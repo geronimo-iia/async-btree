@@ -7,6 +7,7 @@
    - configure [travis-ci](https://travis-ci.org)
    - publish alpha version (not functional) on [pypi](https://pypi.org)
    - configure [coverage](https://coveralls.io)
+   - configure [scrutinizer](https://scrutinizer-ci.com/)
 
 # 1.0.0 (YYYY-MM-DD)
 
