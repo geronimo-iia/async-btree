@@ -1,0 +1,20 @@
+site_name: async-btree
+site_description: Async behavior tree
+site_author: Jerome Guibert
+
+repo_url: https://github.com/geronimo-iia/async-btree
+edit_uri: https://github.com/geronimo-iia/async-btree/edit/master/docs
+
+theme: readthedocs
+
+markdown_extensions:
+  - codehilite:
+      linenums: true
+
+nav:
+- Home: index.md
+- Advanced: advanced.md
+- About:
+  - Release Notes: about/changelog.md
+  - Contributing: about/contributing.md
+  - License: about/license.md
