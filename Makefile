@@ -81,7 +81,7 @@ endif
 PYTEST_RERUN_OPTIONS := --last-failed --exitfirst
 
 .PHONY: test
-test: test-all ## Run unit and integration tests
+test: test-int ## Run unit and integration tests
 
 .PHONY: test-unit
 test-unit: install

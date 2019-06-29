@@ -19,12 +19,12 @@ T = TypeVar('T')
 
 
 async def amap(
-    corofunc: Awaitable[Callable[Any], T], iterable: Union[AsyncIterable, Iterable]
-) -> AsyncGenerator[T]:
+    corofunc: Awaitable[Callable[[Any], T]], iterable: Union[AsyncIterable, Iterable]
+) -> AsyncGenerator[T, None]:
     """Map an async function onto an iterable or an async iterable.
 
     # Parameters
-    corofunc (Awaitable[Callable[Any], T]): coroutine function
+    corofunc (Awaitable[Callable[[Any], T]]): coroutine function
     iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection which will be applied.
 
     # Returns
@@ -43,12 +43,12 @@ async def amap(
 
 
 async def afilter(
-    corofunc: Awaitable[Callable[T], bool], iterable: Union[AsyncIterable, Iterable]
-) -> AsyncGenerator[T]:
+    corofunc: Awaitable[Callable[[T], bool]], iterable: Union[AsyncIterable, Iterable]
+) -> AsyncGenerator[T, None]:
     """Filter an iterable or an async iterable with an async function.
 
     # Parameters
-    corofunc (Awaitable[Callable[Any], bool]): filter async function
+    corofunc (Awaitable[Callable[[T], bool]]): filter async function
     iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection which will be applied.
 
     # Returns
