@@ -2,7 +2,7 @@
 Common definition
 """
 # from collections import namedtuple
-from typing import Awaitable, Callable, List, NamedTuple, TypeVar, Union, Any
+from typing import Any, Awaitable, Callable, List, NamedTuple, TypeVar, Union
 
 
 __all__ = [

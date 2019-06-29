@@ -4,15 +4,13 @@ Curiosity module define special construct with curio framework.
 
 from typing import List
 
-
 from .definition import (
-    CallableFunction,
-    AsyncInnerFunction,
-    node_metadata,
     FAILURE,
     SUCCESS,
+    AsyncInnerFunction,
+    CallableFunction,
+    node_metadata,
 )
-
 from .utils import amap
 
 

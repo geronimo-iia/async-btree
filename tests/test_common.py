@@ -1,4 +1,5 @@
 from curio import run
+
 from libellule.control_flow.common import (
     FAILURE,
     SUCCESS,

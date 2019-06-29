@@ -3,15 +3,13 @@ analyze definition.
 
 """
 from inspect import getclosurevars
-from typing import NamedTuple, Tuple, Any, List
+from typing import Any, List, NamedTuple, Tuple
 
-from .definition import NodeMetadata, CallableFunction
+from .definition import CallableFunction, NodeMetadata
 
-__all__ = [
-    "analyze",
-    "print_analyze",
-    "Node"
-]
+
+__all__ = ["analyze", "print_analyze", "Node"]
+
 
 class Node(NamedTuple):
     """Node aggregate node definition:
@@ -27,8 +25,9 @@ class Node(NamedTuple):
     def __str__(self):
         return print_analyze(a_node=self)
 
-#pylint: disable=protected-access
-def analyze(target: CallableFunction) -> Node: 
+
+# pylint: disable=protected-access
+def analyze(target: CallableFunction) -> Node:
     """Analyze specified target and return a Node representation.
 
     # Parameters
@@ -65,11 +64,15 @@ def analyze(target: CallableFunction) -> Node:
         # its a node construct.
         node = target.__node_metadata
         if not isinstance(node, NodeMetadata):
-            raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
+            raise RuntimeError(
+                f'attr __node_metadata of {target} is not a NodeMetadata!'
+            )
         return Node(
             name=node.name,
             properties=list(map(_analyze_property, node.properties)),
-            edges=list(filter(lambda p: p is not None, map(_analyze_edges, node.edges))),
+            edges=list(
+                filter(lambda p: p is not None, map(_analyze_edges, node.edges))
+            ),
         )
 
     # simple function

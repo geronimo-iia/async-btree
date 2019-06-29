@@ -3,15 +3,14 @@ Control function definition.
 """
 from typing import List
 
+from .decorator import is_success
 from .definition import (
-    CallableFunction,
+    FAILURE,
     AsyncInnerFunction,
+    CallableFunction,
     ExceptionDecorator,
     node_metadata,
-    FAILURE,
 )
-
-from .decorator import is_success
 
 
 __all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]

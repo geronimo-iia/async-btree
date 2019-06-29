@@ -12,7 +12,8 @@ from typing import (
     Union,
 )
 
-__all__ = ['amap','afilter', 'run']
+
+__all__ = ['amap', 'afilter', 'run']
 
 T = TypeVar('T')
 
@@ -67,14 +68,14 @@ async def afilter(
                 yield item
 
 
-
 try:
     from curio import gather, spawn
     from contextvars import copy_context
-    
+
     def run(kernel, target, *args):
         """ Curio run with independent contextvars. """
         return copy_context().run(kernel.run, target, *args)
+
 
 except:  # pylint: disable=bare-except
     # default to asyncio

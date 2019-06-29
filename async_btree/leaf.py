@@ -2,13 +2,13 @@
 Leaf definition.
 """
 
+from .decorator import is_success
 from .definition import (
-    CallableFunction,
     AsyncInnerFunction,
+    CallableFunction,
     ExceptionDecorator,
     node_metadata,
 )
-from .decorator import is_success
 
 
 __all__ = ["action", "condition"]

@@ -1,8 +1,8 @@
 from contextvars import ContextVar
 
 import pytest
-
 from curio import run
+
 from libellule.control_flow.common import FAILURE, SUCCESS, ControlFlowException
 from libellule.control_flow.decorator import *
 

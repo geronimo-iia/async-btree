@@ -3,10 +3,10 @@ Decorator module define all decorator function node.
 
 """
 from .definition import (
-    CallableFunction,
-    AsyncInnerFunction,
-    SUCCESS,
     FAILURE,
+    SUCCESS,
+    AsyncInnerFunction,
+    CallableFunction,
     ExceptionDecorator,
     node_metadata,
 )
