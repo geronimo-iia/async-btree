@@ -12,6 +12,7 @@
    - remove pylint.ini to a simple .pylintrc (add ide support)
    - disable pylint bad-continuation (bug with pep8 formater)
    - grow up code line lentgh to 120 (havent a minitel to code...)
+   - declare extra dependency
  - Documentation:
    - replace mkdocs with [pydoc-markdown](https://github.com/NiklasRosenstein/pydoc-markdown)
  - Code:

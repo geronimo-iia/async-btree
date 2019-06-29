@@ -35,6 +35,8 @@ classifiers = [
 
 python = "^3.7"
 
+# Optional dependency
+curio = { version = "^0.9", extras = [ "curio" ] }
 
 [tool.poetry.dev-dependencies]
 
@@ -59,8 +61,7 @@ freezegun = "*"
 coveragespace = "*"
 
 # Documentation
-mkdocs = "^1.0"
-pydoc-markdown = "*"
+pydoc-markdown = "2.0.5"
 pygments = "*"
 
 # Tooling
