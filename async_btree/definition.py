@@ -26,9 +26,9 @@ FAILURE = not SUCCESS  # Well defined falsy...
 
 
 class ExceptionDecorator(Exception):
-    """
-    ExceptionDecorator exception is a decorator on a real exception
-    with the assert ExceptionDecorator.__bool__ == False.
+    """ExceptionDecorator exception is a decorator on a real exception.
+
+    This will ensure that ```assert ExceptionDecorator.__bool__ == False```.
     This permit to return exception as a 'FAILURE' status.
     """
 
@@ -46,19 +46,13 @@ class ExceptionDecorator(Exception):
         return self.exception.__str__()
 
 
-# NodeMetadata = namedtuple("NodeMetadata", ["name", "properties", "edges"])
 class NodeMetadata(NamedTuple):
-    """
-    NodeMetadata is our node definition:
-    - name: named operation
-    - properties: a list of property name (metadata),
-            or a list of tuple (name, value) for definition.
-    - edges: a list of member which act as edges (metadata),
-            or a list of tuple (name, node list) for definition.
+    """NodeMetadata is our node definition.
 
-    Implementation note:
-    is it better to define two namedtuple,
-    one for each meaning: metadata and definition ?
+    # Attributes
+    - name (str): named operation
+    - properties (List[str]): a list of property name.
+    - edges (List[str]): a list of member name which act as edges.
     """
 
     name: str

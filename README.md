@@ -5,8 +5,6 @@ Async behavior tree for python
 Alpha Status (project and code refactorisation)
 
 
-This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
-
 [![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/geronimo-iia/async-btree/master.svg?label=window)](https://ci.appveyor.com/project/geronimo-iia/async-btree)
 [![Coverage Status](https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg)](https://coveralls.io/r/geronimo-iia/async-btree)

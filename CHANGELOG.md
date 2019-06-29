@@ -2,7 +2,7 @@
 # 0.1.0 (YYYY-MM-DD) In Progress
 
  - Added Project Management: 
-   - initial project structure from [jacebrowning/template-python](https://github.com/jacebrowning/template-python)
+   - initial project structure based on [jacebrowning/template-python](https://github.com/jacebrowning/template-python)
    - initial project configuration
    - follow [Semantic Versioning](https://semver.org/)
    - configure [travis-ci](https://travis-ci.org)
