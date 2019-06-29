@@ -2,11 +2,12 @@
 Common definition
 """
 # from collections import namedtuple
-from typing import Awaitable, Callable, List, NamedTuple, TypeVar, Union
+from typing import Awaitable, Callable, List, NamedTuple, TypeVar, Union, Any
 
 
 __all__ = [
     'CallableFunction',
+    'AsyncInnerFunction',
     'SUCCESS',
     'FAILURE',
     'ExceptionDecorator',
@@ -17,6 +18,9 @@ __all__ = [
 
 CallableFunction = Union[Awaitable[Callable], Callable]
 """Something callable with or without async."""
+
+AsyncInnerFunction = Awaitable[Callable[[], Any]]
+"""Function signature of async function implementation."""
 
 SUCCESS = True  # a success call
 """Success constant."""

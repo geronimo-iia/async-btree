@@ -1,16 +1,25 @@
 """
 Control function definition.
 """
-from typing import Awaitable, List
+from typing import List
 
-from .common import FAILURE, ControlFlowException, node_metadata
+from .definition import (
+    CallableFunction,
+    AsyncInnerFunction,
+    ExceptionDecorator,
+    node_metadata,
+    FAILURE,
+)
+
 from .decorator import is_success
 
 
 __all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]
 
 
-def sequence(children: List[Awaitable], succes_threshold: int = None) -> Awaitable:
+def sequence(
+    children: List[CallableFunction], succes_threshold: int = None
+) -> AsyncInnerFunction:
     """
     'sequence' return a function which execute children in sequence.
 
@@ -43,7 +52,7 @@ def sequence(children: List[Awaitable], succes_threshold: int = None) -> Awaitab
             try:
                 last_result = await child()
             except Exception as e:  # pylint: disable=broad-except
-                last_result = ControlFlowException(e)
+                last_result = ExceptionDecorator(e)
 
             results.append(last_result)
 
@@ -63,7 +72,7 @@ def sequence(children: List[Awaitable], succes_threshold: int = None) -> Awaitab
     return _sequence
 
 
-def fallback(children: List[Awaitable]) -> Awaitable:
+def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
     """
     Execute tasks in sequence and succeed if one task succeed or failed if all task failed.
     Often named 'selector', children can be seen as an ordered list of child starting from higthest
@@ -89,8 +98,10 @@ Synonym of fallback.
 
 
 def decision(
-    condition: Awaitable, success_tree: Awaitable, failure_tree: Awaitable = None
-) -> Awaitable:
+    condition: CallableFunction,
+    success_tree: CallableFunction,
+    failure_tree: CallableFunction = None,
+) -> AsyncInnerFunction:
     """
     Decision node.
 
@@ -109,7 +120,9 @@ def decision(
     return _decision
 
 
-def repeat_until(condition: Awaitable, child: Awaitable) -> Awaitable:
+def repeat_until(
+    condition: CallableFunction, child: CallableFunction
+) -> AsyncInnerFunction:
     """
     Repeat child evaluation until condition is truthy, return last child evaluation or FAILURE if no evaluation occurs.
 
@@ -127,7 +140,7 @@ def repeat_until(condition: Awaitable, child: Awaitable) -> Awaitable:
                 result = await child()
 
             except Exception as e:  # pylint: disable=broad-except
-                result = ControlFlowException(e)
+                result = ExceptionDecorator(e)
 
         return result
 

@@ -1,9 +1,15 @@
 """
-decorator module define all decorator function node.
-"""
-from typing import Awaitable
+Decorator module define all decorator function node.
 
-from .common import FAILURE, SUCCESS, ControlFlowException, node_metadata
+"""
+from .definition import (
+    CallableFunction,
+    AsyncInnerFunction,
+    SUCCESS,
+    FAILURE,
+    ExceptionDecorator,
+    node_metadata,
+)
 
 
 __all__ = [
@@ -20,7 +26,7 @@ __all__ = [
 ]
 
 
-def alias(child: Awaitable, name: str) -> Awaitable:
+def alias(child: CallableFunction, name: str) -> AsyncInnerFunction:
     """
     alias add a specifc name on our child.
 
@@ -36,7 +42,9 @@ def alias(child: Awaitable, name: str) -> Awaitable:
     return _alias
 
 
-def decorate(child: Awaitable, decorator: Awaitable, **kwargs) -> Awaitable:
+def decorate(
+    child: CallableFunction, decorator: CallableFunction, **kwargs
+) -> AsyncInnerFunction:
     """
     Post process a child with specified decorator function.
     First argument of decorator function must be a child.
@@ -55,7 +63,7 @@ def decorate(child: Awaitable, decorator: Awaitable, **kwargs) -> Awaitable:
     return _decorate
 
 
-def always_success(child: Awaitable) -> Awaitable:
+def always_success(child: CallableFunction) -> AsyncInnerFunction:
     """
     Always return SUCCESS value.
 
@@ -81,7 +89,7 @@ def always_success(child: Awaitable) -> Awaitable:
     return _always_success
 
 
-def always_failure(child: Awaitable) -> Awaitable:  # -> Awaitable:
+def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitable:
     """
     Always return FAILURE value.
 
@@ -101,14 +109,14 @@ def always_failure(child: Awaitable) -> Awaitable:  # -> Awaitable:
                 result = child_result
 
         except Exception as e:  # pylint: disable=bare-except,broad-except
-            result = ControlFlowException(e)
+            result = ExceptionDecorator(e)
 
         return result
 
     return _always_failure
 
 
-def is_success(child: Awaitable) -> Awaitable:
+def is_success(child: CallableFunction) -> AsyncInnerFunction:
     """
     :param child: child function to decorate
     :return: an Awaitable function which return SUCCESS if child return SUCCESS else FAILURE.
@@ -120,12 +128,12 @@ def is_success(child: Awaitable) -> Awaitable:
         try:
             return SUCCESS if bool(await child()) else FAILURE
         except Exception as e:  # pylint: disable=bare-except,broad-except
-            return ControlFlowException(e)
+            return ExceptionDecorator(e)
 
     return _is_success
 
 
-def is_failure(child: Awaitable) -> Awaitable:
+def is_failure(child: CallableFunction) -> AsyncInnerFunction:
     """
     :param child: child function to decorate
     :return:  an Awaitable function which return SUCCESS if child return FAILURE else FAILURE.
@@ -142,7 +150,7 @@ def is_failure(child: Awaitable) -> Awaitable:
     return _is_failure
 
 
-def inverter(child: Awaitable) -> Awaitable:
+def inverter(child: CallableFunction) -> AsyncInnerFunction:
     """
     Invert node status.
 
@@ -157,7 +165,7 @@ def inverter(child: Awaitable) -> Awaitable:
     return _inverter
 
 
-def retry(child: Awaitable, max_retry: int = 3) -> Awaitable:
+def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
     """
     Retry child evaluation at most max_retry time on failure until child succeed.
 
@@ -187,7 +195,7 @@ def retry(child: Awaitable, max_retry: int = 3) -> Awaitable:
                 if (
                     not infinite_retry_condition
                 ):  # avoid data allocation if never returned
-                    result = ControlFlowException(e)
+                    result = ExceptionDecorator(e)
 
             if not infinite_retry_condition:  # avoid overflow
                 retry_count += 1
@@ -197,7 +205,7 @@ def retry(child: Awaitable, max_retry: int = 3) -> Awaitable:
     return _retry
 
 
-def retry_until_success(child: Awaitable) -> Awaitable:
+def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
     """
     Retry child until success.
 
@@ -212,17 +220,13 @@ def retry_until_success(child: Awaitable) -> Awaitable:
     return node_metadata(name="retry_until_success")(retry(child=child, max_retry=-1))
 
 
-def retry_until_failed(child: Awaitable) -> Awaitable:
+def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
     """
     Retry child until failed.
 
     :param child: child function to decorate
     :return: an Awaitable function which try to evaluate child until it failed.
     """
-
-    # @node_metadata()
-    # async def _retry_until_failed():
-    #    return await retry(child=inverter(child=child), max_retry=-1)()
 
     return node_metadata(name="retry_until_failed")(
         retry(child=inverter(child), max_retry=-1)

@@ -1,16 +1,20 @@
 """
 Leaf definition.
 """
-from typing import Awaitable
 
-from .common import ControlFlowException, node_metadata
+from .definition import (
+    CallableFunction,
+    AsyncInnerFunction,
+    ExceptionDecorator,
+    node_metadata,
+)
 from .decorator import is_success
 
 
 __all__ = ["action", "condition"]
 
 
-def action(target: Awaitable, **kwargs) -> Awaitable:
+def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     """
     Action is an awaitable closure of specified function
     :param target: awaitable function
@@ -23,12 +27,12 @@ def action(target: Awaitable, **kwargs) -> Awaitable:
         try:
             return await target(**kwargs)
         except Exception as e:  # pylint: disable=broad-except
-            return ControlFlowException(exception=e)
+            return ExceptionDecorator(exception=e)
 
     return _action
 
 
-def condition(target: Awaitable, **kwargs) -> Awaitable:
+def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     """
     Condition is an awaitable closure of specified function.
     :param target: awaitable function which be evaluated as True/False.
