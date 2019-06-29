@@ -68,7 +68,7 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
     Always return SUCCESS value.
 
     :param child: child function to decorate
-    :return: an Awaitable function which return child result if is truthy else SUCCESS (Any exception will be ignored). 
+    :return: an Awaitable function which return child result if is truthy else SUCCESS (Any exception will be ignored).
 
     """
 
