@@ -69,7 +69,7 @@ async def afilter(
 
 
 try:
-    from curio import gather, spawn
+    import curio  # pylint: disable=unused-import
     from contextvars import copy_context
 
     def run(kernel, target, *args):
