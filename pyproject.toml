@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "0.0.1-alpha"
+version = "0.1.0"
 description = "Async behavior tree"
 
 license = "MIT"
@@ -60,6 +60,7 @@ coveragespace = "*"
 
 # Documentation
 mkdocs = "^1.0"
+pydoc-markdown = "*"
 pygments = "*"
 
 # Tooling
@@ -67,6 +68,7 @@ pyinstaller = "*"
 sniffer = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
+autopep8 = "^1.4"
 
 [tool.poetry.scripts]
 

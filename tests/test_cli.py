@@ -2,9 +2,8 @@
 # pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned
 
 import pytest
-from expecter import expect
-
 from click.testing import CliRunner
+from expecter import expect
 
 from async_btree.cli import main
 
@@ -15,9 +14,7 @@ def runner():
 
 
 def describe_cli():
-
     def describe_conversion():
-
         def when_integer(runner):
             result = runner.invoke(main, ['42'])
 

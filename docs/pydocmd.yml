@@ -1,0 +1,46 @@
+site_name: async-btree
+site_description: Async behavior tree
+site_author: Jerome Guibert
+
+repo_url: https://github.com/geronimo-iia/async-btree
+edit_uri: https://github.com/geronimo-iia/async-btree/edit/master/docs
+
+theme: readthedocs
+
+generate:
+- async_btree/definiton.md:
+  - async_btree.definition+
+- async_btree/utils.md:
+  - async_btree.leaf+
+
+pages:
+- Home: index.md << ../README.md
+- Advanced: advanced.md
+- Async Btree:
+  - utils: async_btree/utils.md
+  - definition: async_btree/definiton.md
+- About:
+  - Release Notes: about/changelog.md << ../CHANGELOG.md
+  - Contributing: about/contributing.md << ../CONTRIBUTING.md
+  - License: about/license.md << ../LICENSE.md
+  - Code of Conduct: about/code_of_conduct.md << ../CODE_OF_CONDUCT.md
+
+# These options all show off their default values. You don't have to add
+# them to your configuration if you're fine with the default.
+#docs_dir: docs
+gens_dir: _build/pydocmd
+site_dir: _build/site
+markdown_extensions:
+  - codehilite:
+      linenums: true
+  - extra
+  - smarty
+  - codehilite
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+
+headers: html

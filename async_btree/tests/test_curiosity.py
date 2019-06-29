@@ -1,7 +1,8 @@
+from contextvars import ContextVar
+
+from curio import Kernel, run, sleep
 from libellule.control_flow.common import FAILURE
 from libellule.control_flow.curiosity import parallele, run as run_curio
-from curio import run, sleep, Kernel
-from contextvars import ContextVar
 
 
 async def a_func():

@@ -1,11 +1,13 @@
 """
 Curiosity module define special construct with curio framework.
 """
-from typing import Awaitable, List
-from curio import spawn, gather
 from contextvars import copy_context
+from typing import Awaitable, List
 
-from .common import node_metadata, FAILURE, SUCCESS, amap
+from curio import gather, spawn
+
+from .common import FAILURE, SUCCESS, amap, node_metadata
+
 
 __all__ = ['run', 'parallele']
 

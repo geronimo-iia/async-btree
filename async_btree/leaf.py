@@ -2,8 +2,10 @@
 Leaf definition.
 """
 from typing import Awaitable
-from .common import node_metadata, ControlFlowException
+
+from .common import ControlFlowException, node_metadata
 from .decorator import is_success
+
 
 __all__ = ["action", "condition"]
 

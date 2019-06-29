@@ -2,7 +2,9 @@
 decorator module define all decorator function node.
 """
 from typing import Awaitable
-from .common import node_metadata, SUCCESS, FAILURE, ControlFlowException
+
+from .common import FAILURE, SUCCESS, ControlFlowException, node_metadata
+
 
 __all__ = [
     "alias",
@@ -14,7 +16,7 @@ __all__ = [
     "inverter",
     "retry",
     "retry_until_success",
-    "retry_until_failed"
+    "retry_until_failed",
 ]
 
 
@@ -134,7 +136,7 @@ def is_failure(child: Awaitable) -> Awaitable:
     async def _is_failure():
         try:
             return SUCCESS if not bool(await child()) else FAILURE
-        except: #pylint: disable=bare-except
+        except:  # pylint: disable=bare-except
             return SUCCESS
 
     return _is_failure

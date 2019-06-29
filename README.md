@@ -148,5 +148,5 @@ $ python
 
 # Contributing
 
-You could find all information in [Contributing page](./CONTRIBUTING.md)
+You could find all information in Contributing page.
 

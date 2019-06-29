@@ -3,8 +3,9 @@ Common definition.
 
 """
 from collections import namedtuple
-from typing import List, Awaitable
 from inspect import getclosurevars
+from typing import Awaitable, List
+
 
 __all__ = [
     "amap",
@@ -17,6 +18,7 @@ __all__ = [
     "analyze",
     "print_analyze",
 ]
+
 
 async def amap(corofunc: Awaitable, iterable):
     """
@@ -31,6 +33,7 @@ async def amap(corofunc: Awaitable, iterable):
     else:
         for item in iterable:
             yield await corofunc(item)
+
 
 async def afilter(corofunc: Awaitable, iterable):
     """
@@ -81,7 +84,9 @@ Implementation note:
 """
 
 
-def node_metadata(name: str = None, properties: List[str] = None, edges: List[str] = None):
+def node_metadata(
+    name: str = None, properties: List[str] = None, edges: List[str] = None
+):
     """
     'node_metadata' is a function decorator which add meta information about node:
         - name
@@ -99,7 +104,7 @@ def node_metadata(name: str = None, properties: List[str] = None, edges: List[st
         fn.__node_metadata = ANode(
             name=name if name else fn.__name__.lstrip("_"),
             properties=properties or [],
-            edges=edges or ["child", "children"]
+            edges=edges or ["child", "children"],
         )
         return fn
 

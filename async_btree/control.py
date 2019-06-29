@@ -2,8 +2,10 @@
 Control function definition.
 """
 from typing import Awaitable, List
-from .common import node_metadata, FAILURE, ControlFlowException
+
+from .common import FAILURE, ControlFlowException, node_metadata
 from .decorator import is_success
+
 
 __all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]
 
@@ -86,7 +88,9 @@ Synonym of fallback.
 """
 
 
-def decision(condition: Awaitable, success_tree: Awaitable, failure_tree: Awaitable = None) -> Awaitable:
+def decision(
+    condition: Awaitable, success_tree: Awaitable, failure_tree: Awaitable = None
+) -> Awaitable:
     """
     Decision node.
 

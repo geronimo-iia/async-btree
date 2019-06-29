@@ -65,7 +65,7 @@ check: install format  ## Run formaters, linters, and static analysis
 ifdef CI
 	git diff --exit-code
 endif
-	poetry run pylint $(PACKAGES) --rcfile=.pylint.ini
+	poetry run pylint $(PACKAGES) --rcfile=.pylintrc
 	poetry run mypy $(PACKAGES) --config-file=.mypy.ini
 	poetry run pydocstyle $(PACKAGES) $(CONFIG)
 
@@ -110,24 +110,12 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
-MKDOCS_INDEX := site/index.html
-
 .PHONY: docs
-docs: mkdocs uml ## Generate documentation and UML
+docs: uml mkdocs ## Generate documentation and UML
 
 .PHONY: mkdocs
-mkdocs: install $(MKDOCS_INDEX)
-$(MKDOCS_INDEX): docs/requirements.txt mkdocs.yml docs/*.md
-	@ mkdir -p docs/about
-	@ cd docs && ln -sf ../README.md index.md
-	@ cd docs/about && ln -sf ../../CHANGELOG.md changelog.md
-	@ cd docs/about && ln -sf ../../CONTRIBUTING.md contributing.md
-	@ cd docs/about && ln -sf ../../LICENSE.md license.md
-	poetry run mkdocs build --clean --strict
-
-# Workaround: https://github.com/rtfd/readthedocs.org/issues/5090
-docs/requirements.txt: poetry.lock
-	@ poetry run pip freeze -qqq | grep mkdocs > $@
+mkdocs: install
+	@cd docs && poetry run pydocmd build
 
 .PHONY: uml
 uml: install docs/*.png

@@ -1,9 +1,10 @@
-from libellule.control_flow.common import SUCCESS, FAILURE, ControlFlowException
-from libellule.control_flow.decorator import *
-from curio import run
 from contextvars import ContextVar
 
 import pytest
+
+from curio import run
+from libellule.control_flow.common import FAILURE, SUCCESS, ControlFlowException
+from libellule.control_flow.decorator import *
 
 
 async def a_func():
@@ -43,6 +44,7 @@ def test_root_name():
     rooted = alias(a_func, name="a_func")
     assert rooted.__node_metadata.name == "a_func"
     assert run(rooted) == "a"
+
 
 def test_decorate():
     async def b_decorator(child_value, other=""):
