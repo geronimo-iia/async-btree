@@ -13,7 +13,7 @@ from .definition import (
 )
 
 
-__all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]
+__all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
 
 def sequence(
@@ -41,7 +41,7 @@ def sequence(
     assert 0 <= succes_threshold <= len(children)
     failure_threshold = len(children) - succes_threshold + 1
 
-    @node_metadata(properties=["succes_threshold"])
+    @node_metadata(properties=['succes_threshold'])
     async def _sequence():
         success = 0
         failure = 0
@@ -72,10 +72,10 @@ def sequence(
 
 
 def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
-    """
-    Execute tasks in sequence and succeed if one task succeed or failed if all task failed.
-    Often named 'selector', children can be seen as an ordered list of child starting from higthest
-    priority to lowet priority.
+    """Execute tasks in sequence and succeed if one succeed or failed if all failed.
+
+    Often named 'selector', children can be seen as an ordered list
+        starting from higthest priority to lowest priority.
 
     :param children: list of Awaitable
     :return: an awaitable function.
@@ -85,15 +85,14 @@ def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
     # async def _fallback():
     #    return sequence(children, succes_threshold=1)()
 
-    return node_metadata(name="fallback")(
+    return node_metadata(name='fallback')(
         sequence(children, succes_threshold=min(1, len(children)))
     )
 
 
-selector = lambda children: node_metadata(name="selector")(fallback(children))
-"""
-Synonym of fallback.
-"""
+def selector(children: CallableFunction) -> AsyncInnerFunction:
+    """Synonym of fallback."""
+    return node_metadata(name='selector')(fallback(children))
 
 
 def decision(
@@ -101,16 +100,16 @@ def decision(
     success_tree: CallableFunction,
     failure_tree: CallableFunction = None,
 ) -> AsyncInnerFunction:
-    """
-    Decision node.
+    """Create a decision node.
 
     :param condition: awaitable condition
     :param success_tree: awaitable success tree which be evaluated if cond is Truthy
-    :param failure_tree: awaitable failure tree  which be evaluated if cond is Falsy (None per default)
+    :param failure_tree: awaitable failure tree  which be evaluated if cond is Falsy
+        (None per default)
     :return: an awaitable function.
     """
 
-    @node_metadata(edges=["condition", "success_tree", "failure_tree"])
+    @node_metadata(edges=['condition', 'success_tree', 'failure_tree'])
     async def _decision():
         if await condition():
             return await success_tree()
@@ -122,15 +121,15 @@ def decision(
 def repeat_until(
     condition: CallableFunction, child: CallableFunction
 ) -> AsyncInnerFunction:
-    """
-    Repeat child evaluation until condition is truthy, return last child evaluation or FAILURE if no evaluation occurs.
+    """Repeat child evaluation until condition is truthy.
 
+    Return last child evaluation or FAILURE if no evaluation occurs.
     :param condition: awaitable condition
     :param child: awaitable child
     :return: an awaitable function.
     """
 
-    @node_metadata(edges=["condition", "child"])
+    @node_metadata(edges=['condition', 'child'])
     async def _repeat_until():
         result = FAILURE
         condition_eval = is_success(child=condition)

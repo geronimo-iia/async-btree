@@ -27,7 +27,8 @@ try:
         Return an awaitable function which run children in parallele.
 
         succes_threshold generalize traditional sequence/fallback.
-        succes_threshold must be in [0, len(children)], is default value is len(children)
+        succes_threshold must be in [0, len(children)],
+            default value is len(children)
 
         if #success = succes_threshold, return a success
 
@@ -41,7 +42,7 @@ try:
         succes_threshold = succes_threshold if succes_threshold else len(children)
         assert 0 <= succes_threshold <= len(children)
 
-        @node_metadata(properties=["succes_threshold"])
+        @node_metadata(properties=['succes_threshold'])
         async def _parallele():
 
             results = await gather([task async for task in amap(spawn, children)])
@@ -53,7 +54,7 @@ try:
         return _parallele
 
 
-except:  # pylint: disable=bare-except
+except Exception:  # pylint: disable=bare-except
 
     # default to a simple sequence
     from .control import sequence as parallele

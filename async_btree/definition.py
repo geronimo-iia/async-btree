@@ -70,10 +70,8 @@ T = TypeVar('T', covariant=True, bound=CallableFunction)
 def node_metadata(  # pylint: disable=protected-access
     name: str = None, properties: List[str] = None, edges: List[str] = None
 ):
-    """'node_metadata' is a function decorator which add meta information about node:
-        - name
-        - properties
-        - edges
+    """'node_metadata' is a function decorator which add meta information about node.
+
     We add a property on decorated function named '__node_metadata'.
 
     # Parameters
@@ -88,9 +86,9 @@ def node_metadata(  # pylint: disable=protected-access
 
     def decorate_function(function: T) -> T:
         function.__node_metadata = NodeMetadata(
-            name=name if name else function.__name__.lstrip("_"),
+            name=name if name else function.__name__.lstrip('_'),
             properties=properties or [],
-            edges=edges or ["child", "children"],
+            edges=edges or ['child', 'children'],
         )
         return function
 

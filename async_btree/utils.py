@@ -25,7 +25,8 @@ async def amap(
 
     # Parameters
     corofunc (Awaitable[Callable[[Any], T]]): coroutine function
-    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection which will be applied.
+    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
+        which will be applied.
 
     # Returns
     AsyncGenerator[T]: an async iterator of corofunc(item)
@@ -49,7 +50,8 @@ async def afilter(
 
     # Parameters
     corofunc (Awaitable[Callable[[T], bool]]): filter async function
-    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection which will be applied.
+    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
+        which will be applied.
 
     # Returns
     (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True
@@ -68,15 +70,16 @@ async def afilter(
                 yield item
 
 
+# pylint: disable=unused-import
 try:
-    import curio  # pylint: disable=unused-import
+    import curio  # noqa: F401
     from contextvars import copy_context
 
     def run(kernel, target, *args):
-        """ Curio run with independent contextvars. """
+        """Curio run with independent contextvars."""
         return copy_context().run(kernel.run, target, *args)
 
 
-except:  # pylint: disable=bare-except
+except Exception:  # pylint: disable=bare-except
     # default to asyncio
     from asyncio import run

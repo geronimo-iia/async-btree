@@ -1,6 +1,4 @@
-"""
-Leaf definition.
-"""
+"""Leaf definition."""
 
 from .decorator import is_success
 from .definition import (
@@ -11,18 +9,19 @@ from .definition import (
 )
 
 
-__all__ = ["action", "condition"]
+__all__ = ['action', 'condition']
 
 
 def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
-    """
-    Action is an awaitable closure of specified function
+    """Declare an action leaf.
+
+    Action is an awaitable closure of specified function.
     :param target: awaitable function
     :param kwargs: optional kwargs argument to pass on target function
     :return: an awaitable function.
     """
 
-    @node_metadata(properties=["target"])
+    @node_metadata(properties=['target'])
     async def _action():
         try:
             return await target(**kwargs)
@@ -33,7 +32,8 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
 
 
 def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
-    """
+    """Declare a condition leaf.
+
     Condition is an awaitable closure of specified function.
     :param target: awaitable function which be evaluated as True/False.
     :param kwargs: optional kwargs argument to pass on target function
@@ -44,6 +44,6 @@ def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     # async def _condition():
     #    return is_success(child=action(target=target, *args, **kwargs))()
 
-    return node_metadata(name="condition", properties=["target"])(
+    return node_metadata(name='condition', properties=['target'])(
         is_success(action(target=target, **kwargs))
     )
