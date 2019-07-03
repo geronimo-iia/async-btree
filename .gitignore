@@ -3,7 +3,6 @@
 *.egg-info
 __pycache__
 .ipynb_checkpoints
-.mypy_cache/
 
 # Temporary OS files
 Icon*
