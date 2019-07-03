@@ -1,7 +1,9 @@
+from contextvars import ContextVar
+
+from curio import run
+
 from libellule.control_flow.common import *
 from libellule.control_flow.control import *
-from curio import run
-from contextvars import ContextVar
 
 
 async def a_func():

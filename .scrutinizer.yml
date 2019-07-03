@@ -1,7 +1,7 @@
 build:
   tests:
     override:
-      - pylint-run --rcfile=.pylint.ini
+      - pylint-run --rcfile=.pylintrc
       - py-scrutinizer-run
 checks:
   python:

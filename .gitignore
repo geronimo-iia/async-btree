@@ -16,11 +16,8 @@ Icon*
 *.pid
 
 # Generated documentation
-/docs/gen/
-/docs/apidocs/
-/site/
-/*.html
 /docs/*.png
+/docs/_build
 
 # Google Drive
 *.gdoc
@@ -41,5 +38,7 @@ Icon*
 # Sublime Text
 *.sublime-workspace
 
-# Eclipse
+# IDE
 .settings
+.idea/
+.vscode

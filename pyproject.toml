@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "0.0.1-alpha"
+version = "0.1.0"
 description = "Async behavior tree"
 
 license = "MIT"
@@ -14,8 +14,8 @@ homepage = "https://pypi.org/project/async_btree"
 documentation = "https://async_btree.readthedocs.io"
 repository = "https://github.com/geronimo-iia/async-btree"
 
-keywords = [
-]
+keywords = ["behavior-tree", "asyncio"]
+
 classifiers = [
     # update this list to match your application: https://pypi.org/pypi?%3Aaction=list_classifiers
     "Development Status :: 3 - Alpha",
@@ -35,8 +35,13 @@ classifiers = [
 
 python = "^3.7"
 
+# Optional dependency
+curio = { version = "^0.9", optional = true }
 
 [tool.poetry.dev-dependencies]
+
+# extra
+curio = "^0.9"
 
 # Formatters
 black = "=19.3b0"
@@ -46,6 +51,17 @@ isort = "=4.3.4"
 mypy = "*"
 pydocstyle = "*"
 pylint = "^2.0"
+flake8 = "*"
+flake8-blind-except = "*"
+flake8-bugbear = "*"
+flake8-builtins = "*"
+flake8-comprehensions = "*"
+flake8-debugger = "*"
+flake8-docstrings = "*"
+flake8-isort = "*"
+flake8-black = "*"
+flake8-quotes = "*"
+flake8-string-format = "*"
 
 # Testing
 pytest = "^4.3.1"
@@ -59,7 +75,7 @@ freezegun = "*"
 coveragespace = "*"
 
 # Documentation
-mkdocs = "^1.0"
+pydoc-markdown = "2.0.5"
 pygments = "*"
 
 # Tooling
@@ -67,15 +83,16 @@ pyinstaller = "*"
 sniffer = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
+autopep8 = "^1.4"
 
-[tool.poetry.scripts]
-
-async-btree = "async_btree.cli:main"
+#[tool.poetry.scripts]
+#async-btree = "async_btree.cli:main"
 
 [tool.black]
 
 target-version = ["py36", "py37"]
 skip-string-normalization = true
+line_length = 88
 
 [build-system]
 

@@ -1,11 +1,12 @@
-from libellule.control_flow.common import (
-    ControlFlowException,
-    SUCCESS,
-    FAILURE,
-    amap,
-    afilter,
-)
 from curio import run
+
+from libellule.control_flow.common import (
+    FAILURE,
+    SUCCESS,
+    ControlFlowException,
+    afilter,
+    amap,
+)
 
 
 def test_truthy():

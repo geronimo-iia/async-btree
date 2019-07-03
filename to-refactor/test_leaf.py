@@ -1,5 +1,6 @@
-from libellule.control_flow.leaf import action, condition
 from curio import run
+
+from libellule.control_flow.leaf import action, condition
 
 
 def test_condition():

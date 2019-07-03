@@ -5,8 +5,6 @@ Async behavior tree for python
 Alpha Status (project and code refactorisation)
 
 
-This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
-
 [![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/geronimo-iia/async-btree/master.svg?label=window)](https://ci.appveyor.com/project/geronimo-iia/async-btree)
 [![Coverage Status](https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg)](https://coveralls.io/r/geronimo-iia/async-btree)
@@ -36,17 +34,17 @@ Few implementation libraries:
 ## Why another library so ?
 
 When you study behavior tree implementation, reactive node, dynamic change, runtime execution, etc ... 
-at a moment you're build more or less something that mimic an evaluator 'eval/apply' or a compilator, with a complex hierachical set of class.
-All complexity came with internal state management, global variable, callback etc ...
-This break the simplicity of initial design.
+At a moment you're build more or less something that mimic an evaluator 'eval/apply' or a compilator, with a complex hierachical set of class.
+All complexity came with internal state management, using tree of blackboard to avoid global variable, multithreading issue, maybe few callback etc ...
+This break the simplicity and beauty of your initial design.
 
 What I find usefull with behavior tree:
  - clarity of expression
  - node tree representation
  - possibility to reuse behavior
- - add external measure to dynamicaly change a behavior, a first step on obervable pattern...
+ - add external measure to dynamicaly change a behavior, a first step on observable pattern...
 
-As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of a single function to obtain what I want: add metadata on a sematic construction, deal with closure and function in parameters or in return value...
+As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of functionnal programming to obtain what I want: add metadata on a sematic construction, deal with closure, use function in parameters or in return value...
 
 And a last reason, more personal, it that i would explore python expressivity.
 
@@ -98,7 +96,7 @@ As we use async function as underlaying mechanism to manage the execution flow, 
 But, (always a but somewhere isn't it...), you should read this [amazing blog post}(https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/) by Nathaniel J. Smith.
 And next study [curio](https://github.com/dabeaz/curio) framework in deep.
 
-As curio said:
+As curio say:
 > Don't Use Curio if You're Allergic to Curio
 
 Personaly, after few time of testing and reading curio code, I'm pretty addict.
@@ -145,3 +143,8 @@ $ python
 >>> import async_btree
 >>> async_btree.__version__
 ```
+
+# Contributing
+
+You could find all information in Contributing page.
+
