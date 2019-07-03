@@ -36,7 +36,7 @@ classifiers = [
 python = "^3.7"
 
 # Optional dependency
-curio = { version = "^0.9", extras = [ "curio" ] }
+curio = { version = "^0.9", optional = true }
 
 [tool.poetry.dev-dependencies]
 

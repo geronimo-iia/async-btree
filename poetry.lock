@@ -136,7 +136,7 @@ requests = ">=2.0,<3.0"
 category = "main"
 description = "Curio - Concurrent I/O"
 name = "curio"
-optional = false
+optional = true
 python-versions = "*"
 version = "0.9"
 
@@ -819,7 +819,7 @@ python-versions = ">=2.7"
 version = "0.5.1"
 
 [metadata]
-content-hash = "3e4aa34155076b8a6b87d0deb5dedd08685dcebf3db02003f5864cd8f1ef4b41"
+content-hash = "e873d1b9f983f3fd6c05de67ba202fa228f616c7d368db18cd3610fd6f526aea"
 python-versions = "^3.7"
 
 [metadata.hashes]
