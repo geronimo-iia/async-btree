@@ -2,7 +2,7 @@
 Common definition
 """
 # from collections import namedtuple
-from typing import Any, Awaitable, Callable, List, NamedTuple, TypeVar, Union
+from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union
 
 
 __all__ = [
@@ -16,10 +16,10 @@ __all__ = [
 ]
 
 
-CallableFunction = Union[Awaitable[Callable], Callable]
+CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]
 """Something callable with or without async."""
 
-AsyncInnerFunction = Awaitable[Callable[[], Any]]
+AsyncInnerFunction = Callable[[], Awaitable[Any]]
 """Function signature of async function implementation."""
 
 SUCCESS = True  # a success call
@@ -64,21 +64,23 @@ class NodeMetadata(NamedTuple):
     edges: List[str]
 
 
-T = TypeVar('T', covariant=True, bound=CallableFunction)
+T = TypeVar('T', bound=CallableFunction)
 
 
 def node_metadata(  # pylint: disable=protected-access
-    name: str = None, properties: List[str] = None, edges: List[str] = None
+    name: Optional[str] = None,
+    properties: Optional[List[str]] = None,
+    edges: Optional[List[str]] = None,
 ):
     """'node_metadata' is a function decorator which add meta information about node.
 
     We add a property on decorated function named '__node_metadata'.
 
     # Parameters
-    name (str): override name of decorated function,
+    name (Optional[str]): override name of decorated function,
         default is function name left striped with '_'
-    properties (List[str]): a list of property name ([] as default)
-    edges (List[str]): a list of edges name (["child", "children"] as default)
+    properties (Optional[List[str]]): a list of property name ([] as default)
+    edges (Optional[List[str]]): a list of edges name (["child", "children"] as default)
 
     # Returns
     the decorator function

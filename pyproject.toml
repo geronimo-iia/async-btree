@@ -48,6 +48,17 @@ isort = "=4.3.4"
 mypy = "*"
 pydocstyle = "*"
 pylint = "^2.0"
+flake8 = "*"
+flake8-blind-except = "*"
+flake8-bugbear = "*"
+flake8-builtins = "*"
+flake8-comprehensions = "*"
+flake8-debugger = "*"
+flake8-docstrings = "*"
+flake8-isort = "*"
+flake8-black = "*"
+flake8-quotes = "*"
+flake8-string-format = "*"
 
 # Testing
 pytest = "^4.3.1"
@@ -71,14 +82,14 @@ MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
 autopep8 = "^1.4"
 
-[tool.poetry.scripts]
-
-async-btree = "async_btree.cli:main"
+#[tool.poetry.scripts]
+#async-btree = "async_btree.cli:main"
 
 [tool.black]
 
 target-version = ["py36", "py37"]
 skip-string-normalization = true
+line_length = 88
 
 [build-system]
 

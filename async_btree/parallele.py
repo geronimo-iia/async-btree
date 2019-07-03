@@ -21,7 +21,7 @@ try:
     from curio import gather, spawn
 
     def parallele(
-        children: List[CallableFunction], succes_threshold: int = None
+        children: List[CallableFunction], succes_threshold: int = -1
     ) -> AsyncInnerFunction:
         """
         Return an awaitable function which run children in parallele.
@@ -54,7 +54,7 @@ try:
         return _parallele
 
 
-except Exception:  # pylint: disable=bare-except
+except Exception:  # pylint: disable=broad-except
 
     # default to a simple sequence
     from .control import sequence as parallele

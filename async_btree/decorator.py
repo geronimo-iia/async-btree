@@ -1,4 +1,6 @@
 """Decorator module define all decorator function node."""
+from typing import Any
+
 from .definition import (
     FAILURE,
     SUCCESS,
@@ -71,7 +73,7 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
 
     @node_metadata()
     async def _always_success():
-        result = SUCCESS
+        result: Any = SUCCESS
 
         try:
             child_result = await child()
@@ -97,7 +99,7 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
 
     @node_metadata()
     async def _always_failure():
-        result = FAILURE
+        result: Any = FAILURE
 
         try:
             child_result = await child()
@@ -125,7 +127,7 @@ def is_success(child: CallableFunction) -> AsyncInnerFunction:
     async def _is_success():
         try:
             return SUCCESS if bool(await child()) else FAILURE
-        except Exception as e:  # pylint: disable=bare-except,broad-except
+        except Exception as e:  # pylint: disable=broad-except
             return ExceptionDecorator(e)
 
     return _is_success
@@ -144,7 +146,7 @@ def is_failure(child: CallableFunction) -> AsyncInnerFunction:
     async def _is_failure():
         try:
             return SUCCESS if not bool(await child()) else FAILURE
-        except Exception:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=broad-except
             return SUCCESS
 
     return _is_failure
@@ -181,7 +183,7 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
     async def _retry():
         retry_count = 0
         infinite_retry_condition = max_retry == -1
-        result = FAILURE
+        result: Any = FAILURE
 
         while infinite_retry_condition or retry_count < max_retry:
             try:

@@ -1,7 +1,7 @@
 """
 Control function definition.
 """
-from typing import List
+from typing import List, Any, Optional
 
 from .decorator import is_success
 from .definition import (
@@ -17,13 +17,14 @@ __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
 
 def sequence(
-    children: List[CallableFunction], succes_threshold: int = None
+    children: List[CallableFunction], succes_threshold: int = -1
 ) -> AsyncInnerFunction:
     """
     'sequence' return a function which execute children in sequence.
 
     succes_threshold generalize traditional sequence/fallback.
-    succes_threshold must be in [0, len(children)], is default value is len(children)
+    succes_threshold must be in [0, len(children)],
+        is default value is (-1) means len(children)
 
     if #success = succes_threshold, return a success
 
@@ -90,7 +91,7 @@ def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
     )
 
 
-def selector(children: CallableFunction) -> AsyncInnerFunction:
+def selector(children: List[CallableFunction]) -> AsyncInnerFunction:
     """Synonym of fallback."""
     return node_metadata(name='selector')(fallback(children))
 
@@ -98,7 +99,7 @@ def selector(children: CallableFunction) -> AsyncInnerFunction:
 def decision(
     condition: CallableFunction,
     success_tree: CallableFunction,
-    failure_tree: CallableFunction = None,
+    failure_tree: Optional[CallableFunction] = None,
 ) -> AsyncInnerFunction:
     """Create a decision node.
 
@@ -131,7 +132,7 @@ def repeat_until(
 
     @node_metadata(edges=['condition', 'child'])
     async def _repeat_until():
-        result = FAILURE
+        result: Any = FAILURE
         condition_eval = is_success(child=condition)
         while await condition_eval():
             try:

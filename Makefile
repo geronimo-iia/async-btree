@@ -10,8 +10,11 @@ MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Virtual environment paths
 VIRTUAL_ENV ?= .venv
+RUN := poetry run
 
 # MAIN TASKS ##################################################################
+
+SNIFFER := $(RUN) sniffer
 
 .PHONY: all
 all: install
@@ -21,11 +24,11 @@ ci: format check test mkdocs ## Run all tasks that determine CI status
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
-	poetry run sniffer
+	$(SNIFFER)
 
 .PHONY: run ## Start the program
 run: install
-	poetry run python $(PACKAGE)/__main__.py
+	$(RUN) python $(PACKAGE)/__main__.py
 
 # SYSTEM DEPENDENCIES #########################################################
 
@@ -54,20 +57,42 @@ poetry.lock: pyproject.toml
 
 # CHECKS ######################################################################
 
-.PHONY: format
-format: install
-	poetry run isort $(PACKAGES) --recursive --apply
-	poetry run black $(PACKAGES)
-	@ echo
+ISORT := $(RUN) isort
+PYLINT := $(RUN) pylint
+FLAKE := $(RUN) flake8
+BLACK := $(RUN) black
+MYPI := $(RUN) mypy
+PYCODESTYLE := $(RUN) pycodestyle
+PYDOCSTYLE := $(RUN) pydocstyle
+
 
 .PHONY: check
-check: install format  ## Run formaters, linters, and static analysis
-ifdef CI
-	git diff --exit-code
-endif
-	poetry run pylint $(PACKAGES) --rcfile=.pylintrc
-	poetry run mypy $(PACKAGES) --config-file=.mypy.ini
-	poetry run pydocstyle $(PACKAGES) $(CONFIG)
+check: isort black flake mypy pydocstyle ## Run linters and static analysis
+
+.PHONY: isort
+isort: install
+	$(ISORT) $(PACKAGES) --recursive --apply
+
+.PHONY: black
+black: install
+	$(BLACK) $(PACKAGES) 
+
+.PHONY: pylint
+pylint: install
+	$(PYLINT) $(PACKAGE)
+
+.PHONY: mypy
+mypy: install
+	$(MYPI) $(PACKAGES) --config-file=.mypy.ini
+
+.PHONY: pydocstyle
+pydocstyle: install
+	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
+
+.PHONY: flake
+flake: install ## Run flake8 linters
+	$(FLAKE) $(PACKAGES)
+
 
 # TESTS #######################################################################
 
@@ -81,28 +106,11 @@ endif
 PYTEST_RERUN_OPTIONS := --last-failed --exitfirst
 
 .PHONY: test
-test: test-int ## Run unit and integration tests
-
-.PHONY: test-unit
-test-unit: install
-	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
-	poetry run pytest $(PACKAGE) $(PYTEST_OPTIONS)
-	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
-	poetry run coveragespace $(REPOSITORY) unit
-
-.PHONY: test-int
-test-int: install
-	@ if test -e $(FAILURES); then poetry run pytest tests $(PYTEST_RERUN_OPTIONS); fi
+test: install ## Run unit tests
+	@ if test -e $(FAILURES); then $(RUN) pytest tests $(PYTEST_RERUN_OPTIONS); fi
 	@ rm -rf $(FAILURES)
-	poetry run pytest tests $(PYTEST_OPTIONS)
-	poetry run coveragespace $(REPOSITORY) integration
-
-.PHONY: test-all
-test-all: install
-	@ if test -e $(FAILURES); then poetry run pytest $(PACKAGES) $(PYTEST_RERUN_OPTIONS); fi
-	@ rm -rf $(FAILURES)
-	poetry run pytest $(PACKAGES) $(PYTEST_OPTIONS)
-	poetry run coveragespace $(REPOSITORY) overall
+	$(RUN) pytest tests $(PYTEST_OPTIONS)
+	$(RUN) coveragespace $(REPOSITORY) overall
 
 .PHONY: read-coverage
 read-coverage:
@@ -115,19 +123,19 @@ docs: uml mkdocs ## Generate documentation and UML
 
 .PHONY: mkdocs
 mkdocs: install
-	@cd docs && poetry run pydocmd build
+	@cd docs && $(RUN) pydocmd build
 
 .PHONY: uml
 uml: install docs/*.png
 docs/*.png: $(MODULES)
-	poetry run pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
+	$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: mkdocs-live
 mkdocs-live: mkdocs
 	eval "sleep 3; bin/open http://127.0.0.1:8000" &
-	poetry run mkdocs serve
+	$(RUN) pydocmd serve
 
 # BUILD #######################################################################
 
@@ -144,10 +152,10 @@ $(DIST_FILES): $(MODULES) pyproject.toml
 exe: install $(EXE_FILES)
 $(EXE_FILES): $(MODULES) $(PROJECT).spec
 	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
-	poetry run pyinstaller $(PROJECT).spec --noconfirm --clean
+	$(RUN) pyinstaller $(PROJECT).spec --noconfirm --clean
 
 $(PROJECT).spec:
-	poetry run pyi-makespec $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
+	$(RUN) pyi-makespec $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
 
 # RELEASE #####################################################################
 

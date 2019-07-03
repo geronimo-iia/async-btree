@@ -3,7 +3,7 @@ analyze definition.
 
 """
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Tuple
+from typing import Any, List, NamedTuple, Tuple, no_type_check
 
 from .definition import CallableFunction, NodeMetadata
 
@@ -12,7 +12,8 @@ __all__ = ["analyze", "print_analyze", "Node"]
 
 
 class Node(NamedTuple):
-    """Node aggregate node definition:
+    """Node aggregate node definition.
+
     - name: named operation
     - properties: a list of tuple (name, value) for definition.
     - edges: a list of tuple (name, node list) for definition.
@@ -20,13 +21,16 @@ class Node(NamedTuple):
 
     name: str
     properties: List[Tuple[str, Any]]
-    edges: List[Tuple[str, List['Node']]]
+    # edges: List[Tuple[str, List['Node']]]
+    # https://github.com/python/mypy/issues/731
+    edges: List[Tuple[str, List[Any]]]
 
     def __str__(self):
         return print_analyze(a_node=self)
 
 
 # pylint: disable=protected-access
+@no_type_check  # it's a shortcut for hasattr ...
 def analyze(target: CallableFunction) -> Node:
     """Analyze specified target and return a Node representation.
 
@@ -40,16 +44,12 @@ def analyze(target: CallableFunction) -> Node:
     nonlocals = getclosurevars(target).nonlocals
 
     def _analyze_property(p):
-        """
-        Return a tuple (name, value) or (name, function name) as property
-        """
+        """Return a tuple (name, value) or (name, function name) as property."""
         value = nonlocals[p] if p in nonlocals else None
         return p, value.__name__ if value and callable(value) else value
 
     def _analyze_edges(egde_name):
-        """
-        Lookup children node from egde_name local var.
-        """
+        """Lookup children node from egde_name local var."""
         value = None
         if egde_name in nonlocals and nonlocals[egde_name]:
             edge = nonlocals[egde_name]
@@ -85,10 +85,8 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def print_analyze(a_node: Node, indent=0, label=None) -> str:
-    """
-    Print a textual representation of a Node.
-    """
+def print_analyze(a_node: Node, indent=0, label=None) -> None:
+    """Print a textual representation of a Node."""
     _ident = '    '
     _space = f'{_ident * indent} '
     if label:
@@ -104,3 +102,4 @@ def print_analyze(a_node: Node, indent=0, label=None) -> str:
         if children:
             for child in children:
                 print_analyze(a_node=child, indent=indent + 1, label=_label)
+
