@@ -40,6 +40,9 @@ curio = { version = "^0.9", optional = true }
 
 [tool.poetry.dev-dependencies]
 
+# extra
+curio = "^0.9"
+
 # Formatters
 black = "=19.3b0"
 isort = "=4.3.4"
