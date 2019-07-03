@@ -1,6 +1,4 @@
-"""
-Curiosity module define special construct with curio framework.
-"""
+"""Curiosity module define special construct with curio framework."""
 
 from typing import List
 

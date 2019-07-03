@@ -1,7 +1,4 @@
-"""
-analyze definition.
-
-"""
+"""Analyze definition."""
 from inspect import getclosurevars
 from typing import Any, List, NamedTuple, Tuple, no_type_check
 
@@ -102,4 +99,3 @@ def print_analyze(a_node: Node, indent=0, label=None) -> None:
         if children:
             for child in children:
                 print_analyze(a_node=child, indent=indent + 1, label=_label)
-

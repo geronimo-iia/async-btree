@@ -1,7 +1,5 @@
-"""
-Control function definition.
-"""
-from typing import List, Any, Optional
+"""Control function definition."""
+from typing import Any, List, Optional
 
 from .decorator import is_success
 from .definition import (

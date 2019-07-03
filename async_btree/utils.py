@@ -1,6 +1,4 @@
-"""
-Utility function.
-"""
+"""Utility function."""
 from typing import (
     Any,
     AsyncGenerator,
@@ -81,8 +79,6 @@ try:
 
 
 except Exception:  # pylint: disable=broad-except
-    # default to asyncio
-    from asyncio import run as _run
 
     def run(kernel, target, *args):
-        return run(target, *args)
+        raise RuntimeError('curio not installed!')
