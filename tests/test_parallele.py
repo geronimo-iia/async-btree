@@ -1,4 +1,4 @@
-from curio import Kernel, run, sleep
+from curio import sleep
 
 from async_btree import FAILURE, parallele
 

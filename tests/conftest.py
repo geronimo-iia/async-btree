@@ -1,10 +1,11 @@
 """Unit tests configuration file."""
 
 import logging
+
 import pytest
 from curio import Kernel
+from curio.debug import logcrash, longblock
 from curio.monitor import Monitor
-from curio.debug import longblock, logcrash
 
 
 @pytest.fixture(scope='session')

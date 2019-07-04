@@ -86,7 +86,7 @@ pylint: install
 
 .PHONY: mypy
 mypy: install
-	$(MYPI) $(PACKAGES)  --config-file=.mypy.ini
+	$(MYPI) $(PACKAGE)  --config-file=.mypy.ini
 
 .PHONY: pydocstyle
 pydocstyle: install
