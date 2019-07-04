@@ -38,10 +38,10 @@ python = "^3.7"
 # Optional dependency
 curio = { version = "^0.9", optional = true }
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.extras]
+curio = ["curio"]
 
-# extra
-curio = "^0.9"
+[tool.poetry.dev-dependencies]
 
 # Formatters
 black = "=19.3b0"
