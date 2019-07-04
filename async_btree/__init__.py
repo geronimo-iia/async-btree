@@ -64,5 +64,5 @@ __all__ = [
 
 try:
     __version__ = get_distribution('async-btree').version
-except DistributionNotFound:
+except DistributionNotFound:  # pragma: no cover
     __version__ = '(local)'

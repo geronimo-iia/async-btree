@@ -80,7 +80,7 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
             if child_result:
                 result = child_result
 
-        except Exception:  # pylint: disable=broad-except
+        except Exception:
             pass
 
         return result
@@ -106,7 +106,7 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
             if not child_result:
                 result = child_result
 
-        except Exception as e:  # pylint: disable=bare-except,broad-except
+        except Exception as e:
             result = ExceptionDecorator(e)
 
         return result
@@ -127,7 +127,7 @@ def is_success(child: CallableFunction) -> AsyncInnerFunction:
     async def _is_success():
         try:
             return SUCCESS if bool(await child()) else FAILURE
-        except Exception as e:  # pylint: disable=broad-except
+        except Exception as e:
             return ExceptionDecorator(e)
 
     return _is_success
@@ -191,7 +191,7 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
                 if result:
                     return result
 
-            except Exception as e:  # pylint: disable=broad-except
+            except Exception as e:
                 # return last failure exception
                 if (
                     not infinite_retry_condition

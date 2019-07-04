@@ -37,7 +37,7 @@ try:
         :return: an awaitable function.
 
         """
-        succes_threshold = succes_threshold if succes_threshold else len(children)
+        succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
         assert 0 <= succes_threshold <= len(children)
 
         @node_metadata(properties=['succes_threshold'])
@@ -52,7 +52,6 @@ try:
         return _parallele
 
 
-except Exception:  # pylint: disable=broad-except
-
+except Exception:  # pragma: no cover
     # default to a simple sequence
     from .control import sequence as parallele

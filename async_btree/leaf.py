@@ -25,7 +25,7 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     async def _action():
         try:
             return await target(**kwargs)
-        except Exception as e:  # pylint: disable=broad-except
+        except Exception as e:
             return ExceptionDecorator(exception=e)
 
     return _action
