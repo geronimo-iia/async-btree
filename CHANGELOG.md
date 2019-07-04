@@ -22,4 +22,6 @@
    - define 'utils' module to declare few async function like afilter, amap
    - fix flake8 syntax error
    - fix mypy typing error
+   - add basic test unit
+   - fix typing declaration
 
