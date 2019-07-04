@@ -90,7 +90,7 @@ A little note:
 > You should not use this until you're ready to think about what you're doing :)
 
 
-### a note on async framework
+### Note about 'async' framework
 
 As we use async function as underlaying mechanism to manage the execution flow, the standard library asyncio is pretty fine.
 But, (always a but somewhere isn't it...), you should read this [amazing blog post}(https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/) by Nathaniel J. Smith.
@@ -100,18 +100,6 @@ As curio say:
 > Don't Use Curio if You're Allergic to Curio
 
 Personaly, after few time of testing and reading curio code, I'm pretty addict.
-
-
-# TODO List to go away of Alpha status
-
-TODO Code:
- - module common definition (typing)
- - module of meta manipulation
- - define submodule for decorator, leaf etc
- - add more example in docs
- - ensure tests and coverage
-
-
 
 
 # Setup

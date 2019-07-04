@@ -8,17 +8,32 @@ edit_uri: https://github.com/geronimo-iia/async-btree/edit/master/docs
 theme: readthedocs
 
 generate:
-- async_btree/definiton.md:
+- async_btree/definition.md:
   - async_btree.definition+
-- async_btree/utils.md:
+- async_btree/analyze.md:
+  - async_btree.analyze+
+- async_btree/control.md:
+  - async_btree.control+
+- async_btree/decorator.md:
+  - async_btree.decorator+
+- async_btree/leaf.md:
   - async_btree.leaf+
+- async_btree/parallele.md:
+  - async_btree.parallele+
+- async_btree/utils.md:
+  - async_btree.utils+
 
 pages:
 - Home: index.md << ../README.md
-- Advanced: advanced.md
-- Async Btree:
+- Async Btree: 
+  - definiton: async_btree/definition.md
+  - analyze: async_btree/analyze.md
+  - control: async_btree/control.md
+  - decorator: async_btree/decorator.md
+  - leaf: async_btree/leaf.md
+  - parallele: async_btree/parallele.md
   - utils: async_btree/utils.md
-  - definition: async_btree/definiton.md
+
 - About:
   - Release Notes: about/changelog.md << ../CHANGELOG.md
   - Contributing: about/contributing.md << ../CONTRIBUTING.md
