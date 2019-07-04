@@ -818,8 +818,11 @@ optional = false
 python-versions = ">=2.7"
 version = "0.5.1"
 
+[extras]
+curio = ["curio"]
+
 [metadata]
-content-hash = "e873d1b9f983f3fd6c05de67ba202fa228f616c7d368db18cd3610fd6f526aea"
+content-hash = "fb5f31ed0d42fa1191ed40df4337894e2806db4e0af641c66a2dcef4c3bbd949"
 python-versions = "^3.7"
 
 [metadata.hashes]

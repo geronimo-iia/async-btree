@@ -41,11 +41,11 @@ doctor:  ## Confirm system dependencies are available
 DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
 
 .PHONY: install
-install: $(DEPENDENCIES) .cache
+install: .venv $(DEPENDENCIES) .cache 
 
 $(DEPENDENCIES): poetry.lock
-	@ poetry config settings.virtualenvs.in-project true
-	poetry install
+	@ poetry config settings.virtualenvs.in-project false
+	poetry install -E curio
 	@ touch $@
 
 poetry.lock: pyproject.toml
@@ -54,6 +54,9 @@ poetry.lock: pyproject.toml
 
 .cache:
 	@ mkdir -p .cache
+
+.venv:
+	@ mkdir -p $(VIRTUAL_ENV)
 
 # CHECKS ######################################################################
 
@@ -83,7 +86,7 @@ pylint: install
 
 .PHONY: mypy
 mypy: install
-	$(MYPI) $(PACKAGES)  --config-file=.mypy.ini
+	$(MYPI) $(PACKAGE)  --config-file=.mypy.ini
 
 .PHONY: pydocstyle
 pydocstyle: install

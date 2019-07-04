@@ -65,7 +65,7 @@ class NodeMetadata(NamedTuple):
 T = TypeVar('T', bound=CallableFunction)
 
 
-def node_metadata(  # pylint: disable=protected-access
+def node_metadata(
     name: Optional[str] = None,
     properties: Optional[List[str]] = None,
     edges: Optional[List[str]] = None,

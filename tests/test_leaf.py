@@ -1,30 +1,28 @@
-from curio import run
-
-from libellule.control_flow.leaf import action, condition
+from async_btree import action, condition
 
 
-def test_condition():
+def test_condition(kernel):
     async def target_test(value):
         return value
 
-    assert run(
+    assert kernel.run(
         condition(target_test, value=True)
     )  # pylint: disable=unexpected-keyword-arg
 
-    assert not run(
+    assert not kernel.run(
         condition(target_test, value=False)
     )  # pylint: disable=unexpected-keyword-arg
 
 
-def test_action_with_exception_is_falsy():
+def test_action_with_exception_is_falsy(kernel):
     async def generate_exception():
         raise Exception("Bing!")
 
-    assert not run(action(generate_exception))
+    assert not kernel.run(action(generate_exception))
 
 
-def test_action_results():
+def test_action_results(kernel):
     async def compute(a, b):
         return a + b
 
-    assert run(action(compute, a=1, b=1)) == 2
+    assert kernel.run(action(compute, a=1, b=1)) == 2

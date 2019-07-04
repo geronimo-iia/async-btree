@@ -36,7 +36,7 @@ def sequence(
     :param succes_threshold: succes threshold value
     :return: an awaitable function.
     """
-    succes_threshold = succes_threshold if succes_threshold else len(children)
+    succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
     assert 0 <= succes_threshold <= len(children)
     failure_threshold = len(children) - succes_threshold + 1
 
@@ -49,7 +49,7 @@ def sequence(
         for child in children:
             try:
                 last_result = await child()
-            except Exception as e:  # pylint: disable=broad-except
+            except Exception as e:
                 last_result = ExceptionDecorator(e)
 
             results.append(last_result)
@@ -136,7 +136,7 @@ def repeat_until(
             try:
                 result = await child()
 
-            except Exception as e:  # pylint: disable=broad-except
+            except Exception as e:
                 result = ExceptionDecorator(e)
 
         return result

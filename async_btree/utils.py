@@ -68,7 +68,6 @@ async def afilter(
                 yield item
 
 
-# pylint: disable=unused-import
 try:
     import curio  # noqa: F401
     from contextvars import copy_context
@@ -78,7 +77,7 @@ try:
         return copy_context().run(kernel.run, target, *args)
 
 
-except Exception:  # pylint: disable=broad-except
+except Exception:  # pragma: no cover
 
     def run(kernel, target, *args):
         raise RuntimeError('curio not installed!')
