@@ -20,7 +20,7 @@ from async_btree import (
 
 
 async def a_func():
-    return "a"
+    return 'a'
 
 
 async def failure_func():
@@ -39,39 +39,26 @@ async def empty_func():
     return []
 
 
-counter = ContextVar("counter", default=5)
-
-
-async def tick():
-    value = counter.get()
-    counter.set(value - 1)
-    if value <= 0:
-        return SUCCESS
-    if value == 3:
-        raise RuntimeError("3")
-    return FAILURE
-
-
 def test_root_name(kernel):
-    rooted = alias(child=a_func, name="a_func")
-    assert rooted.__node_metadata.name == "a_func"
-    assert kernel.run(rooted) == "a"
+    rooted = alias(child=a_func, name='a_func')
+    assert rooted.__node_metadata.name == 'a_func'
+    assert kernel.run(rooted) == 'a'
 
 
 def test_decorate(kernel):
-    async def b_decorator(child_value, other=""):
-        return f"b{child_value}{other}"
+    async def b_decorator(child_value, other=''):
+        return f'b{child_value}{other}'
 
-    assert kernel.run(decorate(a_func, b_decorator)) == "ba"
+    assert kernel.run(decorate(a_func, b_decorator)) == 'ba'
 
-    assert kernel.run(decorate(a_func, b_decorator, other="c")) == "bac"
+    assert kernel.run(decorate(a_func, b_decorator, other='c')) == 'bac'
 
 
 def test_always_success(kernel):
     assert kernel.run(always_success(success_func)) == SUCCESS
     assert kernel.run(always_success(failure_func)) == SUCCESS
     assert kernel.run(always_success(exception_func)) == SUCCESS
-    assert kernel.run(always_success(a_func)) == "a"
+    assert kernel.run(always_success(a_func)) == 'a'
 
 
 def test_always_failure(kernel):
@@ -109,6 +96,17 @@ def test_inverter(kernel):
 
 def test_retry(kernel):
 
+    counter = ContextVar('counter_test_retry', default=5)
+
+    async def tick():
+        value = counter.get()
+        counter.set(value - 1)
+        if value <= 0:
+            return SUCCESS
+        if value == 3:
+            raise RuntimeError('3')
+        return FAILURE
+
     result = kernel.run(retry(tick))
     assert not result
     assert isinstance(result, ExceptionDecorator)
@@ -122,10 +120,32 @@ def test_retry(kernel):
 
 
 def test_retry_until_success(kernel):
+    counter = ContextVar('counter_test_retry_until_success', default=5)
+
+    async def tick():
+        value = counter.get()
+        counter.set(value - 1)
+        if value <= 0:
+            return SUCCESS
+        if value == 3:
+            raise RuntimeError('3')
+        return FAILURE
+
     counter.set(100)
     assert kernel.run(retry_until_success(tick))
 
 
 def test_retry_until_failed(kernel):
+    counter = ContextVar('counter_test_retry_until_failed', default=5)
+
+    async def tick():
+        value = counter.get()
+        counter.set(value - 1)
+        if value <= 0:
+            return SUCCESS
+        if value == 3:
+            raise RuntimeError('3')
+        return FAILURE
+
     counter.set(100)
     assert kernel.run(retry_until_failed(tick))
