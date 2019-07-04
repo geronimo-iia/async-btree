@@ -1,6 +1,19 @@
 """Unit tests configuration file."""
 
 import logging
+import pytest
+from curio import Kernel
+from curio.monitor import Monitor
+from curio.debug import longblock, logcrash
+
+
+@pytest.fixture(scope='session')
+def kernel(request):
+    k = Kernel(debug=[longblock, logcrash])
+    m = Monitor(k)
+    request.addfinalizer(lambda: k.run(shutdown=True))
+    request.addfinalizer(m.close)
+    return k
 
 
 def pytest_configure(config):
@@ -10,3 +23,8 @@ def pytest_configure(config):
 
     terminal = config.pluginmanager.getplugin('terminal')
     terminal.TerminalReporter.showfspath = False
+
+
+def run(corofunc, *args):
+
+    kernel().run(corofunc, *args)
