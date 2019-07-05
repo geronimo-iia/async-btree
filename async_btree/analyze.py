@@ -5,7 +5,7 @@ from typing import Any, List, NamedTuple, Tuple, no_type_check
 from .definition import CallableFunction, NodeMetadata
 
 
-__all__ = ["analyze", "print_analyze", "Node"]
+__all__ = ["analyze", "stringify_analyze", "Node"]
 
 
 class Node(NamedTuple):
@@ -23,7 +23,7 @@ class Node(NamedTuple):
     edges: List[Tuple[str, List[Any]]]
 
     def __str__(self):
-        return print_analyze(a_node=self)
+        return stringify_analyze(a_node=self)
 
 
 # pylint: disable=protected-access
@@ -82,20 +82,24 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def print_analyze(a_node: Node, indent=0, label=None) -> None:
+def stringify_analyze(a_node: Node, indent=0, label=None) -> str:
     """Print a textual representation of a Node."""
     _ident = '    '
     _space = f'{_ident * indent} '
+    result: str = ''
     if label:
-        print(f"{_space}--({label})--> {a_node.name}:")
+        result += f'{_space}--({label})--> {a_node.name}:\n'
         _space += f"{_ident}{' ' * len(label)}"
     else:
-        print(f"{_space}--> {a_node.name}:")
+        result += f'{_space}--> {a_node.name}:\n'
 
     for k, v in a_node.properties:
-        print(f"{_space}    {k}: {v}")
+        result += f'{_space}    {k}: {v}\n'
 
     for _label, children in a_node.edges:
         if children:
             for child in children:
-                print_analyze(a_node=child, indent=indent + 1, label=_label)
+                result += stringify_analyze(
+                    a_node=child, indent=indent + 1, label=_label
+                )
+    return result
