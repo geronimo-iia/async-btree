@@ -1,5 +1,5 @@
 
-# 0.1.0 (YYYY-MM-DD) In Progress
+# 0.1.0 (2019-07-05)
 
 - Added Project Management: 
 - initial project structure based on [jacebrowning/template-python](https://github.com/jacebrowning/template-python)
