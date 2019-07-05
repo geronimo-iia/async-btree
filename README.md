@@ -6,7 +6,6 @@ Alpha Status (project and code refactorisation)
 
 
 [![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
-[![Windows Build Status](https://img.shields.io/appveyor/ci/geronimo-iia/async-btree/master.svg?label=window)](https://ci.appveyor.com/project/geronimo-iia/async-btree)
 [![Coverage Status](https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg)](https://coveralls.io/r/geronimo-iia/async-btree)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/geronimo-iia/async-btree.svg)](https://scrutinizer-ci.com/g/geronimo-iia/async-btree/?branch=master)
 [![PyPI Version](https://img.shields.io/pypi/v/async-btree.svg)](https://pypi.org/project/async-btree)

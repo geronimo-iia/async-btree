@@ -24,4 +24,5 @@
     - fix mypy typing error
     - add basic test unit
     - fix typing declaration
+    - complete code coverage
 
