@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "0.1.0"
+version = "0.1.2"
 description = "Async behavior tree"
 
 license = "MIT"
@@ -18,7 +18,7 @@ keywords = ["behavior-tree", "asyncio"]
 
 classifiers = [
     # update this list to match your application: https://pypi.org/pypi?%3Aaction=list_classifiers
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Framework :: AsyncIO",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
