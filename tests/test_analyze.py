@@ -1,16 +1,18 @@
 from contextvars import ContextVar
+
 import pytest
+
 from async_btree import (
-    repeat_until,
-    alias,
-    retry,
-    analyze,
-    stringify_analyze,
     action,
+    alias,
+    analyze,
     inverter,
-    Node,
+    repeat_until,
+    retry,
     sequence,
+    stringify_analyze,
 )
+
 
 max_n = ContextVar("max_n", default=5)
 
@@ -45,7 +47,7 @@ def test_analyze_tree_1():
 
     a_tree_1 = analyze(tree_1)
 
-    printed_tree = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> action:\n                      target: hello\n"""
+    printed_tree = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> action:\n                      target: hello\n"""  # noqa: E501, B950
     assert stringify_analyze(a_tree_1) == printed_tree
 
 
@@ -53,7 +55,7 @@ def test_analyze_tree_2():
     tree_2 = retry(child=inverter(child=action(hello)), max_retry=10)
     a_tree_2 = analyze(tree_2)
 
-    printed_tree = """ --> retry:\n     max_retry: 10\n     --(child)--> inverter:\n         --(child)--> action:\n                      target: hello\n"""
+    printed_tree = """ --> retry:\n     max_retry: 10\n     --(child)--> inverter:\n         --(child)--> action:\n                      target: hello\n"""  # noqa: E501, B950
 
     assert stringify_analyze(a_tree_2) == printed_tree
 
@@ -84,5 +86,5 @@ def test_analyze_sequence():
             name="btree_1",
         )
     )
-    print_test = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> sequence:\n                      succes_threshold: 3\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n"""
+    print_test = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> sequence:\n                      succes_threshold: 3\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n"""  # noqa: E501, B950
     assert stringify_analyze(a_tree) == print_test
