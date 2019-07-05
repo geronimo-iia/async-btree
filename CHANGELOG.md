@@ -1,4 +1,8 @@
 
+# 0.1.1 (2019-07-05)
+
+- Stable version flag
+
 # 0.1.0 (2019-07-05)
 
 - Added Project Management: 
