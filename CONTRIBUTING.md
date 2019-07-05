@@ -7,8 +7,18 @@
     * Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
     * Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
 * Pyenv: [https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/pyenv#installation)
-* Python: `$ pyenv install`
+* Python: `$ pyenv install 3.7.3`
+
+  Note for [MacOS 10.14 user](https://github.com/pyenv/pyenv/issues/544):
+  ```bash
+    SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk MACOSX_DEPLOYMENT_TARGET=10.14 pyenv install 3.7.3
+  ```
 * Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
+
+  Note:
+  ```bash
+  poetry config settings.virtualenvs.path "${HOME}/.virtualenvs"
+  ```
 * Graphviz:
     * macOS: `$ brew install graphviz`
     * Linux: [https://graphviz.org/download](https://graphviz.org/download/)
