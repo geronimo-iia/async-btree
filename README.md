@@ -19,10 +19,12 @@ Versions following [Semantic Versioning](https://semver.org/)
 > -- <cite>[behaviortree](https://www.behaviortree.dev/bt_basics/)</cite>
 
 If your new (or not) about behavior tree, you could spend some time on this few links:
+
 - [Behavior trees for AI: How they work](https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php) by Chris Simpson
 - [Introduction to BTs](https://www.behaviortree.dev/bt_basics/)
 
 Few implementation libraries:
+
 - [task_behavior_engine](https://github.com/ToyotaResearchInstitute/task_behavior_engine) A behavior tree based task engine written in Python
 - [pi_trees](https://github.com/pirobot/pi_trees/) a Python/ROS library for implementing Behavior Trees
 - [pr_behavior_tree](https://github.com/personalrobotics/pr_behavior_tree) A simple python behavior tree library based on coroutines
@@ -38,10 +40,11 @@ All complexity came with internal state management, using tree of blackboard to 
 This break the simplicity and beauty of your initial design.
 
 What I find usefull with behavior tree:
- - clarity of expression
- - node tree representation
- - possibility to reuse behavior
- - add external measure to dynamicaly change a behavior, a first step on observable pattern...
+
+- clarity of expression
+- node tree representation
+- possibility to reuse behavior
+- add external measure to dynamicaly change a behavior, a first step on observable pattern...
 
 As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of functionnal programming to obtain what I want: add metadata on a sematic construction, deal with closure, use function in parameters or in return value...
 
@@ -49,9 +52,10 @@ And a last reason, more personal, it that i would explore python expressivity.
 
 So, in this module, I purpose you to use the concept of coroutines, and their mecanisms to manage the execution flow.
 By this way:
- - we reuse simple language idiom to manage state, parameter, etc
- - no design constraint on action implementation
- - most of language build block could be reused
+
+- we reuse simple language idiom to manage state, parameter, etc
+- no design constraint on action implementation
+- most of language build block could be reused
 
 You could build expression like this:
 

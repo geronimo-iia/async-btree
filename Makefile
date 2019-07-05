@@ -127,6 +127,8 @@ docs: uml mkdocs ## Generate documentation and UML
 .PHONY: mkdocs
 mkdocs: install
 	@cd docs && $(RUN) pydocmd build
+	# pydocmd only move md files
+	@mv -f docs/packages.png docs/_build/site/overview/packages.png
 
 .PHONY: uml
 uml: install docs/*.png
