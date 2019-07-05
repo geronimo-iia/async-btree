@@ -1,6 +1,6 @@
 from pkg_resources import DistributionNotFound, get_distribution
 
-from .analyze import Node, analyze, print_analyze
+from .analyze import Node, analyze, stringify_analyze
 from .control import decision, fallback, repeat_until, selector, sequence
 from .decorator import (
     alias,
@@ -31,7 +31,7 @@ from .utils import afilter, amap, run
 __all__ = [
     'Node',
     'analyze',
-    'print_analyze',
+    'stringify_analyze',
     'decision',
     'fallback',
     'repeat_until',
