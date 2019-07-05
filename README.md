@@ -2,8 +2,6 @@
 
 Async behavior tree for python
 
-Alpha Status (project and code refactorisation)
-
 
 [![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
 [![Coverage Status](https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg)](https://coveralls.io/r/geronimo-iia/async-btree)
