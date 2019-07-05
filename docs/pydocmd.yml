@@ -25,8 +25,9 @@ generate:
 
 pages:
 - Home: index.md << ../README.md
-- Async Btree: 
-  - definiton: async_btree/definition.md
+- Async Btree:
+  - overview: overview.md << ./overview.md
+  - definition: async_btree/definition.md
   - analyze: async_btree/analyze.md
   - control: async_btree/control.md
   - decorator: async_btree/decorator.md
@@ -42,7 +43,7 @@ pages:
 
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
-#docs_dir: docs
+docs_dir: docs
 gens_dir: _build/pydocmd
 site_dir: _build/site
 markdown_extensions:
