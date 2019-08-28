@@ -35,7 +35,7 @@ def analyze(target: CallableFunction) -> Node:
     - target (CallableFunction): async function to analyze
 
     # Returns
-    (Node) a defintion
+    (Node) a definition
     """
 
     nonlocals = getclosurevars(target).nonlocals
@@ -82,21 +82,28 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def stringify_analyze(a_node: Node, indent=0, label=None) -> str:
-    """Print a textual representation of a Node."""
+def stringify_analyze(target: Node, indent=0, label=None) -> str:
+    """Stringify node representation of specified target.
+
+     # Parameters
+    - target (CallableFunction): async function to analyze
+
+    # Returns
+    (str) a string node representation
+    """
     _ident = '    '
     _space = f'{_ident * indent} '
     result: str = ''
     if label:
-        result += f'{_space}--({label})--> {a_node.name}:\n'
+        result += f'{_space}--({label})--> {target.name}:\n'
         _space += f"{_ident}{' ' * len(label)}"
     else:
-        result += f'{_space}--> {a_node.name}:\n'
+        result += f'{_space}--> {target.name}:\n'
 
-    for k, v in a_node.properties:
+    for k, v in target.properties:
         result += f'{_space}    {k}: {v}\n'
 
-    for _label, children in a_node.edges:
+    for _label, children in target.edges:
         if children:
             for child in children:
                 result += stringify_analyze(
