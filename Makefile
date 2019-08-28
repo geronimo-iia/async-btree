@@ -127,13 +127,14 @@ docs: uml mkdocs ## Generate documentation and UML
 .PHONY: mkdocs
 mkdocs: install
 	@cd docs && $(RUN) pydocmd build
-	# pydocmd only move md files
-	@mv -f docs/packages.png docs/_build/site/overview/packages.png
+	@# pydocmd only move md files
+	@cp -f docs/packages.png docs/_build/site/overview/packages.png
 
 .PHONY: uml
 uml: install docs/*.png
+
 docs/*.png: $(MODULES)
-	$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
+	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
