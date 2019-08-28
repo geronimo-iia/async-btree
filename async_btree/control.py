@@ -17,7 +17,7 @@ __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 def sequence(
     children: List[CallableFunction], succes_threshold: int = -1
 ) -> AsyncInnerFunction:
-    """Returns a function which execute children in sequence.
+    """Return a function which execute children in sequence.
 
     succes_threshold parameter generalize traditional sequence/fallback and
     must be in [0, len(children)]. Default value is (-1) means len(children)
