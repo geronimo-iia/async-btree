@@ -167,15 +167,15 @@ Analyze specified target and return a Node representation.</p>
 <p><code class="codehilite"><span class="p">(</span><span class="n">Node</span><span class="p">)</span></code>: a node instance representation of target function</p>
 <h1 id="async_btree.stringify_analyze">stringify_analyze</h1>
 
-<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">async_btree</span><span class="o">.</span><span class="n">analyze</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">async_btree</span><span class="o">.</span><span class="n">analyze</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </pre></div>
 </td></tr></table>
 Stringify node representation of specified target.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><strong>target (CallableFunction)</strong>: async function to analyze</li>
-<li><strong>ident (int)</strong>: level identation (default to zero)</li>
-<li><strong>label (str)</strong>: label of current node (default None)</li>
+<li><strong>indent (int)</strong>: level identation (default to zero)</li>
+<li><strong>label (Optional[str])</strong>: label of current node (default None)</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p><code class="codehilite"><span class="p">(</span><span class="n">str</span><span class="p">)</span></code>: a string node representation</p>

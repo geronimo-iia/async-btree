@@ -160,7 +160,7 @@
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">]],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
-Returns a function which execute children in sequence.</p>
+Return a function which execute children in sequence.</p>
 <p>succes_threshold parameter generalize traditional sequence/fallback and
 must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 <p>if <code class="codehilite"><span class="n">success</span></code> = succes_threshold, return a success</p>
