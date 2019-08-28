@@ -32,7 +32,7 @@ class Node(NamedTuple):
     edges: List[Tuple[str, List[Any]]]
 
     def __str__(self):
-        return stringify_analyze(a_node=self)
+        return stringify_analyze(target=self)
 
 
 # pylint: disable=protected-access
@@ -118,6 +118,6 @@ def stringify_analyze(target: Node, indent: int = 0, label: str = None) -> str:
         if children:
             for child in children:
                 result += stringify_analyze(
-                    a_node=child, indent=indent + 1, label=_label
+                    target=child, indent=indent + 1, label=_label
                 )
     return result
