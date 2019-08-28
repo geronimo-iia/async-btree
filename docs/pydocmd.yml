@@ -37,7 +37,6 @@ pages:
 
 - About:
   - Release Notes: about/changelog.md << ../CHANGELOG.md
-  - Contributing: about/contributing.md << ../CONTRIBUTING.md
   - License: about/license.md << ../LICENSE.md
   - Code of Conduct: about/code_of_conduct.md << ../CODE_OF_CONDUCT.md
 
