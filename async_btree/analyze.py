@@ -1,6 +1,6 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Tuple, no_type_check
+from typing import Any, List, NamedTuple, Tuple, no_type_check, Optional
 
 from .definition import CallableFunction, NodeMetadata
 
@@ -91,13 +91,15 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def stringify_analyze(target: Node, indent: int = 0, label: str = None) -> str:
+def stringify_analyze(
+    target: Node, indent: int = 0, label: Optional[str] = None
+) -> str:
     """Stringify node representation of specified target.
 
     # Parameters
     target (CallableFunction): async function to analyze
-    ident (int): level identation (default to zero)
-    label (str): label of current node (default None)
+    indent (int): level identation (default to zero)
+    label (Optional[str]): label of current node (default None)
 
     # Returns
     (str): a string node representation
