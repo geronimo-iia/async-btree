@@ -1,3 +1,0 @@
-
-
-![Packages](packages.png)
