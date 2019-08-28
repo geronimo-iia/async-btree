@@ -2,8 +2,8 @@ site_name: async-btree
 site_description: Async behavior tree
 site_author: Jerome Guibert
 
+site_url: https://geronimo-iia.github.io/async-btree/
 repo_url: https://github.com/geronimo-iia/async-btree
-edit_uri: https://github.com/geronimo-iia/async-btree/edit/master/docs
 
 theme: readthedocs
 
@@ -37,15 +37,14 @@ pages:
 
 - About:
   - Release Notes: about/changelog.md << ../CHANGELOG.md
-  - Contributing: about/contributing.md << ../CONTRIBUTING.md
   - License: about/license.md << ../LICENSE.md
   - Code of Conduct: about/code_of_conduct.md << ../CODE_OF_CONDUCT.md
 
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
-docs_dir: docs
+#docs_dir: docs-source
 gens_dir: _build/pydocmd
-site_dir: _build/site
+#site_dir: ../docs
 markdown_extensions:
   - codehilite:
       linenums: true

@@ -121,21 +121,29 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
+DOC_PATHS = ./docs
+
 .PHONY: docs
-docs: uml mkdocs ## Generate documentation and UML
+docs: clean-docs uml mkdocs ## Generate documentation and UML
+
+.PHONY: clean-docs
+clean-docs:
+	@rm -rf $(DOC_PATHS)/*
+	@mkdir -p $(DOC_PATHS)
+	@mkdir -p $(DOC_PATHS)/uml
 
 .PHONY: mkdocs
 mkdocs: install
-	@cd docs && $(RUN) pydocmd build
-	# pydocmd only move md files
-	@mv -f docs/packages.png docs/_build/site/overview/packages.png
+	@cd docs-source && $(RUN) pydocmd build
+	@mv docs-source/_build/site/* ./docs
 
 .PHONY: uml
 uml: install docs/*.png
+
 docs/*.png: $(MODULES)
-	$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png docs/classes.png
-	- mv -f packages_$(PACKAGE).png docs/packages.png
+	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
+	- mv -f classes_$(PACKAGE).png docs/uml/classes.png
+	- mv -f packages_$(PACKAGE).png docs/uml/packages.png
 
 .PHONY: mkdocs-live
 mkdocs-live: mkdocs
