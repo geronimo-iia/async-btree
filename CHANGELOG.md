@@ -1,8 +1,19 @@
+# 1.0.0 (2019-08-28)
+
+- rework documentation build process (see docs-source folder)
+- configure github page under master/docs
+- configure documentation site on pypi
+- add doc style on all function 
+- standardize parameter name
 
 # 0.1.2 (2019-07-05)
 
 - Stable version flag
 - Remove alpha note
+
+# 0.1.1 (2019-07-05)
+
+Removed version due to configuration error.
 
 # 0.1.0 (2019-07-05)
 

@@ -21,20 +21,21 @@ try:
     def parallele(
         children: List[CallableFunction], succes_threshold: int = -1
     ) -> AsyncInnerFunction:
-        """
-        Return an awaitable function which run children in parallele.
+        """Return an awaitable function which run children in parallele.
 
-        succes_threshold generalize traditional sequence/fallback.
-        succes_threshold must be in [0, len(children)],
-            default value is len(children)
+        `succes_threshold` parameter generalize traditional sequence/fallback,
+        and must be in [0, len(children)], default value is len(children)
 
         if #success = succes_threshold, return a success
 
         if #failure = len(children) - succes_threshold, return a failure
 
-        :param children: list of Awaitable
-        :param succes_threshold: succes threshold value
-        :return: an awaitable function.
+        # Parameters
+        children (List[CallableFunction]): list of Awaitable
+        succes_threshold (int): succes threshold value, default len(children)
+
+        # Returns
+        (AsyncInnerFunction): an awaitable function.
 
         """
         succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
