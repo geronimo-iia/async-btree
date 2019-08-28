@@ -1,3 +1,0 @@
-
-
-![Packages](../uml/packages.png)

@@ -1,3 +1,8 @@
+# 1.0.0 (2019-08-28)
+
+- rework documentation build process (see docs-source folder)
+- configure github page under master/docs
+- configure documentation site on pypi 
 
 # 0.1.2 (2019-07-05)
 

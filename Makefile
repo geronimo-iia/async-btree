@@ -2,6 +2,7 @@
 PROJECT := async-btree
 PACKAGE := async_btree
 REPOSITORY := geronimo-iia/async-btree
+DOC_PATHS = ./docs
 
 # Project paths
 PACKAGES := $(PACKAGE) tests
@@ -121,16 +122,8 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
-DOC_PATHS = ./docs
-
 .PHONY: docs
-docs: clean-docs uml mkdocs ## Generate documentation and UML
-
-.PHONY: clean-docs
-clean-docs:
-	@rm -rf $(DOC_PATHS)/*
-	@mkdir -p $(DOC_PATHS)
-	@mkdir -p $(DOC_PATHS)/uml
+docs: .clean-docs uml mkdocs ## Generate documentation and UML
 
 .PHONY: mkdocs
 mkdocs: install
@@ -141,6 +134,7 @@ mkdocs: install
 uml: install docs/*.png
 
 docs/*.png: $(MODULES)
+	@mkdir -p $(DOC_PATHS)/uml
 	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/uml/classes.png
 	- mv -f packages_$(PACKAGE).png docs/uml/packages.png
@@ -198,7 +192,8 @@ clean-all: clean
 
 .PHONY: .clean-docs
 .clean-docs:
-	rm -rf docs/*.png site
+	rm -rf docs/* docs-source/_build
+
 
 .PHONY: .clean-build
 .clean-build:
