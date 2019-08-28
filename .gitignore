@@ -16,8 +16,7 @@ Icon*
 *.pid
 
 # Generated documentation
-/docs/*.png
-/docs/_build
+/docs-source/_build
 
 # Google Drive
 *.gdoc
