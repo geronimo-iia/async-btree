@@ -14,7 +14,7 @@ class Node(NamedTuple):
     # Attributes
     name (str): named operation
     properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
-    edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for 
+    edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for
         definition.
 
     # Notes
