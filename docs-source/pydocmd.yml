@@ -12,7 +12,9 @@ generate:
 - async_btree/definition.md:
   - async_btree.definition+
 - async_btree/analyze.md:
-  - async_btree.analyze+
+  - async_btree.analyze
+  - async_btree.stringify_analyze
+  - async_btree.Node
 - async_btree/control.md:
   - async_btree.control+
 - async_btree/decorator.md:
@@ -26,7 +28,7 @@ generate:
 
 pages:
 - Home: index.md << ../README.md
-- Async Btree:
+- Async Btree API:
   - packages: packages.md << ./packages.md
   - definition: async_btree/definition.md
   - analyze: async_btree/analyze.md

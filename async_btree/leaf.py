@@ -16,9 +16,13 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     """Declare an action leaf.
 
     Action is an awaitable closure of specified function.
-    :param target: awaitable function
-    :param kwargs: optional kwargs argument to pass on target function
-    :return: an awaitable function.
+
+    # Parameters
+    target (CallableFunction): awaitable function
+    kwargs: optional kwargs argument to pass on target function
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(properties=['target'])
@@ -35,14 +39,14 @@ def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     """Declare a condition leaf.
 
     Condition is an awaitable closure of specified function.
-    :param target: awaitable function which be evaluated as True/False.
-    :param kwargs: optional kwargs argument to pass on target function
-    :return: an awaitable function.
-    """
 
-    # @node_metadata(properties=["target"])
-    # async def _condition():
-    #    return is_success(child=action(target=target, *args, **kwargs))()
+    # Parameters
+    target (CallableFunction):  awaitable function which be evaluated as True/False.
+    kwargs: optional kwargs argument to pass on target function
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
+    """
 
     return node_metadata(name='condition', properties=['target'])(
         is_success(action(target=target, **kwargs))

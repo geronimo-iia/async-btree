@@ -9,11 +9,20 @@ __all__ = ["analyze", "stringify_analyze", "Node"]
 
 
 class Node(NamedTuple):
-    """Node aggregate node definition.
+    """Node aggregate node definition implemented with NamedTuple.
 
-    - name: named operation
-    - properties: a list of tuple (name, value) for definition.
-    - edges: a list of tuple (name, node list) for definition.
+    # Attributes
+    name (str): named operation
+    properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
+    edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for 
+        definition.
+
+    # Notes
+
+    Edges attribut should be edges: ```List[Tuple[str, List['Node']]]```
+
+    But it is impossible for now, see
+    [mypy issues 731](https://github.com/python/mypy/issues/731)
     """
 
     name: str
@@ -32,10 +41,10 @@ def analyze(target: CallableFunction) -> Node:
     """Analyze specified target and return a Node representation.
 
     # Parameters
-    - target (CallableFunction): async function to analyze
+    target (CallableFunction): async function to analyze
 
     # Returns
-    (Node) a definition
+    (Node): a node instance representation of target function
     """
 
     nonlocals = getclosurevars(target).nonlocals
@@ -82,14 +91,16 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def stringify_analyze(target: Node, indent=0, label=None) -> str:
+def stringify_analyze(target: Node, indent: int = 0, label: str = None) -> str:
     """Stringify node representation of specified target.
 
-     # Parameters
-    - target (CallableFunction): async function to analyze
+    # Parameters
+    target (CallableFunction): async function to analyze
+    ident (int): level identation (default to zero)
+    label (str): label of current node (default None)
 
     # Returns
-    (str) a string node representation
+    (str): a string node representation
     """
     _ident = '    '
     _space = f'{_ident * indent} '

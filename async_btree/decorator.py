@@ -28,9 +28,12 @@ __all__ = [
 def alias(child: CallableFunction, name: str) -> AsyncInnerFunction:
     """Define an alias on our child.
 
-    :param child: child function to decorate
-    :param name: name of function tree
-    :return: an Awaitable function.
+    # Parameters
+    child (CallableFunction): child function to decorate
+    name (str): name of function tree
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(name=name)
@@ -50,9 +53,14 @@ def decorate(
 
     This method implement a simple lazy evaluation.
 
-    :param child: child function to decorate
-    :param decorator: awaitable target decorator
-    :return: an Awaitable function which return decorator evaluation against child.
+    # Parameters
+    child (CallableFunction): child function to decorate
+    decorator (CallableFunction): awaitable target decorator
+    kwargs: optional keyed argument to pass to decorator function
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which
+        return decorator evaluation against child.
     """
 
     @node_metadata(properties=['decorator'])
@@ -65,8 +73,11 @@ def decorate(
 def always_success(child: CallableFunction) -> AsyncInnerFunction:
     """Create a node which always return SUCCESS value.
 
-    :param child: child function to decorate
-    :return: an Awaitable function which return child result if is truthy
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which return child result if is truthy
         else SUCCESS (Any exception will be ignored).
 
     """
@@ -91,8 +102,11 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
 def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitable:
     """Produce a function which always return FAILURE value.
 
-    :param child: child function to decorate
-    :return: an Awaitable function which return child result if is falsy
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which return child result if is falsy
         else FAILURE, or a ControlFlowException if error occurs.
 
     """
@@ -117,9 +131,12 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
 def is_success(child: CallableFunction) -> AsyncInnerFunction:
     """Create a conditional node which test if child success.
 
-    :param child: child function to decorate
-    :return: an Awaitable function which return SUCCESS if child return SUCCESS
-        else FAILURE.
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which return SUCCESS if child
+        return SUCCESS else FAILURE.
         An exception will be evaluated as falsy.
     """
 
@@ -136,9 +153,12 @@ def is_success(child: CallableFunction) -> AsyncInnerFunction:
 def is_failure(child: CallableFunction) -> AsyncInnerFunction:
     """Create a conditional node which test if child fail.
 
-    :param child: child function to decorate
-    :return:  an Awaitable function which return SUCCESS if child return FAILURE
-        else FAILURE.
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which return SUCCESS if child
+        return FAILURE else FAILURE.
         An exception will be evaluated as a success.
     """
 
@@ -155,9 +175,12 @@ def is_failure(child: CallableFunction) -> AsyncInnerFunction:
 def inverter(child: CallableFunction) -> AsyncInnerFunction:
     """Invert node status.
 
-    :param child: child function to decorate
-    :return: an Awaitable function which return SUCCESS if child return FAILURE
-        else FAILURE
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which return SUCCESS if child
+        return FAILURE else SUCCESS
     """
 
     @node_metadata()
@@ -170,11 +193,13 @@ def inverter(child: CallableFunction) -> AsyncInnerFunction:
 def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
     """Retry child evaluation at most max_retry time on failure until child succeed.
 
-    :param child: child function to decorate
-    :param max_retry: max retry count (default 3), -1 mean infinite retry
+    # Parameters
+    child (CallableFunction): child function to decorate
+    max_retry (int): max retry count (default 3), -1 mean infinite retry
 
-    :return: an Awaitable function which retry child evaluation at most max_retry time
-        on failure until child succeed.
+    # Returns
+    (AsyncInnerFunction): an awaitable function which retry child evaluation
+        at most max_retry time on failure until child succeed.
         If max_retry is reached, returns FAILURE or last exception.
     """
     assert max_retry > 0 or max_retry == -1
@@ -209,8 +234,12 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
 def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
     """Retry child until success.
 
-    :param child: child function to decorate
-    :return: an Awaitable function which try to evaluate child until it succeed.
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which try to evaluate child
+        until it succeed.
     """
 
     # @node_metadata()
@@ -223,8 +252,12 @@ def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
 def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
     """Retry child until failed.
 
-    :param child: child function to decorate
-    :return: an Awaitable function which try to evaluate child until it failed.
+    # Parameters
+    child (CallableFunction): child function to decorate
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function which try to evaluate child
+        until it failed.
     """
 
     return node_metadata(name='retry_until_failed')(

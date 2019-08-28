@@ -1,4 +1,18 @@
-"""Common definition."""
+"""Common definition.
+
+## CallableFunction Type
+
+Specify something callable with or without async:
+
+```CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]```
+
+## AsyncInnerFunction Type
+
+Function signature of async function implementation:
+
+```Callable[[], Awaitable[Any]]```
+
+"""
 # from collections import namedtuple
 from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union
 
@@ -52,9 +66,9 @@ class NodeMetadata(NamedTuple):
     """NodeMetadata is our node definition.
 
     # Attributes
-    - name (str): named operation
-    - properties (List[str]): a list of property name.
-    - edges (List[str]): a list of member name which act as edges.
+    name (str): named operation
+    properties (List[str]): a list of property name.
+    edges (List[str]): a list of member name which act as edges.
     """
 
     name: str
