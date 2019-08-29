@@ -1,5 +1,7 @@
 from contextvars import ContextVar
 
+import pytest
+
 from async_btree import (
     FAILURE,
     SUCCESS,
@@ -55,6 +57,12 @@ def test_sequence(kernel):
     )
 
     assert not kernel.run(sequence(children=[]))
+    # negative
+    with pytest.raises(AssertionError):
+        sequence(children=[exception_func, failure_func], succes_threshold=-2)
+    # upper than len children
+    with pytest.raises(AssertionError):
+        sequence(children=[exception_func, failure_func], succes_threshold=3)
 
 
 def test_fallback(kernel):

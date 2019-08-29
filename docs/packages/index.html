@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>overview - async-btree</title>
+  <title>packages - async-btree</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "overview";
-    var mkdocs_page_input_path = "overview.md";
+    var mkdocs_page_name = "packages";
+    var mkdocs_page_input_path = "packages.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -55,13 +55,16 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Async Btree</span>
+    <span class="caption-text">Async Btree API</span>
     <ul class="subnav">
                 <li class=" current">
                     
-    <a class="current" href="./">overview</a>
+    <a class="current" href="./">packages</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#package-overview">Package Overview</a></li>
+    
+
     </ul>
                 </li>
                 <li class="">
@@ -136,14 +139,14 @@
     
       
         
-          <li>Async Btree &raquo;</li>
+          <li>Async Btree API &raquo;</li>
         
       
     
-    <li>overview</li>
+    <li>packages</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/geronimo-iia/async-btree/edit/master/docs/overview.md"
+        <a href="https://github.com/geronimo-iia/async-btree/edit/master/docs/packages.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -153,7 +156,18 @@
           <div role="main">
             <div class="section">
               
-                <p><img alt="Packages" src="../uml/packages.png" /></p>
+                <h1 id="package-overview">Package Overview</h1>
+<p><img alt="Packages" src="../uml/packages.png" /></p>
+<p>We define several packages:</p>
+<ul>
+<li><a href="../async_btree/definition/">definition</a>: common model definition</li>
+<li><a href="../async_btree/leaf/">leaf</a>: leaf node implementation</li>
+<li><a href="../async_btree/decorator/">decorator</a>: decorator node implementation</li>
+<li><a href="../async_btree/control/">control</a>: control node implementation</li>
+<li><a href="../async_btree/parallele/">parallele</a>: a specific parallele node implementation with curio</li>
+<li><a href="../async_btree/analyze/">analyze</a>: analyze function to dynamically analyze behaviour tree</li>
+<li><a href="../async_btree/utils/">utils</a>: few async function implementation to hide complexity</li>
+</ul>
               
             </div>
           </div>

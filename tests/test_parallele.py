@@ -1,3 +1,4 @@
+import pytest
 from curio import sleep
 
 from async_btree import FAILURE, parallele
@@ -25,3 +26,9 @@ def test_parallele(kernel):
     assert kernel.run(
         parallele(children=[a_func, b_func, failure_func], succes_threshold=2)
     )
+    # negative
+    with pytest.raises(AssertionError):
+        parallele(children=[a_func, b_func, failure_func], succes_threshold=-2)
+    # upper than len children
+    with pytest.raises(AssertionError):
+        parallele(children=[a_func, b_func, failure_func], succes_threshold=4)

@@ -1,6 +1,6 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Tuple, no_type_check
+from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
 
 from .definition import CallableFunction, NodeMetadata
 
@@ -9,11 +9,20 @@ __all__ = ["analyze", "stringify_analyze", "Node"]
 
 
 class Node(NamedTuple):
-    """Node aggregate node definition.
+    """Node aggregate node definition implemented with NamedTuple.
 
-    - name: named operation
-    - properties: a list of tuple (name, value) for definition.
-    - edges: a list of tuple (name, node list) for definition.
+    # Attributes
+    name (str): named operation
+    properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
+    edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for
+        definition.
+
+    # Notes
+
+    Edges attribut should be edges: ```List[Tuple[str, List['Node']]]```
+
+    But it is impossible for now, see
+    [mypy issues 731](https://github.com/python/mypy/issues/731)
     """
 
     name: str
@@ -23,7 +32,7 @@ class Node(NamedTuple):
     edges: List[Tuple[str, List[Any]]]
 
     def __str__(self):
-        return stringify_analyze(a_node=self)
+        return stringify_analyze(target=self)
 
 
 # pylint: disable=protected-access
@@ -32,10 +41,10 @@ def analyze(target: CallableFunction) -> Node:
     """Analyze specified target and return a Node representation.
 
     # Parameters
-    - target (CallableFunction): async function to analyze
+    target (CallableFunction): async function to analyze
 
     # Returns
-    (Node) a defintion
+    (Node): a node instance representation of target function
     """
 
     nonlocals = getclosurevars(target).nonlocals
@@ -82,24 +91,35 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def stringify_analyze(a_node: Node, indent=0, label=None) -> str:
-    """Print a textual representation of a Node."""
+def stringify_analyze(
+    target: Node, indent: int = 0, label: Optional[str] = None
+) -> str:
+    """Stringify node representation of specified target.
+
+    # Parameters
+    target (CallableFunction): async function to analyze
+    indent (int): level identation (default to zero)
+    label (Optional[str]): label of current node (default None)
+
+    # Returns
+    (str): a string node representation
+    """
     _ident = '    '
     _space = f'{_ident * indent} '
     result: str = ''
     if label:
-        result += f'{_space}--({label})--> {a_node.name}:\n'
+        result += f'{_space}--({label})--> {target.name}:\n'
         _space += f"{_ident}{' ' * len(label)}"
     else:
-        result += f'{_space}--> {a_node.name}:\n'
+        result += f'{_space}--> {target.name}:\n'
 
-    for k, v in a_node.properties:
+    for k, v in target.properties:
         result += f'{_space}    {k}: {v}\n'
 
-    for _label, children in a_node.edges:
+    for _label, children in target.edges:
         if children:
             for child in children:
                 result += stringify_analyze(
-                    a_node=child, indent=indent + 1, label=_label
+                    target=child, indent=indent + 1, label=_label
                 )
     return result

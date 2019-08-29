@@ -118,6 +118,10 @@ def test_retry(kernel):
     counter.set(100)
     assert kernel.run(retry(tick, max_retry=-1))
 
+    # negative
+    with pytest.raises(AssertionError):
+        retry(tick, max_retry=-2)
+
 
 def test_retry_until_success(kernel):
     counter = ContextVar('counter_test_retry_until_success', default=5)

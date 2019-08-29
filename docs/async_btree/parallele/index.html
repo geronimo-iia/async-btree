@@ -55,11 +55,11 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Async Btree</span>
+    <span class="caption-text">Async Btree API</span>
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../overview/">overview</a>
+    <a class="" href="../../packages/">packages</a>
                 </li>
                 <li class="">
                     
@@ -136,7 +136,7 @@
     
       
         
-          <li>Async Btree &raquo;</li>
+          <li>Async Btree API &raquo;</li>
         
       
     
@@ -155,19 +155,21 @@
               
                 <h1 id="async_btree.parallele">parallele</h1>
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">parallele</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">]],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
+<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">parallele</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">]],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
-
-<p>Return an awaitable function which run children in parallele.</p>
-<p>succes_threshold generalize traditional sequence/fallback.
-succes_threshold must be in [0, len(children)],
-    default value is len(children)</p>
+Return an awaitable function which run children in parallele.</p>
+<p><code class="codehilite"><span class="n">succes_threshold</span></code> parameter generalize traditional sequence/fallback,
+and must be in [0, len(children)], default value is len(children)</p>
 <p>if <code class="codehilite"><span class="n">success</span></code> = succes_threshold, return a success</p>
 <p>if <code class="codehilite"><span class="n">failure</span></code> = len(children) - succes_threshold, return a failure</p>
-<p>:param children: list of Awaitable
-:param succes_threshold: succes threshold value
-:return: an awaitable function.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>children (List[CallableFunction])</strong>: list of Awaitable</li>
+<li><strong>succes_threshold (int)</strong>: succes threshold value, default len(children)</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function.</p>
               
             </div>
           </div>

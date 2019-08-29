@@ -55,11 +55,11 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Async Btree</span>
+    <span class="caption-text">Async Btree API</span>
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../overview/">overview</a>
+    <a class="" href="../../packages/">packages</a>
                 </li>
                 <li class="">
                     
@@ -136,7 +136,7 @@
     
       
         
-          <li>Async Btree &raquo;</li>
+          <li>Async Btree API &raquo;</li>
         
       
     
@@ -161,9 +161,13 @@
 </pre></div>
 </td></tr></table>
 Define an alias on our child.</p>
-<p>:param child: child function to decorate
-:param name: name of function tree
-:return: an Awaitable function.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+<li><strong>name (str)</strong>: name of function tree</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function.</p>
 <h2 id="async_btree.decorator.decorate">decorate</h2>
 
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">decorate</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">],</span> <span class="n">decorator</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
@@ -173,17 +177,27 @@ Create a decorator.</p>
 <p>Post process a child with specified decorator function.
 First argument of decorator function must be a child.</p>
 <p>This method implement a simple lazy evaluation.</p>
-<p>:param child: child function to decorate
-:param decorator: awaitable target decorator
-:return: an Awaitable function which return decorator evaluation against child.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+<li><strong>decorator (CallableFunction)</strong>: awaitable target decorator</li>
+<li><strong>kwargs</strong>: optional keyed argument to pass to decorator function</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which
+    return decorator evaluation against child.</p>
 <h2 id="async_btree.decorator.always_success">always_success</h2>
 
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
 Create a node which always return SUCCESS value.</p>
-<p>:param child: child function to decorate
-:return: an Awaitable function which return child result if is truthy
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which return child result if is truthy
     else SUCCESS (Any exception will be ignored).</p>
 <h2 id="async_btree.decorator.always_failure">always_failure</h2>
 
@@ -191,8 +205,12 @@ Create a node which always return SUCCESS value.</p>
 </pre></div>
 </td></tr></table>
 Produce a function which always return FAILURE value.</p>
-<p>:param child: child function to decorate
-:return: an Awaitable function which return child result if is falsy
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which return child result if is falsy
     else FAILURE, or a ControlFlowException if error occurs.</p>
 <h2 id="async_btree.decorator.is_success">is_success</h2>
 
@@ -200,9 +218,13 @@ Produce a function which always return FAILURE value.</p>
 </pre></div>
 </td></tr></table>
 Create a conditional node which test if child success.</p>
-<p>:param child: child function to decorate
-:return: an Awaitable function which return SUCCESS if child return SUCCESS
-    else FAILURE.
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which return SUCCESS if child
+    return SUCCESS else FAILURE.
     An exception will be evaluated as falsy.</p>
 <h2 id="async_btree.decorator.is_failure">is_failure</h2>
 
@@ -210,9 +232,13 @@ Create a conditional node which test if child success.</p>
 </pre></div>
 </td></tr></table>
 Create a conditional node which test if child fail.</p>
-<p>:param child: child function to decorate
-:return:  an Awaitable function which return SUCCESS if child return FAILURE
-    else FAILURE.
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which return SUCCESS if child
+    return FAILURE else FAILURE.
     An exception will be evaluated as a success.</p>
 <h2 id="async_btree.decorator.inverter">inverter</h2>
 
@@ -220,19 +246,27 @@ Create a conditional node which test if child fail.</p>
 </pre></div>
 </td></tr></table>
 Invert node status.</p>
-<p>:param child: child function to decorate
-:return: an Awaitable function which return SUCCESS if child return FAILURE
-    else FAILURE</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which return SUCCESS if child
+    return FAILURE else SUCCESS</p>
 <h2 id="async_btree.decorator.retry">retry</h2>
 
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">retry</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">],</span> <span class="n">max_retry</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
 Retry child evaluation at most max_retry time on failure until child succeed.</p>
-<p>:param child: child function to decorate
-:param max_retry: max retry count (default 3), -1 mean infinite retry</p>
-<p>:return: an Awaitable function which retry child evaluation at most max_retry time
-    on failure until child succeed.
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+<li><strong>max_retry (int)</strong>: max retry count (default 3), -1 mean infinite retry</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which retry child evaluation
+    at most max_retry time on failure until child succeed.
     If max_retry is reached, returns FAILURE or last exception.</p>
 <h2 id="async_btree.decorator.retry_until_success">retry_until_success</h2>
 
@@ -240,16 +274,26 @@ Retry child evaluation at most max_retry time on failure until child succeed.</p
 </pre></div>
 </td></tr></table>
 Retry child until success.</p>
-<p>:param child: child function to decorate
-:return: an Awaitable function which try to evaluate child until it succeed.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which try to evaluate child
+    until it succeed.</p>
 <h2 id="async_btree.decorator.retry_until_failed">retry_until_failed</h2>
 
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">retry_until_failed</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
 Retry child until failed.</p>
-<p>:param child: child function to decorate
-:return: an Awaitable function which try to evaluate child until it failed.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>child (CallableFunction)</strong>: child function to decorate</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function which try to evaluate child
+    until it failed.</p>
               
             </div>
           </div>

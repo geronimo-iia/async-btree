@@ -55,11 +55,11 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Async Btree</span>
+    <span class="caption-text">Async Btree API</span>
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../overview/">overview</a>
+    <a class="" href="../../packages/">packages</a>
                 </li>
                 <li class="">
                     
@@ -136,7 +136,7 @@
     
       
         
-          <li>Async Btree &raquo;</li>
+          <li>Async Btree API &raquo;</li>
         
       
     
@@ -161,20 +161,28 @@
 </pre></div>
 </td></tr></table>
 Declare an action leaf.</p>
-<p>Action is an awaitable closure of specified function.
-:param target: awaitable function
-:param kwargs: optional kwargs argument to pass on target function
-:return: an awaitable function.</p>
+<p>Action is an awaitable closure of specified function.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>target (CallableFunction)</strong>: awaitable function</li>
+<li><strong>kwargs</strong>: optional kwargs argument to pass on target function</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function.</p>
 <h2 id="async_btree.leaf.condition">condition</h2>
 
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">condition</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
 Declare a condition leaf.</p>
-<p>Condition is an awaitable closure of specified function.
-:param target: awaitable function which be evaluated as True/False.
-:param kwargs: optional kwargs argument to pass on target function
-:return: an awaitable function.</p>
+<p>Condition is an awaitable closure of specified function.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>target (CallableFunction)</strong>:  awaitable function which be evaluated as True/False.</li>
+<li><strong>kwargs</strong>: optional kwargs argument to pass on target function</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function.</p>
               
             </div>
           </div>

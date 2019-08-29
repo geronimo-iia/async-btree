@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "0.1.2"
+version = "1.0.0"
 description = "Async behavior tree"
 
 license = "MIT"
@@ -11,7 +11,7 @@ authors = ["Jerome Guibert <jguibert@gmail.com>"]
 readme = "README.md"
 
 homepage = "https://pypi.org/project/async_btree"
-documentation = "https://async_btree.readthedocs.io"
+documentation = "https://geronimo-iia.github.io/async-btree/"
 repository = "https://github.com/geronimo-iia/async-btree"
 
 keywords = ["behavior-tree", "asyncio"]
@@ -76,6 +76,7 @@ coveragespace = "*"
 
 # Documentation
 pydoc-markdown = "2.0.5"
+pymdown-extensions = "6.0"
 pygments = "*"
 
 # Tooling

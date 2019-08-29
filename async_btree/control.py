@@ -17,12 +17,10 @@ __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 def sequence(
     children: List[CallableFunction], succes_threshold: int = -1
 ) -> AsyncInnerFunction:
-    """
-    'sequence' return a function which execute children in sequence.
+    """Return a function which execute children in sequence.
 
-    succes_threshold generalize traditional sequence/fallback.
-    succes_threshold must be in [0, len(children)],
-        is default value is (-1) means len(children)
+    succes_threshold parameter generalize traditional sequence/fallback and
+    must be in [0, len(children)]. Default value is (-1) means len(children)
 
     if #success = succes_threshold, return a success
 
@@ -32,12 +30,20 @@ def sequence(
      - an array of previous result when success
      - last failure when fail
 
-    :param children: list of Awaitable
-    :param succes_threshold: succes threshold value
-    :return: an awaitable function.
+    # Parameters
+    children (List[CallableFunction]): list of Awaitable
+    succes_threshold (int): succes threshold value
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
+
+    # Exceptions:
+        AssertionError if succes_threshold is invalid
     """
     succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
-    assert 0 <= succes_threshold <= len(children)
+    if not (0 <= succes_threshold <= len(children)):
+        raise AssertionError('succes_threshold')
+
     failure_threshold = len(children) - succes_threshold + 1
 
     @node_metadata(properties=['succes_threshold'])
@@ -76,13 +82,12 @@ def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
     Often named 'selector', children can be seen as an ordered list
         starting from higthest priority to lowest priority.
 
-    :param children: list of Awaitable
-    :return: an awaitable function.
-    """
+    # Parameters
+    children (List[CallableFunction]): list of Awaitable
 
-    # @node_metadata()
-    # async def _fallback():
-    #    return sequence(children, succes_threshold=1)()
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
+    """
 
     return node_metadata(name='fallback')(
         sequence(children, succes_threshold=min(1, len(children)))
@@ -101,11 +106,15 @@ def decision(
 ) -> AsyncInnerFunction:
     """Create a decision node.
 
-    :param condition: awaitable condition
-    :param success_tree: awaitable success tree which be evaluated if cond is Truthy
-    :param failure_tree: awaitable failure tree  which be evaluated if cond is Falsy
-        (None per default)
-    :return: an awaitable function.
+    # Parameters
+    condition (CallableFunction): awaitable condition
+    success_tree (CallableFunction): awaitable success tree which be
+        evaluated if cond is Truthy
+    failure_tree (CallableFunction): awaitable failure tree which be
+        evaluated if cond is Falsy (None per default)
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(edges=['condition', 'success_tree', 'failure_tree'])
@@ -123,9 +132,13 @@ def repeat_until(
     """Repeat child evaluation until condition is truthy.
 
     Return last child evaluation or FAILURE if no evaluation occurs.
-    :param condition: awaitable condition
-    :param child: awaitable child
-    :return: an awaitable function.
+
+    # Parameters
+    condition (CallableFunction): awaitable condition
+    child (CallableFunction): awaitable child
+
+    # Returns
+    (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(edges=['condition', 'child'])
