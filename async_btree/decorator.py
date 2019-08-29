@@ -92,7 +92,7 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
                 result = child_result
 
         except Exception:
-            pass
+            return result
 
         return result
 
