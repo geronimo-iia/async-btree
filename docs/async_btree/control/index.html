@@ -175,6 +175,11 @@ must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 </ul>
 <p><strong>Returns</strong></p>
 <p><code class="codehilite"><span class="p">(</span><span class="n">AsyncInnerFunction</span><span class="p">)</span></code>: an awaitable function.</p>
+<p><strong>Exceptions:</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">AssertionError</span> <span class="k">if</span> <span class="nv">succes_threshold</span> <span class="nv">is</span> <span class="nv">invalid</span>
+</pre></div>
+</td></tr></table>
+
 <h2 id="async_btree.control.fallback">fallback</h2>
 
 <p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">fallback</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>

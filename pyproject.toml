@@ -76,7 +76,8 @@ coveragespace = "*"
 
 # Documentation
 pydoc-markdown = "2.0.5"
-pygments = "*"
+pymdown-extensions = "*"
+pygments = "6.0"
 
 # Tooling
 pyinstaller = "*"
