@@ -39,7 +39,8 @@ try:
 
         """
         succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
-        assert 0 <= succes_threshold <= len(children)
+        if not (0 <= succes_threshold <= len(children)):
+            raise AssertionError('succes_threshold')
 
         @node_metadata(properties=['succes_threshold'])
         async def _parallele():

@@ -202,7 +202,8 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
         at most max_retry time on failure until child succeed.
         If max_retry is reached, returns FAILURE or last exception.
     """
-    assert max_retry > 0 or max_retry == -1
+    if not (max_retry > 0 or max_retry == -1):
+        raise AssertionError('max_retry')
 
     @node_metadata(properties=['max_retry'])
     async def _retry():

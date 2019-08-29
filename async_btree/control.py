@@ -36,9 +36,14 @@ def sequence(
 
     # Returns
     (AsyncInnerFunction): an awaitable function.
+
+    # Exceptions:
+        AssertionError if succes_threshold is invalid
     """
     succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
-    assert 0 <= succes_threshold <= len(children)
+    if not (0 <= succes_threshold <= len(children)):
+        raise AssertionError('succes_threshold')
+
     failure_threshold = len(children) - succes_threshold + 1
 
     @node_metadata(properties=['succes_threshold'])
