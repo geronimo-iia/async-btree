@@ -874,7 +874,7 @@ testing = ["pathlib2", "contextlib2", "unittest2"]
 curio = ["curio"]
 
 [metadata]
-content-hash = "6c8d1fc75cd5a99708eee3e1078f6381d1b09419b5cbbcb2764d1a23a6754ed4"
+content-hash = "37282921d6408b745ddec5f7d47a44de111cb50a0f6347116efcb45f14a56e8b"
 python-versions = "^3.7"
 
 [metadata.hashes]

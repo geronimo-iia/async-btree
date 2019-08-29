@@ -211,11 +211,9 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
         infinite_retry_condition = max_retry == -1
         result: Any = FAILURE
 
-        while infinite_retry_condition or retry_count < max_retry:
+        while not result and (infinite_retry_condition or retry_count < max_retry):
             try:
                 result = await child()
-                if result:
-                    return result
 
             except Exception as e:
                 # return last failure exception
@@ -224,8 +222,7 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
                 ):  # avoid data allocation if never returned
                     result = ExceptionDecorator(e)
 
-            if not infinite_retry_condition:  # avoid overflow
-                retry_count += 1
+            retry_count += 1
 
         return result
 
