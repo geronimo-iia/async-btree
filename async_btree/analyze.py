@@ -1,6 +1,6 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Tuple, no_type_check, Optional
+from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
 
 from .definition import CallableFunction, NodeMetadata
 
