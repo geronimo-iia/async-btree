@@ -5,6 +5,7 @@
 - configure documentation site on pypi
 - add doc style on all function 
 - standardize parameter name
+- fix dev documentation dependency
 
 # 0.1.2 (2019-07-05)
 
