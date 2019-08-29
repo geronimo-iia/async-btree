@@ -4,7 +4,7 @@ site_author: Jerome Guibert
 
 site_url: https://geronimo-iia.github.io/async-btree/
 repo_url: https://github.com/geronimo-iia/async-btree
-edit_url: https://github.com/geronimo-iia/async-btree
+edit_uri: ''
 
 theme: readthedocs
 
