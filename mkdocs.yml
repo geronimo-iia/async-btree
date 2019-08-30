@@ -29,21 +29,21 @@ theme:
     tabs: false
 
 nav:
-- Home: README.md
+- Home: _build/README.md
 - Async Btree API:
-  - packages: async_btree/packages.md
-  - definition: async_btree/definition.md
-  - analyze: async_btree/analyze.md
-  - control: async_btree/control.md
-  - decorator: async_btree/decorator.md
-  - leaf: async_btree/leaf.md
-  - parallele: async_btree/parallele.md
-  - utils: async_btree/utils.md
+  - packages: packages.md
+  - definition: _build/async_btree/definition.md
+  - analyze: _build/async_btree/analyze.md
+  - control: _build/async_btree/control.md
+  - decorator: _build/async_btree/decorator.md
+  - leaf: _build/async_btree/leaf.md
+  - parallele: _build/async_btree/parallele.md
+  - utils: _build/async_btree/utils.md
 - About:
   - Contributing: contributing.md
-  - Release Notes: CHANGELOG.md
-  - License: LICENSE.md
-  - Code of Conduct: CODE_OF_CONDUCT.md
+  - Release Notes: _build/CHANGELOG.md
+  - License: _build/LICENSE.md
+  - Code of Conduct: _build/CODE_OF_CONDUCT.md
 
 # Customization
 extra:

@@ -2,7 +2,6 @@
 PROJECT := async-btree
 PACKAGE := async_btree
 REPOSITORY := geronimo-iia/async-btree
-DOC_PATHS = ./docs
 
 # Project paths
 PACKAGES := $(PACKAGE) tests
@@ -126,25 +125,26 @@ read-coverage:
 docs: uml pydocmd mkdocs ## Generate documentation and UML
 
 mkdocs: install
-	@cp *.md docs-source/
+	@mkdir -p docs-source/_build
+	@cp *.md docs-source/_build
 	@$(RUN) mkdocs build
 
 pydocmd: install $(MODULES) ## Auto generate Api Doc
-	@mkdir -p docs-source/async_btree
-	@cd docs-source && \
-		$(RUN) pydocmd simple async_btree.definition+ > async_btree/definition.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > async_btree/analyze.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.control+ > async_btree/control.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.decorator+ > async_btree/decorator.md  && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.leaf+ > async_btree/leaf.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.parallele+ > async_btree/parallele.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.utils+ > async_btree/utils.md
+	@mkdir -p docs-source/_build/async_btree
+	@cd docs-source/_build/async_btree && \
+		$(RUN) pydocmd simple async_btree.definition+ > definition.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > analyze.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.control+ > control.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.decorator+ > decorator.md  && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.leaf+ > leaf.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.parallele+ > parallele.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.utils+ > utils.md
 
 uml: $(MODULES)
-	@mkdir -p docs-source/uml
+	@mkdir -p docs-source/_build/uml
 	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png docs-source/uml/classes.png
-	- mv -f packages_$(PACKAGE).png docs-source/uml/packages.png
+	- mv -f classes_$(PACKAGE).png docs-source/_build/uml/classes.png
+	- mv -f packages_$(PACKAGE).png docs-source/_build/uml/packages.png
 
 
 # BUILD #######################################################################
