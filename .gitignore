@@ -42,3 +42,5 @@ Icon*
 .idea/
 .vscode
 .history
+
+.DS_Store

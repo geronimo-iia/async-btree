@@ -65,10 +65,11 @@ class ExceptionDecorator(Exception):
 class NodeMetadata(NamedTuple):
     """NodeMetadata is our node definition.
 
-    # Attributes
+    # Attributes:
     name (str): named operation
     properties (List[str]): a list of property name.
     edges (List[str]): a list of member name which act as edges.
+
     """
 
     name: str
@@ -88,14 +89,16 @@ def node_metadata(
 
     We add a property on decorated function named '__node_metadata'.
 
-    # Parameters
+    # Parameters:
     name (Optional[str]): override name of decorated function,
         default is function name left striped with '_'
     properties (Optional[List[str]]): a list of property name ([] as default)
-    edges (Optional[List[str]]): a list of edges name (["child", "children"] as default)
+    edges (Optional[List[str]]): a list of edges name
+        (["child", "children"] as default)
 
-    # Returns
-    the decorator function
+    # Returns:
+        the decorator function
+
     """
 
     def decorate_function(function: T) -> T:

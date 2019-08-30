@@ -1,63 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/packages/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/definition/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/analyze/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/control/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/decorator/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/leaf/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/parallele/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/async_btree/utils/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/contributing/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/CHANGELOG/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-08-29</lastmod>
+     <loc>https://geronimo-iia.github.io/async-btree/LICENSE/</loc>
+     <lastmod>2019-08-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://geronimo-iia.github.io/async-btree/CODE_OF_CONDUCT/</loc>
+     <lastmod>2019-08-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

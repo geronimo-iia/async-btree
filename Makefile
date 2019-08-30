@@ -123,26 +123,29 @@ read-coverage:
 # DOCUMENTATION ###############################################################
 
 .PHONY: docs
-docs: .clean-docs uml mkdocs ## Generate documentation and UML
+docs: uml pydocmd mkdocs ## Generate documentation and UML
 
-.PHONY: mkdocs
 mkdocs: install
-	@cd docs-source && $(RUN) pydocmd build
-	@mv docs-source/_build/site/* ./docs
+	@cp *.md docs-source/
+	@$(RUN) mkdocs build
 
-.PHONY: uml
-uml: install docs/*.png
+pydocmd: install $(MODULES) ## Auto generate Api Doc
+	@mkdir -p docs-source/async_btree
+	@cd docs-source && \
+		$(RUN) pydocmd simple async_btree.definition+ > async_btree/definition.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > async_btree/analyze.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.control+ > async_btree/control.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.decorator+ > async_btree/decorator.md  && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.leaf+ > async_btree/leaf.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.parallele+ > async_btree/parallele.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.utils+ > async_btree/utils.md
 
-docs/*.png: $(MODULES)
-	@mkdir -p $(DOC_PATHS)/uml
+uml: $(MODULES)
+	@mkdir -p docs-source/uml
 	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png docs/uml/classes.png
-	- mv -f packages_$(PACKAGE).png docs/uml/packages.png
+	- mv -f classes_$(PACKAGE).png docs-source/uml/classes.png
+	- mv -f packages_$(PACKAGE).png docs-source/uml/packages.png
 
-.PHONY: mkdocs-live
-mkdocs-live: mkdocs
-	eval "sleep 3; bin/open http://127.0.0.1:8000" &
-	$(RUN) pydocmd serve
 
 # BUILD #######################################################################
 
