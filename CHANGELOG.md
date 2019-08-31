@@ -1,6 +1,6 @@
 # 1.0.0 (2019-08-28)
 
-- rework documentation build process (see docs-source folder)
+- rework documentation build process (see mkdocs folder)
 - configure github page under master/docs
 - configure documentation site on pypi
 - add doc style on all function 
