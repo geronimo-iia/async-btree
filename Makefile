@@ -123,13 +123,13 @@ read-coverage:
 
 DOCS_PATH = "mkdocs/docs"
 
-mkdocs-uml:
+mkdocs-uml: ## Generate UML Diagram
 	@mkdir -p $(DOCS_PATH)/uml
 	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png $(DOCS_PATH)/uml/classes.png
 	- mv -f packages_$(PACKAGE).png $(DOCS_PATH)/uml/packages.png
 
-mkdocs-api:
+mkdocs-api: ## Generate API documentation
 	@mkdir -p $(DOCS_PATH)/api
 	@cd $(DOCS_PATH)/api && \
 		$(RUN) pydocmd simple async_btree.definition+ > definition.md && \
@@ -140,12 +140,15 @@ mkdocs-api:
 		$(RUN) pydocmd simple async_btree.analyze async_btree.parallele+ > parallele.md && \
 		$(RUN) pydocmd simple async_btree.analyze async_btree.utils+ > utils.md
 
-
-mkdocs-md:
+mkdocs-md: ## Copy standard document
 	@cp -f README.md $(DOCS_PATH)/index.md
 	@cp -f LICENSE.md $(DOCS_PATH)/license.md
 	@cp -f CHANGELOG.md $(DOCS_PATH)/changelog.md
 	@cp -f CODE_OF_CONDUCT.md $(DOCS_PATH)/code_of_conduct.md
+
+
+mkdocs-site: mkdocs-uml mkdocs-api mkdocs-md ## Build Documentation Site
+	@cd mkdocs && $(RUN) mkdocs build
 
 
 .PHONY: docs
