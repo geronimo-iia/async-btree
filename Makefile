@@ -130,11 +130,11 @@ mkdocs-api: # Generate API documentation
 	@cd $(DOCS_PATH)/api && \
 		$(RUN) pydocmd simple async_btree.definition+ > definition.md && \
 		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > analyze.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.control+ > control.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.decorator+ > decorator.md  && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.leaf+ > leaf.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.parallele+ > parallele.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.utils+ > utils.md
+		$(RUN) pydocmd simple async_btree.control+ > control.md && \
+		$(RUN) pydocmd simple async_btree.decorator+ > decorator.md  && \
+		$(RUN) pydocmd simple async_btree.leaf+ > leaf.md && \
+		$(RUN) pydocmd simple async_btree.parallele+ > parallele.md && \
+		$(RUN) pydocmd simple async_btree.utils+ > utils.md
 
 mkdocs-md: # Copy standard document
 	@cp -f README.md $(DOCS_PATH)/index.md

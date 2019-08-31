@@ -21,6 +21,9 @@ async def amap(
 ) -> AsyncGenerator[T, None]:
     """Map an async function onto an iterable or an async iterable.
 
+    This simplify writing of mapping a function on something iterable
+    between 'async for ...' and 'for...' .
+
     # Parameters
     corofunc (Callable[[Any], Awaitable[T]]): coroutine function
     iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
@@ -45,6 +48,9 @@ async def afilter(
     corofunc: Callable[[Any], Awaitable[bool]], iterable: Union[AsyncIterable, Iterable]
 ) -> AsyncGenerator[T, None]:
     """Filter an iterable or an async iterable with an async function.
+
+    This simplify writing of filtering by a function on something iterable
+    between 'async for ...' and 'for...' .
 
     # Parameters
     corofunc (Callable[[Any], Awaitable[bool]]): filter async function
@@ -73,7 +79,15 @@ try:
     from contextvars import copy_context
 
     def run(kernel, target, *args):
-        """Curio run with independent contextvars."""
+        """Curio run with independent contextvars.
+
+        This mimic asyncio framework behaviour.
+
+        ```
+        copy_context().run(kernel.run, target, *args)
+        ```
+
+        """
         return copy_context().run(kernel.run, target, *args)
 
 

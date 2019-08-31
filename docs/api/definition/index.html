@@ -587,7 +587,7 @@
 <p><code>CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]</code></p>
 <h2 id="asyncinnerfunction-type">AsyncInnerFunction Type<a class="headerlink" href="#asyncinnerfunction-type" title="Permanent link">&para;</a></h2>
 <p>Function signature of async function implementation:</p>
-<p><code>Callable[[], Awaitable[Any]]</code></p>
+<p><code>AsyncInnerFunction = Callable[[], Awaitable[Any]]</code></p>
 <h2 id="exceptiondecorator">ExceptionDecorator<a class="headerlink" href="#exceptiondecorator" title="Permanent link">&para;</a></h2>
 <p><div class="codehilite"><pre><span></span><span class="n">ExceptionDecorator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span>
 </pre></div>
@@ -598,24 +598,30 @@ This permit to return exception as a 'FAILURE' status.</p>
 <p><div class="codehilite"><pre><span></span><span class="n">NodeMetadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 NodeMetadata is our node definition.</p>
-<p><strong>Attributes:</strong></p>
-<p>name (str): named operation
-properties (List[str]): a list of property name.
-edges (List[str]): a list of member name which act as edges.</p>
+<p>A NodeMetadata is used to keep information on name, properties name, and relations ship
+name between a hierachical construct of functions.</p>
+<p>This permit us to print or analyze all information of a behaviour tree.</p>
+<p><strong>Attributes</strong></p>
+<ul>
+<li><code>name (str)</code>: named operation</li>
+<li><code>properties (List[str])</code>: a list of property name (an int value, ...).</li>
+<li><code>edges (List[str])</code>: a list of member name which act as edges (a child, ...).</li>
+</ul>
 <h2 id="node_metadata">node_metadata<a class="headerlink" href="#node_metadata" title="Permanent link">&para;</a></h2>
 <p><div class="codehilite"><pre><span></span><span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span>
 </pre></div>
 'node_metadata' is a function decorator which add meta information about node.</p>
 <p>We add a property on decorated function named '__node_metadata'.</p>
-<p><strong>Parameters:</strong></p>
-<p>name (Optional[str]): override name of decorated function,
-    default is function name left striped with '_'
-properties (Optional[List[str]]): a list of property name ([] as default)
-edges (Optional[List[str]]): a list of edges name
-    (["child", "children"] as default)</p>
-<p><strong>Returns:</strong></p>
-<div class="codehilite"><pre><span></span>the decorator function
-</pre></div>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong>name (Optional[str])</strong>: override name of decorated function,
+    default is function name left striped with '_'</li>
+<li><strong>properties (Optional[List[str]])</strong>: a list of property name ([] as default)</li>
+<li><strong>edges (Optional[List[str]])</strong>: a list of edges name
+    (["child", "children"] as default)</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>the decorator function</p>
                 
                   
                 

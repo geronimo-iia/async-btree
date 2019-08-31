@@ -10,7 +10,7 @@ Specify something callable with or without async:
 
 Function signature of async function implementation:
 
-```Callable[[], Awaitable[Any]]```
+```AsyncInnerFunction = Callable[[], Awaitable[Any]]```
 
 """
 # from collections import namedtuple
@@ -65,10 +65,15 @@ class ExceptionDecorator(Exception):
 class NodeMetadata(NamedTuple):
     """NodeMetadata is our node definition.
 
-    # Attributes:
+    A NodeMetadata is used to keep information on name, properties name, and relations ship
+    name between a hierachical construct of functions.
+
+    This permit us to print or analyze all information of a behaviour tree.
+
+    # Attributes
     name (str): named operation
-    properties (List[str]): a list of property name.
-    edges (List[str]): a list of member name which act as edges.
+    properties (List[str]): a list of property name (an int value, ...).
+    edges (List[str]): a list of member name which act as edges (a child, ...).
 
     """
 
@@ -89,15 +94,15 @@ def node_metadata(
 
     We add a property on decorated function named '__node_metadata'.
 
-    # Parameters:
+    # Parameters
     name (Optional[str]): override name of decorated function,
         default is function name left striped with '_'
     properties (Optional[List[str]]): a list of property name ([] as default)
     edges (Optional[List[str]]): a list of edges name
         (["child", "children"] as default)
 
-    # Returns:
-        the decorator function
+    # Returns
+    the decorator function
 
     """
 

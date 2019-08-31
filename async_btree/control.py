@@ -37,8 +37,8 @@ def sequence(
     # Returns
     (AsyncInnerFunction): an awaitable function.
 
-    # Exceptions:
-        AssertionError if succes_threshold is invalid
+    # Exceptions
+    AssertionError if succes_threshold is invalid
     """
     succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
     if not (0 <= succes_threshold <= len(children)):
