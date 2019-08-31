@@ -121,6 +121,33 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
+DOCS_PATH = "mkdocs/docs"
+
+mkdocs-uml:
+	@mkdir -p $(DOCS_PATH)/uml
+	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
+	- mv -f classes_$(PACKAGE).png $(DOCS_PATH)/uml/classes.png
+	- mv -f packages_$(PACKAGE).png $(DOCS_PATH)/uml/packages.png
+
+mkdocs-api:
+	@mkdir -p $(DOCS_PATH)/api
+	@cd $(DOCS_PATH)/api && \
+		$(RUN) pydocmd simple async_btree.definition+ > definition.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > analyze.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.control+ > control.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.decorator+ > decorator.md  && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.leaf+ > leaf.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.parallele+ > parallele.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.utils+ > utils.md
+
+
+mkdocs-md:
+	@cp -f README.md $(DOCS_PATH)/index.md
+	@cp -f LICENSE.md $(DOCS_PATH)/license.md
+	@cp -f CHANGELOG.md $(DOCS_PATH)/changelog.md
+	@cp -f CODE_OF_CONDUCT.md $(DOCS_PATH)/code_of_conduct.md
+
+
 .PHONY: docs
 docs: uml pydocmd mkdocs ## Generate documentation and UML
 
