@@ -138,7 +138,7 @@ $ python
 >>> async_btree.__version__
 ```
 
-See [Api documentation](https://geronimo-iia.github.io/async-btree/api)
+See [Api documentation](https://geronimo-iia.github.io/async-btree/api-overview)
 
 ## License
 
@@ -148,3 +148,9 @@ See [Api documentation](https://geronimo-iia.github.io/async-btree/api)
 ## Contributing
 
 See [Contributing](https://geronimo-iia.github.io/async-btree/contributing)
+
+## TODO
+
+- add examples
+- publish release V1.0.0
+
