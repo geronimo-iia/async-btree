@@ -30,7 +30,7 @@ theme:
 
 nav:
   - Home: index.md
-  - Async Btree API:
+  - API:
       - overview: api-overview.md
       - definition: api/definition.md
       - analyze: api/analyze.md
@@ -41,6 +41,7 @@ nav:
       - utils: api/utils.md
   - About:
       - Contributing: contributing.md
+      - Documentation: documentation.md
       - Release Notes: changelog.md
       - License: license.md
       - Code of Conduct: code_of_conduct.md
