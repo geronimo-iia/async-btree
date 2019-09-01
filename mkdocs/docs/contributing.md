@@ -6,6 +6,7 @@ This is a cookiecutter template for a typical Python library following modern pa
 My main requirement was to find something wich use Poetry project to manage python dependencies.
 Other template exist like [Cookiecutter PyPackage](https://github.com/audreyr/cookiecutter-pypackage), maybe a next time ?
 
+
 ## Setup
 
 ### Requirements

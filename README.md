@@ -108,13 +108,13 @@ As curio say:
 Personaly, after few time of testing and reading curio code, I'm pretty addict.
 
 
-## Setup
+# Setup
 
-### Requirements
+## Requirements
 
 * Python 3.7+
 
-### Installation
+## Installation
 
 Install this library directly into an activated virtual environment:
 
@@ -128,7 +128,7 @@ or add it to your [Poetry](https://poetry.eustace.io/) project:
 $ poetry add async-btree
 ```
 
-## Usage
+# Usage
 
 After installation, the package can imported:
 
@@ -140,16 +140,16 @@ $ python
 
 See [Api documentation](https://geronimo-iia.github.io/async-btree/api-overview)
 
-## License
+# License
 
 [The MIT License (MIT)](https://geronimo-iia.github.io/async-btree/license)
 
 
-## Contributing
+# Contributing
 
 See [Contributing](https://geronimo-iia.github.io/async-btree/contributing)
 
-## TODO
+# TODO
 
 - add examples
 - publish release V1.0.0
