@@ -1,0 +1,80 @@
+docs_dir: docs
+# in order to expose with github page project
+site_dir: site
+
+# Project information
+site_name: async-btree
+site_url: https://geronimo-iia.github.io/async-btree/
+site_description: Async behavior tree
+site_author: Jerome Guibert
+
+# Repository
+repo_name: "geronimo-iia/async-btree"
+repo_url: "https://github.com/geronimo-iia/async-btree"
+
+# Copyright
+copyright: 'Copyright © 2019 <a href="https://geronimo-iia.github.io/async-btree/">Jerome Guibert</a>'
+
+# Configuration
+theme:
+  name: "material"
+  language: "en"
+  palette:
+    primary: "deep purple"
+    accent: "light-blue"
+  font:
+    text: "Ubuntu"
+    code: "Ubuntu Mono"
+  feature:
+    tabs: false
+
+nav:
+  - Home: index.md
+  - API:
+      - overview: api-overview.md
+      - definition: api/definition.md
+      - analyze: api/analyze.md
+      - control: api/control.md
+      - decorator: api/decorator.md
+      - leaf: api/leaf.md
+      - parallele: api/parallele.md
+      - utils: api/utils.md
+  - About:
+      - Contributing: contributing.md
+      - Documentation: documentation.md
+      - Release Notes: changelog.md
+      - License: license.md
+      - Code of Conduct: code_of_conduct.md
+
+# Customization
+extra:
+  social:
+    - type: "github"
+      link: "https://github.com/geronimo-iia"
+    - type: "twitter"
+      link: "https://twitter.com/schtroumphix"
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - fontawesome_markdown

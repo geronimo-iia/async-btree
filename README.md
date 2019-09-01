@@ -1,6 +1,4 @@
-# Overview
-
-Async behavior tree for python
+# Async Behaviour Tree for Python
 
 
 [![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
@@ -12,7 +10,10 @@ Async behavior tree for python
 
 Versions following [Semantic Versioning](https://semver.org/)
 
-## What's a behavior tree ?
+## Overview
+
+
+### What's a behavior tree ?
 
 > Unlike a Finite State Machine, a Behaviour Tree is a tree of hierarchical nodes that controls the flow of decision and the execution of "tasks" or, as we will call them further, "Actions".
 > -- <cite>[behaviortree](https://www.behaviortree.dev/bt_basics/)</cite>
@@ -31,7 +32,9 @@ Few implementation libraries:
 - [behave](https://github.com/fuchen/behave) A behavior tree implementation in Python
 
 
-## Why another library so ?
+### Why another library so ?
+
+__SIMPLICITY__
 
 When you study behavior tree implementation, reactive node, dynamic change, runtime execution, etc ... 
 At a moment you're build more or less something that mimic an evaluator 'eval/apply' or a compilator, with a complex hierachical set of class.
@@ -49,7 +52,9 @@ As I've used OOP for years (very long time), I will try to avoid class tree and 
 
 And a last reason, more personal, it that i would explore python expressivity.
 
-So, in this module, I purpose you to use the concept of coroutines, and their mecanisms to manage the execution flow.
+__SO HOW ?__
+
+In this module, I purpose you to use the concept of coroutines, and their mecanisms to manage the execution flow.
 By this way:
 
 - we reuse simple language idiom to manage state, parameter, etc
@@ -134,125 +139,18 @@ $ python
 >>> async_btree.__version__
 ```
 
+See [Api documentation](https://geronimo-iia.github.io/async-btree/api-overview)
+
 ## License
 
-```text
-**The MIT License (MIT)**
-
-Copyright &copy; 2019, Jerome Guibert
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-```
+[The MIT License (MIT)](https://geronimo-iia.github.io/async-btree/license)
 
 
 ## Contributing
 
-This project is based on [Jace's Python Template](https://github.com/jacebrowning/template-python).
-This is a cookiecutter template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make and Graphviz to fully automate all development and deployment tasks.
+See [Contributing](https://geronimo-iia.github.io/async-btree/contributing)
 
-My main requirement was to find something wich use Poetry project to manage python dependencies.
-Other template exist like [Cookiecutter PyPackage](https://github.com/audreyr/cookiecutter-pypackage), maybe a next time ?
+## TODO
 
-### Setup
+- add examples
 
-#### Requirements
-
-* Make:
-    * macOS: `$ xcode-select --install`
-    * Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
-    * Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
-* Pyenv: [https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/pyenv#installation)
-* Python: `$ pyenv install 3.7.3`
-
-  Note for [MacOS 10.14 user](https://github.com/pyenv/pyenv/issues/544):
-  ```bash
-    SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk MACOSX_DEPLOYMENT_TARGET=10.14 pyenv install 3.7.3
-  ```
-* Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
-
-  Note:
-  ```bash
-  poetry config settings.virtualenvs.path "${HOME}/.virtualenvs"
-  ```
-* Graphviz:
-    * macOS: `$ brew install graphviz`
-    * Linux: [https://graphviz.org/download](https://graphviz.org/download/)
-    * Windows: [https://graphviz.org/download](https://graphviz.org/download/)
-
-To confirm these system dependencies are configured correctly:
-
-```text
-$ make doctor
-```
-
-#### Installation
-
-Install project dependencies into a virtual environment:
-
-```text
-$ make install
-```
-
-### Development Tasks
-
-#### Manual
-
-Run the tests:
-
-```text
-$ make test
-```
-
-Run static analysis:
-
-```text
-$ make check
-```
-
-Build the documentation:
-
-```text
-$ make docs
-```
-
-#### Automatic
-
-Keep all of the above tasks running on change:
-
-```text
-$ make watch
-```
-
-> In order to have OS X notifications, `brew install terminal-notifier`.
-
-### Continuous Integration
-
-The CI server will report overall build status:
-
-```text
-$ make ci
-```
-
-### Release Tasks
-
-Release to PyPI:
-
-```text
-$ make upload
-```

@@ -11,6 +11,10 @@ __all__ = ["analyze", "stringify_analyze", "Node"]
 class Node(NamedTuple):
     """Node aggregate node definition implemented with NamedTuple.
 
+    A Node is used to keep information on name, properties, and relations ship
+    between a hierachical construct of functions.
+    It's like an instance of NodeMetadata.
+
     # Attributes
     name (str): named operation
     properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
