@@ -11,24 +11,26 @@ Note on documentation generation.
 ## Documentation folder
 
 under mkdocs folder:
+
 - 'docs' which keep handle writed doc file,
 - 'docs/api' api generated files folder
 - 'docs/uml' uml gererated diagrams folder
-- mkdocs.yaml: configuration file for mkdocs tool
+-  'mkdocs.yaml': configuration file for mkdocs tool
 
 ## Makefile targets
 
 
 Main target: 'docs'
-1. mkdocs-github-page
-   1. mkdocs-site
-      1. mkdocs-uml: Generate UML Diagram
-      2. mkdocs-api: Generate API documentation
-      3. mkdocs-md: Copy standard document
-      4. Build web site with mkdocs tool
-   2. move generated website content into '/docs' folder in order to expose with guthub page project
-2. .clean-docs
-    Remove all generated files
+
+- call 'mkdocs-github-page'
+    - call 'mkdocs-site':
+        - call 'mkdocs-uml': Generate UML Diagram
+        - call 'mkdocs-api': Generate API documentation
+        - call 'mkdocs-md': Copy standard document
+        - Build web site with mkdocs tool
+    - move generated website content into '/docs' folder in order to expose with guthub page project
+- call '.clean-docs' (Remove all temp files)
+    
 
 ## Extract from Makefile
 
