@@ -65,8 +65,8 @@ class ExceptionDecorator(Exception):
 class NodeMetadata(NamedTuple):
     """NodeMetadata is our node definition.
 
-    A NodeMetadata is used to keep information on name, properties name, and relations ship
-    name between a hierachical construct of functions.
+    A NodeMetadata is used to keep information on name, properties name,
+    and relations ship name between a hierachical construct of functions.
 
     This permit us to print or analyze all information of a behaviour tree.
 
