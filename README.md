@@ -153,5 +153,4 @@ See [Contributing](https://geronimo-iia.github.io/async-btree/contributing)
 ## TODO
 
 - add examples
-- publish release V1.0.0
 
