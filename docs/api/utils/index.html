@@ -558,7 +558,8 @@
 <p><div class="codehilite"><pre><span></span><span class="n">amap</span><span class="p">(</span><span class="n">corofunc</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AsyncIterable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span>
 </pre></div>
 Map an async function onto an iterable or an async iterable.</p>
-<p>This simplify writing of mapping a function on something iterable.</p>
+<p>This simplify writing of mapping a function on something iterable
+between 'async for ...' and 'for...' .</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><strong>corofunc (Callable[[Any], Awaitable[T]])</strong>: coroutine function</li>
@@ -573,7 +574,8 @@ Map an async function onto an iterable or an async iterable.</p>
 <p><div class="codehilite"><pre><span></span><span class="n">afilter</span><span class="p">(</span><span class="n">corofunc</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="nb">bool</span><span class="p">]],</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AsyncIterable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span>
 </pre></div>
 Filter an iterable or an async iterable with an async function.</p>
-<p>This simplify writing of filtering by a function on something iterable.</p>
+<p>This simplify writing of filtering by a function on something iterable
+between 'async for ...' and 'for...' .</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><strong>corofunc (Callable[[Any], Awaitable[bool]])</strong>: filter async function</li>
@@ -588,6 +590,9 @@ Filter an iterable or an async iterable with an async function.</p>
 <p><div class="codehilite"><pre><span></span><span class="n">run</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
 </pre></div>
 Curio run with independent contextvars.</p>
+<p>This mimic asyncio framework behaviour.</p>
+<div class="codehilite"><pre><span></span>copy_context().run(kernel.run, target, *args)
+</pre></div>
                 
                   
                 

@@ -575,22 +575,29 @@
 <li>pyreverse to generate uml diagram</li>
 </ul>
 <h2 id="documentation-folder">Documentation folder<a class="headerlink" href="#documentation-folder" title="Permanent link">&para;</a></h2>
-<p>under mkdocs folder:
-- 'docs' which keep handle writed doc file,
-- 'docs/api' api generated files folder
-- 'docs/uml' uml gererated diagrams folder
-- mkdocs.yaml: configuration file for mkdocs tool</p>
+<p>under mkdocs folder:</p>
+<ul>
+<li>'docs' which keep handle writed doc file,</li>
+<li>'docs/api' api generated files folder</li>
+<li>'docs/uml' uml gererated diagrams folder</li>
+<li>'mkdocs.yaml': configuration file for mkdocs tool</li>
+</ul>
 <h2 id="makefile-targets">Makefile targets<a class="headerlink" href="#makefile-targets" title="Permanent link">&para;</a></h2>
-<p>Main target: 'docs'
-1. mkdocs-github-page
-   1. mkdocs-site
-      1. mkdocs-uml: Generate UML Diagram
-      2. mkdocs-api: Generate API documentation
-      3. mkdocs-md: Copy standard document
-      4. Build web site with mkdocs tool
-   2. move generated website content into '/docs' folder in order to expose with guthub page project
-2. .clean-docs
-    Remove all generated files</p>
+<p>Main target: 'docs'</p>
+<ul>
+<li>call 'mkdocs-github-page'<ul>
+<li>call 'mkdocs-site':<ul>
+<li>call 'mkdocs-uml': Generate UML Diagram</li>
+<li>call 'mkdocs-api': Generate API documentation</li>
+<li>call 'mkdocs-md': Copy standard document</li>
+<li>Build web site with mkdocs tool</li>
+</ul>
+</li>
+<li>move generated website content into '/docs' folder in order to expose with guthub page project</li>
+</ul>
+</li>
+<li>call '.clean-docs' (Remove all temp files)</li>
+</ul>
 <h2 id="extract-from-makefile">Extract from Makefile<a class="headerlink" href="#extract-from-makefile" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>DOCS_PATH = &quot;mkdocs/docs&quot;
 

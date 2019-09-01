@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#overview" tabindex="1" class="md-skip">
+      <a href="#async-behaviour-tree-for-python" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -255,19 +255,26 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#whats-a-behavior-tree" class="md-nav__link">
     What's a behavior tree ?
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#why-another-library-so" class="md-nav__link">
     Why another library so ?
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#note-about-async-framework" class="md-nav__link">
@@ -572,19 +579,26 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#whats-a-behavior-tree" class="md-nav__link">
     What's a behavior tree ?
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#why-another-library-so" class="md-nav__link">
     Why another library so ?
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#note-about-async-framework" class="md-nav__link">
@@ -672,8 +686,7 @@
                   <a href="https://github.com/geronimo-iia/async-btree/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
-<p>Async behavior tree for python</p>
+                <h1 id="async-behaviour-tree-for-python">Async Behaviour Tree for Python<a class="headerlink" href="#async-behaviour-tree-for-python" title="Permanent link">&para;</a></h1>
 <p><a href="https://travis-ci.org/geronimo-iia/async-btree"><img alt="Unix Build Status" src="https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix" /></a>
 <a href="https://coveralls.io/r/geronimo-iia/async-btree"><img alt="Coverage Status" src="https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg" /></a>
 <a href="https://www.codacy.com/app/geronimo-iia/async-btree?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=geronimo-iia/async-btree&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://api.codacy.com/project/badge/Grade/fe669a02b4aa46b5b1faf619ba2bf382" /></a>
@@ -681,7 +694,8 @@
 <a href="https://pypi.org/project/async-btree"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/async-btree.svg" /></a>
 <a href="https://pypi.org/project/async-btree"><img alt="PyPI License" src="https://img.shields.io/pypi/l/async-btree.svg" /></a></p>
 <p>Versions following <a href="https://semver.org/">Semantic Versioning</a></p>
-<h2 id="whats-a-behavior-tree">What's a behavior tree ?<a class="headerlink" href="#whats-a-behavior-tree" title="Permanent link">&para;</a></h2>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<h3 id="whats-a-behavior-tree">What's a behavior tree ?<a class="headerlink" href="#whats-a-behavior-tree" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>Unlike a Finite State Machine, a Behaviour Tree is a tree of hierarchical nodes that controls the flow of decision and the execution of "tasks" or, as we will call them further, "Actions".
 -- <cite><a href="https://www.behaviortree.dev/bt_basics/">behaviortree</a></cite></p>
@@ -699,7 +713,7 @@
 <li><a href="https://github.com/aigamedev/btsk">btsk</a> Behavior Tree Starter Kit</li>
 <li><a href="https://github.com/fuchen/behave">behave</a> A behavior tree implementation in Python</li>
 </ul>
-<h2 id="why-another-library-so">Why another library so ?<a class="headerlink" href="#why-another-library-so" title="Permanent link">&para;</a></h2>
+<h3 id="why-another-library-so">Why another library so ?<a class="headerlink" href="#why-another-library-so" title="Permanent link">&para;</a></h3>
 <p><strong>SIMPLICITY</strong></p>
 <p>When you study behavior tree implementation, reactive node, dynamic change, runtime execution, etc ... 
 At a moment you're build more or less something that mimic an evaluator 'eval/apply' or a compilator, with a complex hierachical set of class.
