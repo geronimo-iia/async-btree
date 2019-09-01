@@ -166,7 +166,7 @@ docs: mkdocs-github-page .clean-docs ## Generate documentation and UML
 DIST_FILES := dist/*.tar.gz dist/*.whl
 
 .PHONY: dist
-dist: install $(DIST_FILES)
+dist: install check test $(DIST_FILES)
 $(DIST_FILES): $(MODULES) pyproject.toml
 	rm -f $(DIST_FILES)
 	poetry build

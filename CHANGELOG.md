@@ -1,4 +1,4 @@
-# 1.0.0 (2019-08-28)
+# 1.0.0 (2019-09-01)
 
 - rework documentation build process (see mkdocs folder)
 - configure github page under master/docs
