@@ -1,6 +1,4 @@
-# Overview
-
-Async behavior tree for python
+# Async Behaviour Tree for Python
 
 
 [![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
@@ -12,7 +10,10 @@ Async behavior tree for python
 
 Versions following [Semantic Versioning](https://semver.org/)
 
-## What's a behavior tree ?
+## Overview
+
+
+### What's a behavior tree ?
 
 > Unlike a Finite State Machine, a Behaviour Tree is a tree of hierarchical nodes that controls the flow of decision and the execution of "tasks" or, as we will call them further, "Actions".
 > -- <cite>[behaviortree](https://www.behaviortree.dev/bt_basics/)</cite>
@@ -31,7 +32,7 @@ Few implementation libraries:
 - [behave](https://github.com/fuchen/behave) A behavior tree implementation in Python
 
 
-## Why another library so ?
+### Why another library so ?
 
 __SIMPLICITY__
 
@@ -108,13 +109,13 @@ As curio say:
 Personaly, after few time of testing and reading curio code, I'm pretty addict.
 
 
-# Setup
+## Setup
 
-## Requirements
+### Requirements
 
 * Python 3.7+
 
-## Installation
+### Installation
 
 Install this library directly into an activated virtual environment:
 
@@ -128,7 +129,7 @@ or add it to your [Poetry](https://poetry.eustace.io/) project:
 $ poetry add async-btree
 ```
 
-# Usage
+## Usage
 
 After installation, the package can imported:
 
@@ -140,16 +141,16 @@ $ python
 
 See [Api documentation](https://geronimo-iia.github.io/async-btree/api-overview)
 
-# License
+## License
 
 [The MIT License (MIT)](https://geronimo-iia.github.io/async-btree/license)
 
 
-# Contributing
+## Contributing
 
 See [Contributing](https://geronimo-iia.github.io/async-btree/contributing)
 
-# TODO
+## TODO
 
 - add examples
 - publish release V1.0.0
