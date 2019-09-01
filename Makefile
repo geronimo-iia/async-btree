@@ -2,7 +2,6 @@
 PROJECT := async-btree
 PACKAGE := async_btree
 REPOSITORY := geronimo-iia/async-btree
-DOC_PATHS = ./docs
 
 # Project paths
 PACKAGES := $(PACKAGE) tests
@@ -21,15 +20,11 @@ SNIFFER := $(RUN) sniffer
 all: install
 
 .PHONY: ci
-ci: format check test mkdocs ## Run all tasks that determine CI status
+ci: format check test ## Run all tasks that determine CI status
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
 	$(SNIFFER)
-
-.PHONY: run ## Start the program
-run: install
-	$(RUN) python $(PACKAGE)/__main__.py
 
 # SYSTEM DEPENDENCIES #########################################################
 
@@ -46,7 +41,7 @@ install: .venv $(DEPENDENCIES) .cache
 
 $(DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project false
-	poetry install -E curio
+	@ poetry install -E curio
 	@ touch $@
 
 poetry.lock: pyproject.toml
@@ -122,47 +117,59 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
-.PHONY: docs
-docs: .clean-docs uml mkdocs ## Generate documentation and UML
+DOCS_PATH = "mkdocs/docs"
 
-.PHONY: mkdocs
-mkdocs: install
-	@cd docs-source && $(RUN) pydocmd build
-	@mv docs-source/_build/site/* ./docs
-
-.PHONY: uml
-uml: install docs/*.png
-
-docs/*.png: $(MODULES)
-	@mkdir -p $(DOC_PATHS)/uml
+mkdocs-uml: # Generate UML Diagram
+	@mkdir -p $(DOCS_PATH)/uml
 	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png docs/uml/classes.png
-	- mv -f packages_$(PACKAGE).png docs/uml/packages.png
+	- mv -f classes_$(PACKAGE).png $(DOCS_PATH)/uml/classes.png
+	- mv -f packages_$(PACKAGE).png $(DOCS_PATH)/uml/packages.png
 
-.PHONY: mkdocs-live
-mkdocs-live: mkdocs
-	eval "sleep 3; bin/open http://127.0.0.1:8000" &
-	$(RUN) pydocmd serve
+mkdocs-api: # Generate API documentation
+	@mkdir -p $(DOCS_PATH)/api
+	@cd $(DOCS_PATH)/api && \
+		$(RUN) pydocmd simple async_btree.definition+ > definition.md && \
+		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > analyze.md && \
+		$(RUN) pydocmd simple async_btree.control+ > control.md && \
+		$(RUN) pydocmd simple async_btree.decorator+ > decorator.md  && \
+		$(RUN) pydocmd simple async_btree.leaf+ > leaf.md && \
+		$(RUN) pydocmd simple async_btree.parallele+ > parallele.md && \
+		$(RUN) pydocmd simple async_btree.utils+ > utils.md
+
+mkdocs-md: # Copy standard document
+	@cp -f README.md $(DOCS_PATH)/index.md
+	@cp -f LICENSE.md $(DOCS_PATH)/license.md
+	@cp -f CHANGELOG.md $(DOCS_PATH)/changelog.md
+	@cp -f CODE_OF_CONDUCT.md $(DOCS_PATH)/code_of_conduct.md
+
+mkdocs-site: mkdocs-uml mkdocs-api mkdocs-md # Build Documentation Site
+	@cd mkdocs && $(RUN) mkdocs build
+
+mkdocs-github-page: mkdocs-site # Move generated docs under /docs
+	@rm -rf docs/
+	@mv mkdocs/site docs/
+
+.clean-docs: # remove all generated files
+	@rm -rf mkdocs/site
+	@rm -rf $(DOCS_PATH)/uml
+	@rm -rf $(DOCS_PATH)/api
+	@rm -rf $(DOCS_PATH)/index.md
+	@rm -rf $(DOCS_PATH)/license.md
+	@rm -rf $(DOCS_PATH)/changelog.md
+	@rm -rf $(DOCS_PATH)/code_of_conduct.md
+
+.PHONY: docs
+docs: mkdocs-github-page .clean-docs ## Generate documentation and UML
 
 # BUILD #######################################################################
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
-EXE_FILES := dist/$(PROJECT).*
 
 .PHONY: dist
 dist: install $(DIST_FILES)
 $(DIST_FILES): $(MODULES) pyproject.toml
 	rm -f $(DIST_FILES)
 	poetry build
-
-.PHONY: exe
-exe: install $(EXE_FILES)
-$(EXE_FILES): $(MODULES) $(PROJECT).spec
-	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
-	$(RUN) pyinstaller $(PROJECT).spec --noconfirm --clean
-
-$(PROJECT).spec:
-	$(RUN) pyi-makespec $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
 
 # RELEASE #####################################################################
 
@@ -175,7 +182,7 @@ upload: dist ## Upload the current version to PyPI
 # CLEANUP #####################################################################
 
 .PHONY: clean
-clean: .clean-build .clean-docs .clean-test .clean-install ## Delete all generated and temporary files
+clean: .clean-build .clean-test .clean-install .clean-docs ## Delete all generated and temporary files
 
 .PHONY: clean-all
 clean-all: clean
@@ -189,11 +196,6 @@ clean-all: clean
 .PHONY: .clean-test
 .clean-test:
 	rm -rf .cache .pytest .coverage htmlcov
-
-.PHONY: .clean-docs
-.clean-docs:
-	rm -rf docs/* docs-source/_build
-
 
 .PHONY: .clean-build
 .clean-build:

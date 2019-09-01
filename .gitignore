@@ -15,9 +15,6 @@ Icon*
 .env
 *.pid
 
-# Generated documentation
-/docs-source/_build
-
 # Google Drive
 *.gdoc
 *.gsheet
@@ -42,3 +39,6 @@ Icon*
 .idea/
 .vscode
 .history
+
+# OSX
+.DS_Store
