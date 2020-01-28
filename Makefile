@@ -200,7 +200,7 @@ help: all
 
 update-from-template:
 	@git diff --name-only --exit-code
-	cookiecutter gh:geronimo-iia/template-python#feature/poetry-1.0.0 --output-dir .. --config-file .cookiecutter.json --no-input --overwrite-if-exists
+	cookiecutter gh:geronimo-iia/template-python --checkout feature/poetry-1.0.0  --config-file .cookiecutter.yaml --output-dir .. --no-input --overwrite-if-exists
 	git status # shows lots of overridden files
 	git add . -p # walk through patchsets, selecting files for adding
 	git commit -m "Updated from template."
