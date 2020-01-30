@@ -43,12 +43,3 @@ Icon*
 
 # OSX
 .DS_Store
-
-# Doc temp directories
-mkdocs/site
-mkdocs/docs/api/
-mkdocs/docs/changelog.md
-mkdocs/docs/code_of_conduct.md
-mkdocs/docs/index.md
-mkdocs/docs/license.md
-mkdocs/docs/uml/

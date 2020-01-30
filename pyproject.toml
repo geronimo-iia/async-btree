@@ -3,17 +3,12 @@
 name = "async_btree"
 version = "1.0.0"
 description = "Async behavior tree"
-
 license = "MIT"
-
 authors = ["Jerome Guibert <jguibert@gmail.com>"]
-
 readme = "README.md"
-
 homepage = "https://pypi.org/project/async_btree"
 documentation = "https://geronimo-iia.github.io/async-btree/"
 repository = "https://github.com/geronimo-iia/async-btree"
-
 keywords = ["behavior-tree", "asyncio"]
 
 classifiers = [
@@ -32,7 +27,6 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-
 python = "^3.7"
 
 # Optional dependency
@@ -41,63 +35,65 @@ curio = { version = "^0.9", optional = true }
 [tool.poetry.extras]
 curio = ["curio"]
 
+
 [tool.poetry.dev-dependencies]
-
-# Formatters
-black = "=19.3b0"
-isort = "=4.3.4"
-
-# Linters
+black = "=19.3b0" # The uncompromising code formatter.
+isort = "=4.3.4" #A Python utility / library to sort Python imports.
+seed-isort-config = "^1.9"
+flake8 = "^3.7.9" # the modular source code checker: pep8, pyflakes and co
+flake8-2020 = "1.5.0" # flake8 plugin which checks for misuse of `sys.version` or `sys.version_info`
+flake8-black = "^0.1.1" # flake8 plugin to call black as a code style validator
+flake8-blind-except = "^0.1.1" # A flake8 extension that checks for blind except: statements
+flake8-broken-line = "^0.1.1" # Flake8 plugin to forbid backslashes for line breaks
+flake8-bugbear = "^20.1.2" # A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle.
+flake8-builtins = "^1.4.2" # Check for python builtins being used as variables or parameters.
+flake8-comprehensions = "^3.2.2" #  A flake8 plugin to help you write better list/set/dict comprehensions.
+flake8-debugger = "^3.2.1" #  ipdb/pdb statement checker plugin for flake8
+flake8-docstrings = "^1.5.0" #  Extension for flake8 which uses pydocstyle to check docstrings
+flake8-isort = "^2.8.0" #  flake8 plugin that integrates isort .
+flake8-mutable = "^1.2.0" # mutable defaults flake8 extension
+flake8-pytest = "^1.3" #  pytest assert checker plugin for flake8
+flake8-quotes = "^2.1.1" # Flake8 lint for quotes.
+flake8-string-format = "^0.2.3" # string format checker, plugin for flake8
+darglint = "^1.1.2" # A utility for ensuring Google-style docstrings stay up to date with the source code.
+pydocstyle = "^5.0.2" # Python docstring style checker
 mypy = "*"
-pydocstyle = "*"
-pylint = "^2.0"
-flake8 = "*"
-flake8-blind-except = "*"
-flake8-bugbear = "*"
-flake8-builtins = "*"
-flake8-comprehensions = "*"
-flake8-debugger = "*"
-flake8-docstrings = "*"
-flake8-isort = "*"
-flake8-black = "*"
-flake8-quotes = "*"
-flake8-string-format = "*"
 
-# Testing
-pytest = "^4.3.1"
-pytest-cov = "*"
+pre-commit = "^1.21.0" # A framework for managing and maintaining multi-language pre-commit hooks.
+
+# Unit Testing
+pytest = "^4.6.9" # pytest: simple powerful testing with Python
+pytest-cov = "^2.8.1" # Pytest plugin for measuring coverage.
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
-freezegun = "*"
-
-# Reports
-coveragespace = "*"
+pytest-mock = "^1.10"
+coverage = "^5.0.3" # Code coverage measurement for Python
+xdoctest = "^0.11.0" # A rewrite of the builtin doctest module
 
 # Documentation
-pydoc-markdown = "2.0.5"
-pymdown-extensions = "6.0"
-pygments = "*"
-mkdocs-material= "*"
-fontawesome_markdown = "*"
-
-# Tooling
-pyinstaller = "*"
-sniffer = "*"
-MacFSEvents = { version = "*", platform = "darwin" }
-pync = { version = "*", platform = "darwin" }
-autopep8 = "^1.4"
-
-#[tool.poetry.scripts]
-#async-btree = "async_btree.cli:main"
+sphinx = "^2.3.1"
+sphinx_rtd_theme = "^0.4.3"
+m2r = "^0.2.1"  # M2R converts a markdown file including reStructuredText (rst)
 
 [tool.black]
-
-target-version = ["py36", "py37"]
+# see https://black.readthedocs.io/en/stable/
+target-version = ["py37"]
 skip-string-normalization = true
 line_length = 88
 
-[build-system]
+[tool.isort]
+# see https://timothycrosley.github.io/isort/
+not_skip = "__init__.py"
+multi_line_output = 3
+known_standard_library = "dataclasses,typing_extensions"
+known_first_party = "async_btree"
+combine_as_imports = true
+force_grid_wrap = false
+include_trailing_comma = true
+lines_after_imports = 2
+line_length = 88
 
-requires = ["poetry>=0.12"]
+[build-system]
+requires = ["poetry>=1.0.0"]
 build-backend = "poetry.masonry.api"
