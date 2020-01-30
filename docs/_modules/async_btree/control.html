@@ -151,20 +151,12 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">.decorator</span> <span class="kn">import</span> <span class="n">is_success</span>
-<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">FAILURE</span><span class="p">,</span>
-    <span class="n">AsyncInnerFunction</span><span class="p">,</span>
-    <span class="n">CallableFunction</span><span class="p">,</span>
-    <span class="n">ExceptionDecorator</span><span class="p">,</span>
-    <span class="n">node_metadata</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">FAILURE</span><span class="p">,</span> <span class="n">AsyncInnerFunction</span><span class="p">,</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">ExceptionDecorator</span><span class="p">,</span> <span class="n">node_metadata</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;fallback&#39;</span><span class="p">,</span> <span class="s1">&#39;selector&#39;</span><span class="p">,</span> <span class="s1">&#39;decision&#39;</span><span class="p">,</span> <span class="s1">&#39;repeat_until&#39;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="sequence"><a class="viewcode-back" href="../../api.html#async_btree.sequence">[docs]</a><span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span>
-    <span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<div class="viewcode-block" id="sequence"><a class="viewcode-back" href="../../api.html#async_btree.sequence">[docs]</a><span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Return a function which execute children in sequence.</span>
 
 <span class="sd">    succes_threshold parameter generalize traditional sequence/fallback and</span>
@@ -178,15 +170,15 @@
 <span class="sd">     - an array of previous result when success</span>
 <span class="sd">     - last failure when fail</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    children (List[CallableFunction]): list of Awaitable</span>
-<span class="sd">    succes_threshold (int): succes threshold value</span>
+<span class="sd">    Args:</span>
+<span class="sd">        children (List[CallableFunction]): list of Awaitable</span>
+<span class="sd">        succes_threshold (int): succes threshold value</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
 
-<span class="sd">    # Exceptions</span>
-<span class="sd">    AssertionError if succes_threshold is invalid</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError if succes_threshold is invalid</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">succes_threshold</span> <span class="o">=</span> <span class="n">succes_threshold</span> <span class="k">if</span> <span class="n">succes_threshold</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">succes_threshold</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)):</span>
@@ -230,16 +222,14 @@
 <span class="sd">    Often named &#39;selector&#39;, children can be seen as an ordered list</span>
 <span class="sd">        starting from higthest priority to lowest priority.</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    children (List[CallableFunction]): list of Awaitable</span>
+<span class="sd">    Args:</span>
+<span class="sd">        children (List[CallableFunction]): list of Awaitable</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fallback&#39;</span><span class="p">)(</span>
-        <span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">succes_threshold</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)))</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fallback&#39;</span><span class="p">)(</span><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">succes_threshold</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">))))</span></div>
 
 
 <div class="viewcode-block" id="selector"><a class="viewcode-back" href="../../api.html#async_btree.selector">[docs]</a><span class="k">def</span> <span class="nf">selector</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
@@ -248,21 +238,19 @@
 
 
 <div class="viewcode-block" id="decision"><a class="viewcode-back" href="../../api.html#async_btree.decision">[docs]</a><span class="k">def</span> <span class="nf">decision</span><span class="p">(</span>
-    <span class="n">condition</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span>
-    <span class="n">success_tree</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span>
-    <span class="n">failure_tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">condition</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">success_tree</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">failure_tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Create a decision node.</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    condition (CallableFunction): awaitable condition</span>
-<span class="sd">    success_tree (CallableFunction): awaitable success tree which be</span>
-<span class="sd">        evaluated if cond is Truthy</span>
-<span class="sd">    failure_tree (CallableFunction): awaitable failure tree which be</span>
-<span class="sd">        evaluated if cond is Falsy (None per default)</span>
+<span class="sd">    Args:</span>
+<span class="sd">        condition (CallableFunction): awaitable condition</span>
+<span class="sd">        success_tree (CallableFunction): awaitable success tree which be</span>
+<span class="sd">            evaluated if cond is Truthy</span>
+<span class="sd">        failure_tree (CallableFunction): awaitable failure tree which be</span>
+<span class="sd">            evaluated if cond is Falsy (None per default)</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="s1">&#39;success_tree&#39;</span><span class="p">,</span> <span class="s1">&#39;failure_tree&#39;</span><span class="p">])</span>
@@ -274,19 +262,17 @@
     <span class="k">return</span> <span class="n">_decision</span></div>
 
 
-<div class="viewcode-block" id="repeat_until"><a class="viewcode-back" href="../../api.html#async_btree.repeat_until">[docs]</a><span class="k">def</span> <span class="nf">repeat_until</span><span class="p">(</span>
-    <span class="n">condition</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<div class="viewcode-block" id="repeat_until"><a class="viewcode-back" href="../../api.html#async_btree.repeat_until">[docs]</a><span class="k">def</span> <span class="nf">repeat_until</span><span class="p">(</span><span class="n">condition</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Repeat child evaluation until condition is truthy.</span>
 
 <span class="sd">    Return last child evaluation or FAILURE if no evaluation occurs.</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    condition (CallableFunction): awaitable condition</span>
-<span class="sd">    child (CallableFunction): awaitable child</span>
+<span class="sd">    Args:</span>
+<span class="sd">        condition (CallableFunction): awaitable condition</span>
+<span class="sd">        child (CallableFunction): awaitable child</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="s1">&#39;child&#39;</span><span class="p">])</span>
@@ -315,7 +301,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Jerome Guibert
+        &copy; Copyright 2019, Jerome Guibert
 
     </p>
   </div>

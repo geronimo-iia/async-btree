@@ -14,18 +14,15 @@ class Node(NamedTuple):
     between a hierachical construct of functions.
     It's like an instance of NodeMetadata.
 
-    # Attributes
-    name (str): named operation
-    properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
-    edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for
-        definition.
+    Attributes:
+        name (str): named operation.
+        properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
+        edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for
+            definition.
 
-    # Notes
-
-    Edges attribut should be edges: ```List[Tuple[str, List['Node']]]```
-
-    But it is impossible for now, see
-    [mypy issues 731](https://github.com/python/mypy/issues/731)
+    Notes:
+        Edges attribut should be edges: ```List[Tuple[str, List['Node']]]```
+        But it is impossible for now, see [mypy issues 731](https://github.com/python/mypy/issues/731)
     """
 
     name: str
@@ -43,11 +40,11 @@ class Node(NamedTuple):
 def analyze(target: CallableFunction) -> Node:
     """Analyze specified target and return a Node representation.
 
-    # Parameters
-    target (CallableFunction): async function to analyze
+    Args:
+        target (CallableFunction): async function to analyze.
 
-    # Returns
-    (Node): a node instance representation of target function
+    Returns:
+        (Node): a node instance representation of target function
     """
 
     nonlocals = getclosurevars(target).nonlocals
@@ -73,39 +70,31 @@ def analyze(target: CallableFunction) -> Node:
         # its a node construct.
         node = target.__node_metadata
         if not isinstance(node, NodeMetadata):
-            raise RuntimeError(
-                f'attr __node_metadata of {target} is not a NodeMetadata!'
-            )
+            raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
         return Node(
             name=node.name,
             properties=list(map(_analyze_property, node.properties)),
-            edges=list(
-                filter(lambda p: p is not None, map(_analyze_edges, node.edges))
-            ),
+            edges=list(filter(lambda p: p is not None, map(_analyze_edges, node.edges))),
         )
 
     # simple function
     return Node(
-        name=target.__name__.lstrip("_")
-        if hasattr(target, "__name__")
-        else "anonymous",
+        name=target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous",
         properties=list(map(_analyze_property, nonlocals.keys())),
         edges=[],
     )
 
 
-def stringify_analyze(
-    target: Node, indent: int = 0, label: Optional[str] = None
-) -> str:
+def stringify_analyze(target: Node, indent: int = 0, label: Optional[str] = None) -> str:
     """Stringify node representation of specified target.
 
-    # Parameters
-    target (CallableFunction): async function to analyze
-    indent (int): level identation (default to zero)
-    label (Optional[str]): label of current node (default None)
+    Args:
+        target (CallableFunction): async function to analyze.
+        indent (int): level identation (default to zero).
+        label (Optional[str]): label of current node (default None).
 
-    # Returns
-    (str): a string node representation
+    Returns:
+        (str): a string node representation.
     """
     _ident = '    '
     _space = f'{_ident * indent} '
@@ -122,7 +111,5 @@ def stringify_analyze(
     for _label, children in target.edges:
         if children:
             for child in children:
-                result += stringify_analyze(
-                    target=child, indent=indent + 1, label=_label
-                )
+                result += stringify_analyze(target=child, indent=indent + 1, label=_label)
     return result

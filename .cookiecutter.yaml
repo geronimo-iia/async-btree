@@ -3,7 +3,7 @@ default_context:
   full_name: Jerome Guibert
   github_repo: async-btree
   github_username: geronimo-iia
-  max_code_line_length: 88
+  max_code_line_length: 120
   package_name: async_btree
   project_name: async-btree
   project_short_description: Async behavior tree.

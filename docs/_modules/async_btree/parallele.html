@@ -151,13 +151,7 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">FAILURE</span><span class="p">,</span>
-    <span class="n">SUCCESS</span><span class="p">,</span>
-    <span class="n">AsyncInnerFunction</span><span class="p">,</span>
-    <span class="n">CallableFunction</span><span class="p">,</span>
-    <span class="n">node_metadata</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">FAILURE</span><span class="p">,</span> <span class="n">SUCCESS</span><span class="p">,</span> <span class="n">AsyncInnerFunction</span><span class="p">,</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">node_metadata</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">amap</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;parallele&#39;</span><span class="p">]</span>
@@ -166,9 +160,7 @@
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">curio</span> <span class="kn">import</span> <span class="n">gather</span><span class="p">,</span> <span class="n">spawn</span>
 
-<div class="viewcode-block" id="parallele"><a class="viewcode-back" href="../../api.html#async_btree.parallele">[docs]</a>    <span class="k">def</span> <span class="nf">parallele</span><span class="p">(</span>
-        <span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<div class="viewcode-block" id="parallele"><a class="viewcode-back" href="../../api.html#async_btree.parallele">[docs]</a>    <span class="k">def</span> <span class="nf">parallele</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Return an awaitable function which run children in parallele.</span>
 
 <span class="sd">        `succes_threshold` parameter generalize traditional sequence/fallback,</span>
@@ -217,7 +209,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Jerome Guibert
+        &copy; Copyright 2019, Jerome Guibert
 
     </p>
   </div>

@@ -4,7 +4,8 @@ API Reference
 =============
 
 Async Btree
-----------
+-----------
+
 .. automodule:: async_btree
    :members:
    :undoc-members:

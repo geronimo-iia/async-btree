@@ -82,7 +82,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-async_btree">My Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-async_btree">Async Btree</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
@@ -156,7 +156,7 @@
   <div class="section" id="api-reference">
 <span id="id1"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-async_btree">
-<span id="my-project"></span><h2>My Project<a class="headerlink" href="#module-async_btree" title="Permalink to this headline">¶</a></h2>
+<span id="async-btree"></span><h2>Async Btree<a class="headerlink" href="#module-async_btree" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="async_btree.Node">
 <em class="property">class </em><code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">Node</code><a class="reference internal" href="_modules/async_btree/analyze.html#Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.Node" title="Permalink to this definition">¶</a></dt>
@@ -164,32 +164,58 @@
 <p>A Node is used to keep information on name, properties, and relations ship
 between a hierachical construct of functions.
 It’s like an instance of NodeMetadata.</p>
-<p># Attributes
-name (str): named operation
-properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
-edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for</p>
-<blockquote>
-<div><p>definition.</p>
-</div></blockquote>
-<p># Notes</p>
-<p>Edges attribut should be edges: <code class="docutils literal notranslate"><span class="pre">`List[Tuple[str,</span> <span class="pre">List['Node']]]`</span></code></p>
-<p>But it is impossible for now, see
-[mypy issues 731](<a class="reference external" href="https://github.com/python/mypy/issues/731">https://github.com/python/mypy/issues/731</a>)</p>
-<dl class="method">
+<dl class="attribute">
 <dt id="async_btree.Node.name">
-<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#async_btree.Node.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">name</code><a class="headerlink" href="#async_btree.Node.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>named operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="async_btree.Node.properties">
+<code class="sig-name descname">properties</code><a class="headerlink" href="#async_btree.Node.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of tuple (name, value) for definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[Tuple[str, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="async_btree.Node.edges">
+<code class="sig-name descname">edges</code><a class="headerlink" href="#async_btree.Node.edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of tuple (name, node list) for
+definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[Tuple[str, List[Any]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>Edges attribut should be edges: <code class="docutils literal notranslate"><span class="pre">`List[Tuple[str,</span> <span class="pre">List['Node']]]`</span></code>
+But it is impossible for now, see [mypy issues 731](<a class="reference external" href="https://github.com/python/mypy/issues/731">https://github.com/python/mypy/issues/731</a>)</p>
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">name</code></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="async_btree.Node.properties">
-<em class="property">property </em><code class="sig-name descname">properties</code><a class="headerlink" href="#async_btree.Node.properties" title="Permalink to this definition">¶</a></dt>
+<dt>
+<em class="property">property </em><code class="sig-name descname">properties</code></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="async_btree.Node.edges">
-<em class="property">property </em><code class="sig-name descname">edges</code><a class="headerlink" href="#async_btree.Node.edges" title="Permalink to this definition">¶</a></dt>
+<dt>
+<em class="property">property </em><code class="sig-name descname">edges</code></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
@@ -199,40 +225,61 @@ edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for</p>
 <dt id="async_btree.analyze">
 <code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">analyze</code><span class="sig-paren">(</span><em class="sig-param">target: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; async_btree.analyze.Node<a class="reference internal" href="_modules/async_btree/analyze.html#analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.analyze" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analyze specified target and return a Node representation.</p>
-<p># Parameters
-target (CallableFunction): async function to analyze</p>
-<p># Returns
-(Node): a node instance representation of target function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>target</strong> (<em>CallableFunction</em>) – async function to analyze.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a node instance representation of target function</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(<a class="reference internal" href="#async_btree.Node" title="async_btree.Node">Node</a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="async_btree.stringify_analyze">
 <code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">stringify_analyze</code><span class="sig-paren">(</span><em class="sig-param">target: async_btree.analyze.Node</em>, <em class="sig-param">indent: int = 0</em>, <em class="sig-param">label: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/async_btree/analyze.html#stringify_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.stringify_analyze" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stringify node representation of specified target.</p>
-<p># Parameters
-target (CallableFunction): async function to analyze
-indent (int): level identation (default to zero)
-label (Optional[str]): label of current node (default None)</p>
-<p># Returns
-(str): a string node representation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>CallableFunction</em>) – async function to analyze.</p></li>
+<li><p><strong>indent</strong> (<em>int</em>) – level identation (default to zero).</p></li>
+<li><p><strong>label</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – label of current node (default None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a string node representation.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="async_btree.decision">
 <code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">decision</code><span class="sig-paren">(</span><em class="sig-param">condition: Union[Callable[[...], Awaitable[Any]], Callable], success_tree: Union[Callable[[...], Awaitable[Any]], Callable], failure_tree: Union[Callable[[...], Awaitable[Any]], Callable, None] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#decision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.decision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a decision node.</p>
-<p># Parameters
-condition (CallableFunction): awaitable condition
-success_tree (CallableFunction): awaitable success tree which be</p>
-<blockquote>
-<div><p>evaluated if cond is Truthy</p>
-</div></blockquote>
-<dl class="simple">
-<dt>failure_tree (CallableFunction): awaitable failure tree which be</dt><dd><p>evaluated if cond is Falsy (None per default)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> (<em>CallableFunction</em>) – awaitable condition</p></li>
+<li><p><strong>success_tree</strong> (<em>CallableFunction</em>) – awaitable success tree which be
+evaluated if cond is Truthy</p></li>
+<li><p><strong>failure_tree</strong> (<em>CallableFunction</em>) – awaitable failure tree which be
+evaluated if cond is Falsy (None per default)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
 </dd>
 </dl>
-<p># Returns
-(AsyncInnerFunction): an awaitable function.</p>
 </dd></dl>
 
 <dl class="function">
@@ -243,10 +290,17 @@ success_tree (CallableFunction): awaitable success tree which be</p>
 <dt>Often named ‘selector’, children can be seen as an ordered list</dt><dd><p>starting from higthest priority to lowest priority.</p>
 </dd>
 </dl>
-<p># Parameters
-children (List[CallableFunction]): list of Awaitable</p>
-<p># Returns
-(AsyncInnerFunction): an awaitable function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -254,11 +308,20 @@ children (List[CallableFunction]): list of Awaitable</p>
 <code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">repeat_until</code><span class="sig-paren">(</span><em class="sig-param">condition: Union[Callable[[...], Awaitable[Any]], Callable], child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#repeat_until"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.repeat_until" title="Permalink to this definition">¶</a></dt>
 <dd><p>Repeat child evaluation until condition is truthy.</p>
 <p>Return last child evaluation or FAILURE if no evaluation occurs.</p>
-<p># Parameters
-condition (CallableFunction): awaitable condition
-child (CallableFunction): awaitable child</p>
-<p># Returns
-(AsyncInnerFunction): an awaitable function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> (<em>CallableFunction</em>) – awaitable condition</p></li>
+<li><p><strong>child</strong> (<em>CallableFunction</em>) – awaitable child</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -282,13 +345,23 @@ must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 </ul>
 </dd>
 </dl>
-<p># Parameters
-children (List[CallableFunction]): list of Awaitable
-succes_threshold (int): succes threshold value</p>
-<p># Returns
-(AsyncInnerFunction): an awaitable function.</p>
-<p># Exceptions
-AssertionError if succes_threshold is invalid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p></li>
+<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>AssertionError if succes_threshold is invalid</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -594,7 +667,7 @@ AsyncGenerator[T]: an async iterator of corofunc(item)</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Jerome Guibert
+        &copy; Copyright 2019, Jerome Guibert
 
     </p>
   </div>

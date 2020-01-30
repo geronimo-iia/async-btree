@@ -150,12 +150,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;Leaf definition.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">.decorator</span> <span class="kn">import</span> <span class="n">is_success</span>
-<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">AsyncInnerFunction</span><span class="p">,</span>
-    <span class="n">CallableFunction</span><span class="p">,</span>
-    <span class="n">ExceptionDecorator</span><span class="p">,</span>
-    <span class="n">node_metadata</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">AsyncInnerFunction</span><span class="p">,</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">ExceptionDecorator</span><span class="p">,</span> <span class="n">node_metadata</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;condition&#39;</span><span class="p">]</span>
 
@@ -196,9 +191,7 @@
 <span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])(</span>
-        <span class="n">is_success</span><span class="p">(</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])(</span><span class="n">is_success</span><span class="p">(</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)))</span></div>
 </pre></div>
 
            </div>
@@ -211,7 +204,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Jerome Guibert
+        &copy; Copyright 2019, Jerome Guibert
 
     </p>
   </div>

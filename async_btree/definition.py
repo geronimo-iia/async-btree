@@ -1,12 +1,10 @@
 """Common definition.
 
-## CallableFunction Type
+CallableFunction Type:
 
 Specify something callable with or without async:
 
 ```CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]```
-
-## AsyncInnerFunction Type
 
 Function signature of async function implementation:
 
@@ -69,10 +67,10 @@ class NodeMetadata(NamedTuple):
 
     This permit us to print or analyze all information of a behaviour tree.
 
-    # Attributes
-    name (str): named operation
-    properties (List[str]): a list of property name (an int value, ...).
-    edges (List[str]): a list of member name which act as edges (a child, ...).
+    Attributes:
+        name (str): named operation
+        properties (List[str]): a list of property name (an int value, ...).
+        edges (List[str]): a list of member name which act as edges (a child, ...).
 
     """
 
@@ -85,23 +83,21 @@ T = TypeVar('T', bound=CallableFunction)
 
 
 def node_metadata(
-    name: Optional[str] = None,
-    properties: Optional[List[str]] = None,
-    edges: Optional[List[str]] = None,
+    name: Optional[str] = None, properties: Optional[List[str]] = None, edges: Optional[List[str]] = None
 ):
     """'node_metadata' is a function decorator which add meta information about node.
 
     We add a property on decorated function named '__node_metadata'.
 
-    # Parameters
-    name (Optional[str]): override name of decorated function,
-        default is function name left striped with '_'
-    properties (Optional[List[str]]): a list of property name ([] as default)
-    edges (Optional[List[str]]): a list of edges name
-        (["child", "children"] as default)
+    Args:
+        name (Optional[str]): override name of decorated function,
+            default is function name left striped with '_'
+        properties (Optional[List[str]]): a list of property name ([] as default)
+        edges (Optional[List[str]]): a list of edges name
+            (["child", "children"] as default)
 
-    # Returns
-    the decorator function
+    Returns:
+        the decorator function
 
     """
 

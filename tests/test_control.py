@@ -2,16 +2,7 @@ from contextvars import ContextVar
 
 import pytest
 
-from async_btree import (
-    FAILURE,
-    SUCCESS,
-    ExceptionDecorator,
-    decision,
-    fallback,
-    repeat_until,
-    selector,
-    sequence,
-)
+from async_btree import FAILURE, SUCCESS, ExceptionDecorator, decision, fallback, repeat_until, selector, sequence
 
 
 async def a_func():
@@ -39,22 +30,14 @@ def test_sequence(kernel):
         sequence(children=[a_func, failure_func, success_func])
     ), "default behaviour fail of one failed"
 
-    assert kernel.run(
-        sequence(children=[a_func, failure_func, success_func], succes_threshold=2)
-    )
-    assert kernel.run(
-        sequence(children=[a_func, success_func, failure_func], succes_threshold=2)
-    )
+    assert kernel.run(sequence(children=[a_func, failure_func, success_func], succes_threshold=2))
+    assert kernel.run(sequence(children=[a_func, success_func, failure_func], succes_threshold=2))
     assert kernel.run(
         sequence(children=[failure_func, a_func, success_func], succes_threshold=2)
     ), 'must continue after first failure'
 
-    assert kernel.run(
-        sequence(children=[exception_func, failure_func, a_func], succes_threshold=1)
-    )
-    assert not kernel.run(
-        sequence(children=[exception_func, failure_func], succes_threshold=1)
-    )
+    assert kernel.run(sequence(children=[exception_func, failure_func, a_func], succes_threshold=1))
+    assert not kernel.run(sequence(children=[exception_func, failure_func], succes_threshold=1))
 
     assert not kernel.run(sequence(children=[]))
     # negative
@@ -81,9 +64,7 @@ def test_decision(kernel):
     assert kernel.run(decision(condition=success_func, success_tree=a_func)) == 'a'
     assert not kernel.run(decision(condition=failure_func, success_tree=a_func))
 
-    result = kernel.run(
-        decision(condition=failure_func, success_tree=a_func, failure_tree=b_func)
-    )
+    result = kernel.run(decision(condition=failure_func, success_tree=a_func, failure_tree=b_func))
     assert result == 'b', 'failure tree must be called'
 
 
@@ -100,9 +81,7 @@ def test_repeat_until_falsy_condition(kernel):
             raise RuntimeError('3')
         return SUCCESS
 
-    assert (
-        kernel.run(repeat_until(condition=tick, child=a_func)) == 'a'
-    ), 'return last sucess result'
+    assert kernel.run(repeat_until(condition=tick, child=a_func)) == 'a', 'return last sucess result'
     assert counter.get() == 2
 
 

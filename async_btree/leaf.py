@@ -1,12 +1,7 @@
 """Leaf definition."""
 
 from .decorator import is_success
-from .definition import (
-    AsyncInnerFunction,
-    CallableFunction,
-    ExceptionDecorator,
-    node_metadata,
-)
+from .definition import AsyncInnerFunction, CallableFunction, ExceptionDecorator, node_metadata
 
 __all__ = ['action', 'condition']
 
@@ -16,12 +11,12 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
 
     Action is an awaitable closure of specified function.
 
-    # Parameters
-    target (CallableFunction): awaitable function
-    kwargs: optional kwargs argument to pass on target function
+    Args:
+        target (CallableFunction): awaitable function
+        kwargs: optional kwargs argument to pass on target function
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(properties=['target'])
@@ -39,14 +34,12 @@ def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
 
     Condition is an awaitable closure of specified function.
 
-    # Parameters
-    target (CallableFunction):  awaitable function which be evaluated as True/False.
-    kwargs: optional kwargs argument to pass on target function
+    Args:
+        target (CallableFunction):  awaitable function which be evaluated as True/False.
+        kwargs: optional kwargs argument to pass on target function
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
     """
 
-    return node_metadata(name='condition', properties=['target'])(
-        is_success(action(target=target, **kwargs))
-    )
+    return node_metadata(name='condition', properties=['target'])(is_success(action(target=target, **kwargs)))
