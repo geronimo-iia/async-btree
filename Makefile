@@ -26,8 +26,11 @@ debug-info:  ## Show poetry debug info
 	poetry debug:info
 
 # PROJECT DEPENDENCIES ########################################################
+directory = $(wildcard .git)
 
-install: .install .cache | $(directory) ## Install project dependencies
+.PHONY: install
+install: .install .cache $(directory) ## Install project dependencies
+	echo $(directory)
 
 .install: poetry.lock
 	poetry install -E curio
@@ -41,7 +44,6 @@ poetry.lock: pyproject.toml
 	@mkdir -p .cache
 
 # Install pre-commit only if we are in a git repository
-directory = $(wildcard ./.git)
 $(directory):
 	poetry run pre-commit install -f --install-hooks
 

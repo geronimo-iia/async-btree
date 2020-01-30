@@ -3,7 +3,7 @@
 API Reference
 =============
 
-Async Btree
+My Project
 ----------
 .. automodule:: async_btree
    :members:

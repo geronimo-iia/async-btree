@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "1.0.0"
+version = "1.0.1"
 description = "Async behavior tree"
 license = "MIT"
 authors = ["Jerome Guibert <jguibert@gmail.com>"]
