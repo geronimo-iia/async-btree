@@ -13,7 +13,6 @@ from async_btree import (
     stringify_analyze,
 )
 
-
 max_n = ContextVar("max_n", default=5)
 
 

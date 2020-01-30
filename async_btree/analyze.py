@@ -4,7 +4,6 @@ from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
 
 from .definition import CallableFunction, NodeMetadata
 
-
 __all__ = ["analyze", "stringify_analyze", "Node"]
 
 

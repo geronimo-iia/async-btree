@@ -8,7 +8,6 @@ from .definition import (
     node_metadata,
 )
 
-
 __all__ = ['action', 'condition']
 
 

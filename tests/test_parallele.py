@@ -1,7 +1,7 @@
 import pytest
-from curio import sleep
 
 from async_btree import FAILURE, parallele
+from curio import sleep
 
 
 async def a_func():

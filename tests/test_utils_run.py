@@ -1,8 +1,7 @@
 from contextvars import ContextVar
 
-from curio import Kernel
-
 from async_btree import run
+from curio import Kernel
 
 
 def test_run_curio(kernel):

@@ -16,7 +16,6 @@ Function signature of async function implementation:
 # from collections import namedtuple
 from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union
 
-
 __all__ = [
     'CallableFunction',
     'AsyncInnerFunction',

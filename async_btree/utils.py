@@ -10,7 +10,6 @@ from typing import (
     Union,
 )
 
-
 __all__ = ['amap', 'afilter', 'run']
 
 T = TypeVar('T')

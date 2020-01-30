@@ -10,7 +10,6 @@ from .definition import (
     node_metadata,
 )
 
-
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
 

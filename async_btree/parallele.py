@@ -11,7 +11,6 @@ from .definition import (
 )
 from .utils import amap
 
-
 __all__ = ['parallele']
 
 

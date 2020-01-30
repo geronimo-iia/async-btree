@@ -3,6 +3,7 @@
 import logging
 
 import pytest
+
 from curio import Kernel
 from curio.debug import logcrash, longblock
 from curio.monitor import Monitor

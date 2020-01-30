@@ -10,7 +10,6 @@ from .definition import (
     node_metadata,
 )
 
-
 __all__ = [
     'alias',
     'decorate',

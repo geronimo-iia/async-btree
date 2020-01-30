@@ -30,7 +30,7 @@ debug-info:  ## Show poetry debug info
 install: .install .cache | $(directory) ## Install project dependencies
 
 .install: poetry.lock
-	poetry install
+	poetry install -E curio
 	poetry check
 	@touch $@
 
