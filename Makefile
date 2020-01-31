@@ -26,15 +26,15 @@ debug-info:  ## Show poetry debug info
 	poetry debug:info
 
 # PROJECT DEPENDENCIES ########################################################
-directory = $(wildcard .git)
 
 .PHONY: install
-install: .install .cache $(directory) ## Install project dependencies
-	echo $(directory)
+install: .install .cache ## Install project dependencies
 
+GIT_DIR = .git
 .install: poetry.lock
 	poetry install -E curio
 	poetry check
+	@- test -d $(GIT_DIR) && poetry run pre-commit install -f --install-hooks
 	@touch $@
 
 poetry.lock: pyproject.toml
@@ -43,9 +43,6 @@ poetry.lock: pyproject.toml
 .cache:
 	@mkdir -p .cache
 
-# Install pre-commit only if we are in a git repository
-$(directory):
-	poetry run pre-commit install -f --install-hooks
 
 requirements.txt: poetry.lock ## Generate requirements.txt
 	poetry export --without-hashes -f requirements.txt > requirements.txt

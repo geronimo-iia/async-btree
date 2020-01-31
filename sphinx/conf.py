@@ -12,7 +12,9 @@
 #
 import os
 import sys
+
 import toml
+
 
 sys.path.append(os.path.dirname(__file__))
 sys.path.append(os.path.join(os.path.dirname(__name__), "..", "async_btree"))
@@ -49,6 +51,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.ifconfig",
     "m2r",
+    "autodocsumm",
 ]
 
 # Napoleon settings
@@ -63,6 +66,11 @@ napoleon_use_admonition_for_references = False
 napoleon_use_ivar = False
 napoleon_use_param = True
 napoleon_use_rtype = True
+
+# autodocsumm settings
+autodoc_default_options = {'autosummary': True}
+
+autodata_content = 'both'
 
 source_suffix = ['.rst', '.md']
 

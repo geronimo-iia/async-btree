@@ -7,5 +7,7 @@ Async Btree
 -----------
 
 .. automodule:: async_btree
-   :members:
-   :undoc-members:
+    :autosummary:
+    :members:
+    :undoc-members:
+    :show-inheritance:

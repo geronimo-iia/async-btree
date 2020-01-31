@@ -160,12 +160,12 @@
 
 <span class="sd">    Action is an awaitable closure of specified function.</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    target (CallableFunction): awaitable function</span>
-<span class="sd">    kwargs: optional kwargs argument to pass on target function</span>
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction): awaitable function</span>
+<span class="sd">        kwargs: optional kwargs argument to pass on target function</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
@@ -183,12 +183,12 @@
 
 <span class="sd">    Condition is an awaitable closure of specified function.</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    target (CallableFunction):  awaitable function which be evaluated as True/False.</span>
-<span class="sd">    kwargs: optional kwargs argument to pass on target function</span>
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction):  awaitable function which be evaluated as True/False.</span>
+<span class="sd">        kwargs: optional kwargs argument to pass on target function</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])(</span><span class="n">is_success</span><span class="p">(</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)))</span></div>

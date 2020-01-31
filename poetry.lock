@@ -60,6 +60,17 @@ tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.i
 
 [[package]]
 category = "dev"
+description = "Extended sphinx autodoc including automatic autosummaries"
+name = "autodocsumm"
+optional = false
+python-versions = "*"
+version = "0.1.11"
+
+[package.dependencies]
+sphinx = "*"
+
+[[package]]
+category = "dev"
 description = "Internationalization utilities"
 name = "babel"
 optional = false
@@ -981,7 +992,7 @@ testing = ["jaraco.itertools"]
 curio = ["curio"]
 
 [metadata]
-content-hash = "0b154f3368cb8e1b91cab4ec6ecc2b60f50b7119b3d88d3da3a1b2d649e856ab"
+content-hash = "60dfb3ee35a3f199e62b2112417c1caadf9a94a5d7ed0e5e58e3665c7d17daf9"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1008,6 +1019,9 @@ atomicwrites = [
 attrs = [
     {file = "attrs-19.3.0-py2.py3-none-any.whl", hash = "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"},
     {file = "attrs-19.3.0.tar.gz", hash = "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"},
+]
+autodocsumm = [
+    {file = "autodocsumm-0.1.11.tar.gz", hash = "sha256:d4ba2fe3a07d2e13165509c3e275f0e16b11e84c873adccaa1e31502a59c452a"},
 ]
 babel = [
     {file = "Babel-2.8.0-py2.py3-none-any.whl", hash = "sha256:d670ea0b10f8b723672d3a6abeb87b565b244da220d76b4dba1b66269ec152d4"},

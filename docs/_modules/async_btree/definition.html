@@ -149,13 +149,11 @@
   <h1>Source code for async_btree.definition</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Common definition.</span>
 
-<span class="sd">## CallableFunction Type</span>
+<span class="sd">CallableFunction Type:</span>
 
 <span class="sd">Specify something callable with or without async:</span>
 
 <span class="sd">```CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]```</span>
-
-<span class="sd">## AsyncInnerFunction Type</span>
 
 <span class="sd">Function signature of async function implementation:</span>
 
@@ -196,18 +194,18 @@
 <span class="sd">    This permit to return exception as a &#39;FAILURE&#39; status.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="ExceptionDecorator.__init__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">exception</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">exception</span></div>
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
+<div class="viewcode-block" id="ExceptionDecorator.__bool__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__bool__">[docs]</a>    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+<div class="viewcode-block" id="ExceptionDecorator.__repr__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ExceptionDecorator.__str__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="NodeMetadata"><a class="viewcode-back" href="../../api.html#async_btree.NodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">NodeMetadata</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -218,10 +216,10 @@
 
 <span class="sd">    This permit us to print or analyze all information of a behaviour tree.</span>
 
-<span class="sd">    # Attributes</span>
-<span class="sd">    name (str): named operation</span>
-<span class="sd">    properties (List[str]): a list of property name (an int value, ...).</span>
-<span class="sd">    edges (List[str]): a list of member name which act as edges (a child, ...).</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): named operation</span>
+<span class="sd">        properties (List[str]): a list of property name (an int value, ...).</span>
+<span class="sd">        edges (List[str]): a list of member name which act as edges (a child, ...).</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -240,15 +238,15 @@
 
 <span class="sd">    We add a property on decorated function named &#39;__node_metadata&#39;.</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    name (Optional[str]): override name of decorated function,</span>
-<span class="sd">        default is function name left striped with &#39;_&#39;</span>
-<span class="sd">    properties (Optional[List[str]]): a list of property name ([] as default)</span>
-<span class="sd">    edges (Optional[List[str]]): a list of edges name</span>
-<span class="sd">        ([&quot;child&quot;, &quot;children&quot;] as default)</span>
+<span class="sd">    Args:</span>
+<span class="sd">        name (Optional[str]): override name of decorated function,</span>
+<span class="sd">            default is function name left striped with &#39;_&#39;</span>
+<span class="sd">        properties (Optional[List[str]]): a list of property name ([] as default)</span>
+<span class="sd">        edges (Optional[List[str]]): a list of edges name</span>
+<span class="sd">            ([&quot;child&quot;, &quot;children&quot;] as default)</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    the decorator function</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        the decorator function</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 

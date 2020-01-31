@@ -163,16 +163,16 @@
 <span class="sd">    This simplify writing of mapping a function on something iterable</span>
 <span class="sd">    between &#39;async for ...&#39; and &#39;for...&#39; .</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    corofunc (Callable[[Any], Awaitable[T]]): coroutine function</span>
-<span class="sd">    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection</span>
-<span class="sd">        which will be applied.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        corofunc (Callable[[Any], Awaitable[T]]): coroutine function</span>
+<span class="sd">        iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection</span>
+<span class="sd">            which will be applied.</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    AsyncGenerator[T]: an async iterator of corofunc(item)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        AsyncGenerator[T]: an async iterator of corofunc(item)</span>
 
-<span class="sd">    # Example</span>
-<span class="sd">    ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```</span>
+<span class="sd">    Example:</span>
+<span class="sd">        ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">AsyncIterable</span><span class="p">):</span>  <span class="c1"># if hasattr(iterable, &#39;__aiter__&#39;):</span>
@@ -191,16 +191,16 @@
 <span class="sd">    This simplify writing of filtering by a function on something iterable</span>
 <span class="sd">    between &#39;async for ...&#39; and &#39;for...&#39; .</span>
 
-<span class="sd">    # Parameters</span>
-<span class="sd">    corofunc (Callable[[Any], Awaitable[bool]]): filter async function</span>
-<span class="sd">    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection</span>
-<span class="sd">        which will be applied.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        corofunc (Callable[[Any], Awaitable[bool]]): filter async function</span>
+<span class="sd">        iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection</span>
+<span class="sd">            which will be applied.</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">    (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True</span>
 
-<span class="sd">    # Example</span>
-<span class="sd">    ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```</span>
+<span class="sd">    Example:</span>
+<span class="sd">        ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">AsyncIterable</span><span class="p">):</span>  <span class="c1"># if hasattr(iterable, &#39;__aiter__&#39;):</span>

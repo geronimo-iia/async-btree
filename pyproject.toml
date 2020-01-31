@@ -75,6 +75,7 @@ xdoctest = "^0.11.0" # A rewrite of the builtin doctest module
 sphinx = "^2.3.1"
 sphinx_rtd_theme = "^0.4.3"
 m2r = "^0.2.1"  # M2R converts a markdown file including reStructuredText (rst)
+autodocsumm = "*"
 
 [tool.black]
 # see https://black.readthedocs.io/en/stable/
@@ -88,11 +89,13 @@ not_skip = "__init__.py"
 multi_line_output = 3
 known_standard_library = "dataclasses,typing_extensions"
 known_first_party = "async_btree"
+known_third_party = ["curio", "pkg_resources", "pytest", "toml"]
 combine_as_imports = true
 force_grid_wrap = false
 include_trailing_comma = true
 lines_after_imports = 2
 line_length = 120
+
 
 [build-system]
 requires = ["poetry>=1.0.0"]

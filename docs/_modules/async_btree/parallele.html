@@ -170,12 +170,12 @@
 
 <span class="sd">        if #failure = len(children) - succes_threshold, return a failure</span>
 
-<span class="sd">        # Parameters</span>
-<span class="sd">        children (List[CallableFunction]): list of Awaitable</span>
-<span class="sd">        succes_threshold (int): succes threshold value, default len(children)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            children (List[CallableFunction]): list of Awaitable</span>
+<span class="sd">            succes_threshold (int): succes threshold value, default len(children)</span>
 
-<span class="sd">        # Returns</span>
-<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (AsyncInnerFunction): an awaitable function.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">succes_threshold</span> <span class="o">=</span> <span class="n">succes_threshold</span> <span class="k">if</span> <span class="n">succes_threshold</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>

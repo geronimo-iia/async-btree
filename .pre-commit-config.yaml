@@ -1,5 +1,5 @@
 default_language_version:
-    python: python3.7
+  python: python3.7
 repos:
   - repo: https://github.com/asottile/seed-isort-config
     rev: v1.9.2
@@ -18,12 +18,4 @@ repos:
     rev: 3.7.8
     hooks:
       - id: flake8
-        additional_dependencies: ['flake8-docstrings', 'darglint']
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
-    hooks:
-      - id: trailing-whitespace
-        exclude: ^tests/.*/fixtures/.*
-      - id: end-of-file-fixer
-        exclude: ^tests/.*/fixtures/.*
-      - id: debug-statements
+        additional_dependencies: ["flake8-docstrings", "darglint"]
