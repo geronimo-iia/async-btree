@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.0.1
+## 1.0.1 (2020-01-31)
 
 - update from template-python
 - use poetry 1.0.x
