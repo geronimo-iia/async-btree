@@ -1,8 +1,9 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
+from typing import Any, Callable, List, NamedTuple, Optional, Tuple, no_type_check
 
 from .definition import CallableFunction, NodeMetadata
+
 
 __all__ = ["analyze", "stringify_analyze", "Node"]
 
@@ -35,6 +36,20 @@ class Node(NamedTuple):
         return stringify_analyze(target=self)
 
 
+def _get_analyze_edges(nonlocals) -> Callable:
+
+    return _get_analyze_edges
+
+
+@no_type_check
+def _get_node_metadata(target: CallableFunction) -> NodeMetadata:
+    """Returns node metadata instance associated with target."""
+    node = target.__node_metadata
+    if not isinstance(node, NodeMetadata):
+        raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
+    return node
+
+
 # pylint: disable=protected-access
 @no_type_check  # it's a shortcut for hasattr ...
 def analyze(target: CallableFunction) -> Node:
@@ -49,16 +64,19 @@ def analyze(target: CallableFunction) -> Node:
 
     nonlocals = getclosurevars(target).nonlocals
 
+    def _get_nonlocals_value_for(name):
+        return nonlocals[name] if name in nonlocals else None
+
     def _analyze_property(p):
         """Return a tuple (name, value) or (name, function name) as property."""
-        value = nonlocals[p] if p in nonlocals else None
+        value = _get_nonlocals_value_for(name=p)
         return p, value.__name__ if value and callable(value) else value
 
     def _analyze_edges(egde_name):
         """Lookup children node from egde_name local var."""
         value = None
-        if egde_name in nonlocals and nonlocals[egde_name]:
-            edge = nonlocals[egde_name]
+        edge = _get_nonlocals_value_for(name=egde_name)
+        if edge:
             # it could be a collection of node
             if hasattr(edge, "__iter__"):
                 value = list(map(analyze, edge))
@@ -67,10 +85,7 @@ def analyze(target: CallableFunction) -> Node:
         return (egde_name, value)
 
     if hasattr(target, "__node_metadata"):
-        # its a node construct.
-        node = target.__node_metadata
-        if not isinstance(node, NodeMetadata):
-            raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
+        node = _get_node_metadata(target=target)
         return Node(
             name=node.name,
             properties=list(map(_analyze_property, node.properties)),
