@@ -1,210 +1,141 @@
 # Project settings
-PROJECT := async-btree
 PACKAGE := async_btree
 REPOSITORY := geronimo-iia/async-btree
-
-# Project paths
 PACKAGES := $(PACKAGE) tests
-CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
-# Virtual environment paths
-VIRTUAL_ENV ?= .venv
-RUN := poetry run
+# uncomment if you wanna disable test coverage
+# DISABLE_COVERAGE
 
 # MAIN TASKS ##################################################################
-
-SNIFFER := $(RUN) sniffer
 
 .PHONY: all
 all: install
 
 .PHONY: ci
-ci: format check test ## Run all tasks that determine CI status
-
-.PHONY: watch
-watch: install .clean-test ## Continuously run all CI tasks when files chanage
-	$(SNIFFER)
+ci: check test ## Run all tasks that determine CI status
 
 # SYSTEM DEPENDENCIES #########################################################
 
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
-	bin/verchew
+	tools/verchew
+
+.PHONY: debug-info
+debug-info:  ## Show poetry debug info
+	poetry debug:info
 
 # PROJECT DEPENDENCIES ########################################################
 
-DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
-
 .PHONY: install
-install: .venv $(DEPENDENCIES) .cache 
+install: .install .cache ## Install project dependencies
 
-$(DEPENDENCIES): poetry.lock
-	@ poetry config settings.virtualenvs.in-project false
-	@ poetry install -E curio
-	@ touch $@
+GIT_DIR = .git
+.install: poetry.lock
+	poetry install -E curio
+	poetry check
+	@- test -d $(GIT_DIR) && poetry run pre-commit install -f --install-hooks
+	@touch $@
 
 poetry.lock: pyproject.toml
 	poetry lock
-	@ touch $@
 
 .cache:
-	@ mkdir -p .cache
+	@mkdir -p .cache
 
-.venv:
-	@ mkdir -p $(VIRTUAL_ENV)
+
+requirements.txt: poetry.lock ## Generate requirements.txt
+	poetry export --without-hashes -f requirements.txt > requirements.txt
+
 
 # CHECKS ######################################################################
 
-ISORT := $(RUN) isort
-PYLINT := $(RUN) pylint
-FLAKE := $(RUN) flake8
-BLACK := $(RUN) black
-MYPI := $(RUN) mypy
-PYCODESTYLE := $(RUN) pycodestyle
-PYDOCSTYLE := $(RUN) pydocstyle
-
-
 .PHONY: check
-check: isort black flake mypy pydocstyle ## Run linters and static analysis
-
-.PHONY: isort
-isort: install
-	$(ISORT) $(PACKAGES) --recursive --apply
-
-.PHONY: black
-black: install
-	$(BLACK) $(PACKAGES) 
-
-.PHONY: pylint
-pylint: install
-	$(PYLINT) $(PACKAGE)
-
-.PHONY: mypy
-mypy: install
-	$(MYPI) $(PACKAGE)  --config-file=.mypy.ini
-
-.PHONY: pydocstyle
-pydocstyle: install
-	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
-
-.PHONY: flake
-flake: install ## Run flake8 linters
-	$(FLAKE) $(PACKAGES)
-
+check: install   ## Run linters and static analysis
+	poetry run isort $(PACKAGES) --recursive --apply
+	poetry run black $(PACKAGES)
+	poetry run flake8 $(PACKAGES)
+	poetry run pydocstyle $(PACKAGES) $(wildcard *.py)
+	poetry run mypy $(PACKAGE)
 
 # TESTS #######################################################################
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
-
 PYTEST_OPTIONS := --random --random-seed=$(RANDOM_SEED)
 ifdef DISABLE_COVERAGE
-PYTEST_OPTIONS += --no-cov --disable-warnings
+	PYTEST_OPTIONS += --no-cov --disable-warnings
 endif
-PYTEST_RERUN_OPTIONS := --last-failed --exitfirst
 
 .PHONY: test
 test: install ## Run unit tests
-	@ if test -e $(FAILURES); then $(RUN) pytest tests $(PYTEST_RERUN_OPTIONS); fi
-	@ rm -rf $(FAILURES)
-	$(RUN) pytest tests $(PYTEST_OPTIONS)
-	$(RUN) coveragespace $(REPOSITORY) overall
 
-.PHONY: read-coverage
-read-coverage:
-	bin/open htmlcov/index.html
+	@if test -e $(FAILURES); then poetry run pytest tests --last-failed --exitfirst; fi
+	@rm -rf $(FAILURES)
+	poetry run pytest tests $(PYTEST_OPTIONS)
+ifndef DISABLE_COVERAGE
+	@echo  "coverage report is located at htmlcov/index.html"
+endif
 
-# DOCUMENTATION ###############################################################
-
-DOCS_PATH = "mkdocs/docs"
-
-mkdocs-uml: # Generate UML Diagram
-	@mkdir -p $(DOCS_PATH)/uml
-	@$(RUN) pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png $(DOCS_PATH)/uml/classes.png
-	- mv -f packages_$(PACKAGE).png $(DOCS_PATH)/uml/packages.png
-
-mkdocs-api: # Generate API documentation
-	@mkdir -p $(DOCS_PATH)/api
-	@cd $(DOCS_PATH)/api && \
-		$(RUN) pydocmd simple async_btree.definition+ > definition.md && \
-		$(RUN) pydocmd simple async_btree.analyze async_btree.stringify_analyze async_btree.Node > analyze.md && \
-		$(RUN) pydocmd simple async_btree.control+ > control.md && \
-		$(RUN) pydocmd simple async_btree.decorator+ > decorator.md  && \
-		$(RUN) pydocmd simple async_btree.leaf+ > leaf.md && \
-		$(RUN) pydocmd simple async_btree.parallele+ > parallele.md && \
-		$(RUN) pydocmd simple async_btree.utils+ > utils.md
-
-mkdocs-md: # Copy standard document
-	@cp -f README.md $(DOCS_PATH)/index.md
-	@cp -f LICENSE.md $(DOCS_PATH)/license.md
-	@cp -f CHANGELOG.md $(DOCS_PATH)/changelog.md
-	@cp -f CODE_OF_CONDUCT.md $(DOCS_PATH)/code_of_conduct.md
-
-mkdocs-site: mkdocs-uml mkdocs-api mkdocs-md # Build Documentation Site
-	@cd mkdocs && $(RUN) mkdocs build
-
-mkdocs-github-page: mkdocs-site # Move generated docs under /docs
-	@rm -rf docs/
-	@mv mkdocs/site docs/
-
-.clean-docs: # remove all generated files
-	@rm -rf mkdocs/site
-	@rm -rf $(DOCS_PATH)/uml
-	@rm -rf $(DOCS_PATH)/api
-	@rm -rf $(DOCS_PATH)/index.md
-	@rm -rf $(DOCS_PATH)/license.md
-	@rm -rf $(DOCS_PATH)/changelog.md
-	@rm -rf $(DOCS_PATH)/code_of_conduct.md
-
-.PHONY: docs
-docs: mkdocs-github-page .clean-docs ## Generate documentation and UML
 
 # BUILD #######################################################################
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
 
-.PHONY: dist
-dist: install check test $(DIST_FILES)
+.PHONY: build
+build: install check test $(DIST_FILES) ## Builds the source and wheels archives
 $(DIST_FILES): $(MODULES) pyproject.toml
-	rm -f $(DIST_FILES)
+	@rm -f $(DIST_FILES)
 	poetry build
 
 # RELEASE #####################################################################
 
-.PHONY: upload
-upload: dist ## Upload the current version to PyPI
-	git diff --name-only --exit-code
+.PHONY: publish
+publish: build ## Publishes the package, previously built with the build command, to the remote repository
+	@git diff --name-only --exit-code
 	poetry publish
-	bin/open https://pypi.org/project/$(PROJECT)
+	PROJECT_RELEASE := $$(sed -n -E "s/__version__ = '(.+)'/\1/p" async_btree/__version__.py)
+	@git tag "v$(PROJECT_RELEASE)"
+	@git push origin "v$(PROJECT_RELEASE)"
+	@tools/open https://pypi.org/project/async-btree
+
+
+# DOC #########################################################################
+
+SPHINX_BUILD_DIR = .cache/sphinx
+.PHONY: docs
+docs:  ## Build and publish sit documentation.
+	@mkdir -p $(SPHINX_BUILD_DIR)
+	@poetry run sphinx-build -M html "sphinx" "$(SPHINX_BUILD_DIR)"
+	@rm -rf docs/
+	@mv $(SPHINX_BUILD_DIR)/html docs/
+
 
 # CLEANUP #####################################################################
 
 .PHONY: clean
-clean: .clean-build .clean-test .clean-install .clean-docs ## Delete all generated and temporary files
+clean:  ## Delete all generated and temporary files
+	@rm -rf *.spec dist build .eggs *.egg-info .install
+	@rm -rf .cache .pytest .coverage htmlcov
+	@find $(PACKAGES) -name '__pycache__' -delete
+	@rm -rf *.egg-info
 
-.PHONY: clean-all
-clean-all: clean
-	rm -rf $(VIRTUAL_ENV)
+# UPDATE TEMPLATE ############################################################
 
-.PHONY: .clean-install
-.clean-install:
-	find $(PACKAGES) -name '__pycache__' -delete
-	rm -rf *.egg-info
+.PHONY: update-from-template
 
-.PHONY: .clean-test
-.clean-test:
-	rm -rf .cache .pytest .coverage htmlcov
+update-from-template:  ## Update project from template
+	@git diff --name-only --exit-code
+	@cookiecutter gh:geronimo-iia/template-python --output-dir .. --config-file .cookiecutter.yaml --no-input --overwrite-if-exists
+	@git status # shows lots of overridden files
+	@git add . -p # walk through patchsets, selecting files for adding
+	@git commit -m "Updated from template."
 
-.PHONY: .clean-build
-.clean-build:
-	rm -rf *.spec dist build
 
 # HELP ########################################################################
 
 .PHONY: help
 help: all
-	@ grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help

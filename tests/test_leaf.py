@@ -5,13 +5,9 @@ def test_condition(kernel):
     async def target_test(value):
         return value
 
-    assert kernel.run(
-        condition(target_test, value=True)
-    )  # pylint: disable=unexpected-keyword-arg
+    assert kernel.run(condition(target_test, value=True))  # pylint: disable=unexpected-keyword-arg
 
-    assert not kernel.run(
-        condition(target_test, value=False)
-    )  # pylint: disable=unexpected-keyword-arg
+    assert not kernel.run(condition(target_test, value=False))  # pylint: disable=unexpected-keyword-arg
 
 
 def test_action_with_exception_is_falsy(kernel):

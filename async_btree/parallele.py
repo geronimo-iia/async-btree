@@ -2,15 +2,8 @@
 
 from typing import List
 
-from .definition import (
-    FAILURE,
-    SUCCESS,
-    AsyncInnerFunction,
-    CallableFunction,
-    node_metadata,
-)
+from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
 from .utils import amap
-
 
 __all__ = ['parallele']
 
@@ -18,9 +11,7 @@ __all__ = ['parallele']
 try:
     from curio import gather, spawn
 
-    def parallele(
-        children: List[CallableFunction], succes_threshold: int = -1
-    ) -> AsyncInnerFunction:
+    def parallele(children: List[CallableFunction], succes_threshold: int = -1) -> AsyncInnerFunction:
         """Return an awaitable function which run children in parallele.
 
         `succes_threshold` parameter generalize traditional sequence/fallback,
@@ -30,12 +21,12 @@ try:
 
         if #failure = len(children) - succes_threshold, return a failure
 
-        # Parameters
-        children (List[CallableFunction]): list of Awaitable
-        succes_threshold (int): succes threshold value, default len(children)
+        Args:
+            children (List[CallableFunction]): list of Awaitable
+            succes_threshold (int): succes threshold value, default len(children)
 
-        # Returns
-        (AsyncInnerFunction): an awaitable function.
+        Returns:
+            (AsyncInnerFunction): an awaitable function.
 
         """
         succes_threshold = succes_threshold if succes_threshold != -1 else len(children)

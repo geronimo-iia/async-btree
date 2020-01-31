@@ -2,17 +2,7 @@ from contextvars import ContextVar
 
 import pytest
 
-from async_btree import (
-    action,
-    alias,
-    analyze,
-    inverter,
-    repeat_until,
-    retry,
-    sequence,
-    stringify_analyze,
-)
-
+from async_btree import action, alias, analyze, inverter, repeat_until, retry, sequence, stringify_analyze
 
 max_n = ContextVar("max_n", default=5)
 
@@ -32,18 +22,13 @@ def hello():  # we could define it as sync or async
 
 def test_node_str():
     node = analyze(alias(child=action(target=hello), name='a test'))
-    printed_tree = (
-        """ --> a test:\n     --(child)--> action:\n                  target: hello\n"""
-    )
+    printed_tree = """ --> a test:\n     --(child)--> action:\n                  target: hello\n"""
     assert str(node) == printed_tree
 
 
 def test_analyze_tree_1():
 
-    tree_1 = alias(
-        child=repeat_until(child=action(hello), condition=success_until_zero),
-        name="btree_1",
-    )
+    tree_1 = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name="btree_1")
 
     a_tree_1 = analyze(tree_1)
 
@@ -80,8 +65,7 @@ def test_analyze_sequence():
     a_tree = analyze(
         alias(
             child=repeat_until(
-                child=sequence(children=[action(hello), action(hello), action(hello)]),
-                condition=success_until_zero,
+                child=sequence(children=[action(hello), action(hello), action(hello)]), condition=success_until_zero
             ),
             name="btree_1",
         )

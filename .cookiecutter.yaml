@@ -1,0 +1,17 @@
+default_context:
+  email: jguibert@gmail.com
+  full_name: Jerome Guibert
+  github_repo: async-btree
+  github_username: geronimo-iia
+  max_code_line_length: 120
+  package_name: async_btree
+  project_name: async-btree
+  project_short_description: Async behavior tree.
+  project_slug: async-btree
+  python_major_version: 3
+  python_minor_version: 7
+  use_coveragespace: 1
+  use_scrutinizer: 1
+  year: 2019
+_extensions:
+  - "jinja2_time.TimeExtension"

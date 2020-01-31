@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>async_btree.analyze &mdash; async_btree 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> async_btree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">async_btree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>async_btree.analyze</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for async_btree.analyze</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Analyze definition.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getclosurevars</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">no_type_check</span>
+
+<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">NodeMetadata</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;analyze&quot;</span><span class="p">,</span> <span class="s2">&quot;stringify_analyze&quot;</span><span class="p">,</span> <span class="s2">&quot;Node&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../api.html#async_btree.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Node aggregate node definition implemented with NamedTuple.</span>
+
+<span class="sd">    A Node is used to keep information on name, properties, and relations ship</span>
+<span class="sd">    between a hierachical construct of functions.</span>
+<span class="sd">    It&#39;s like an instance of NodeMetadata.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): named operation.</span>
+<span class="sd">        properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.</span>
+<span class="sd">        edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for</span>
+<span class="sd">            definition.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Edges attribut should be edges: ```List[Tuple[str, List[&#39;Node&#39;]]]```</span>
+<span class="sd">        But it is impossible for now, see [mypy issues 731](https://github.com/python/mypy/issues/731)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="c1"># edges: List[Tuple[str, List[&#39;Node&#39;]]]</span>
+    <span class="c1"># https://github.com/python/mypy/issues/731</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span>
+
+<div class="viewcode-block" id="Node.__str__"><a class="viewcode-back" href="../../api.html#async_btree.Node.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># pylint: disable=protected-access</span>
+<div class="viewcode-block" id="analyze"><a class="viewcode-back" href="../../api.html#async_btree.analyze">[docs]</a><span class="nd">@no_type_check</span>  <span class="c1"># it&#39;s a shortcut for hasattr ...</span>
+<span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Analyze specified target and return a Node representation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction): async function to analyze.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Node): a node instance representation of target function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">nonlocals</span> <span class="o">=</span> <span class="n">getclosurevars</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">nonlocals</span>
+
+    <span class="k">def</span> <span class="nf">_analyze_property</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a tuple (name, value) or (name, function name) as property.&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nonlocals</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">callable</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_analyze_edges</span><span class="p">(</span><span class="n">egde_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Lookup children node from egde_name local var.&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">egde_name</span> <span class="ow">in</span> <span class="n">nonlocals</span> <span class="ow">and</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">egde_name</span><span class="p">]:</span>
+            <span class="n">edge</span> <span class="o">=</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">egde_name</span><span class="p">]</span>
+            <span class="c1"># it could be a collection of node</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span> <span class="n">edge</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># or a single node</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">analyze</span><span class="p">(</span><span class="n">edge</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">egde_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;__node_metadata&quot;</span><span class="p">):</span>
+        <span class="c1"># its a node construct.</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">__node_metadata</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">NodeMetadata</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attr __node_metadata of </span><span class="si">{target}</span><span class="s1"> is not a NodeMetadata!&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Node</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">properties</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_analyze_property</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">properties</span><span class="p">)),</span>
+            <span class="n">edges</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">_analyze_edges</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">edges</span><span class="p">))),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># simple function</span>
+    <span class="k">return</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;anonymous&quot;</span><span class="p">,</span>
+        <span class="n">properties</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_analyze_property</span><span class="p">,</span> <span class="n">nonlocals</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span>
+        <span class="n">edges</span><span class="o">=</span><span class="p">[],</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="stringify_analyze"><a class="viewcode-back" href="../../api.html#async_btree.stringify_analyze">[docs]</a><span class="k">def</span> <span class="nf">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Stringify node representation of specified target.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction): async function to analyze.</span>
+<span class="sd">        indent (int): level identation (default to zero).</span>
+<span class="sd">        label (Optional[str]): label of current node (default None).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (str): a string node representation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_ident</span> <span class="o">=</span> <span class="s1">&#39;    &#39;</span>
+    <span class="n">_space</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;{_ident * indent} &#39;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{_space}</span><span class="s1">--(</span><span class="si">{label}</span><span class="s1">)--&gt; </span><span class="si">{target.name}</span><span class="s1">:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">_space</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{_ident}</span><span class="s2">{&#39; &#39; * len(label)}&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{_space}</span><span class="s1">--&gt; </span><span class="si">{target.name}</span><span class="s1">:</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{_space}</span><span class="s1">    </span><span class="si">{k}</span><span class="s1">: </span><span class="si">{v}</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">for</span> <span class="n">_label</span><span class="p">,</span> <span class="n">children</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">children</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">child</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">indent</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">_label</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jerome Guibert
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

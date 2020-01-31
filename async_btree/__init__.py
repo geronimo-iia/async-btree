@@ -1,3 +1,4 @@
+"""Declare async btree api."""
 from pkg_resources import DistributionNotFound, get_distribution
 
 from .analyze import Node, analyze, stringify_analyze

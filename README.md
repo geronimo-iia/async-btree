@@ -1,7 +1,7 @@
 # Async Behaviour Tree for Python
 
 
-[![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.org/geronimo-iia/async-btree)
+[![Unix Build Status](https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix)](https://travis-ci.com/geronimo-iia/async-btree)
 [![Coverage Status](https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg)](https://coveralls.io/r/geronimo-iia/async-btree)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe669a02b4aa46b5b1faf619ba2bf382)](https://www.codacy.com/app/geronimo-iia/async-btree?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=geronimo-iia/async-btree&amp;utm_campaign=Badge_Grade)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/geronimo-iia/async-btree.svg)](https://scrutinizer-ci.com/g/geronimo-iia/async-btree/?branch=master)
@@ -108,14 +108,7 @@ As curio say:
 
 Personaly, after few time of testing and reading curio code, I'm pretty addict.
 
-
-## Setup
-
-### Requirements
-
-* Python 3.7+
-
-### Installation
+## Installation
 
 Install this library directly into an activated virtual environment:
 
@@ -139,18 +132,4 @@ $ python
 >>> async_btree.__version__
 ```
 
-See [Api documentation](https://geronimo-iia.github.io/async-btree/api-overview)
-
-## License
-
-[The MIT License (MIT)](https://geronimo-iia.github.io/async-btree/license)
-
-
-## Contributing
-
-See [Contributing](https://geronimo-iia.github.io/async-btree/contributing)
-
-## TODO
-
-- add examples
-
+See [documentation](https://geronimo-iia.github.io/async-btree).

@@ -1,15 +1,7 @@
 """Decorator module define all decorator function node."""
 from typing import Any
 
-from .definition import (
-    FAILURE,
-    SUCCESS,
-    AsyncInnerFunction,
-    CallableFunction,
-    ExceptionDecorator,
-    node_metadata,
-)
-
+from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, ExceptionDecorator, node_metadata
 
 __all__ = [
     'alias',
@@ -28,12 +20,12 @@ __all__ = [
 def alias(child: CallableFunction, name: str) -> AsyncInnerFunction:
     """Define an alias on our child.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
-    name (str): name of function tree
+    Args:
+        child (CallableFunction): child function to decorate
+        name (str): name of function tree
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(name=name)
@@ -43,9 +35,7 @@ def alias(child: CallableFunction, name: str) -> AsyncInnerFunction:
     return _alias
 
 
-def decorate(
-    child: CallableFunction, decorator: CallableFunction, **kwargs
-) -> AsyncInnerFunction:
+def decorate(child: CallableFunction, decorator: CallableFunction, **kwargs) -> AsyncInnerFunction:
     """Create a decorator.
 
     Post process a child with specified decorator function.
@@ -53,14 +43,14 @@ def decorate(
 
     This method implement a simple lazy evaluation.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
-    decorator (CallableFunction): awaitable target decorator
-    kwargs: optional keyed argument to pass to decorator function
+    Args:
+        child (CallableFunction): child function to decorate
+        decorator (CallableFunction): awaitable target decorator
+        kwargs: optional keyed argument to pass to decorator function
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which
-        return decorator evaluation against child.
+    Returns:
+      (AsyncInnerFunction): an awaitable function which
+            return decorator evaluation against child.
     """
 
     @node_metadata(properties=['decorator'])
@@ -73,12 +63,12 @@ def decorate(
 def always_success(child: CallableFunction) -> AsyncInnerFunction:
     """Create a node which always return SUCCESS value.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which return child result if is truthy
-        else SUCCESS (Any exception will be ignored).
+    Returns:
+        (AsyncInnerFunction): an awaitable function which return child result if is truthy
+            else SUCCESS (Any exception will be ignored).
 
     """
 
@@ -102,12 +92,12 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
 def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitable:
     """Produce a function which always return FAILURE value.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which return child result if is falsy
-        else FAILURE, or a ControlFlowException if error occurs.
+    Returns:
+        (AsyncInnerFunction): an awaitable function which return child result if is falsy
+            else FAILURE, or a ControlFlowException if error occurs.
 
     """
 
@@ -131,13 +121,13 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
 def is_success(child: CallableFunction) -> AsyncInnerFunction:
     """Create a conditional node which test if child success.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which return SUCCESS if child
-        return SUCCESS else FAILURE.
-        An exception will be evaluated as falsy.
+    Returns:
+        (AsyncInnerFunction): an awaitable function which return SUCCESS if child
+            return SUCCESS else FAILURE.
+            An exception will be evaluated as falsy.
     """
 
     @node_metadata()
@@ -153,13 +143,13 @@ def is_success(child: CallableFunction) -> AsyncInnerFunction:
 def is_failure(child: CallableFunction) -> AsyncInnerFunction:
     """Create a conditional node which test if child fail.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which return SUCCESS if child
-        return FAILURE else FAILURE.
-        An exception will be evaluated as a success.
+    Returns:
+        (AsyncInnerFunction): an awaitable function which return SUCCESS if child
+            return FAILURE else FAILURE.
+            An exception will be evaluated as a success.
     """
 
     @node_metadata()
@@ -175,12 +165,12 @@ def is_failure(child: CallableFunction) -> AsyncInnerFunction:
 def inverter(child: CallableFunction) -> AsyncInnerFunction:
     """Invert node status.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which return SUCCESS if child
-        return FAILURE else SUCCESS
+    Returns:
+        (AsyncInnerFunction): an awaitable function which return SUCCESS if child
+            return FAILURE else SUCCESS
     """
 
     @node_metadata()
@@ -193,14 +183,14 @@ def inverter(child: CallableFunction) -> AsyncInnerFunction:
 def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
     """Retry child evaluation at most max_retry time on failure until child succeed.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
-    max_retry (int): max retry count (default 3), -1 mean infinite retry
+    Args:
+        child (CallableFunction): child function to decorate
+        max_retry (int): max retry count (default 3), -1 mean infinite retry
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which retry child evaluation
-        at most max_retry time on failure until child succeed.
-        If max_retry is reached, returns FAILURE or last exception.
+    Returns:
+        (AsyncInnerFunction): an awaitable function which retry child evaluation
+            at most max_retry time on failure until child succeed.
+            If max_retry is reached, returns FAILURE or last exception.
     """
     if not (max_retry > 0 or max_retry == -1):
         raise AssertionError('max_retry')
@@ -217,9 +207,7 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
 
             except Exception as e:
                 # return last failure exception
-                if (
-                    not infinite_retry_condition
-                ):  # avoid data allocation if never returned
+                if not infinite_retry_condition:  # avoid data allocation if never returned
                     result = ExceptionDecorator(e)
 
             retry_count += 1
@@ -232,12 +220,12 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
 def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
     """Retry child until success.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which try to evaluate child
-        until it succeed.
+    Returns:
+        (AsyncInnerFunction): an awaitable function which try to evaluate child
+            until it succeed.
     """
 
     # @node_metadata()
@@ -250,14 +238,12 @@ def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
 def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
     """Retry child until failed.
 
-    # Parameters
-    child (CallableFunction): child function to decorate
+    Args:
+        child (CallableFunction): child function to decorate
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function which try to evaluate child
-        until it failed.
+    Returns:
+        (AsyncInnerFunction): an awaitable function which try to evaluate child
+            until it failed.
     """
 
-    return node_metadata(name='retry_until_failed')(
-        retry(child=inverter(child), max_retry=-1)
-    )
+    return node_metadata(name='retry_until_failed')(retry(child=inverter(child), max_retry=-1))

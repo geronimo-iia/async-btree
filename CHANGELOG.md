@@ -1,4 +1,11 @@
-# 1.0.0 (2019-09-01)
+# Change Log
+
+## 1.0.1 (2020-01-31)
+
+- update from template-python
+- use poetry 1.0.x
+
+## 1.0.0 (2019-09-01)
 
 - rework documentation build process (see mkdocs folder)
 - configure github page under master/docs
@@ -7,16 +14,16 @@
 - standardize parameter name
 - fix dev documentation dependency
 
-# 0.1.2 (2019-07-05)
+## 0.1.2 (2019-07-05)
 
 - Stable version flag
 - Remove alpha note
 
-# 0.1.1 (2019-07-05)
+## 0.1.1 (2019-07-05)
 
 Removed version due to configuration error.
 
-# 0.1.0 (2019-07-05)
+## 0.1.0 (2019-07-05)
 
 - Added Project Management: 
 - initial project structure based on [jacebrowning/template-python](https://github.com/jacebrowning/template-python)

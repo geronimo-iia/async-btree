@@ -1,15 +1,5 @@
 """Utility function."""
-from typing import (
-    Any,
-    AsyncGenerator,
-    AsyncIterable,
-    Awaitable,
-    Callable,
-    Iterable,
-    TypeVar,
-    Union,
-)
-
+from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
 
 __all__ = ['amap', 'afilter', 'run']
 
@@ -24,16 +14,16 @@ async def amap(
     This simplify writing of mapping a function on something iterable
     between 'async for ...' and 'for...' .
 
-    # Parameters
-    corofunc (Callable[[Any], Awaitable[T]]): coroutine function
-    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
-        which will be applied.
+    Args:
+        corofunc (Callable[[Any], Awaitable[T]]): coroutine function
+        iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
+            which will be applied.
 
-    # Returns
-    AsyncGenerator[T]: an async iterator of corofunc(item)
+    Returns:
+        AsyncGenerator[T]: an async iterator of corofunc(item)
 
-    # Example
-    ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
+    Example:
+        ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
 
     """
     if isinstance(iterable, AsyncIterable):  # if hasattr(iterable, '__aiter__'):
@@ -52,16 +42,16 @@ async def afilter(
     This simplify writing of filtering by a function on something iterable
     between 'async for ...' and 'for...' .
 
-    # Parameters
-    corofunc (Callable[[Any], Awaitable[bool]]): filter async function
-    iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
-        which will be applied.
+    Args:
+        corofunc (Callable[[Any], Awaitable[bool]]): filter async function
+        iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection
+            which will be applied.
 
-    # Returns
-    (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True
+    Returns:
+        (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True
 
-    # Example
-    ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
+    Example:
+        ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
 
     """
     if isinstance(iterable, AsyncIterable):  # if hasattr(iterable, '__aiter__'):

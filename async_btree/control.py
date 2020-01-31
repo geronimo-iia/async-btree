@@ -2,21 +2,12 @@
 from typing import Any, List, Optional
 
 from .decorator import is_success
-from .definition import (
-    FAILURE,
-    AsyncInnerFunction,
-    CallableFunction,
-    ExceptionDecorator,
-    node_metadata,
-)
-
+from .definition import FAILURE, AsyncInnerFunction, CallableFunction, ExceptionDecorator, node_metadata
 
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
 
-def sequence(
-    children: List[CallableFunction], succes_threshold: int = -1
-) -> AsyncInnerFunction:
+def sequence(children: List[CallableFunction], succes_threshold: int = -1) -> AsyncInnerFunction:
     """Return a function which execute children in sequence.
 
     succes_threshold parameter generalize traditional sequence/fallback and
@@ -30,15 +21,15 @@ def sequence(
      - an array of previous result when success
      - last failure when fail
 
-    # Parameters
-    children (List[CallableFunction]): list of Awaitable
-    succes_threshold (int): succes threshold value
+    Args:
+        children (List[CallableFunction]): list of Awaitable
+        succes_threshold (int): succes threshold value
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
 
-    # Exceptions
-    AssertionError if succes_threshold is invalid
+    Raises:
+        (AssertionError): if succes_threshold is invalid
     """
     succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
     if not (0 <= succes_threshold <= len(children)):
@@ -82,16 +73,14 @@ def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
     Often named 'selector', children can be seen as an ordered list
         starting from higthest priority to lowest priority.
 
-    # Parameters
-    children (List[CallableFunction]): list of Awaitable
+    Args:
+        children (List[CallableFunction]): list of Awaitable
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
     """
 
-    return node_metadata(name='fallback')(
-        sequence(children, succes_threshold=min(1, len(children)))
-    )
+    return node_metadata(name='fallback')(sequence(children, succes_threshold=min(1, len(children))))
 
 
 def selector(children: List[CallableFunction]) -> AsyncInnerFunction:
@@ -100,21 +89,19 @@ def selector(children: List[CallableFunction]) -> AsyncInnerFunction:
 
 
 def decision(
-    condition: CallableFunction,
-    success_tree: CallableFunction,
-    failure_tree: Optional[CallableFunction] = None,
+    condition: CallableFunction, success_tree: CallableFunction, failure_tree: Optional[CallableFunction] = None
 ) -> AsyncInnerFunction:
     """Create a decision node.
 
-    # Parameters
-    condition (CallableFunction): awaitable condition
-    success_tree (CallableFunction): awaitable success tree which be
-        evaluated if cond is Truthy
-    failure_tree (CallableFunction): awaitable failure tree which be
-        evaluated if cond is Falsy (None per default)
+    Args:
+        condition (CallableFunction): awaitable condition
+        success_tree (CallableFunction): awaitable success tree which be
+            evaluated if cond is Truthy
+        failure_tree (CallableFunction): awaitable failure tree which be
+            evaluated if cond is Falsy (None per default)
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(edges=['condition', 'success_tree', 'failure_tree'])
@@ -126,19 +113,17 @@ def decision(
     return _decision
 
 
-def repeat_until(
-    condition: CallableFunction, child: CallableFunction
-) -> AsyncInnerFunction:
+def repeat_until(condition: CallableFunction, child: CallableFunction) -> AsyncInnerFunction:
     """Repeat child evaluation until condition is truthy.
 
     Return last child evaluation or FAILURE if no evaluation occurs.
 
-    # Parameters
-    condition (CallableFunction): awaitable condition
-    child (CallableFunction): awaitable child
+    Args:
+        condition (CallableFunction): awaitable condition
+        child (CallableFunction): awaitable child
 
-    # Returns
-    (AsyncInnerFunction): an awaitable function.
+    Returns:
+        (AsyncInnerFunction): an awaitable function.
     """
 
     @node_metadata(edges=['condition', 'child'])

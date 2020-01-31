@@ -1,0 +1,1004 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Reference &mdash; async_btree 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Change Log" href="changelog.html" />
+    <link rel="prev" title="Async Behaviour Tree for Python" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> async_btree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-async_btree">Async Btree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">async_btree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-reference">
+<span id="id1"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-async_btree">
+<span id="async-btree"></span><h2>Async Btree<a class="headerlink" href="#module-async_btree" title="Permalink to this headline">¶</a></h2>
+<p>Declare async btree api.</p>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node" title="async_btree.Node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Node</span></code></a></p></td>
+<td><p>Node aggregate node definition implemented with NamedTuple.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.NodeMetadata" title="async_btree.NodeMetadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeMetadata</span></code></a></p></td>
+<td><p>NodeMetadata is our node definition.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.analyze" title="async_btree.analyze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze</span></code></a>(target, Awaitable[Any]], Callable])</p></td>
+<td><p>Analyze specified target and return a Node representation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.stringify_analyze" title="async_btree.stringify_analyze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stringify_analyze</span></code></a>(target, indent, label)</p></td>
+<td><p>Stringify node representation of specified target.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decision" title="async_btree.decision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decision</span></code></a>(condition, Awaitable[Any]], …)</p></td>
+<td><p>Create a decision node.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.fallback" title="async_btree.fallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fallback</span></code></a>(children, Awaitable[Any]], Callable]])</p></td>
+<td><p>Execute tasks in sequence and succeed if one succeed or failed if all failed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.repeat_until" title="async_btree.repeat_until"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repeat_until</span></code></a>(condition, Awaitable[Any]], …)</p></td>
+<td><p>Repeat child evaluation until condition is truthy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.selector" title="async_btree.selector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">selector</span></code></a>(children, Awaitable[Any]], Callable]])</p></td>
+<td><p>Synonym of fallback.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.sequence" title="async_btree.sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sequence</span></code></a>(children, Awaitable[Any]], …)</p></td>
+<td><p>Return a function which execute children in sequence.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.alias" title="async_btree.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span></code></a>(child, Awaitable[Any]], Callable], name)</p></td>
+<td><p>Define an alias on our child.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.always_failure" title="async_btree.always_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_failure</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<td><p>Produce a function which always return FAILURE value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.always_success" title="async_btree.always_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_success</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<td><p>Create a node which always return SUCCESS value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decorate" title="async_btree.decorate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decorate</span></code></a>(child, Awaitable[Any]], Callable], …)</p></td>
+<td><p>Create a decorator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.inverter" title="async_btree.inverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverter</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<td><p>Invert node status.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.is_failure" title="async_btree.is_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_failure</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<td><p>Create a conditional node which test if child fail.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.is_success" title="async_btree.is_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_success</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<td><p>Create a conditional node which test if child success.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry" title="async_btree.retry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry</span></code></a>(child, Awaitable[Any]], Callable], …)</p></td>
+<td><p>Retry child evaluation at most max_retry time on failure until child succeed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.retry_until_failed" title="async_btree.retry_until_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_failed</span></code></a>(child, Awaitable[Any]], …)</p></td>
+<td><p>Retry child until failed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry_until_success" title="async_btree.retry_until_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_success</span></code></a>(child, Awaitable[Any]], …)</p></td>
+<td><p>Retry child until success.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.node_metadata" title="async_btree.node_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node_metadata</span></code></a>(name, properties, edges)</p></td>
+<td><p>‘node_metadata’ is a function decorator which add meta information about node.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.action" title="async_btree.action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action</span></code></a>(target, Awaitable[Any]], Callable], …)</p></td>
+<td><p>Declare an action leaf.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.condition" title="async_btree.condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></a>(target, Awaitable[Any]], …)</p></td>
+<td><p>Declare a condition leaf.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.parallele" title="async_btree.parallele"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallele</span></code></a>(children, Awaitable[Any]], …)</p></td>
+<td><p>Return an awaitable function which run children in parallele.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.afilter" title="async_btree.afilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">afilter</span></code></a>(corofunc, Awaitable[bool]], …)</p></td>
+<td><p>Filter an iterable or an async iterable with an async function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.amap" title="async_btree.amap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amap</span></code></a>(corofunc, Awaitable[T]], iterable, …)</p></td>
+<td><p>Map an async function onto an iterable or an async iterable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.run" title="async_btree.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(kernel, target, *args)</p></td>
+<td><p>Curio run with independent contextvars.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceptions</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.ExceptionDecorator" title="async_btree.ExceptionDecorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExceptionDecorator</span></code></a>(exception)</p></td>
+<td><p>ExceptionDecorator exception is a decorator on a real exception.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="async_btree.Node">
+<em class="property">class </em><code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">Node</code><a class="reference internal" href="_modules/async_btree/analyze.html#Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>Node aggregate node definition implemented with NamedTuple.</p>
+<p>A Node is used to keep information on name, properties, and relations ship
+between a hierachical construct of functions.
+It’s like an instance of NodeMetadata.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node.edges" title="async_btree.Node.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
+<td><p>Alias for field number 2</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.Node.name" title="async_btree.Node.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Alias for field number 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node.properties" title="async_btree.Node.properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">properties</span></code></a></p></td>
+<td><p>Alias for field number 1</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="async_btree.Node.name">
+<code class="sig-name descname">name</code><a class="headerlink" href="#async_btree.Node.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>named operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="async_btree.Node.properties">
+<code class="sig-name descname">properties</code><a class="headerlink" href="#async_btree.Node.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of tuple (name, value) for definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[Tuple[str, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="async_btree.Node.edges">
+<code class="sig-name descname">edges</code><a class="headerlink" href="#async_btree.Node.edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of tuple (name, node list) for
+definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[Tuple[str, List[Any]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>Edges attribut should be edges: <code class="docutils literal notranslate"><span class="pre">`List[Tuple[str,</span> <span class="pre">List['Node']]]`</span></code>
+But it is impossible for now, see [mypy issues 731](<a class="reference external" href="https://github.com/python/mypy/issues/731">https://github.com/python/mypy/issues/731</a>)</p>
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">name</code></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">properties</code></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">edges</code></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.analyze">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">analyze</code><span class="sig-paren">(</span><em class="sig-param">target: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; async_btree.analyze.Node<a class="reference internal" href="_modules/async_btree/analyze.html#analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze specified target and return a Node representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>target</strong> (<em>CallableFunction</em>) – async function to analyze.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a node instance representation of target function</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(<a class="reference internal" href="#async_btree.Node" title="async_btree.Node">Node</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.stringify_analyze">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">stringify_analyze</code><span class="sig-paren">(</span><em class="sig-param">target: async_btree.analyze.Node</em>, <em class="sig-param">indent: int = 0</em>, <em class="sig-param">label: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/async_btree/analyze.html#stringify_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.stringify_analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stringify node representation of specified target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>CallableFunction</em>) – async function to analyze.</p></li>
+<li><p><strong>indent</strong> (<em>int</em>) – level identation (default to zero).</p></li>
+<li><p><strong>label</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – label of current node (default None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a string node representation.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.decision">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">decision</code><span class="sig-paren">(</span><em class="sig-param">condition: Union[Callable[[...], Awaitable[Any]], Callable], success_tree: Union[Callable[[...], Awaitable[Any]], Callable], failure_tree: Union[Callable[[...], Awaitable[Any]], Callable, None] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#decision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.decision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a decision node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> (<em>CallableFunction</em>) – awaitable condition</p></li>
+<li><p><strong>success_tree</strong> (<em>CallableFunction</em>) – awaitable success tree which be
+evaluated if cond is Truthy</p></li>
+<li><p><strong>failure_tree</strong> (<em>CallableFunction</em>) – awaitable failure tree which be
+evaluated if cond is Falsy (None per default)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.fallback">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">fallback</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#fallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.fallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute tasks in sequence and succeed if one succeed or failed if all failed.</p>
+<dl class="simple">
+<dt>Often named ‘selector’, children can be seen as an ordered list</dt><dd><p>starting from higthest priority to lowest priority.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.repeat_until">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">repeat_until</code><span class="sig-paren">(</span><em class="sig-param">condition: Union[Callable[[...], Awaitable[Any]], Callable], child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#repeat_until"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.repeat_until" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repeat child evaluation until condition is truthy.</p>
+<p>Return last child evaluation or FAILURE if no evaluation occurs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> (<em>CallableFunction</em>) – awaitable condition</p></li>
+<li><p><strong>child</strong> (<em>CallableFunction</em>) – awaitable child</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.selector">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">selector</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synonym of fallback.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.sequence">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function which execute children in sequence.</p>
+<p>succes_threshold parameter generalize traditional sequence/fallback and
+must be in [0, len(children)]. Default value is (-1) means len(children)</p>
+<p>if #success = succes_threshold, return a success</p>
+<p>if #failure = len(children) - succes_threshold, return a failure</p>
+<dl class="simple">
+<dt>What we can return as value and keep sematic Failure/Success:</dt><dd><ul class="simple">
+<li><p>an array of previous result when success</p></li>
+<li><p>last failure when fail</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p></li>
+<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>(</strong><strong>AssertionError</strong><strong>)</strong> – if succes_threshold is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.alias">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">alias</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable], name: str</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define an alias on our child.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – name of function tree</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.always_failure">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">always_failure</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#always_failure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.always_failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a function which always return FAILURE value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which return child result if is falsy</dt><dd><p>else FAILURE, or a ControlFlowException if error occurs.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.always_success">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">always_success</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#always_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.always_success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a node which always return SUCCESS value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which return child result if is truthy</dt><dd><p>else SUCCESS (Any exception will be ignored).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.decorate">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">decorate</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable], decorator: Union[Callable[[...], Awaitable[Any]], Callable], **kwargs</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#decorate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a decorator.</p>
+<p>Post process a child with specified decorator function.
+First argument of decorator function must be a child.</p>
+<p>This method implement a simple lazy evaluation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p></li>
+<li><p><strong>decorator</strong> (<em>CallableFunction</em>) – awaitable target decorator</p></li>
+<li><p><strong>kwargs</strong> – optional keyed argument to pass to decorator function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which</dt><dd><p>return decorator evaluation against child.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.inverter">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">inverter</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#inverter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.inverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert node status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return FAILURE else SUCCESS</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.is_failure">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">is_failure</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#is_failure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.is_failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a conditional node which test if child fail.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return FAILURE else FAILURE.
+An exception will be evaluated as a success.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.is_success">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">is_success</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#is_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.is_success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a conditional node which test if child success.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return SUCCESS else FAILURE.
+An exception will be evaluated as falsy.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.retry">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">retry</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable], max_retry: int = 3</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#retry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.retry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retry child evaluation at most max_retry time on failure until child succeed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p></li>
+<li><p><strong>max_retry</strong> (<em>int</em>) – max retry count (default 3), -1 mean infinite retry</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which retry child evaluation</dt><dd><p>at most max_retry time on failure until child succeed.
+If max_retry is reached, returns FAILURE or last exception.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.retry_until_failed">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">retry_until_failed</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#retry_until_failed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.retry_until_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retry child until failed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which try to evaluate child</dt><dd><p>until it failed.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.retry_until_success">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">retry_until_success</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#retry_until_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.retry_until_success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retry child until success.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>an awaitable function which try to evaluate child</dt><dd><p>until it succeed.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="async_btree.ExceptionDecorator">
+<em class="property">exception </em><code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">ExceptionDecorator</code><span class="sig-paren">(</span><em class="sig-param">exception: Exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/async_btree/definition.html#ExceptionDecorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.ExceptionDecorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>ExceptionDecorator exception is a decorator on a real exception.</p>
+<p>This will ensure that <code class="docutils literal notranslate"><span class="pre">`assert</span> <span class="pre">ExceptionDecorator.__bool__</span> <span class="pre">==</span> <span class="pre">False`</span></code>.
+This permit to return exception as a ‘FAILURE’ status.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="async_btree.NodeMetadata">
+<em class="property">class </em><code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">NodeMetadata</code><a class="reference internal" href="_modules/async_btree/definition.html#NodeMetadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.NodeMetadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>NodeMetadata is our node definition.</p>
+<p>A NodeMetadata is used to keep information on name, properties name,
+and relations ship name between a hierachical construct of functions.</p>
+<p>This permit us to print or analyze all information of a behaviour tree.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.edges" title="async_btree.NodeMetadata.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
+<td><p>Alias for field number 2</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.name" title="async_btree.NodeMetadata.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Alias for field number 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.properties" title="async_btree.NodeMetadata.properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">properties</span></code></a></p></td>
+<td><p>Alias for field number 1</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="async_btree.NodeMetadata.name">
+<code class="sig-name descname">name</code><a class="headerlink" href="#async_btree.NodeMetadata.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>named operation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="async_btree.NodeMetadata.properties">
+<code class="sig-name descname">properties</code><a class="headerlink" href="#async_btree.NodeMetadata.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of property name (an int value, …).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="async_btree.NodeMetadata.edges">
+<code class="sig-name descname">edges</code><a class="headerlink" href="#async_btree.NodeMetadata.edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of member name which act as edges (a child, …).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">name</code></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">properties</code></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">property </em><code class="sig-name descname">edges</code></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.node_metadata">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">node_metadata</code><span class="sig-paren">(</span><em class="sig-param">name: Optional[str] = None</em>, <em class="sig-param">properties: Optional[List[str]] = None</em>, <em class="sig-param">edges: Optional[List[str]] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/async_btree/definition.html#node_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.node_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘node_metadata’ is a function decorator which add meta information about node.</p>
+<p>We add a property on decorated function named ‘__node_metadata’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – override name of decorated function,
+default is function name left striped with ‘_’</p></li>
+<li><p><strong>properties</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – a list of property name ([] as default)</p></li>
+<li><p><strong>edges</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – a list of edges name
+([“child”, “children”] as default)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the decorator function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.action">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">action</code><span class="sig-paren">(</span><em class="sig-param">target: Union[Callable[[...], Awaitable[Any]], Callable], **kwargs</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/leaf.html#action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declare an action leaf.</p>
+<p>Action is an awaitable closure of specified function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>CallableFunction</em>) – awaitable function</p></li>
+<li><p><strong>kwargs</strong> – optional kwargs argument to pass on target function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.condition">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">condition</code><span class="sig-paren">(</span><em class="sig-param">target: Union[Callable[[...], Awaitable[Any]], Callable], **kwargs</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/leaf.html#condition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declare a condition leaf.</p>
+<p>Condition is an awaitable closure of specified function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>CallableFunction</em>) – awaitable function which be evaluated as True/False.</p></li>
+<li><p><strong>kwargs</strong> – optional kwargs argument to pass on target function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.parallele">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/parallele.html#parallele"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an awaitable function which run children in parallele.</p>
+<p><cite>succes_threshold</cite> parameter generalize traditional sequence/fallback,
+and must be in [0, len(children)], default value is len(children)</p>
+<p>if #success = succes_threshold, return a success</p>
+<p>if #failure = len(children) - succes_threshold, return a failure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p></li>
+<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value, default len(children)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.afilter">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">afilter</code><span class="sig-paren">(</span><em class="sig-param">corofunc: Callable[[Any], Awaitable[bool]], iterable: Union[AsyncIterable, Iterable]</em><span class="sig-paren">)</span> &#x2192; AsyncGenerator[T, None]<a class="reference internal" href="_modules/async_btree/utils.html#afilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.afilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter an iterable or an async iterable with an async function.</p>
+<p>This simplify writing of filtering by a function on something iterable
+between ‘async for …’ and ‘for…’ .</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>corofunc</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>Awaitable</em><em>[</em><em>bool</em><em>]</em><em>]</em>) – filter async function</p></li>
+<li><p><strong>iterable</strong> (<em>Union</em><em>[</em><em>AsyncIterable</em><em>, </em><em>Iterable</em><em>]</em>) – iterable or async iterable collection
+which will be applied.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an async iterator of item which satisfy corofunc(item) == True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncGenerator[T])</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p><code class="docutils literal notranslate"><span class="pre">`[i</span> <span class="pre">async</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">amap(inc,</span> <span class="pre">afilter(even,</span> <span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4]))]`</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.amap">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">amap</code><span class="sig-paren">(</span><em class="sig-param">corofunc: Callable[[Any], Awaitable[T]], iterable: Union[AsyncIterable, Iterable]</em><span class="sig-paren">)</span> &#x2192; AsyncGenerator[T, None]<a class="reference internal" href="_modules/async_btree/utils.html#amap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.amap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map an async function onto an iterable or an async iterable.</p>
+<p>This simplify writing of mapping a function on something iterable
+between ‘async for …’ and ‘for…’ .</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>corofunc</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>Awaitable</em><em>[</em><em>T</em><em>]</em><em>]</em>) – coroutine function</p></li>
+<li><p><strong>iterable</strong> (<em>Union</em><em>[</em><em>AsyncIterable</em><em>, </em><em>Iterable</em><em>]</em>) – iterable or async iterable collection
+which will be applied.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an async iterator of corofunc(item)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>AsyncGenerator[T]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p><code class="docutils literal notranslate"><span class="pre">`[i</span> <span class="pre">async</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">amap(inc,</span> <span class="pre">afilter(even,</span> <span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4]))]`</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="async_btree.run">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">kernel</em>, <em class="sig-param">target</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/async_btree/utils.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Curio run with independent contextvars.</p>
+<p>This mimic asyncio framework behaviour.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">copy_context().run(kernel.run,</span> <span class="pre">target,</span> <span class="pre">*args)</span>
+<span class="pre">`</span></code></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Change Log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Async Behaviour Tree for Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jerome Guibert
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

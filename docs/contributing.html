@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contributing &mdash; async_btree 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributor Covenant Code of Conduct" href="code_of_conduct.html" />
+    <link rel="prev" title="Change Log" href="changelog.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> async_btree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#make-installation">Make Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyenv-installation">Pyenv Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-installation">Python Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poetry-installation-https-poetry-eustace-io-docs-installation">Poetry Installation: https://poetry.eustace.io/docs/#installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#confirm-installation">Confirm Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development-tasks">Development Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#manual">Manual</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-project-dependencies">Install project dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-the-tests">Run the tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run-static-analysis">Run static analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-the-documentation">Build the documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-the-package">Build the package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ontain-help">Ontain help</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-with-visual-studio-code">Integration With Visual Studio Code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-tasks">Release Tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">async_btree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Contributing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/contributing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contributing">
+<span id="id1"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>This project is based on <a class="reference external" href="https://github.com/geronimo-iia/template-python">Geronimo-iaa’s Python Template</a>.
+This is a cookiecutter template for a typical Python library following modern packaging conventions.
+It utilizes popular libraries to fully automate all development and deployment tasks.</p>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>You will need:</p>
+<ul class="simple">
+<li><p>Python 3.7”+</p></li>
+<li><p><a class="reference external" href="https://github.com/pyenv/pyenv#installation">Pyenv</a></p></li>
+<li><p><a class="reference external" href="https://python-poetry.org/">poetry</a></p></li>
+<li><p>Make with find, sed</p></li>
+</ul>
+</div>
+<div class="section" id="make-installation">
+<h3>Make Installation<a class="headerlink" href="#make-installation" title="Permalink to this headline">¶</a></h3>
+<p>A powerfull tool:</p>
+<ul class="simple">
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">xcode-select</span> <span class="pre">--install</span></code></p></li>
+<li><p>Linux: <a class="reference external" href="https://www.gnu.org/software/make">https://www.gnu.org/software/make</a></p></li>
+<li><p>Windows: <a class="reference external" href="https://mingw.org/download/installer">https://mingw.org/download/installer</a></p></li>
+</ul>
+</div>
+<div class="section" id="pyenv-installation">
+<h3>Pyenv Installation<a class="headerlink" href="#pyenv-installation" title="Permalink to this headline">¶</a></h3>
+<p>Pyenv will manage all our python version.
+Follow <a class="reference external" href="https://github.com/pyenv/pyenv#installation">https://github.com/pyenv/pyenv#installation</a></p>
+</div>
+<div class="section" id="python-installation">
+<h3>Python Installation<a class="headerlink" href="#python-installation" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Do:</p>
+<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pyenv</span> <span class="pre">install</span> <span class="pre">3.7</span></code></p>
+</div></blockquote>
+<p>Note for <a class="reference external" href="https://github.com/pyenv/pyenv/issues/544">MacOS 10.14 user</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SDKROOT</span><span class="o">=</span>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk <span class="nv">MACOSX_DEPLOYMENT_TARGET</span><span class="o">=</span><span class="m">10</span>.14 pyenv install <span class="m">3</span>.7.3
+</pre></div>
+</div>
+</div>
+<div class="section" id="poetry-installation-https-poetry-eustace-io-docs-installation">
+<h3>Poetry Installation: <a class="reference external" href="https://poetry.eustace.io/docs/#installation">https://poetry.eustace.io/docs/#installation</a><a class="headerlink" href="#poetry-installation-https-poetry-eustace-io-docs-installation" title="Permalink to this headline">¶</a></h3>
+<p>Poetry will manage our dependencies and create our virtual environment for us.</p>
+</div>
+<div class="section" id="confirm-installation">
+<h3>Confirm Installation<a class="headerlink" href="#confirm-installation" title="Permalink to this headline">¶</a></h3>
+<p>To confirm these system dependencies are configured correctly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make doctor
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="development-tasks">
+<h2>Development Tasks<a class="headerlink" href="#development-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="manual">
+<h3>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="install-project-dependencies">
+<h4>Install project dependencies<a class="headerlink" href="#install-project-dependencies" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make install
+</pre></div>
+</div>
+<p>Note:</p>
+<ul class="simple">
+<li><p>this target create a dummy file <code class="docutils literal notranslate"><span class="pre">.install</span></code>. The makefile rule depends on pyproject.toml and
+poetry.lock file</p></li>
+<li><p>if for whatever reason, you have to force installation, just remove this <code class="docutils literal notranslate"><span class="pre">.install</span></code> file and
+execute a <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="run-the-tests">
+<h4>Run the tests<a class="headerlink" href="#run-the-tests" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make <span class="nb">test</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-static-analysis">
+<h4>Run static analysis<a class="headerlink" href="#run-static-analysis" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make check
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-the-documentation">
+<h4>Build the documentation<a class="headerlink" href="#build-the-documentation" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make docs
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-the-package">
+<h4>Build the package<a class="headerlink" href="#build-the-package" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make build
+</pre></div>
+</div>
+</div>
+<div class="section" id="ontain-help">
+<h4>Ontain help<a class="headerlink" href="#ontain-help" title="Permalink to this headline">¶</a></h4>
+<p>For help:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ make <span class="nb">help</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="integration-with-visual-studio-code">
+<h3>Integration With Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Permalink to this headline">¶</a></h3>
+<p>Even if we use fabulous tool like pyenv, poetry, … at the end, we just want to go on, and code.</p>
+<p>So here, few detail of my installation.</p>
+<ul>
+<li><p>.bashrc</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init pyenv with default python version</span>
+<span class="k">if</span> <span class="nb">command</span> -v pyenv <span class="m">1</span>&gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> <span class="k">then</span>
+<span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>pyenv init -<span class="k">)</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+
+<span class="c1"># add poetry in path</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.poetry/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+
+<span class="c1"># Add Visual Studio Code (code)</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/Applications/Visual Studio Code.app/Contents/Resources/app/bin&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>poetry configuration: all is let with default</p></li>
+<li><dl class="simple">
+<dt>How Launch Visual Studio Code within virtual environment created by poetry ?</dt><dd><p>After do a <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>, you have to do:</p>
+</dd>
+</dl>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>   poetry shell
+   code .
+
+<span class="sb">``</span>poetry shell<span class="sb">``</span> will activate project virtual environment.
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="continuous-integration">
+<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
+<p>The CI server will report overall build status:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make ci
+</pre></div>
+</div>
+</div>
+<div class="section" id="release-tasks">
+<h2>Release Tasks<a class="headerlink" href="#release-tasks" title="Permalink to this headline">¶</a></h2>
+<p>Release to PyPI:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make publish
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code_of_conduct.html" class="btn btn-neutral float-right" title="Contributor Covenant Code of Conduct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Change Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jerome Guibert
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

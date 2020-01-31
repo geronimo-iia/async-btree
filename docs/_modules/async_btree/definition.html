@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>async_btree.definition &mdash; async_btree 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> async_btree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">async_btree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>async_btree.definition</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for async_btree.definition</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Common definition.</span>
+
+<span class="sd">CallableFunction Type:</span>
+
+<span class="sd">Specify something callable with or without async:</span>
+
+<span class="sd">```CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]```</span>
+
+<span class="sd">Function signature of async function implementation:</span>
+
+<span class="sd">```AsyncInnerFunction = Callable[[], Awaitable[Any]]```</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># from collections import namedtuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;CallableFunction&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;AsyncInnerFunction&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SUCCESS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;FAILURE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ExceptionDecorator&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;NodeMetadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;node_metadata&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="n">CallableFunction</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;Something callable with or without async.&quot;&quot;&quot;</span>
+
+<span class="n">AsyncInnerFunction</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
+<span class="sd">&quot;&quot;&quot;Function signature of async function implementation.&quot;&quot;&quot;</span>
+
+<span class="n">SUCCESS</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># a success call</span>
+<span class="sd">&quot;&quot;&quot;Success constant.&quot;&quot;&quot;</span>
+
+<span class="n">FAILURE</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">SUCCESS</span>  <span class="c1"># Well defined falsy...</span>
+<span class="sd">&quot;&quot;&quot;Failure constant.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="ExceptionDecorator"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator">[docs]</a><span class="k">class</span> <span class="nc">ExceptionDecorator</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ExceptionDecorator exception is a decorator on a real exception.</span>
+
+<span class="sd">    This will ensure that ```assert ExceptionDecorator.__bool__ == False```.</span>
+<span class="sd">    This permit to return exception as a &#39;FAILURE&#39; status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ExceptionDecorator.__init__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">exception</span></div>
+
+<div class="viewcode-block" id="ExceptionDecorator.__bool__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__bool__">[docs]</a>    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="ExceptionDecorator.__repr__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ExceptionDecorator.__str__"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="NodeMetadata"><a class="viewcode-back" href="../../api.html#async_btree.NodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">NodeMetadata</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;NodeMetadata is our node definition.</span>
+
+<span class="sd">    A NodeMetadata is used to keep information on name, properties name,</span>
+<span class="sd">    and relations ship name between a hierachical construct of functions.</span>
+
+<span class="sd">    This permit us to print or analyze all information of a behaviour tree.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): named operation</span>
+<span class="sd">        properties (List[str]): a list of property name (an int value, ...).</span>
+<span class="sd">        edges (List[str]): a list of member name which act as edges (a child, ...).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">CallableFunction</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="node_metadata"><a class="viewcode-back" href="../../api.html#async_btree.node_metadata">[docs]</a><span class="k">def</span> <span class="nf">node_metadata</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&#39;node_metadata&#39; is a function decorator which add meta information about node.</span>
+
+<span class="sd">    We add a property on decorated function named &#39;__node_metadata&#39;.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (Optional[str]): override name of decorated function,</span>
+<span class="sd">            default is function name left striped with &#39;_&#39;</span>
+<span class="sd">        properties (Optional[List[str]]): a list of property name ([] as default)</span>
+<span class="sd">        edges (Optional[List[str]]): a list of edges name</span>
+<span class="sd">            ([&quot;child&quot;, &quot;children&quot;] as default)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the decorator function</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">decorate_function</span><span class="p">(</span><span class="n">function</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="n">function</span><span class="o">.</span><span class="n">__node_metadata</span> <span class="o">=</span> <span class="n">NodeMetadata</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span>
+            <span class="n">properties</span><span class="o">=</span><span class="n">properties</span> <span class="ow">or</span> <span class="p">[],</span>
+            <span class="n">edges</span><span class="o">=</span><span class="n">edges</span> <span class="ow">or</span> <span class="p">[</span><span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">function</span>
+
+    <span class="k">return</span> <span class="n">decorate_function</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jerome Guibert
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
