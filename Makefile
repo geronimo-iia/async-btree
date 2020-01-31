@@ -94,7 +94,7 @@ $(DIST_FILES): $(MODULES) pyproject.toml
 publish: build ## Publishes the package, previously built with the build command, to the remote repository
 	@git diff --name-only --exit-code
 	poetry publish
-	PROJECT_RELEASE := $$(sed -n -E "s/__version__ = '(.+)'/\1/p" async_btree/__version__.py)
+	PROJECT_RELEASE := $$(python -c "import async_btree; print(async_btree.__version__);")
 	@git tag "v$(PROJECT_RELEASE)"
 	@git push origin "v$(PROJECT_RELEASE)"
 	@tools/open https://pypi.org/project/async-btree
