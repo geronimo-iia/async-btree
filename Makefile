@@ -39,6 +39,7 @@ GIT_DIR = .git
 
 poetry.lock: pyproject.toml
 	poetry lock
+	@touch $@
 
 .cache:
 	@mkdir -p .cache
@@ -94,9 +95,9 @@ $(DIST_FILES): $(MODULES) pyproject.toml
 publish: build ## Publishes the package, previously built with the build command, to the remote repository
 	@git diff --name-only --exit-code
 	poetry publish
-	PROJECT_RELEASE := $$(python -c "import async_btree; print(async_btree.__version__);")
-	@git tag "v$(PROJECT_RELEASE)"
-	@git push origin "v$(PROJECT_RELEASE)"
+	@PROJECT_RELEASE := $$(poetry run python -c "import async_btree; print(async_btree.__version__);") && \
+		git tag "v$(PROJECT_RELEASE)" && \
+		git push origin "v$(PROJECT_RELEASE)"
 	@tools/open https://pypi.org/project/async-btree
 
 
@@ -105,10 +106,12 @@ publish: build ## Publishes the package, previously built with the build command
 SPHINX_BUILD_DIR = .cache/sphinx
 .PHONY: docs
 docs:  ## Build and publish sit documentation.
+	@rm -rf docs/
+	@rm -rf $(SPHINX_BUILD_DIR)/
 	@mkdir -p $(SPHINX_BUILD_DIR)
 	@poetry run sphinx-build -M html "sphinx" "$(SPHINX_BUILD_DIR)"
-	@rm -rf docs/
 	@mv $(SPHINX_BUILD_DIR)/html docs/
+	@touch docs/.nojekyll
 
 
 # CLEANUP #####################################################################

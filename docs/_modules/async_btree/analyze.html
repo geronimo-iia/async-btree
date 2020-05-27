@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geronimo-iia/async-btree">Github</a></li>
 </ul>
 
             
@@ -149,9 +150,10 @@
   <h1>Source code for async_btree.analyze</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Analyze definition.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getclosurevars</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">no_type_check</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">no_type_check</span>
 
 <span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">NodeMetadata</span>
+
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;analyze&quot;</span><span class="p">,</span> <span class="s2">&quot;stringify_analyze&quot;</span><span class="p">,</span> <span class="s2">&quot;Node&quot;</span><span class="p">]</span>
 
@@ -180,8 +182,22 @@
     <span class="c1"># https://github.com/python/mypy/issues/731</span>
     <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span>
 
-<div class="viewcode-block" id="Node.__str__"><a class="viewcode-back" href="../../api.html#async_btree.Node.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div></div>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_analyze_edges</span><span class="p">(</span><span class="n">nonlocals</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+
+    <span class="k">return</span> <span class="n">_get_analyze_edges</span>
+
+
+<span class="nd">@no_type_check</span>
+<span class="k">def</span> <span class="nf">_get_node_metadata</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeMetadata</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns node metadata instance associated with target.&quot;&quot;&quot;</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">__node_metadata</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">NodeMetadata</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attr __node_metadata of </span><span class="si">{target}</span><span class="s1"> is not a NodeMetadata!&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">node</span>
 
 
 <span class="c1"># pylint: disable=protected-access</span>
@@ -198,16 +214,19 @@
 
     <span class="n">nonlocals</span> <span class="o">=</span> <span class="n">getclosurevars</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">nonlocals</span>
 
+    <span class="k">def</span> <span class="nf">_get_nonlocals_value_for</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">nonlocals</span> <span class="k">else</span> <span class="kc">None</span>
+
     <span class="k">def</span> <span class="nf">_analyze_property</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a tuple (name, value) or (name, function name) as property.&quot;&quot;&quot;</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nonlocals</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">_get_nonlocals_value_for</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">callable</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">_analyze_edges</span><span class="p">(</span><span class="n">egde_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Lookup children node from egde_name local var.&quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">egde_name</span> <span class="ow">in</span> <span class="n">nonlocals</span> <span class="ow">and</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">egde_name</span><span class="p">]:</span>
-            <span class="n">edge</span> <span class="o">=</span> <span class="n">nonlocals</span><span class="p">[</span><span class="n">egde_name</span><span class="p">]</span>
+        <span class="n">edge</span> <span class="o">=</span> <span class="n">_get_nonlocals_value_for</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">egde_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="p">:</span>
             <span class="c1"># it could be a collection of node</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">):</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">analyze</span><span class="p">,</span> <span class="n">edge</span><span class="p">))</span>
@@ -216,10 +235,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">egde_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;__node_metadata&quot;</span><span class="p">):</span>
-        <span class="c1"># its a node construct.</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">__node_metadata</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">NodeMetadata</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attr __node_metadata of </span><span class="si">{target}</span><span class="s1"> is not a NodeMetadata!&#39;</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">_get_node_metadata</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Node</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="n">properties</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_analyze_property</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">properties</span><span class="p">)),</span>
