@@ -159,6 +159,7 @@
 <a class="reference external image-reference" href="https://pypi.org/project/async-btree"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/async-btree.svg" /></a>
 <a class="reference external image-reference" href="https://pypi.org/project/async-btree"><img alt="PyPI License" src="https://img.shields.io/pypi/l/async-btree.svg" /></a>
 <p>Versions following <a class="reference external" href="https://semver.org/">Semantic Versioning</a></p>
+<p>See <a class="reference external" href="https://geronimo-iia.github.io/async-btree">documentation</a>.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="what-s-a-behavior-tree">
@@ -264,7 +265,47 @@ And next study <a class="reference external" href="https://github.com/dabeaz/cur
 &gt;&gt;&gt; async_btree.__version__
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://geronimo-iia.github.io/async-btree">documentation</a>.</p>
+<p>See <a class="reference external" href="https://geronimo-iia.github.io/async-btree">API Reference documentation</a>.</p>
+<p>With this framework, you didn’t find any configuration file, no Xml, no json, no yaml.</p>
+<p>The main reason (oriented and personal point of view) is that you did not need to introduce an extra level of abtraction
+to declare a composition of functions. I think it’s true for most of main use case (except using an editor to wrote behaviour tree for example).</p>
+<p>So “If you wrote your function with python, wrote composition in python”…
+<em>(remember that you did not need XML to do SQL, just write good sql…)</em></p>
+<p>So, the goal is to:</p>
+<ul class="simple">
+<li><p>define your business function wich implements actions or conditions, with all test case that you wish/need</p></li>
+<li><p>compose them using those provided by this framework like <code class="docutils literal notranslate"><span class="pre">sequence</span></code>, <code class="docutils literal notranslate"><span class="pre">selector</span></code>, …</p></li>
+<li><p>use them as it is or create a well define python module to reuse them</p></li>
+</ul>
+<p>Wanna style have an abtract tree of our behaviour tree ?</p>
+<p>Functions from async-btree build an abstract tree for you.
+If you lookup in code, you should see an annotation “node_metadata” on internal implementation.
+This decorator add basic information like function name, parameters, and childreen relation ship.</p>
+<p>This abstract tree can be retreived and stringified with <code class="docutils literal notranslate"><span class="pre">analyze</span></code> and <code class="docutils literal notranslate"><span class="pre">stringify_analyze</span></code>.
+Here the profile:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span> <span class="c1"># here we have our &quot;abtract tree code&quot;</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># your behaviour tree, or a sub tree:</span>
+<span class="n">my_func</span> <span class="o">=</span> <span class="n">alias</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">repeat_until</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">action</span><span class="p">(</span><span class="n">hello</span><span class="p">),</span> <span class="n">condition</span><span class="o">=</span><span class="n">success_until_zero</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;btree_1&quot;</span><span class="p">)</span>
+
+<span class="c1"># retrieve meta information and build a Node tree</span>
+<span class="n">abstract_tree_tree_1</span> <span class="o">=</span> <span class="n">analyze</span><span class="p">(</span><span class="n">my_func</span><span class="p">)</span>
+
+<span class="c1"># output the tree:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stringify_analyze</span><span class="p">(</span><span class="n">abstract_tree_tree_1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This should print:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>--&gt; btree_1:
+    --(child)--&gt; repeat_until:
+        --(condition)--&gt; success_until_zero:
+        --(child)--&gt; action:
+                     target: hello
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="contents">

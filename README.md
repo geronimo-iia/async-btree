@@ -10,6 +10,9 @@
 
 Versions following [Semantic Versioning](https://semver.org/)
 
+See [documentation](https://geronimo-iia.github.io/async-btree).
+
+
 ## Overview
 
 
@@ -132,4 +135,58 @@ $ python
 >>> async_btree.__version__
 ```
 
-See [documentation](https://geronimo-iia.github.io/async-btree).
+See [API Reference documentation](https://geronimo-iia.github.io/async-btree).
+
+
+With this framework, you didn't find any configuration file, no Xml, no json, no yaml.
+
+The main reason (oriented and personal point of view) is that you did not need to introduce an extra level of abtraction 
+to declare a composition of functions. I think it's true for most of main use case (except using an editor to wrote behaviour tree for example).
+
+So "If you wrote your function with python, wrote composition in python"... 
+_(remember that you did not need XML to do SQL, just write good sql...)_
+
+
+So, the goal is to:
+ - define your business function wich implements actions or conditions, with all test case that you wish/need
+ - compose them using those provided by this framework like ```sequence```, ```selector```, ...
+ - use them as it is or create a well define python module to reuse them
+
+
+Wanna style have an abtract tree of our behaviour tree ?
+
+Functions from async-btree build an abstract tree for you. 
+If you lookup in code, you should see an annotation "node_metadata" on internal implementation. 
+This decorator add basic information like function name, parameters, and childreen relation ship.
+
+This abstract tree can be retreived and stringified with ```analyze``` and ```stringify_analyze```.
+Here the profile:
+
+```python
+  def analyze(target: CallableFunction) -> Node: # here we have our "abtract tree code"
+    ...
+```
+
+For example:
+
+```python
+
+# your behaviour tree, or a sub tree:
+my_func = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name="btree_1")
+
+# retrieve meta information and build a Node tree
+abstract_tree_tree_1 = analyze(my_func) 
+
+# output the tree:
+print(stringify_analyze(abstract_tree_tree_1))
+```
+
+This should print:
+
+```text
+ --> btree_1:
+     --(child)--> repeat_until:
+         --(condition)--> success_until_zero:
+         --(child)--> action:
+                      target: hello
+```
