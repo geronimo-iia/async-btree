@@ -10,6 +10,8 @@ Contents
     :maxdepth: 1
 
     api
+    tutorials/index
+        
     changelog
     contributing
     code_of_conduct

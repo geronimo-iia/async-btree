@@ -33,6 +33,7 @@ gripper = GripperInterface()
 b_tree = bt.sequence(
     children=[
         bt.always_success(child=bt.action(target=say_hello, name="John")),
+        bt.always_success(child=bt.action(target=check_battery)),
         bt.always_success(child=bt.action(target=gripper.open)),
         bt.always_success(child=bt.action(target=approach_object, name="house")),
         bt.always_success(child=bt.action(target=gripper.close)),

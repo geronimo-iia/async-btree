@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to create a BehaviorTree &mdash; async_btree 1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Change Log" href="../changelog.html" />
+    <link rel="prev" title="Tutorials" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> async_btree
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to create a BehaviorTree</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-create-your-own-action">How to create your own Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-tree-dynamically">Create a tree dynamically</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geronimo-iia/async-btree">Github</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">async_btree</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+        
+      <li>How to create a BehaviorTree</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/tutorial_1.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-create-a-behaviortree">
+<h1>How to create a BehaviorTree<a class="headerlink" href="#how-to-create-a-behaviortree" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial series, most of the time Actions will just print some information on console, but keep in mind that real “production” code would probably do something more complicated.</p>
+<p>The source code of this tutorial is <a class="reference external" href="https://raw.githubusercontent.com/geronimo-iia/async-btree/master/examples/tutorial_1.py">example/tutorial_1.py</a>.</p>
+<div class="section" id="how-to-create-your-own-action">
+<h2>How to create your own Action<a class="headerlink" href="#how-to-create-your-own-action" title="Permalink to this headline">¶</a></h2>
+<p>Firt, you have to wrote your function (async or sync) as normal, like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">approach_object</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;approach_object: </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">check_battery</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;battery ok&quot;</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello: </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At this point, this is not (yet) a behavior action. To define an action, you have to use <code class="docutils literal notranslate"><span class="pre">action</span></code> function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">async_btree</span> <span class="k">as</span> <span class="nn">bt</span>
+
+<span class="n">approach_house_object_action</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">approach_object</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;house&quot;</span><span class="p">)</span>
+
+<span class="n">check_battery_action</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">check_battery</span><span class="p">)</span>
+
+<span class="n">say_hello_john</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">say_hello</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With a class like this one:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GripperInterface</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GripperInterface Open&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GripperInterface Close&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>We can define action for these functions:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>- GripperInterface.open
+- GripperInterface.close
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-tree-dynamically">
+<h2>Create a tree dynamically<a class="headerlink" href="#create-a-tree-dynamically" title="Permalink to this headline">¶</a></h2>
+<p>We will build a sequence of actions like this one:</p>
+<ul class="simple">
+<li><p>say hello</p></li>
+<li><p>check battery</p></li>
+<li><p>open gripper</p></li>
+<li><p>approach object</p></li>
+<li><p>close gripper</p></li>
+</ul>
+<p>To do that, we need to use <code class="docutils literal notranslate"><span class="pre">sequence</span></code> methods.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gripper</span> <span class="o">=</span> <span class="n">GripperInterface</span><span class="p">()</span>
+
+<span class="n">b_tree</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="o">=</span> <span class="p">[</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">say_hello</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">check_battery</span><span class="p">),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">gripper</span><span class="o">.</span><span class="n">open</span><span class="p">),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">approach_object</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;house&quot;</span><span class="p">),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">gripper</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>Run it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curio</span>
+<span class="n">curio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">b_tree</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And you should see:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Hello: John
+</pre></div>
+</div>
+<p>Why we did not see other action ? It’s because our first action did not return a success (something truthy).
+So we could add a <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">True</span></code>, on each our function, like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">approach_object</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;approach_object: </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>Or we could rewrote our behavior tree with specific status:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b_tree</span> <span class="o">=</span> <span class="n">bt</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="o">=</span> <span class="p">[</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">say_hello</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">)),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">check_battery</span><span class="p">)),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">gripper</span><span class="o">.</span><span class="n">open</span><span class="p">)),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">approach_object</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;house&quot;</span><span class="p">)),</span>
+    <span class="n">bt</span><span class="o">.</span><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">bt</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">gripper</span><span class="o">.</span><span class="n">close</span><span class="p">))</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>If we running it again:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Hello: John
+battery ok
+GripperInterface Open
+approach_object: house
+GripperInterface Close
+</pre></div>
+</div>
+<p>As you could see:</p>
+<ul class="simple">
+<li><p>we use a single instance of GripperInterface</p></li>
+<li><p>we have hard coded name on our action function</p></li>
+</ul>
+<p>In a real use case, we should find a way to avoid this:</p>
+<ul class="simple">
+<li><p>wrote a factory function for a specific case</p></li>
+<li><p>either by using ContextVar (<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">contextvars</span> <span class="pre">import</span> <span class="pre">ContextVar</span></code>)</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../changelog.html" class="btn btn-neutral float-right" title="Change Log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jerome Guibert
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
