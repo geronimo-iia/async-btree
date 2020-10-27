@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.0 (in progress)
+
+- update curio version > 1
+- add pytest-curio
+
 ## 1.0.1 (2020-01-31)
 
 - update from template-python
