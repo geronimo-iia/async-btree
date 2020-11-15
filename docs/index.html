@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Async Behaviour Tree for Python &mdash; async_btree 1.0.1 documentation</title>
+  <title>Async Behaviour Tree for Python &mdash; async_btree 1.0.2 documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -214,7 +214,7 @@ By this way:</p>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">b_decorator</span><span class="p">(</span><span class="n">child_value</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A great decorator...&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;b</span><span class="si">{child_value}{other}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;b</span><span class="si">{</span><span class="n">child_value</span><span class="si">}{</span><span class="n">other</span><span class="si">}</span><span class="s2">&quot;</span>
 
 <span class="k">assert</span> <span class="n">run</span><span class="p">(</span><span class="n">decorate</span><span class="p">(</span><span class="n">a_func</span><span class="p">,</span> <span class="n">b_decorator</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;ba&quot;</span>
 </pre></div>

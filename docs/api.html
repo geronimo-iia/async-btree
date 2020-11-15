@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; async_btree 1.0.1 documentation</title>
+  <title>API Reference &mdash; async_btree 1.0.2 documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -160,7 +160,7 @@
 <div class="section" id="module-async_btree">
 <span id="async-btree"></span><h2>Async Btree<a class="headerlink" href="#module-async_btree" title="Permalink to this headline">¶</a></h2>
 <p>Declare async btree api.</p>
-<p><strong>Classes</strong></p>
+<p><strong>Classes:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -175,80 +175,80 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Functions</strong></p>
+<p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.analyze" title="async_btree.analyze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze</span></code></a>(target, Awaitable[Any]], Callable])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.analyze" title="async_btree.analyze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze</span></code></a>(target)</p></td>
 <td><p>Analyze specified target and return a Node representation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.stringify_analyze" title="async_btree.stringify_analyze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stringify_analyze</span></code></a>(target, indent, label)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.stringify_analyze" title="async_btree.stringify_analyze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stringify_analyze</span></code></a>(target[, indent, label])</p></td>
 <td><p>Stringify node representation of specified target.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decision" title="async_btree.decision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decision</span></code></a>(condition, Awaitable[Any]], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decision" title="async_btree.decision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decision</span></code></a>(condition, success_tree[, failure_tree])</p></td>
 <td><p>Create a decision node.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.fallback" title="async_btree.fallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fallback</span></code></a>(children, Awaitable[Any]], Callable]])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.fallback" title="async_btree.fallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fallback</span></code></a>(children)</p></td>
 <td><p>Execute tasks in sequence and succeed if one succeed or failed if all failed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.repeat_until" title="async_btree.repeat_until"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repeat_until</span></code></a>(condition, Awaitable[Any]], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.repeat_until" title="async_btree.repeat_until"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repeat_until</span></code></a>(condition, child)</p></td>
 <td><p>Repeat child evaluation until condition is truthy.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.selector" title="async_btree.selector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">selector</span></code></a>(children, Awaitable[Any]], Callable]])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.selector" title="async_btree.selector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">selector</span></code></a>(children)</p></td>
 <td><p>Synonym of fallback.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.sequence" title="async_btree.sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sequence</span></code></a>(children, Awaitable[Any]], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.sequence" title="async_btree.sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sequence</span></code></a>(children[, succes_threshold])</p></td>
 <td><p>Return a function which execute children in sequence.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.alias" title="async_btree.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span></code></a>(child, Awaitable[Any]], Callable], name)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.alias" title="async_btree.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span></code></a>(child, name)</p></td>
 <td><p>Define an alias on our child.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.always_failure" title="async_btree.always_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_failure</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.always_failure" title="async_btree.always_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_failure</span></code></a>(child)</p></td>
 <td><p>Produce a function which always return FAILURE value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.always_success" title="async_btree.always_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_success</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.always_success" title="async_btree.always_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_success</span></code></a>(child)</p></td>
 <td><p>Create a node which always return SUCCESS value.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decorate" title="async_btree.decorate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decorate</span></code></a>(child, Awaitable[Any]], Callable], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decorate" title="async_btree.decorate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decorate</span></code></a>(child, decorator, **kwargs)</p></td>
 <td><p>Create a decorator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.inverter" title="async_btree.inverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverter</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.inverter" title="async_btree.inverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverter</span></code></a>(child)</p></td>
 <td><p>Invert node status.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.is_failure" title="async_btree.is_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_failure</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.is_failure" title="async_btree.is_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_failure</span></code></a>(child)</p></td>
 <td><p>Create a conditional node which test if child fail.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.is_success" title="async_btree.is_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_success</span></code></a>(child, Awaitable[Any]], Callable])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.is_success" title="async_btree.is_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_success</span></code></a>(child)</p></td>
 <td><p>Create a conditional node which test if child success.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry" title="async_btree.retry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry</span></code></a>(child, Awaitable[Any]], Callable], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry" title="async_btree.retry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry</span></code></a>(child[, max_retry])</p></td>
 <td><p>Retry child evaluation at most max_retry time on failure until child succeed.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.retry_until_failed" title="async_btree.retry_until_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_failed</span></code></a>(child, Awaitable[Any]], …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.retry_until_failed" title="async_btree.retry_until_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_failed</span></code></a>(child)</p></td>
 <td><p>Retry child until failed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry_until_success" title="async_btree.retry_until_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_success</span></code></a>(child, Awaitable[Any]], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry_until_success" title="async_btree.retry_until_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_success</span></code></a>(child)</p></td>
 <td><p>Retry child until success.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.node_metadata" title="async_btree.node_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node_metadata</span></code></a>(name, properties, edges)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.node_metadata" title="async_btree.node_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node_metadata</span></code></a>([name, properties, edges])</p></td>
 <td><p>‘node_metadata’ is a function decorator which add meta information about node.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.action" title="async_btree.action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action</span></code></a>(target, Awaitable[Any]], Callable], …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.action" title="async_btree.action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action</span></code></a>(target, **kwargs)</p></td>
 <td><p>Declare an action leaf.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.condition" title="async_btree.condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></a>(target, Awaitable[Any]], …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.condition" title="async_btree.condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></a>(target, **kwargs)</p></td>
 <td><p>Declare a condition leaf.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.parallele" title="async_btree.parallele"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallele</span></code></a>(children, Awaitable[Any]], …)</p></td>
-<td><p>Return an awaitable function which run children in parallele.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.parallele" title="async_btree.parallele"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallele</span></code></a>(children[, succes_threshold])</p></td>
+<td><p>Return a function which execute children in sequence.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.afilter" title="async_btree.afilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">afilter</span></code></a>(corofunc, Awaitable[bool]], …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.afilter" title="async_btree.afilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">afilter</span></code></a>(corofunc, iterable)</p></td>
 <td><p>Filter an iterable or an async iterable with an async function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.amap" title="async_btree.amap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amap</span></code></a>(corofunc, Awaitable[T]], iterable, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.amap" title="async_btree.amap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amap</span></code></a>(corofunc, iterable)</p></td>
 <td><p>Map an async function onto an iterable or an async iterable.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#async_btree.run" title="async_btree.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(kernel, target, *args)</p></td>
@@ -256,7 +256,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Exceptions</strong></p>
+<p><strong>Exceptions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -276,24 +276,6 @@
 <p>A Node is used to keep information on name, properties, and relations ship
 between a hierachical construct of functions.
 It’s like an instance of NodeMetadata.</p>
-<p><strong>Attributes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node.edges" title="async_btree.Node.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
-<td><p>Alias for field number 2</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.Node.name" title="async_btree.Node.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>Alias for field number 0</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node.properties" title="async_btree.Node.properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">properties</span></code></a></p></td>
-<td><p>Alias for field number 1</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="attribute">
 <dt id="async_btree.Node.name">
 <code class="sig-name descname">name</code><a class="headerlink" href="#async_btree.Node.name" title="Permalink to this definition">¶</a></dt>
@@ -331,21 +313,39 @@ definition.</p>
 <p class="rubric">Notes</p>
 <p>Edges attribut should be edges: <code class="docutils literal notranslate"><span class="pre">`List[Tuple[str,</span> <span class="pre">List['Node']]]`</span></code>
 But it is impossible for now, see [mypy issues 731](<a class="reference external" href="https://github.com/python/mypy/issues/731">https://github.com/python/mypy/issues/731</a>)</p>
-<dl class="attribute">
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node.edges" title="async_btree.Node.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
+<td><p>Alias for field number 2</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.Node.name" title="async_btree.Node.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Alias for field number 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.Node.properties" title="async_btree.Node.properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">properties</span></code></a></p></td>
+<td><p>Alias for field number 1</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
 <dt>
-<code class="sig-name descname">name</code></dt>
+<em class="property">property </em><code class="sig-name descname">name</code></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt>
-<code class="sig-name descname">properties</code></dt>
+<em class="property">property </em><code class="sig-name descname">properties</code></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt>
-<code class="sig-name descname">edges</code></dt>
+<em class="property">property </em><code class="sig-name descname">edges</code></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
@@ -733,24 +733,6 @@ This permit to return exception as a ‘FAILURE’ status.</p>
 <p>A NodeMetadata is used to keep information on name, properties name,
 and relations ship name between a hierachical construct of functions.</p>
 <p>This permit us to print or analyze all information of a behaviour tree.</p>
-<p><strong>Attributes</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.edges" title="async_btree.NodeMetadata.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
-<td><p>Alias for field number 2</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.name" title="async_btree.NodeMetadata.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
-<td><p>Alias for field number 0</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.properties" title="async_btree.NodeMetadata.properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">properties</span></code></a></p></td>
-<td><p>Alias for field number 1</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="attribute">
 <dt id="async_btree.NodeMetadata.name">
 <code class="sig-name descname">name</code><a class="headerlink" href="#async_btree.NodeMetadata.name" title="Permalink to this definition">¶</a></dt>
@@ -784,21 +766,39 @@ and relations ship name between a hierachical construct of functions.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.edges" title="async_btree.NodeMetadata.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
+<td><p>Alias for field number 2</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.name" title="async_btree.NodeMetadata.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Alias for field number 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.NodeMetadata.properties" title="async_btree.NodeMetadata.properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">properties</span></code></a></p></td>
+<td><p>Alias for field number 1</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
 <dt>
-<code class="sig-name descname">name</code></dt>
+<em class="property">property </em><code class="sig-name descname">name</code></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt>
-<code class="sig-name descname">properties</code></dt>
+<em class="property">property </em><code class="sig-name descname">properties</code></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt>
-<code class="sig-name descname">edges</code></dt>
+<em class="property">property </em><code class="sig-name descname">edges</code></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
@@ -869,17 +869,24 @@ default is function name left striped with ‘_’</p></li>
 
 <dl class="function">
 <dt id="async_btree.parallele">
-<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/parallele.html#parallele"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an awaitable function which run children in parallele.</p>
-<p><cite>succes_threshold</cite> parameter generalize traditional sequence/fallback,
-and must be in [0, len(children)], default value is len(children)</p>
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function which execute children in sequence.</p>
+<p>succes_threshold parameter generalize traditional sequence/fallback and
+must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 <p>if #success = succes_threshold, return a success</p>
 <p>if #failure = len(children) - succes_threshold, return a failure</p>
+<dl class="simple">
+<dt>What we can return as value and keep sematic Failure/Success:</dt><dd><ul class="simple">
+<li><p>an array of previous result when success</p></li>
+<li><p>last failure when fail</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p></li>
-<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value, default len(children)</p></li>
+<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -887,6 +894,9 @@ and must be in [0, len(children)], default value is len(children)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>(</strong><strong>AssertionError</strong><strong>)</strong> – if succes_threshold is invalid</p>
 </dd>
 </dl>
 </dd></dl>
