@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "1.0.1"
+version = "1.0.2"
 description = "Async behavior tree"
 license = "MIT"
 authors = ["Jerome Guibert <jguibert@gmail.com>"]
@@ -30,7 +30,7 @@ classifiers = [
 python = "^3.7"
 
 # Optional dependency
-curio = { version = "^0.9", optional = true }
+curio = { version = "^1", optional = true }
 
 [tool.poetry.extras]
 curio = ["curio"]
@@ -62,14 +62,15 @@ mypy = "*"
 pre-commit = "^1.21.0" # A framework for managing and maintaining multi-language pre-commit hooks.
 
 # Unit Testing
-pytest = "^4.6.9" # pytest: simple powerful testing with Python
-pytest-cov = "^2.8.1" # Pytest plugin for measuring coverage.
+pytest-curio = "^1.0.1"
+pytest = "^6" # pytest: simple powerful testing with Python
+pytest-cov = "^2" # Pytest plugin for measuring coverage.
 pytest-describe = "*"
-pytest-expecter = "*"
+#pytest-expecter = "*"
 pytest-random = "*"
-pytest-mock = "^1.10"
-coverage = "^5.0.3" # Code coverage measurement for Python
-xdoctest = "^0.11.0" # A rewrite of the builtin doctest module
+pytest-mock = "^3"
+coverage = "^5" # Code coverage measurement for Python
+xdoctest = "^0.15.0" # A rewrite of the builtin doctest module
 
 # Documentation
 sphinx = "^2.3.1"

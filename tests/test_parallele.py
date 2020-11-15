@@ -19,11 +19,12 @@ async def failure_func():
     return FAILURE
 
 
-def test_parallele(kernel):
-    assert kernel.run(parallele(children=[a_func]))
-    assert kernel.run(parallele(children=[a_func, b_func]))
-    assert not kernel.run(parallele(children=[a_func, b_func, failure_func]))
-    assert kernel.run(parallele(children=[a_func, b_func, failure_func], succes_threshold=2))
+@pytest.mark.curio
+async def test_parallele():
+    assert await parallele(children=[a_func])()
+    assert await parallele(children=[a_func, b_func])()
+    assert not await parallele(children=[a_func, b_func, failure_func])()
+    assert await parallele(children=[a_func, b_func, failure_func], succes_threshold=2)()
     # negative
     with pytest.raises(AssertionError):
         parallele(children=[a_func, b_func, failure_func], succes_threshold=-2)

@@ -25,21 +25,20 @@ async def exception_func():
     raise RuntimeError("ops")
 
 
-def test_sequence(kernel):
-    assert not kernel.run(
-        sequence(children=[a_func, failure_func, success_func])
-    ), "default behaviour fail of one failed"
+@pytest.mark.curio
+async def test_sequence():
+    assert not await sequence(children=[a_func, failure_func, success_func])(), "default behaviour fail of one failed"
 
-    assert kernel.run(sequence(children=[a_func, failure_func, success_func], succes_threshold=2))
-    assert kernel.run(sequence(children=[a_func, success_func, failure_func], succes_threshold=2))
-    assert kernel.run(
-        sequence(children=[failure_func, a_func, success_func], succes_threshold=2)
-    ), 'must continue after first failure'
+    assert await sequence(children=[a_func, failure_func, success_func], succes_threshold=2)()
+    assert await sequence(children=[a_func, success_func, failure_func], succes_threshold=2)()
+    assert await sequence(
+        children=[failure_func, a_func, success_func], succes_threshold=2
+    )(), 'must continue after first failure'
 
-    assert kernel.run(sequence(children=[exception_func, failure_func, a_func], succes_threshold=1))
-    assert not kernel.run(sequence(children=[exception_func, failure_func], succes_threshold=1))
+    assert await sequence(children=[exception_func, failure_func, a_func], succes_threshold=1)()
+    assert not await sequence(children=[exception_func, failure_func], succes_threshold=1)()
 
-    assert not kernel.run(sequence(children=[]))
+    assert not await sequence(children=[])()
     # negative
     with pytest.raises(AssertionError):
         sequence(children=[exception_func, failure_func], succes_threshold=-2)
@@ -48,27 +47,31 @@ def test_sequence(kernel):
         sequence(children=[exception_func, failure_func], succes_threshold=3)
 
 
-def test_fallback(kernel):
-    assert kernel.run(fallback(children=[exception_func, failure_func, a_func]))
-    assert not kernel.run(fallback(children=[exception_func, failure_func]))
-    assert not kernel.run(fallback(children=[]))
+@pytest.mark.curio
+async def test_fallback():
+    assert await fallback(children=[exception_func, failure_func, a_func])()
+    assert not await fallback(children=[exception_func, failure_func])()
+    assert not await fallback(children=[])()
 
 
-def test_selector(kernel):
-    assert kernel.run(selector(children=[exception_func, failure_func, a_func]))
-    assert not kernel.run(selector(children=[exception_func, failure_func]))
+@pytest.mark.curio
+async def test_selector():
+    assert await selector(children=[exception_func, failure_func, a_func])()
+    assert not await selector(children=[exception_func, failure_func])()
     assert selector(children=[]).__node_metadata.name == 'selector'
 
 
-def test_decision(kernel):
-    assert kernel.run(decision(condition=success_func, success_tree=a_func)) == 'a'
-    assert not kernel.run(decision(condition=failure_func, success_tree=a_func))
+@pytest.mark.curio
+async def test_decision():
+    assert await decision(condition=success_func, success_tree=a_func)() == 'a'
+    assert not await decision(condition=failure_func, success_tree=a_func)()
 
-    result = kernel.run(decision(condition=failure_func, success_tree=a_func, failure_tree=b_func))
+    result = await decision(condition=failure_func, success_tree=a_func, failure_tree=b_func)()
     assert result == 'b', 'failure tree must be called'
 
 
-def test_repeat_until_falsy_condition(kernel):
+@pytest.mark.curio
+async def test_repeat_until_falsy_condition():
 
     counter = ContextVar('counter', default=5)
 
@@ -81,11 +84,12 @@ def test_repeat_until_falsy_condition(kernel):
             raise RuntimeError('3')
         return SUCCESS
 
-    assert kernel.run(repeat_until(condition=tick, child=a_func)) == 'a', 'return last sucess result'
+    assert await repeat_until(condition=tick, child=a_func)() == 'a', 'return last sucess result'
     assert counter.get() == 2
 
 
-def test_repeat_until_return_last_result(kernel):
+@pytest.mark.curio
+async def test_repeat_until_return_last_result():
 
     counter = ContextVar('tick_test_repeat_until_return_last_result', default=5)
 
@@ -96,6 +100,6 @@ def test_repeat_until_return_last_result(kernel):
             return FAILURE
         return SUCCESS
 
-    result = kernel.run(repeat_until(condition=tick, child=exception_func))
+    result = await repeat_until(condition=tick, child=exception_func)()
     assert counter.get() == -1
     assert isinstance(result, ExceptionDecorator)

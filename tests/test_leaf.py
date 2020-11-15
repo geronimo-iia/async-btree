@@ -1,24 +1,29 @@
+import pytest
+
 from async_btree import action, condition
 
 
-def test_condition(kernel):
+@pytest.mark.curio
+async def test_condition():
     async def target_test(value):
         return value
 
-    assert kernel.run(condition(target_test, value=True))  # pylint: disable=unexpected-keyword-arg
+    assert await condition(target_test, value=True)()  # pylint: disable=unexpected-keyword-arg
 
-    assert not kernel.run(condition(target_test, value=False))  # pylint: disable=unexpected-keyword-arg
+    assert not await condition(target_test, value=False)()  # pylint: disable=unexpected-keyword-arg
 
 
-def test_action_with_exception_is_falsy(kernel):
+@pytest.mark.curio
+async def test_action_with_exception_is_falsy():
     async def generate_exception():
         raise Exception("Bing!")
 
-    assert not kernel.run(action(generate_exception))
+    assert not await action(generate_exception)()
 
 
-def test_action_results(kernel):
+@pytest.mark.curio
+async def test_action_results():
     async def compute(a, b):
         return a + b
 
-    assert kernel.run(action(compute, a=1, b=1)) == 2
+    assert await action(compute, a=1, b=1)() == 2
