@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.1.0 (in progress)
+## 1.0.2 (in progress)
 
 - update curio version > 1
 - add pytest-curio and rewrote test unit
