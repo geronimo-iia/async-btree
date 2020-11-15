@@ -63,14 +63,14 @@ pre-commit = "^1.21.0" # A framework for managing and maintaining multi-language
 
 # Unit Testing
 pytest-curio = "^1.0.1"
-pytest = "^4.6.9" # pytest: simple powerful testing with Python
-pytest-cov = "^2.8.1" # Pytest plugin for measuring coverage.
+pytest = "^6" # pytest: simple powerful testing with Python
+pytest-cov = "^2" # Pytest plugin for measuring coverage.
 pytest-describe = "*"
-pytest-expecter = "*"
+#pytest-expecter = "*"
 pytest-random = "*"
-pytest-mock = "^1.10"
-coverage = "^5.0.3" # Code coverage measurement for Python
-xdoctest = "^0.11.0" # A rewrite of the builtin doctest module
+pytest-mock = "^3"
+coverage = "^5" # Code coverage measurement for Python
+xdoctest = "^0.15.0" # A rewrite of the builtin doctest module
 
 # Documentation
 sphinx = "^2.3.1"

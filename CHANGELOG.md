@@ -3,7 +3,7 @@
 ## 1.1.0 (in progress)
 
 - update curio version > 1
-- add pytest-curio
+- add pytest-curio and rewrote test unit
 
 ## 1.0.1 (2020-01-31)
 

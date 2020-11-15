@@ -1,11 +1,12 @@
 from contextvars import ContextVar
 
+import pytest
 from curio import Kernel
 
 from async_btree import run
 
 
-def test_run_curio(kernel):
+def test_run_curio():
     counter = ContextVar("counter", default=5)
 
     async def reset_counter():
@@ -19,6 +20,4 @@ def test_run_curio(kernel):
         assert run(k, reset_counter) == 0
         assert counter.get() == 5
 
-    assert kernel.run(reset_counter) == 0
-    assert kernel.run(reset_counter) == -1
-    assert counter.get() == 0
+    assert counter.get() == 5
