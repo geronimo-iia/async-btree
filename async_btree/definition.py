@@ -19,7 +19,7 @@ __all__ = [
     'AsyncInnerFunction',
     'SUCCESS',
     'FAILURE',
-    'ExceptionDecorator',
+    'ControlFlowException',
     'NodeMetadata',
     'node_metadata',
 ]
@@ -38,15 +38,16 @@ FAILURE = not SUCCESS  # Well defined falsy...
 """Failure constant."""
 
 
-class ExceptionDecorator(Exception):
-    """ExceptionDecorator exception is a decorator on a real exception.
+class ControlFlowException(Exception):
+    """ControlFlowException exception is a decorator on a real exception.
 
-    This will ensure that ```assert ExceptionDecorator.__bool__ == False```.
+    This will ensure that ```assert ControlFlowException.__bool__ == False```.
     This permit to return exception as a 'FAILURE' status.
     """
 
     def __init__(self, exception: Exception):
         super().__init__()
+
         self.exception = exception
 
     def __bool__(self):
@@ -57,6 +58,11 @@ class ExceptionDecorator(Exception):
 
     def __str__(self):
         return self.exception.__str__()
+
+    @classmethod
+    def instanciate(cls, exception: Exception):
+        # this methods simply usage of hierarchical call tree.
+        return exception if isinstance(exception, ControlFlowException) else ControlFlowException(exception=exception)
 
 
 class NodeMetadata(NamedTuple):

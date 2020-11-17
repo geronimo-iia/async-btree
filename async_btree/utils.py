@@ -1,7 +1,10 @@
 """Utility function."""
+from inspect import iscoroutinefunction
 from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
 
-__all__ = ['amap', 'afilter', 'run']
+from .definition import CallableFunction
+
+__all__ = ['amap', 'afilter', 'run', 'iscoroutinefunction', 'to_async']
 
 T = TypeVar('T')
 
@@ -64,7 +67,15 @@ async def afilter(
                 yield item
 
 
+def to_async(func: CallableFunction) -> Callable[..., Awaitable[Any]]:
+    async def _func(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return func if iscoroutinefunction(func) else _func
+
+
 try:
+    # TOOD this is not ncessary with curio 1.4
     import curio  # noqa: F401
     from contextvars import copy_context
 

@@ -3,7 +3,7 @@
 from typing import List
 
 from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
-from .utils import amap
+from .utils import amap, to_async
 
 __all__ = ['parallele']
 
@@ -33,10 +33,12 @@ try:
         if not (0 <= succes_threshold <= len(children)):
             raise AssertionError('succes_threshold')
 
+        _children = [to_async(child) for child in children]
+
         @node_metadata(properties=['succes_threshold'])
         async def _parallele():
 
-            results = await gather([task async for task in amap(spawn, children)])
+            results = await gather([task async for task in amap(spawn, _children)])
 
             success = len(list(filter(bool, results)))
 
