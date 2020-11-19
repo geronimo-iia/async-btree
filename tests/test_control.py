@@ -2,7 +2,17 @@ from contextvars import ContextVar
 
 import pytest
 
-from async_btree import FAILURE, SUCCESS, ExceptionDecorator, decision, fallback, repeat_until, selector, sequence
+from async_btree import (
+    FAILURE,
+    SUCCESS,
+    ControlFlowException,
+    decision,
+    fallback,
+    ignore_exception,
+    repeat_until,
+    selector,
+    sequence,
+)
 
 
 async def a_func():
@@ -35,8 +45,11 @@ async def test_sequence():
         children=[failure_func, a_func, success_func], succes_threshold=2
     )(), 'must continue after first failure'
 
-    assert await sequence(children=[exception_func, failure_func, a_func], succes_threshold=1)()
-    assert not await sequence(children=[exception_func, failure_func], succes_threshold=1)()
+    with pytest.raises(RuntimeError):
+        assert await sequence(children=[exception_func, failure_func, a_func], succes_threshold=1)()
+
+    with pytest.raises(RuntimeError):
+        assert not await sequence(children=[failure_func, exception_func], succes_threshold=1)()
 
     assert not await sequence(children=[])()
     # negative
@@ -49,15 +62,17 @@ async def test_sequence():
 
 @pytest.mark.curio
 async def test_fallback():
-    assert await fallback(children=[exception_func, failure_func, a_func])()
-    assert not await fallback(children=[exception_func, failure_func])()
+    with pytest.raises(RuntimeError):
+        assert await fallback(children=[exception_func, failure_func, a_func])()
+    assert await fallback(children=[a_func, failure_func])() == ['a']
     assert not await fallback(children=[])()
 
 
 @pytest.mark.curio
 async def test_selector():
-    assert await selector(children=[exception_func, failure_func, a_func])()
-    assert not await selector(children=[exception_func, failure_func])()
+    with pytest.raises(RuntimeError):
+        assert await selector(children=[exception_func, failure_func, a_func])()
+    assert await selector(children=[a_func, failure_func])() == ['a']
     assert selector(children=[]).__node_metadata.name == 'selector'
 
 
@@ -84,7 +99,7 @@ async def test_repeat_until_falsy_condition():
             raise RuntimeError('3')
         return SUCCESS
 
-    assert await repeat_until(condition=tick, child=a_func)() == 'a', 'return last sucess result'
+    assert await repeat_until(condition=ignore_exception(tick), child=a_func)() == 'a', 'return last sucess result'
     assert counter.get() == 2
 
 
@@ -100,6 +115,6 @@ async def test_repeat_until_return_last_result():
             return FAILURE
         return SUCCESS
 
-    result = await repeat_until(condition=tick, child=exception_func)()
+    result = await repeat_until(condition=tick, child=ignore_exception(exception_func))()
     assert counter.get() == -1
-    assert isinstance(result, ExceptionDecorator)
+    assert isinstance(result, ControlFlowException)

@@ -61,7 +61,7 @@ def decorate(child: CallableFunction, decorator: CallableFunction, **kwargs) -> 
     _child = to_async(child)
     _decorator = to_async(decorator)
 
-    @node_metadata(properties=['decorator'])
+    @node_metadata(properties=['_decorator'])
     async def _decorate():
         return await _decorator(await _child(), **kwargs)
 
@@ -118,7 +118,7 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
 
         try:
             child_result = await _child()
-            if child_result:
+            if bool(child_result):
                 result = child_result
 
         except Exception as e:
@@ -152,7 +152,7 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
 
         try:
             child_result = await _child()
-            if not child_result:
+            if not bool(child_result):
                 result = child_result
 
         except Exception as e:
@@ -218,7 +218,7 @@ def inverter(child: CallableFunction) -> AsyncInnerFunction:
 
     @node_metadata()
     async def _inverter():
-        return not await _child()
+        return not bool(await _child())
 
     return _inverter
 
@@ -242,12 +242,13 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
 
     @node_metadata(properties=['max_retry'])
     async def _retry():
-        retry_count = 0
+        retry_count = max_retry
         result: Any = FAILURE
 
-        while not result and retry_count < max_retry:
+        while not bool(result) and retry_count != 0:
             result = await _child()
-            retry_count += 1
+            print(f"result : {result}")
+            retry_count -= 1
 
         return result
 

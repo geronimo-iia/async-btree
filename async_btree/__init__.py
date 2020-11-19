@@ -14,8 +14,17 @@ from .decorator import (
     retry,
     retry_until_failed,
     retry_until_success,
+    ignore_exception,
 )
-from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, NodeMetadata, node_metadata
+from .definition import (
+    FAILURE,
+    SUCCESS,
+    AsyncInnerFunction,
+    CallableFunction,
+    NodeMetadata,
+    node_metadata,
+    ControlFlowException,
+)
 from .leaf import action, condition
 from .parallele import parallele
 from .utils import afilter, amap, run
@@ -33,6 +42,7 @@ __all__ = [
     'alias',
     'always_failure',
     'always_success',
+    'ignore_exception',
     'decorate',
     'inverter',
     'is_failure',
@@ -47,6 +57,7 @@ __all__ = [
     'ExceptionDecorator',
     'NodeMetadata',
     'node_metadata',
+    'ControlFlowException',
     'action',
     'condition',
     'parallele',

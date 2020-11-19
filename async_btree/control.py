@@ -1,7 +1,6 @@
 """Control function definition."""
 from typing import Any, List, Optional
 
-from .decorator import is_success
 from .definition import FAILURE, AsyncInnerFunction, CallableFunction, node_metadata
 from .utils import to_async
 
@@ -50,7 +49,7 @@ def sequence(children: List[CallableFunction], succes_threshold: int = -1) -> As
             last_result = await child()
             results.append(last_result)
 
-            if last_result:
+            if bool(last_result):
                 success += 1
                 if success == succes_threshold:
                     # last evaluation is a success
@@ -107,9 +106,9 @@ def decision(
     _success_tree = to_async(success_tree)
     _failure_tree = to_async(failure_tree) if failure_tree else None
 
-    @node_metadata(edges=['condition', 'success_tree', 'failure_tree'])
+    @node_metadata(edges=['_condition', '_success_tree', '_failure_tree'])
     async def _decision():
-        if await _condition():
+        if bool(await _condition()):
             return await _success_tree()
         if _failure_tree:
             return await _failure_tree()
@@ -132,12 +131,12 @@ def repeat_until(condition: CallableFunction, child: CallableFunction) -> AsyncI
     """
 
     _child = to_async(child)
+    _condition = to_async(condition)
 
-    @node_metadata(edges=['condition', 'child'])
+    @node_metadata(edges=['_condition', '_child'])
     async def _repeat_until():
         result: Any = FAILURE
-        condition_eval = is_success(child=condition)
-        while await condition_eval():
+        while bool(await _condition()):
             result = await _child()
 
         return result

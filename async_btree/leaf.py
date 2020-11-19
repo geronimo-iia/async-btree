@@ -27,7 +27,7 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
 
     _target = to_async(target)
 
-    @node_metadata(properties=['target'])
+    @node_metadata(properties=['_target'])
     async def _action():
         try:
             return await _target(**kwargs)

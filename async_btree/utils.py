@@ -2,9 +2,9 @@
 from inspect import iscoroutinefunction
 from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
 
-from .definition import CallableFunction
+from .definition import CallableFunction, node_metadata
 
-__all__ = ['amap', 'afilter', 'run', 'iscoroutinefunction', 'to_async']
+__all__ = ['amap', 'afilter', 'run', 'to_async']
 
 T = TypeVar('T')
 
@@ -67,11 +67,26 @@ async def afilter(
                 yield item
 
 
-def to_async(func: CallableFunction) -> Callable[..., Awaitable[Any]]:
-    async def _func(*args, **kwargs):
-        return func(*args, **kwargs)
+def to_async(target: CallableFunction) -> Callable[..., Awaitable[Any]]:
+    """Transform target function in async function if necessary.
 
-    return func if iscoroutinefunction(func) else _func
+    Args:
+        target (CallableFunction): function to transform in async if necessary
+
+    Returns:
+        (Callable[..., Awaitable[Any]]): an async version of target function
+    """
+
+    if iscoroutinefunction(target):
+        # nothing todo
+        return target
+
+    # use node_metadata to keep trace of target function name
+    @node_metadata(name=target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous")
+    async def _to_async(*args, **kwargs):
+        return target(*args, **kwargs)
+
+    return _to_async
 
 
 try:

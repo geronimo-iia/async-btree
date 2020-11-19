@@ -12,7 +12,7 @@ Function signature of async function implementation:
 
 """
 # from collections import namedtuple
-from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union
+from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union, no_type_check
 
 __all__ = [
     'CallableFunction',
@@ -22,6 +22,7 @@ __all__ = [
     'ControlFlowException',
     'NodeMetadata',
     'node_metadata',
+    'get_node_metadata',
 ]
 
 
@@ -81,8 +82,8 @@ class NodeMetadata(NamedTuple):
     """
 
     name: str
-    properties: List[str]
-    edges: List[str]
+    properties: Optional[List[str]]
+    edges: Optional[List[str]]
 
 
 T = TypeVar('T', bound=CallableFunction)
@@ -109,10 +110,17 @@ def node_metadata(
 
     def decorate_function(function: T) -> T:
         function.__node_metadata = NodeMetadata(
-            name=name if name else function.__name__.lstrip('_'),
-            properties=properties or [],
-            edges=edges or ['child', 'children'],
+            name=name if name else function.__name__.lstrip('_'), properties=properties, edges=edges
         )
         return function
 
     return decorate_function
+
+
+@no_type_check
+def get_node_metadata(target: CallableFunction) -> NodeMetadata:
+    """Returns node metadata instance associated with target."""
+    node = target.__node_metadata
+    if not isinstance(node, NodeMetadata):
+        raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
+    return node

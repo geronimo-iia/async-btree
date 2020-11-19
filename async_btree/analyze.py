@@ -1,10 +1,12 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, Callable, List, NamedTuple, Optional, Tuple, no_type_check
+from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
 
-from .definition import CallableFunction, NodeMetadata
+from .definition import CallableFunction, get_node_metadata
 
 __all__ = ["analyze", "stringify_analyze", "Node"]
+
+_DEFAULT_EDGES = ['child', 'children', '_child', '_children']
 
 
 class Node(NamedTuple):
@@ -35,20 +37,6 @@ class Node(NamedTuple):
         return stringify_analyze(target=self)
 
 
-def _get_analyze_edges(nonlocals) -> Callable:
-
-    return _get_analyze_edges
-
-
-@no_type_check
-def _get_node_metadata(target: CallableFunction) -> NodeMetadata:
-    """Returns node metadata instance associated with target."""
-    node = target.__node_metadata
-    if not isinstance(node, NodeMetadata):
-        raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
-    return node
-
-
 # pylint: disable=protected-access
 @no_type_check  # it's a shortcut for hasattr ...
 def analyze(target: CallableFunction) -> Node:
@@ -69,7 +57,10 @@ def analyze(target: CallableFunction) -> Node:
     def _analyze_property(p):
         """Return a tuple (name, value) or (name, function name) as property."""
         value = _get_nonlocals_value_for(name=p)
-        return p, value.__name__ if value and callable(value) else value
+        p_name = p.lstrip('_')
+        if value and callable(value):
+            return p_name, get_node_metadata(target=value).name if hasattr(value, "__node_metadata") else value.__name__
+        return p_name, value
 
     def _analyze_edges(egde_name):
         """Lookup children node from egde_name local var."""
@@ -81,14 +72,14 @@ def analyze(target: CallableFunction) -> Node:
                 value = list(map(analyze, edge))
             else:  # or a single node
                 value = [analyze(edge)]
-        return (egde_name, value)
+        return (egde_name.lstrip('_'), value)
 
     if hasattr(target, "__node_metadata"):
-        node = _get_node_metadata(target=target)
+        node = get_node_metadata(target=target)
         return Node(
             name=node.name,
-            properties=list(map(_analyze_property, node.properties)),
-            edges=list(filter(lambda p: p is not None, map(_analyze_edges, node.edges))),
+            properties=list(map(_analyze_property, node.properties)) if node.properties else [],
+            edges=list(filter(lambda p: p is not None, map(_analyze_edges, node.edges or _DEFAULT_EDGES))),
         )
 
     # simple function
