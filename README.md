@@ -86,7 +86,7 @@ Note that ```decorate(a_func, b_decorator)``` is not an async function, only act
 Few guidelines of this implementation:
 
 - In order to mimic all NodeStatus (success, failure, running), I replace this by truthy/falsy meaning of evaluation value.
-  A special dedicated exception decorate standard exception in order to give them a Falsy meaning.
+  A special dedicated exception decorate standard exception in order to give them a Falsy meaning (`ControlFlowException`).
 - Blackboard pattern, act as a manager of context variable for behavior tree.
   With python 3, please... simply use [contextvars](https://docs.python.org/3/library/contextvars.html) !
 - In order to be able to build a sematic tree, I've introduce a metadata tuple added on function implementation.
@@ -190,3 +190,11 @@ This should print:
          --(child)--> action:
                       target: hello
 ```
+
+
+Note about action and condition method:
+
+ - you could use sync or async function
+ - you could specify a return value with SUCCESS or FAILURE
+ - function with no return value will be evaluated as FAILURE until you decorate them with a `always_success`or `always_failure`
+ 
