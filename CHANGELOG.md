@@ -3,7 +3,7 @@
 ## 1.1.0 (Feature list)
 
 - remove falsy evaluation of exception
-- add a_catch operator
+- add ignore_exception decorator
 - use sync or async function in parameters operator
 
 ## 1.0.2 (2020-11-15)
