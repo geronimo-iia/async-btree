@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Async Behaviour Tree for Python &mdash; async_btree 1.0.2 documentation</title>
+  <title>Async Behaviour Tree for Python &mdash; async_btree 1.1.0 documentation</title>
   
 
   
@@ -224,7 +224,7 @@ Note that <code class="docutils literal notranslate"><span class="pre">decorate(
 <p>Few guidelines of this implementation:</p>
 <ul class="simple">
 <li><p>In order to mimic all NodeStatus (success, failure, running), I replace this by truthy/falsy meaning of evaluation value.
-A special dedicated exception decorate standard exception in order to give them a Falsy meaning.</p></li>
+A special dedicated exception decorate standard exception in order to give them a Falsy meaning (<code class="docutils literal notranslate"><span class="pre">ControlFlowException</span></code>).</p></li>
 <li><p>Blackboard pattern, act as a manager of context variable for behavior tree.
 With python 3, please… simply use <a class="reference external" href="https://docs.python.org/3/library/contextvars.html">contextvars</a> !</p></li>
 <li><p>In order to be able to build a sematic tree, I’ve introduce a metadata tuple added on function implementation.</p></li>
@@ -307,6 +307,12 @@ Here the profile:</p>
                      target: hello
 </pre></div>
 </div>
+<p>Note about action and condition method:</p>
+<ul class="simple">
+<li><p>you could use sync or async function</p></li>
+<li><p>you could specify a return value with SUCCESS or FAILURE</p></li>
+<li><p>function with no return value will be evaluated as FAILURE until you decorate them with a <code class="docutils literal notranslate"><span class="pre">always_success</span></code>or <code class="docutils literal notranslate"><span class="pre">always_failure</span></code></p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="contents">

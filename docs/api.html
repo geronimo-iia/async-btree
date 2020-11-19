@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; async_btree 1.0.2 documentation</title>
+  <title>API Reference &mdash; async_btree 1.1.0 documentation</title>
   
 
   
@@ -212,46 +212,49 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#async_btree.always_success" title="async_btree.always_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">always_success</span></code></a>(child)</p></td>
 <td><p>Create a node which always return SUCCESS value.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.decorate" title="async_btree.decorate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decorate</span></code></a>(child, decorator, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.ignore_exception" title="async_btree.ignore_exception"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ignore_exception</span></code></a>(child)</p></td>
+<td><p>Create a node which ignore runtime exception.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.decorate" title="async_btree.decorate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decorate</span></code></a>(child, decorator, **kwargs)</p></td>
 <td><p>Create a decorator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.inverter" title="async_btree.inverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverter</span></code></a>(child)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.inverter" title="async_btree.inverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverter</span></code></a>(child)</p></td>
 <td><p>Invert node status.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.is_failure" title="async_btree.is_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_failure</span></code></a>(child)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.is_failure" title="async_btree.is_failure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_failure</span></code></a>(child)</p></td>
 <td><p>Create a conditional node which test if child fail.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.is_success" title="async_btree.is_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_success</span></code></a>(child)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.is_success" title="async_btree.is_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_success</span></code></a>(child)</p></td>
 <td><p>Create a conditional node which test if child success.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry" title="async_btree.retry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry</span></code></a>(child[, max_retry])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.retry" title="async_btree.retry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry</span></code></a>(child[, max_retry])</p></td>
 <td><p>Retry child evaluation at most max_retry time on failure until child succeed.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.retry_until_failed" title="async_btree.retry_until_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_failed</span></code></a>(child)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry_until_failed" title="async_btree.retry_until_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_failed</span></code></a>(child)</p></td>
 <td><p>Retry child until failed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.retry_until_success" title="async_btree.retry_until_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_success</span></code></a>(child)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.retry_until_success" title="async_btree.retry_until_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry_until_success</span></code></a>(child)</p></td>
 <td><p>Retry child until success.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.node_metadata" title="async_btree.node_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node_metadata</span></code></a>([name, properties, edges])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.node_metadata" title="async_btree.node_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node_metadata</span></code></a>([name, properties, edges])</p></td>
 <td><p>‘node_metadata’ is a function decorator which add meta information about node.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.action" title="async_btree.action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action</span></code></a>(target, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.action" title="async_btree.action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action</span></code></a>(target, **kwargs)</p></td>
 <td><p>Declare an action leaf.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.condition" title="async_btree.condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></a>(target, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.condition" title="async_btree.condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition</span></code></a>(target, **kwargs)</p></td>
 <td><p>Declare a condition leaf.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.parallele" title="async_btree.parallele"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallele</span></code></a>(children[, succes_threshold])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.parallele" title="async_btree.parallele"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallele</span></code></a>(children[, succes_threshold])</p></td>
 <td><p>Return a function which execute children in sequence.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.afilter" title="async_btree.afilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">afilter</span></code></a>(corofunc, iterable)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.afilter" title="async_btree.afilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">afilter</span></code></a>(corofunc, iterable)</p></td>
 <td><p>Filter an iterable or an async iterable with an async function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.amap" title="async_btree.amap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amap</span></code></a>(corofunc, iterable)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.amap" title="async_btree.amap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amap</span></code></a>(corofunc, iterable)</p></td>
 <td><p>Map an async function onto an iterable or an async iterable.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#async_btree.run" title="async_btree.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(kernel, target, *args)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.run" title="async_btree.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(kernel, target, *args)</p></td>
 <td><p>Curio run with independent contextvars.</p></td>
 </tr>
 </tbody>
@@ -263,8 +266,8 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.ExceptionDecorator" title="async_btree.ExceptionDecorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExceptionDecorator</span></code></a>(exception)</p></td>
-<td><p>ExceptionDecorator exception is a decorator on a real exception.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.ControlFlowException" title="async_btree.ControlFlowException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ControlFlowException</span></code></a>(exception)</p></td>
+<td><p>ControlFlowException exception is a decorator on a real exception.</p></td>
 </tr>
 </tbody>
 </table>
@@ -524,13 +527,16 @@ must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>an awaitable function which return child result if is falsy</dt><dd><p>else FAILURE, or a ControlFlowException if error occurs.</p>
+<dt>an awaitable function which return child result if is falsy</dt><dd><p>else FAILURE.</p>
 </dd>
 </dl>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#async_btree.ControlFlowException" title="async_btree.ControlFlowException"><strong>ControlFlowException</strong></a> – if error occurs</p>
 </dd>
 </dl>
 </dd></dl>
@@ -541,17 +547,23 @@ must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 <dd><p>Create a node which always return SUCCESS value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p></li>
+<li><p><strong>silent_exception</strong> (<em>bool</em>) – if true then exception will be ignored</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>an awaitable function which return child result if is truthy</dt><dd><p>else SUCCESS (Any exception will be ignored).</p>
+<dt>an awaitable function which return child result if it is truthy</dt><dd><p>else SUCCESS.</p>
 </dd>
 </dl>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#async_btree.ControlFlowException" title="async_btree.ControlFlowException"><strong>ControlFlowException</strong></a> – if error occurs</p>
 </dd>
 </dl>
 </dd></dl>
@@ -567,7 +579,7 @@ First argument of decorator function must be a child.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p></li>
-<li><p><strong>decorator</strong> (<em>CallableFunction</em>) – awaitable target decorator</p></li>
+<li><p><strong>decorator</strong> (<em>CallableFunction</em>) – awaitable target decorator with profile ‘decorator(child_result, <a href="#id2"><span class="problematic" id="id3">**</span></a>kwargs)’</p></li>
 <li><p><strong>kwargs</strong> – optional keyed argument to pass to decorator function</p></li>
 </ul>
 </dd>
@@ -615,8 +627,7 @@ First argument of decorator function must be a child.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return FAILURE else FAILURE.
-An exception will be evaluated as a success.</p>
+<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return FAILURE else FAILURE.</p>
 </dd>
 </dl>
 </p>
@@ -637,8 +648,7 @@ An exception will be evaluated as a success.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return SUCCESS else FAILURE.
-An exception will be evaluated as falsy.</p>
+<dt>an awaitable function which return SUCCESS if child</dt><dd><p>return SUCCESS else FAILURE.</p>
 </dd>
 </dl>
 </p>
@@ -716,13 +726,22 @@ If max_retry is reached, returns FAILURE or last exception.</p>
 </dl>
 </dd></dl>
 
-<dl class="exception">
-<dt id="async_btree.ExceptionDecorator">
-<em class="property">exception </em><code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">ExceptionDecorator</code><span class="sig-paren">(</span><em class="sig-param">exception: Exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/async_btree/definition.html#ExceptionDecorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.ExceptionDecorator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>ExceptionDecorator exception is a decorator on a real exception.</p>
-<p>This will ensure that <code class="docutils literal notranslate"><span class="pre">`assert</span> <span class="pre">ExceptionDecorator.__bool__</span> <span class="pre">==</span> <span class="pre">False`</span></code>.
-This permit to return exception as a ‘FAILURE’ status.</p>
+<dl class="function">
+<dt id="async_btree.ignore_exception">
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">ignore_exception</code><span class="sig-paren">(</span><em class="sig-param">child: Union[Callable[[...], Awaitable[Any]], Callable]</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/decorator.html#ignore_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.ignore_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a node which ignore runtime exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>child</strong> (<em>CallableFunction</em>) – child function to decorate</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an awaitable function which return child result
+or any exception with a falsy meaning in a ControlFlowException.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="class">
@@ -825,11 +844,26 @@ default is function name left striped with ‘_’</p></li>
 </dl>
 </dd></dl>
 
+<dl class="exception">
+<dt id="async_btree.ControlFlowException">
+<em class="property">exception </em><code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">ControlFlowException</code><span class="sig-paren">(</span><em class="sig-param">exception: Exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/async_btree/definition.html#ControlFlowException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.ControlFlowException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>ControlFlowException exception is a decorator on a real exception.</p>
+<p>This will ensure that <code class="docutils literal notranslate"><span class="pre">`assert</span> <span class="pre">ControlFlowException.__bool__</span> <span class="pre">==</span> <span class="pre">False`</span></code>.
+This permit to return exception as a ‘FAILURE’ status.</p>
+<dl class="method">
+<dt id="async_btree.ControlFlowException.instanciate">
+<em class="property">classmethod </em><code class="sig-name descname">instanciate</code><span class="sig-paren">(</span><em class="sig-param">exception: Exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/async_btree/definition.html#ControlFlowException.instanciate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.ControlFlowException.instanciate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="async_btree.action">
 <code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">action</code><span class="sig-paren">(</span><em class="sig-param">target: Union[Callable[[...], Awaitable[Any]], Callable], **kwargs</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/leaf.html#action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Declare an action leaf.</p>
-<p>Action is an awaitable closure of specified function.</p>
+<p>Action is an awaitable closure of specified function,
+(See alias function).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -842,6 +876,9 @@ default is function name left striped with ‘_’</p></li>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(AsyncInnerFunction)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#async_btree.ControlFlowException" title="async_btree.ControlFlowException"><strong>ControlFlowException</strong></a> – if error occurs</p>
 </dd>
 </dl>
 </dd></dl>

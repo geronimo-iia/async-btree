@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>async_btree.definition &mdash; async_btree 1.0.2 documentation</title>
+  <title>async_btree.definition &mdash; async_btree 1.1.0 documentation</title>
   
 
   
@@ -163,16 +163,17 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="c1"># from collections import namedtuple</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">no_type_check</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;CallableFunction&#39;</span><span class="p">,</span>
     <span class="s1">&#39;AsyncInnerFunction&#39;</span><span class="p">,</span>
     <span class="s1">&#39;SUCCESS&#39;</span><span class="p">,</span>
     <span class="s1">&#39;FAILURE&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ExceptionDecorator&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ControlFlowException&#39;</span><span class="p">,</span>
     <span class="s1">&#39;NodeMetadata&#39;</span><span class="p">,</span>
     <span class="s1">&#39;node_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;get_node_metadata&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -189,15 +190,16 @@
 <span class="sd">&quot;&quot;&quot;Failure constant.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="ExceptionDecorator"><a class="viewcode-back" href="../../api.html#async_btree.ExceptionDecorator">[docs]</a><span class="k">class</span> <span class="nc">ExceptionDecorator</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;ExceptionDecorator exception is a decorator on a real exception.</span>
+<div class="viewcode-block" id="ControlFlowException"><a class="viewcode-back" href="../../api.html#async_btree.ControlFlowException">[docs]</a><span class="k">class</span> <span class="nc">ControlFlowException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ControlFlowException exception is a decorator on a real exception.</span>
 
-<span class="sd">    This will ensure that ```assert ExceptionDecorator.__bool__ == False```.</span>
+<span class="sd">    This will ensure that ```assert ControlFlowException.__bool__ == False```.</span>
 <span class="sd">    This permit to return exception as a &#39;FAILURE&#39; status.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">exception</span>
 
     <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -207,7 +209,12 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ControlFlowException.instanciate"><a class="viewcode-back" href="../../api.html#async_btree.ControlFlowException.instanciate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">instanciate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="c1"># this methods simply usage of hierarchical call tree.</span>
+        <span class="k">return</span> <span class="n">exception</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">ControlFlowException</span><span class="p">)</span> <span class="k">else</span> <span class="n">ControlFlowException</span><span class="p">(</span><span class="n">exception</span><span class="o">=</span><span class="n">exception</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="NodeMetadata"><a class="viewcode-back" href="../../api.html#async_btree.NodeMetadata">[docs]</a><span class="k">class</span> <span class="nc">NodeMetadata</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
@@ -226,8 +233,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+    <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></div>
 
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">CallableFunction</span><span class="p">)</span>
@@ -254,13 +261,20 @@
 
     <span class="k">def</span> <span class="nf">decorate_function</span><span class="p">(</span><span class="n">function</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="n">function</span><span class="o">.</span><span class="n">__node_metadata</span> <span class="o">=</span> <span class="n">NodeMetadata</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span>
-            <span class="n">properties</span><span class="o">=</span><span class="n">properties</span> <span class="ow">or</span> <span class="p">[],</span>
-            <span class="n">edges</span><span class="o">=</span><span class="n">edges</span> <span class="ow">or</span> <span class="p">[</span><span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">],</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">function</span>
 
     <span class="k">return</span> <span class="n">decorate_function</span></div>
+
+
+<span class="nd">@no_type_check</span>
+<span class="k">def</span> <span class="nf">get_node_metadata</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeMetadata</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns node metadata instance associated with target.&quot;&quot;&quot;</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">__node_metadata</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">NodeMetadata</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;attr __node_metadata of </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1"> is not a NodeMetadata!&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">node</span>
 </pre></div>
 
            </div>
