@@ -137,3 +137,4 @@ In a real use case, we should find a way to avoid this:
 - wrote a factory function for a specific case
 - either by using ContextVar (```from contextvars import ContextVar```)
 
+You could see a sample in this source is [example/tutorial_2_decisions.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/master/examples/tutorial_2_decisions.py).
