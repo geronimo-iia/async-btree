@@ -62,7 +62,7 @@ class ControlFlowException(Exception):
 
     @classmethod
     def instanciate(cls, exception: Exception):
-        # this methods simply usage of hierarchical call tree.
+        # this methods simplify usage of hierarchical call tree.
         return exception if isinstance(exception, ControlFlowException) else ControlFlowException(exception=exception)
 
 
@@ -82,8 +82,8 @@ class NodeMetadata(NamedTuple):
     """
 
     name: str
-    properties: Optional[List[str]]
-    edges: Optional[List[str]]
+    properties: Optional[List[str]] = None
+    edges: Optional[List[str]] = None
 
 
 T = TypeVar('T', bound=CallableFunction)
