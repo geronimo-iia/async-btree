@@ -3,13 +3,13 @@
 from typing import List
 
 from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
-from .utils import amap, to_async
+from .utils import to_async
 
 __all__ = ['parallele']
 
 
 try:
-    from curio import gather, spawn
+    from curio import TaskGroup
 
     def parallele(children: List[CallableFunction], succes_threshold: int = -1) -> AsyncInnerFunction:
         """Return an awaitable function which run children in parallele.
@@ -38,9 +38,11 @@ try:
         @node_metadata(properties=['succes_threshold'])
         async def _parallele():
 
-            results = await gather([task async for task in amap(spawn, _children)])
+            async with TaskGroup(wait=all) as g:
+                for child in _children:
+                    await g.spawn(child)
 
-            success = len(list(filter(bool, results)))
+            success = len(list(filter(bool, g.results)))
 
             return SUCCESS if success >= succes_threshold else FAILURE
 
