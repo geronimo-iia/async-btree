@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.1.0 (Feature list)
+## 1.1.0 (2020-11-20)
 
 - remove falsy evaluation of exception
 - add ignore_exception decorator
