@@ -12,16 +12,17 @@ Function signature of async function implementation:
 
 """
 # from collections import namedtuple
-from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union
+from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union, no_type_check
 
 __all__ = [
     'CallableFunction',
     'AsyncInnerFunction',
     'SUCCESS',
     'FAILURE',
-    'ExceptionDecorator',
+    'ControlFlowException',
     'NodeMetadata',
     'node_metadata',
+    'get_node_metadata',
 ]
 
 
@@ -38,15 +39,16 @@ FAILURE = not SUCCESS  # Well defined falsy...
 """Failure constant."""
 
 
-class ExceptionDecorator(Exception):
-    """ExceptionDecorator exception is a decorator on a real exception.
+class ControlFlowException(Exception):
+    """ControlFlowException exception is a decorator on a real exception.
 
-    This will ensure that ```assert ExceptionDecorator.__bool__ == False```.
+    This will ensure that ```assert ControlFlowException.__bool__ == False```.
     This permit to return exception as a 'FAILURE' status.
     """
 
     def __init__(self, exception: Exception):
         super().__init__()
+
         self.exception = exception
 
     def __bool__(self):
@@ -57,6 +59,11 @@ class ExceptionDecorator(Exception):
 
     def __str__(self):
         return self.exception.__str__()
+
+    @classmethod
+    def instanciate(cls, exception: Exception):
+        # this methods simplify usage of hierarchical call tree.
+        return exception if isinstance(exception, ControlFlowException) else ControlFlowException(exception=exception)
 
 
 class NodeMetadata(NamedTuple):
@@ -75,8 +82,8 @@ class NodeMetadata(NamedTuple):
     """
 
     name: str
-    properties: List[str]
-    edges: List[str]
+    properties: Optional[List[str]] = None
+    edges: Optional[List[str]] = None
 
 
 T = TypeVar('T', bound=CallableFunction)
@@ -103,10 +110,17 @@ def node_metadata(
 
     def decorate_function(function: T) -> T:
         function.__node_metadata = NodeMetadata(
-            name=name if name else function.__name__.lstrip('_'),
-            properties=properties or [],
-            edges=edges or ['child', 'children'],
+            name=name if name else function.__name__.lstrip('_'), properties=properties, edges=edges
         )
         return function
 
     return decorate_function
+
+
+@no_type_check
+def get_node_metadata(target: CallableFunction) -> NodeMetadata:
+    """Returns node metadata instance associated with target."""
+    node = target.__node_metadata
+    if not isinstance(node, NodeMetadata):
+        raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
+    return node

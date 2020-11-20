@@ -33,6 +33,7 @@ def test_analyze_tree_1():
     a_tree_1 = analyze(tree_1)
 
     printed_tree = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> action:\n                      target: hello\n"""  # noqa: E501, B950
+
     assert stringify_analyze(a_tree_1) == printed_tree
 
 

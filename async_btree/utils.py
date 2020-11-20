@@ -1,7 +1,10 @@
 """Utility function."""
+from inspect import iscoroutinefunction
 from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
 
-__all__ = ['amap', 'afilter', 'run']
+from .definition import CallableFunction, node_metadata
+
+__all__ = ['amap', 'afilter', 'run', 'to_async']
 
 T = TypeVar('T')
 
@@ -64,7 +67,30 @@ async def afilter(
                 yield item
 
 
+def to_async(target: CallableFunction) -> Callable[..., Awaitable[Any]]:
+    """Transform target function in async function if necessary.
+
+    Args:
+        target (CallableFunction): function to transform in async if necessary
+
+    Returns:
+        (Callable[..., Awaitable[Any]]): an async version of target function
+    """
+
+    if iscoroutinefunction(target):
+        # nothing todo
+        return target
+
+    # use node_metadata to keep trace of target function name
+    @node_metadata(name=target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous")
+    async def _to_async(*args, **kwargs):
+        return target(*args, **kwargs)
+
+    return _to_async
+
+
 try:
+    # TOOD this is not ncessary with curio 1.4
     import curio  # noqa: F401
     from contextvars import copy_context
 

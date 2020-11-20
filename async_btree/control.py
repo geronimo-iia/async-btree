@@ -1,8 +1,8 @@
 """Control function definition."""
 from typing import Any, List, Optional
 
-from .decorator import is_success
-from .definition import FAILURE, AsyncInnerFunction, CallableFunction, ExceptionDecorator, node_metadata
+from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
+from .utils import to_async
 
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
@@ -37,21 +37,19 @@ def sequence(children: List[CallableFunction], succes_threshold: int = -1) -> As
 
     failure_threshold = len(children) - succes_threshold + 1
 
+    _children = [to_async(child) for child in children]
+
     @node_metadata(properties=['succes_threshold'])
     async def _sequence():
         success = 0
         failure = 0
         results = []
 
-        for child in children:
-            try:
-                last_result = await child()
-            except Exception as e:
-                last_result = ExceptionDecorator(e)
-
+        for child in _children:
+            last_result = await child()
             results.append(last_result)
 
-            if last_result:
+            if bool(last_result):
                 success += 1
                 if success == succes_threshold:
                     # last evaluation is a success
@@ -93,6 +91,9 @@ def decision(
 ) -> AsyncInnerFunction:
     """Create a decision node.
 
+    If condition is meet, return evaluation of success_tree.
+    Otherwise, it return SUCCESS or evaluation of failure_tree if setted.
+
     Args:
         condition (CallableFunction): awaitable condition
         success_tree (CallableFunction): awaitable success tree which be
@@ -104,11 +105,17 @@ def decision(
         (AsyncInnerFunction): an awaitable function.
     """
 
-    @node_metadata(edges=['condition', 'success_tree', 'failure_tree'])
+    _condition = to_async(condition)
+    _success_tree = to_async(success_tree)
+    _failure_tree = to_async(failure_tree) if failure_tree else None
+
+    @node_metadata(edges=['_condition', '_success_tree', '_failure_tree'])
     async def _decision():
-        if await condition():
-            return await success_tree()
-        return await failure_tree() if failure_tree else FAILURE
+        if bool(await _condition()):
+            return await _success_tree()
+        if _failure_tree:
+            return await _failure_tree()
+        return SUCCESS
 
     return _decision
 
@@ -126,16 +133,14 @@ def repeat_until(condition: CallableFunction, child: CallableFunction) -> AsyncI
         (AsyncInnerFunction): an awaitable function.
     """
 
-    @node_metadata(edges=['condition', 'child'])
+    _child = to_async(child)
+    _condition = to_async(condition)
+
+    @node_metadata(edges=['_condition', '_child'])
     async def _repeat_until():
         result: Any = FAILURE
-        condition_eval = is_success(child=condition)
-        while await condition_eval():
-            try:
-                result = await child()
-
-            except Exception as e:
-                result = ExceptionDecorator(e)
+        while bool(await _condition()):
+            result = await _child()
 
         return result
 

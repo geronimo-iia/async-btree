@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.1.0 (2020-11-20)
+
+- remove falsy evaluation of exception
+- add ignore_exception decorator
+- use sync or async function in parameters operator
+- decision control return Success per default rather than act as a failure if no failure tree dependency is set.
+- add test on python 3.8
+
 ## 1.0.2 (2020-11-15)
 
 - update curio version > 1

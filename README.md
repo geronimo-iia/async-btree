@@ -39,9 +39,11 @@ Few implementation libraries:
 
 __SIMPLICITY__
 
-When you study behavior tree implementation, reactive node, dynamic change, runtime execution, etc ... 
+When you study behavior tree implementation, reactive node, dynamic change, runtime execution, etc ...
 At a moment you're build more or less something that mimic an evaluator 'eval/apply' or a compilator, with a complex hierachical set of class.
+
 All complexity came with internal state management, using tree of blackboard to avoid global variable, multithreading issue, maybe few callback etc ...
+
 This break the simplicity and beauty of your initial design.
 
 What I find usefull with behavior tree:
@@ -86,7 +88,8 @@ Note that ```decorate(a_func, b_decorator)``` is not an async function, only act
 Few guidelines of this implementation:
 
 - In order to mimic all NodeStatus (success, failure, running), I replace this by truthy/falsy meaning of evaluation value.
-  A special dedicated exception decorate standard exception in order to give them a Falsy meaning.
+  A special dedicated exception decorate standard exception in order to give them a Falsy meaning (`ControlFlowException`).
+  By default, exception are raised like happen usually until you catch them.
 - Blackboard pattern, act as a manager of context variable for behavior tree.
   With python 3, please... simply use [contextvars](https://docs.python.org/3/library/contextvars.html) !
 - In order to be able to build a sematic tree, I've introduce a metadata tuple added on function implementation.
@@ -157,7 +160,7 @@ Wanna style have an abtract tree of our behaviour tree ?
 
 Functions from async-btree build an abstract tree for you. 
 If you lookup in code, you should see an annotation "node_metadata" on internal implementation. 
-This decorator add basic information like function name, parameters, and childreen relation ship.
+This decorator add basic information like function name, parameters, and children relation ship.
 
 This abstract tree can be retreived and stringified with ```analyze``` and ```stringify_analyze```.
 Here the profile:
@@ -190,3 +193,12 @@ This should print:
          --(child)--> action:
                       target: hello
 ```
+
+
+Note about action and condition method:
+
+ - you could use sync or async function
+ - you could specify a return value with SUCCESS or FAILURE
+ - function with no return value will be evaluated as FAILURE until you decorate them with a `always_success`or `always_failure`
+
+See this [example/tutorial_1.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/master/examples/tutorial_1.py) for more information.

@@ -1,7 +1,8 @@
 """Leaf definition."""
 
 from .decorator import is_success
-from .definition import AsyncInnerFunction, CallableFunction, ExceptionDecorator, node_metadata
+from .definition import AsyncInnerFunction, CallableFunction, ControlFlowException, node_metadata
+from .utils import to_async
 
 __all__ = ['action', 'condition']
 
@@ -9,7 +10,8 @@ __all__ = ['action', 'condition']
 def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
     """Declare an action leaf.
 
-    Action is an awaitable closure of specified function.
+    Action is an awaitable closure of specified function,
+    (See alias function).
 
     Args:
         target (CallableFunction): awaitable function
@@ -17,14 +19,20 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
 
     Returns:
         (AsyncInnerFunction): an awaitable function.
+
+    Raises:
+        ControlFlowException : if error occurs
+
     """
 
-    @node_metadata(properties=['target'])
+    _target = to_async(target)
+
+    @node_metadata(properties=['_target'])
     async def _action():
         try:
-            return await target(**kwargs)
+            return await _target(**kwargs)
         except Exception as e:
-            return ExceptionDecorator(exception=e)
+            raise ControlFlowException.instanciate(e)
 
     return _action
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>async_btree.utils &mdash; async_btree 1.0.2 documentation</title>
+  <title>async_btree.utils &mdash; async_btree 1.1.0 documentation</title>
   
 
   
@@ -150,9 +150,12 @@
             
   <h1>Source code for async_btree.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Utility function.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">iscoroutinefunction</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncGenerator</span><span class="p">,</span> <span class="n">AsyncIterable</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;amap&#39;</span><span class="p">,</span> <span class="s1">&#39;afilter&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">node_metadata</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;amap&#39;</span><span class="p">,</span> <span class="s1">&#39;afilter&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">,</span> <span class="s1">&#39;to_async&#39;</span><span class="p">]</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
 
@@ -215,7 +218,30 @@
                 <span class="k">yield</span> <span class="n">item</span></div>
 
 
+<span class="k">def</span> <span class="nf">to_async</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Transform target function in async function if necessary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction): function to transform in async if necessary</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Callable[..., Awaitable[Any]]): an async version of target function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+        <span class="c1"># nothing todo</span>
+        <span class="k">return</span> <span class="n">target</span>
+
+    <span class="c1"># use node_metadata to keep trace of target function name</span>
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;anonymous&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_to_async</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">target</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_to_async</span>
+
+
 <span class="k">try</span><span class="p">:</span>
+    <span class="c1"># TOOD this is not ncessary with curio 1.4</span>
     <span class="kn">import</span> <span class="nn">curio</span>  <span class="c1"># noqa: F401</span>
     <span class="kn">from</span> <span class="nn">contextvars</span> <span class="kn">import</span> <span class="n">copy_context</span>
 
