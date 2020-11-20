@@ -1,6 +1,6 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
+from typing import Any, Callable, List, NamedTuple, Optional, Tuple, no_type_check
 
 from .definition import CallableFunction, get_node_metadata
 
@@ -37,6 +37,16 @@ class Node(NamedTuple):
         return stringify_analyze(target=self)
 
 
+def _get_function_name(target: Callable) -> str:
+    return target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous"
+
+
+def _get_target_propertie_name(value):
+    if value and callable(value):
+        return get_node_metadata(target=value).name if hasattr(value, "__node_metadata") else _get_function_name(value)
+    return value
+
+
 # pylint: disable=protected-access
 @no_type_check  # it's a shortcut for hasattr ...
 def analyze(target: CallableFunction) -> Node:
@@ -52,26 +62,20 @@ def analyze(target: CallableFunction) -> Node:
     nonlocals = getclosurevars(target).nonlocals
 
     def _get_nonlocals_value_for(name):
-        return nonlocals[name] if name in nonlocals else None
+        return nonlocals.get(name, None)
 
     def _analyze_property(p):
         """Return a tuple (name, value) or (name, function name) as property."""
         value = _get_nonlocals_value_for(name=p)
-        p_name = p.lstrip('_')
-        if value and callable(value):
-            return p_name, get_node_metadata(target=value).name if hasattr(value, "__node_metadata") else value.__name__
-        return p_name, value
+        return p.lstrip('_'), _get_target_propertie_name(value=value)
 
     def _analyze_edges(egde_name):
         """Lookup children node from egde_name local var."""
         value = None
-        edge = _get_nonlocals_value_for(name=egde_name)
-        if edge:
-            # it could be a collection of node
-            if hasattr(edge, "__iter__"):
-                value = list(map(analyze, edge))
-            else:  # or a single node
-                value = [analyze(edge)]
+        edges = _get_nonlocals_value_for(name=egde_name)
+        if edges:
+            # it could be a collection of node or a single node
+            value = list(map(analyze, edges if hasattr(edges, "__iter__") else [edges]))
         return (egde_name.lstrip('_'), value)
 
     if hasattr(target, "__node_metadata"):
@@ -84,9 +88,7 @@ def analyze(target: CallableFunction) -> Node:
 
     # simple function
     return Node(
-        name=target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous",
-        properties=list(map(_analyze_property, nonlocals.keys())),
-        edges=[],
+        name=_get_function_name(target=target), properties=list(map(_analyze_property, nonlocals.keys())), edges=[]
     )
 
 
