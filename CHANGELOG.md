@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.1 (2020-11-21)
+
+- simplify `analyze` function
+- fix parallele implementation
+
 ## 1.1.0 (2020-11-20)
 
 - remove falsy evaluation of exception

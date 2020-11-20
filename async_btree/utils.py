@@ -29,7 +29,7 @@ async def amap(
         ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
 
     """
-    if isinstance(iterable, AsyncIterable):  # if hasattr(iterable, '__aiter__'):
+    if isinstance(iterable, AsyncIterable):
         async for item in iterable:
             yield await corofunc(item)
     else:
@@ -57,7 +57,7 @@ async def afilter(
         ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
 
     """
-    if isinstance(iterable, AsyncIterable):  # if hasattr(iterable, '__aiter__'):
+    if isinstance(iterable, AsyncIterable):
         async for item in iterable:
             if await corofunc(item):
                 yield item

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; async_btree 1.1.0 documentation</title>
+  <title>API Reference &mdash; async_btree 1.1.1 documentation</title>
   
 
   
@@ -246,7 +246,7 @@
 <td><p>Declare a condition leaf.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#async_btree.parallele" title="async_btree.parallele"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallele</span></code></a>(children[, succes_threshold])</p></td>
-<td><p>Return a function which execute children in sequence.</p></td>
+<td><p>Return an awaitable function which run children in parallele.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#async_btree.afilter" title="async_btree.afilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">afilter</span></code></a>(corofunc, iterable)</p></td>
 <td><p>Filter an iterable or an async iterable with an async function.</p></td>
@@ -334,21 +334,21 @@ But it is impossible for now, see [mypy issues 731](<a class="reference external
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="attribute">
 <dt>
-<em class="property">property </em><code class="sig-name descname">name</code></dt>
+<code class="sig-name descname">name</code></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt>
-<em class="property">property </em><code class="sig-name descname">properties</code></dt>
+<code class="sig-name descname">properties</code></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt>
-<em class="property">property </em><code class="sig-name descname">edges</code></dt>
+<code class="sig-name descname">edges</code></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
@@ -467,7 +467,7 @@ evaluated if cond is Falsy (None per default)</p></li>
 
 <dl class="function">
 <dt id="async_btree.sequence">
-<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: Optional[int] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a function which execute children in sequence.</p>
 <p>succes_threshold parameter generalize traditional sequence/fallback and
 must be in [0, len(children)]. Default value is (-1) means len(children)</p>
@@ -805,21 +805,21 @@ and relations ship name between a hierachical construct of functions.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="attribute">
 <dt>
-<em class="property">property </em><code class="sig-name descname">name</code></dt>
+<code class="sig-name descname">name</code></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt>
-<em class="property">property </em><code class="sig-name descname">properties</code></dt>
+<code class="sig-name descname">properties</code></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt>
-<em class="property">property </em><code class="sig-name descname">edges</code></dt>
+<code class="sig-name descname">edges</code></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
@@ -908,24 +908,17 @@ This permit to return exception as a ‘FAILURE’ status.</p>
 
 <dl class="function">
 <dt id="async_btree.parallele">
-<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a function which execute children in sequence.</p>
-<p>succes_threshold parameter generalize traditional sequence/fallback and
-must be in [0, len(children)]. Default value is (-1) means len(children)</p>
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: Optional[int] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/parallele.html#parallele"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an awaitable function which run children in parallele.</p>
+<p><cite>succes_threshold</cite> parameter generalize traditional sequence/fallback,
+and must be in [0, len(children)], default value is len(children)</p>
 <p>if #success = succes_threshold, return a success</p>
 <p>if #failure = len(children) - succes_threshold, return a failure</p>
-<dl class="simple">
-<dt>What we can return as value and keep sematic Failure/Success:</dt><dd><ul class="simple">
-<li><p>an array of previous result when success</p></li>
-<li><p>last failure when fail</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>children</strong> (<em>List</em><em>[</em><em>CallableFunction</em><em>]</em>) – list of Awaitable</p></li>
-<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value</p></li>
+<li><p><strong>succes_threshold</strong> (<em>int</em>) – succes threshold value, default len(children)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -933,9 +926,6 @@ must be in [0, len(children)]. Default value is (-1) means len(children)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(AsyncInnerFunction)</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>(</strong><strong>AssertionError</strong><strong>)</strong> – if succes_threshold is invalid</p>
 </dd>
 </dl>
 </dd></dl>

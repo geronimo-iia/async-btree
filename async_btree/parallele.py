@@ -1,17 +1,17 @@
 """Curiosity module define special construct with curio framework."""
 
-from typing import List
+from typing import List, Optional
 
-from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
-from .utils import amap, to_async
+from .definition import AsyncInnerFunction, CallableFunction, node_metadata
+from .utils import to_async
 
 __all__ = ['parallele']
 
 
 try:
-    from curio import gather, spawn
+    from curio import TaskGroup
 
-    def parallele(children: List[CallableFunction], succes_threshold: int = -1) -> AsyncInnerFunction:
+    def parallele(children: List[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
         """Return an awaitable function which run children in parallele.
 
         `succes_threshold` parameter generalize traditional sequence/fallback,
@@ -29,20 +29,22 @@ try:
             (AsyncInnerFunction): an awaitable function.
 
         """
-        succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
-        if not (0 <= succes_threshold <= len(children)):
+        _succes_threshold = succes_threshold or len(children)
+        if not (0 <= _succes_threshold <= len(children)):
             raise AssertionError('succes_threshold')
 
         _children = [to_async(child) for child in children]
 
-        @node_metadata(properties=['succes_threshold'])
+        @node_metadata(properties=['_succes_threshold'])
         async def _parallele():
 
-            results = await gather([task async for task in amap(spawn, _children)])
+            async with TaskGroup(wait=all) as g:
+                for child in _children:
+                    await g.spawn(child)
 
-            success = len(list(filter(bool, results)))
+            success = len(list(filter(bool, g.results)))
 
-            return SUCCESS if success >= succes_threshold else FAILURE
+            return success >= _succes_threshold
 
         return _parallele
 
