@@ -79,7 +79,8 @@ async def test_selector():
 @pytest.mark.curio
 async def test_decision():
     assert await decision(condition=success_func, success_tree=a_func)() == 'a'
-    assert not await decision(condition=failure_func, success_tree=a_func)()
+    # return SUCCESS when no failure_tree and False condition result
+    assert await decision(condition=failure_func, success_tree=a_func)()
 
     result = await decision(condition=failure_func, success_tree=a_func, failure_tree=b_func)()
     assert result == 'b', 'failure tree must be called'

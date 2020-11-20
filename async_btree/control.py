@@ -1,7 +1,7 @@
 """Control function definition."""
 from typing import Any, List, Optional
 
-from .definition import FAILURE, AsyncInnerFunction, CallableFunction, node_metadata
+from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
 from .utils import to_async
 
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
@@ -91,6 +91,9 @@ def decision(
 ) -> AsyncInnerFunction:
     """Create a decision node.
 
+    If condition is meet, return evaluation of success_tree.
+    Otherwise, it return SUCCESS or evaluation of failure_tree if setted.
+
     Args:
         condition (CallableFunction): awaitable condition
         success_tree (CallableFunction): awaitable success tree which be
@@ -112,7 +115,7 @@ def decision(
             return await _success_tree()
         if _failure_tree:
             return await _failure_tree()
-        return FAILURE
+        return SUCCESS
 
     return _decision
 

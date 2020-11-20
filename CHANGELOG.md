@@ -5,6 +5,7 @@
 - remove falsy evaluation of exception
 - add ignore_exception decorator
 - use sync or async function in parameters operator
+- decision control return Success per default rather than act as a failure if no failure tree dependency is set.
 
 ## 1.0.2 (2020-11-15)
 
