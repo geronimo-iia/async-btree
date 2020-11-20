@@ -467,7 +467,7 @@ evaluated if cond is Falsy (None per default)</p></li>
 
 <dl class="function">
 <dt id="async_btree.sequence">
-<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: Optional[int] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a function which execute children in sequence.</p>
 <p>succes_threshold parameter generalize traditional sequence/fallback and
 must be in [0, len(children)]. Default value is (-1) means len(children)</p>
@@ -908,7 +908,7 @@ This permit to return exception as a ‘FAILURE’ status.</p>
 
 <dl class="function">
 <dt id="async_btree.parallele">
-<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: int = -1</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/parallele.html#parallele"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">parallele</code><span class="sig-paren">(</span><em class="sig-param">children: List[Union[Callable[[...], Awaitable[Any]], Callable]], succes_threshold: Optional[int] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/parallele.html#parallele"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.parallele" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an awaitable function which run children in parallele.</p>
 <p><cite>succes_threshold</cite> parameter generalize traditional sequence/fallback,
 and must be in [0, len(children)], default value is len(children)</p>
