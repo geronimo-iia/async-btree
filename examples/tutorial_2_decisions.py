@@ -22,12 +22,12 @@ import contextvars
 
 async def some_action():
     print("continue here...")
-    return bt.definition.SUCCESS
+    return bt.SUCCESS
 
 
 async def say_hello():
     print(f"Hello {name.get()}")
-    return bt.definition.SUCCESS
+    return bt.SUCCESS
 
 
 async def is_name_set():
@@ -38,9 +38,9 @@ async def ask_for_name():
     new_name = input("Hello, whats your name? \n")
     if new_name != "":
         name.set(new_name)
-        return bt.definition.SUCCESS
+        return bt.SUCCESS
     else:
-        return bt.definition.FAILURE
+        return bt.FAILURE
 
 
 name = contextvars.ContextVar('name', default="")

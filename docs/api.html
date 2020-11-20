@@ -396,6 +396,8 @@ But it is impossible for now, see [mypy issues 731](<a class="reference external
 <dt id="async_btree.decision">
 <code class="sig-prename descclassname">async_btree.</code><code class="sig-name descname">decision</code><span class="sig-paren">(</span><em class="sig-param">condition: Union[Callable[[...], Awaitable[Any]], Callable], success_tree: Union[Callable[[...], Awaitable[Any]], Callable], failure_tree: Union[Callable[[...], Awaitable[Any]], Callable, None] = None</em><span class="sig-paren">)</span> &#x2192; Callable[[], Awaitable[Any]]<a class="reference internal" href="_modules/async_btree/control.html#decision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#async_btree.decision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a decision node.</p>
+<p>If condition is meet, return evaluation of success_tree.
+Otherwise, it return SUCCESS or evaluation of failure_tree if setted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

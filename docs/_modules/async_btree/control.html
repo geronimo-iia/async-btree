@@ -152,7 +152,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;Control function definition.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">FAILURE</span><span class="p">,</span> <span class="n">AsyncInnerFunction</span><span class="p">,</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">node_metadata</span>
+<span class="kn">from</span> <span class="nn">.definition</span> <span class="kn">import</span> <span class="n">FAILURE</span><span class="p">,</span> <span class="n">SUCCESS</span><span class="p">,</span> <span class="n">AsyncInnerFunction</span><span class="p">,</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">node_metadata</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">to_async</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;fallback&#39;</span><span class="p">,</span> <span class="s1">&#39;selector&#39;</span><span class="p">,</span> <span class="s1">&#39;decision&#39;</span><span class="p">,</span> <span class="s1">&#39;repeat_until&#39;</span><span class="p">]</span>
@@ -242,6 +242,9 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Create a decision node.</span>
 
+<span class="sd">    If condition is meet, return evaluation of success_tree.</span>
+<span class="sd">    Otherwise, it return SUCCESS or evaluation of failure_tree if setted.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        condition (CallableFunction): awaitable condition</span>
 <span class="sd">        success_tree (CallableFunction): awaitable success tree which be</span>
@@ -263,7 +266,7 @@
             <span class="k">return</span> <span class="k">await</span> <span class="n">_success_tree</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">_failure_tree</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="n">_failure_tree</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">FAILURE</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span>
 
     <span class="k">return</span> <span class="n">_decision</span></div>
 
