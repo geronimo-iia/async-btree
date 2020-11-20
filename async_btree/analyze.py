@@ -47,6 +47,13 @@ def _get_target_propertie_name(value):
     return value
 
 
+def _analyze_target_edges(edges):
+    if edges:
+        # it could be a collection of node or a single node
+        return list(map(analyze, edges if hasattr(edges, "__iter__") else [edges]))
+    return None
+
+
 # pylint: disable=protected-access
 @no_type_check  # it's a shortcut for hasattr ...
 def analyze(target: CallableFunction) -> Node:
@@ -71,12 +78,8 @@ def analyze(target: CallableFunction) -> Node:
 
     def _analyze_edges(egde_name):
         """Lookup children node from egde_name local var."""
-        value = None
         edges = _get_nonlocals_value_for(name=egde_name)
-        if edges:
-            # it could be a collection of node or a single node
-            value = list(map(analyze, edges if hasattr(edges, "__iter__") else [edges]))
-        return (egde_name.lstrip('_'), value)
+        return (egde_name.lstrip('_'), _analyze_target_edges(edges=edges))
 
     if hasattr(target, "__node_metadata"):
         node = get_node_metadata(target=target)
