@@ -7,7 +7,7 @@ from .utils import to_async
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
 
-def sequence(children: List[CallableFunction], succes_threshold: int = -1) -> AsyncInnerFunction:
+def sequence(children: List[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
     """Return a function which execute children in sequence.
 
     succes_threshold parameter generalize traditional sequence/fallback and
@@ -31,15 +31,15 @@ def sequence(children: List[CallableFunction], succes_threshold: int = -1) -> As
     Raises:
         (AssertionError): if succes_threshold is invalid
     """
-    succes_threshold = succes_threshold if succes_threshold != -1 else len(children)
-    if not (0 <= succes_threshold <= len(children)):
+    _succes_threshold = succes_threshold or len(children)
+    if not (0 <= _succes_threshold <= len(children)):
         raise AssertionError('succes_threshold')
 
-    failure_threshold = len(children) - succes_threshold + 1
+    failure_threshold = len(children) - _succes_threshold + 1
 
     _children = [to_async(child) for child in children]
 
-    @node_metadata(properties=['succes_threshold'])
+    @node_metadata(properties=['_succes_threshold'])
     async def _sequence():
         success = 0
         failure = 0
@@ -51,7 +51,7 @@ def sequence(children: List[CallableFunction], succes_threshold: int = -1) -> As
 
             if bool(last_result):
                 success += 1
-                if success == succes_threshold:
+                if success == _succes_threshold:
                     # last evaluation is a success
                     return results
             else:
