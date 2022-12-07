@@ -32,9 +32,9 @@ install: .install .cache ## Install project dependencies
 
 GIT_DIR = .git
 .install: poetry.lock
+	poetry run python -m pip install --upgrade pip
 	poetry install -E curio
 	poetry check
-	@- test -d $(GIT_DIR) && poetry run pre-commit install -f --install-hooks
 	@touch $@
 
 poetry.lock: pyproject.toml
