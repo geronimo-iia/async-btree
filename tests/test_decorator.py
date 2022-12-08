@@ -1,6 +1,5 @@
-from contextvars import ContextVar
-
 import pytest
+from contextvars import ContextVar
 
 from async_btree import (
     FAILURE,
@@ -80,7 +79,7 @@ async def test_always_failure():
     assert await always_failure(failure_func)() == FAILURE
     with pytest.raises(ControlFlowException):
         await always_failure(exception_func)()
-    assert isinstance(await always_failure(exception_func)(), ExceptionDecorator)
+    assert isinstance(await always_failure(exception_func)(), ControlFlowException)
     assert await always_failure(empty_func)() == []
 
 

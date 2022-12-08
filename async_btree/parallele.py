@@ -5,6 +5,7 @@ from typing import List, Optional
 from .definition import AsyncInnerFunction, CallableFunction, node_metadata
 from .utils import to_async
 
+
 __all__ = ['parallele']
 
 
@@ -47,7 +48,6 @@ try:
             return success >= _succes_threshold
 
         return _parallele
-
 
 except Exception:  # pragma: no cover
     # default to a simple sequence

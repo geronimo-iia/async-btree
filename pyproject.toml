@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "async_btree"
-version = "1.1.1"
+version = "1.2.0.dev"
 description = "Async behavior tree"
 license = "MIT"
 authors = ["Jerome Guibert <jguibert@gmail.com>"]
@@ -12,7 +12,6 @@ repository = "https://github.com/geronimo-iia/async-btree"
 keywords = ["behavior-tree", "asyncio"]
 
 classifiers = [
-    # update this list to match your application: https://pypi.org/pypi?%3Aaction=list_classifiers
     "Development Status :: 5 - Production/Stable",
     "Framework :: AsyncIO",
     "Intended Audience :: Developers",
@@ -21,14 +20,13 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed"
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 
 # Optional dependency
 curio = { version = "^1", optional = true }
@@ -38,40 +36,34 @@ curio = ["curio"]
 
 
 [tool.poetry.dev-dependencies]
-black = "=19.3b0" # The uncompromising code formatter.
-isort = "=4.3.4" #A Python utility / library to sort Python imports.
-seed-isort-config = "^1.9"
-flake8 = "^3.7.9" # the modular source code checker: pep8, pyflakes and co
-flake8-2020 = "1.5.0" # flake8 plugin which checks for misuse of `sys.version` or `sys.version_info`
-flake8-black = "^0.1.1" # flake8 plugin to call black as a code style validator
-flake8-blind-except = "^0.1.1" # A flake8 extension that checks for blind except: statements
-flake8-broken-line = "^0.1.1" # Flake8 plugin to forbid backslashes for line breaks
-flake8-bugbear = "^20.1.2" # A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle.
-flake8-builtins = "^1.4.2" # Check for python builtins being used as variables or parameters.
-flake8-comprehensions = "^3.2.2" #  A flake8 plugin to help you write better list/set/dict comprehensions.
-flake8-debugger = "^3.2.1" #  ipdb/pdb statement checker plugin for flake8
-flake8-docstrings = "^1.5.0" #  Extension for flake8 which uses pydocstyle to check docstrings
-flake8-isort = "^2.8.0" #  flake8 plugin that integrates isort .
-flake8-mutable = "^1.2.0" # mutable defaults flake8 extension
-flake8-pytest = "^1.3" #  pytest assert checker plugin for flake8
-flake8-quotes = "^2.1.1" # Flake8 lint for quotes.
-flake8-string-format = "^0.2.3" # string format checker, plugin for flake8
-darglint = "^1.1.2" # A utility for ensuring Google-style docstrings stay up to date with the source code.
-pydocstyle = "^5.0.2" # Python docstring style checker
+black = "22.3.0" # The uncompromising code formatter.
+isort = "5.9.3" #A Python utility / library to sort Python imports.
+# https://flakehell.readthedocs.io/
+flakehell = "0.9.0"
+flake8="3.9.2"
+# https://github.com/DmytroLitvinov/awesome-flake8-extensions
+flake8-bugbear = "^20.11.1"
+flake8-builtins = "^1.5.3"
+flake8-comprehensions = "^3.3.1"
+flake8-docstrings = "^1.5.0"
+flake8-eradicate = "^1.0.0"
+flake8-isort = "^4.0.0"
+flake8-mutable = "^1.2.0"
+flake8-pytest-style = "^1.3.0"
+flake8-spellcheck = "^0.20.0"
+pep8-naming = "^0.11.1"
+
+# mypy
 mypy = "*"
 
-pre-commit = "^1.21.0" # A framework for managing and maintaining multi-language pre-commit hooks.
-
 # Unit Testing
-pytest-curio = "^1.0.1"
 pytest = "^6" # pytest: simple powerful testing with Python
+pytest-curio = "^1.0.1"
 pytest-cov = "^2" # Pytest plugin for measuring coverage.
-pytest-describe = "*"
-#pytest-expecter = "*"
-pytest-random = "*"
 pytest-mock = "^3"
-coverage = "^5" # Code coverage measurement for Python
 xdoctest = "^0.15.0" # A rewrite of the builtin doctest module
+coverage = {version = "*", extras = ["toml"]}
+
 
 # Documentation
 sphinx = "^2.3.1"
@@ -79,9 +71,13 @@ sphinx_rtd_theme = "^0.4.3"
 m2r = "^0.2.1"  # M2R converts a markdown file including reStructuredText (rst)
 autodocsumm = "*"
 
+
+[tool.poetry.group.dev.dependencies]
+types-setuptools = "^65.6.0.2"
+
 [tool.black]
 # see https://black.readthedocs.io/en/stable/
-target-version = ["py37"]
+target-version = ["py38"]
 skip-string-normalization = true
 line_length = 120
 
@@ -97,9 +93,77 @@ force_grid_wrap = false
 include_trailing_comma = true
 lines_after_imports = 2
 line_length = 120
+use_parentheses = true
+ensure_newline_before_comments = true
 
 
+# see https://coverage.readthedocs.io/en/coverage-5.0.3/config.html
+[tool.coverage.paths]
+source = ["{{cookiecutter.product_name_package}}_{{cookiecutter.component_name_package}}"]
+
+[tool.coverage.run]
+branch = true
+data_file = ".cache/coverage"
+source = ["async_btree"]
+omit = ["tests/*", ".venv/*", "*/__main__.py", "examples/*"]
+
+[tool.coverage.report]
+exclude_lines =[
+    "pragma: no cover",
+    "raise NotImplementedError"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --pdbcls=tests:Debugger -r sxX --cov=async_btree --cov-report=html --cov-report=term-missing:skip-covered"
+cache_dir = ".cache"
+
+[tool.flakehell]
+extended_default_ignore = []
+exclude = ["README.md"]
+format = "colored"
+max_line_length = 120
+show_source = true
+max-complexity = 18
+docstring-convention = "google"
+
+[tool.flakehell.plugins]
+#flake8-bandit = ["+*", "-S322"]
+flake8-bugbear = ["+*"]
+flake8-builtins = ["+*"]
+flake8-comprehensions = ["+*"]
+#flake8-darglint = ["+*", "-DAR201"]
+# explicitly disable docstring
+# D100: Missing docstring in public module
+# D101: Missing docstring in public class
+# D102: Missing docstring in public method
+# D103: Missing docstring in public function
+# D104: Missing docstring in public package
+# D105: Missing docstring in magic method
+# D107: Missing docstring in __init__
+# D202: No blank lines allowed after function docstring
+flake8-docstrings = ["+*", "-D100", "-D101", "-D102", "-D103", "-D104", "-D105", "-D107", "-D202" ]
+flake8-eradicate = ["+*", "-E800"]
+flake8-isort = ["+*"]
+flake8-mutable = ["+*"]
+flake8-pytest-style = ["+*"]
+flake8-spellcheck = ["+*", "-SC200", "-SC100"]
+mccabe = ["+*"]
+pep8-naming = ["+*"]
+pycodestyle = ["+*", "-W503"]
+pyflakes = ["+*", "-W503"]
+pylint = ["+*"]
+
+
+[mypy]
+cache_dir = ".cache/mypy/"
+check_untyped_defs = true
+ignore_errors = false
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
 
 [build-system]
-requires = ["poetry>=1.0.0"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry>=1.1.12"]
+build-backend = "poetry.core.masonry.api"
+

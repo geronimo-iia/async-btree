@@ -14,6 +14,7 @@ Function signature of async function implementation:
 # from collections import namedtuple
 from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union, no_type_check
 
+
 __all__ = [
     'CallableFunction',
     'AsyncInnerFunction',
@@ -119,7 +120,7 @@ def node_metadata(
 
 @no_type_check
 def get_node_metadata(target: CallableFunction) -> NodeMetadata:
-    """Returns node metadata instance associated with target."""
+    """Return node metadata instance associated with target."""
     node = target.__node_metadata
     if not isinstance(node, NodeMetadata):
         raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')

@@ -4,6 +4,7 @@ from typing import Any, Callable, List, NamedTuple, Optional, Tuple, no_type_che
 
 from .definition import CallableFunction, get_node_metadata
 
+
 __all__ = ["analyze", "stringify_analyze", "Node"]
 
 _DEFAULT_EDGES = ['child', 'children', '_child', '_children']

@@ -4,6 +4,7 @@ from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iter
 
 from .definition import CallableFunction, node_metadata
 
+
 __all__ = ['amap', 'afilter', 'run', 'to_async']
 
 T = TypeVar('T')
@@ -105,7 +106,6 @@ try:
 
         """
         return copy_context().run(kernel.run, target, *args)
-
 
 except Exception:  # pragma: no cover
 

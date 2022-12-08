@@ -8,22 +8,22 @@ from .decorator import (
     always_failure,
     always_success,
     decorate,
+    ignore_exception,
     inverter,
     is_failure,
     is_success,
     retry,
     retry_until_failed,
     retry_until_success,
-    ignore_exception,
 )
 from .definition import (
     FAILURE,
     SUCCESS,
     AsyncInnerFunction,
     CallableFunction,
+    ControlFlowException,
     NodeMetadata,
     node_metadata,
-    ControlFlowException,
 )
 from .leaf import action, condition
 from .parallele import parallele

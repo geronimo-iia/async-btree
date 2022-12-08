@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.2.0
+
+
+Technical Update:
+
+- use local .venv directory for virtual env -> better integration with visual studio
+- update development dependencies
+- use flakehell to avoid setup.cfg
+- simplify Makefile
+
 ## 1.1.1 (2020-11-21)
 
 - simplify `analyze` function
