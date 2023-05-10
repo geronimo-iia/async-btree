@@ -4,7 +4,6 @@ from typing import Any, List, Optional
 from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
 from .utils import to_async
 
-
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
 
 

@@ -1,7 +1,6 @@
 """Unit tests configuration file."""
 
 import logging
-import pytest
 
 
 def pytest_configure(config):

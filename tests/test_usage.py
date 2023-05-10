@@ -1,6 +1,6 @@
 import pytest
 
-from async_btree import FAILURE, SUCCESS, always_success, decision
+from async_btree import FAILURE, SUCCESS, decision
 
 
 async def i_fail():

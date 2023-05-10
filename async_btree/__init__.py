@@ -29,7 +29,6 @@ from .leaf import action, condition
 from .parallele import parallele
 from .utils import afilter, amap, run
 
-
 __all__ = [
     'Node',
     'analyze',

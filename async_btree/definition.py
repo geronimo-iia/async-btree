@@ -12,20 +12,9 @@ Function signature of async function implementation:
 
 """
 # from collections import namedtuple
-from typing import (
-    Any,
-    Awaitable,
-    Callable,
-    List,
-    NamedTuple,
-    Optional,
-    ParamSpec,
-    Protocol,
-    TypeVar,
-    Union,
-    no_type_check,
-)
+from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, no_type_check
 
+from typing_extensions import ParamSpec
 
 __all__ = [
     'CallableFunction',

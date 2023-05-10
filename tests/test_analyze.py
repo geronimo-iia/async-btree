@@ -1,8 +1,8 @@
-import pytest
 from contextvars import ContextVar
 
-from async_btree import action, alias, analyze, inverter, repeat_until, retry, sequence, stringify_analyze
+import pytest
 
+from async_btree import action, alias, analyze, inverter, repeat_until, retry, sequence, stringify_analyze
 
 max_n = ContextVar("max_n", default=5)
 

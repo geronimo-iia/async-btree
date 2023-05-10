@@ -4,7 +4,6 @@ from .decorator import is_success
 from .definition import AsyncInnerFunction, CallableFunction, ControlFlowException, node_metadata
 from .utils import to_async
 
-
 __all__ = ['action', 'condition']
 
 

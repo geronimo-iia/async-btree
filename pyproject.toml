@@ -22,11 +22,12 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Typing :: Typed"
+    "Typing :: Typed",
 ]
 
 [tool.poetry.dependencies]
 python = "^3.8,<3.12"
+typing-extensions = "^4.5.0"
 
 # Optional dependency
 curio = { version = "^1", optional = true }
@@ -45,6 +46,7 @@ types-setuptools = "^67.7.0"
 # Unit Testing
 pytest = "^6"                                   # pytest: simple powerful testing with Python
 pytest-cov = "^2"                               # Pytest plugin for measuring coverage.
+pytest-curio = "^1.0.1"
 pytest-mock = "^3"
 xdoctest = "^0.15.0"                            # A rewrite of the builtin doctest module
 coverage = { version = "*", extras = ["toml"] }
@@ -55,8 +57,6 @@ mkdocstrings = { extras = ["python"], version = "^0.21.2" }
 mkdocs-material = "^9.1.9"
 mkdocs-include-markdown-plugin = "^4.0.4"
 
-[tool.poetry.group.dev.dependencies]
-types-setuptools = "^67.7.0"
 
 [tool.black]
 # see https://black.readthedocs.io/en/stable/
@@ -86,9 +86,7 @@ source = ["async_btree"]
 omit = ["tests/*", ".venv/*", "*/__main__.py", "examples/*"]
 
 [tool.coverage.report]
-exclude_lines =[
-    "pragma: no cover",
-    "raise NotImplementedError"]
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -96,6 +94,7 @@ addopts = "--strict-markers --pdbcls=tests:Debugger -r sxX --cov=async_btree --c
 cache_dir = ".cache"
 
 [tool.ruff]
+cache-dir = ".cache/ruff"
 line-length = 120
 
 
@@ -111,4 +110,3 @@ warn_unused_configs = true
 [build-system]
 requires = ["poetry>=1.1.12"]
 build-backend = "poetry.core.masonry.api"
-

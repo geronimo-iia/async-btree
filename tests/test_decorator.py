@@ -1,5 +1,6 @@
-import pytest
 from contextvars import ContextVar
+
+import pytest
 
 from async_btree import (
     FAILURE,

@@ -4,7 +4,6 @@ from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iter
 
 from .definition import CallableFunction, node_metadata
 
-
 __all__ = ['amap', 'afilter', 'run', 'to_async']
 
 T = TypeVar('T')
@@ -92,8 +91,9 @@ def to_async(target: CallableFunction) -> Callable[..., Awaitable[Any]]:
 
 try:
     # TOOD this is not ncessary with curio 1.4
-    import curio  # noqa: F401
     from contextvars import copy_context
+
+    import curio  # noqa: F401
 
     def run(kernel, target, *args):
         """Curio run with independent contextvars.

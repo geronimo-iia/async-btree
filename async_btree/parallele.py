@@ -5,7 +5,6 @@ from typing import List, Optional
 from .definition import AsyncInnerFunction, CallableFunction, node_metadata
 from .utils import to_async
 
-
 __all__ = ['parallele']
 
 

@@ -4,7 +4,6 @@ from typing import Any
 from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, ControlFlowException, node_metadata
 from .utils import to_async
 
-
 __all__ = [
     'alias',
     'decorate',
