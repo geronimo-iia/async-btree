@@ -1,1 +1,0 @@
-curio==1.6 ; python_version >= "3.8" and python_version < "4.0"

@@ -2,9 +2,9 @@ name: Python package
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   POETRY_VIRTUALENVS_CREATE: false
@@ -24,14 +24,14 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
-      run: |
-        curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
-        python get-poetry.py -y
-        rm -f get-poetry.py
-        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
     - name: Install dependencies
       run: make install 
       # poetry install --no-interaction
     - name: Check Python package
-      run: make check test
+      run: make check
+    - name: Test Python package
+      run: make test
+
+      

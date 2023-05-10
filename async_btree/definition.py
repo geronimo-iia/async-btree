@@ -12,7 +12,19 @@ Function signature of async function implementation:
 
 """
 # from collections import namedtuple
-from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, TypeVar, Union, no_type_check
+from typing import (
+    Any,
+    Awaitable,
+    Callable,
+    List,
+    NamedTuple,
+    Optional,
+    ParamSpec,
+    Protocol,
+    TypeVar,
+    Union,
+    no_type_check,
+)
 
 
 __all__ = [
@@ -87,7 +99,21 @@ class NodeMetadata(NamedTuple):
     edges: Optional[List[str]] = None
 
 
-T = TypeVar('T', bound=CallableFunction)
+class DecoratedFunction(Protocol, Callable):
+    __node_metadata: NodeMetadata
+
+
+T = TypeVar('T', bound=Callable[..., Awaitable[Any]])
+
+P = ParamSpec("P")
+R = TypeVar("R", covariant=True)
+
+
+class FunctionWithMetadata(Protocol[P, R]):
+    __node_metadata: NodeMetadata
+
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> R:
+        ...
 
 
 def node_metadata(
@@ -109,7 +135,7 @@ def node_metadata(
 
     """
 
-    def decorate_function(function: T) -> T:
+    def decorate_function(function: Callable[P, R]) -> FunctionWithMetadata[P, R]:
         function.__node_metadata = NodeMetadata(
             name=name if name else function.__name__.lstrip('_'), properties=properties, edges=edges
         )

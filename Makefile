@@ -9,10 +9,17 @@ MODULES := $(wildcard $(PACKAGE)/*.py)
 FAILURES := .cache/v/cache/lastfailed
 DIST_FILES := dist/*.tar.gz dist/*.whl
 
+GIT_COMMIT_SHA := $(shell git rev-parse HEAD)
+
  # MAIN TASKS ##################################################################
 
 .PHONY: all
 all: install
+
+
+.PHONY: debug-info
+debug-info:  ## Show poetry debug info
+	poetry debug:info
 
 .PHONY: help
 help: all
@@ -20,8 +27,6 @@ help: all
 
 
 # PROJECT DEPENDENCIES ########################################################
-
-.PHONY: install
 install: .install .cache ## Install project dependencies
 
 .install: poetry.lock
@@ -33,28 +38,33 @@ install: .install .cache ## Install project dependencies
 poetry.lock: pyproject.toml
 	$(MAKE) configure
 	poetry lock
-	poetry export --without-hashes -f requirements.txt > requirements.txt
+	$(MAKE) requirements.txt
 	@touch $@
 
 .cache:
 	@mkdir -p .cache
 
-.PHONY: configure
-configure: 
-	@poetry config virtualenvs.create true
-	@poetry config virtualenvs.in-project true
-	@poetry config virtualenvs.path .venv
-	@poetry run python -m pip install --upgrade pip
+.PHONY: requirements.txt
+requirements.txt:  ## Generate requirements.txt and requirements-dev.txt
+	@poetry export --without-hashes -f requirements.txt > requirements.txt
+	@sed '1d' requirements.txt
+	@poetry export --without-hashes --dev -f requirements.txt > requirements-dev.txt
 
+
+.PHONY: configure
+configure:
+	@poetry config virtualenvs.in-project true
+	@poetry run python -m pip install --upgrade pip
 
 # CHECKS ######################################################################
 
 .PHONY: check
 check: install   ## Run linters and static analysis
-	poetry run isort $(PACKAGES) --recursive --apply
+	poetry run isort $(PACKAGES) 
 	poetry run black $(PACKAGES)
-	poetry run flakehell lint $(PACKAGE)
-	poetry run mypy $(PACKAGE)
+	poetry run ruff check $(PACKAGES)
+	poetry run mypy --show-error-codes --config-file pyproject.toml $(PACKAGE)
+
 
 # TESTS #######################################################################
 
@@ -62,7 +72,7 @@ check: install   ## Run linters and static analysis
 test: install ## Run unit tests
 	@if test -e $(FAILURES); then poetry run pytest tests --last-failed --exitfirst; fi
 	@rm -rf $(FAILURES)
-	poetry run pytest tests -o log_cli=true -o log_cli_level=INFO
+	poetry run pytest
 
 
 # BUILD #######################################################################
@@ -78,18 +88,12 @@ $(DIST_FILES): $(MODULES) pyproject.toml
 .PHONY: publish
 publish: build ## Publishes the package, previously built with the build command, to the remote repository
 	$(MAKE) configure
-	poetry publish -r datalab
+	poetry publish
 	$(MAKE) tag
 
-.PHONY: tag
-tag:  ## Tags current repository
-	git diff --name-only --exit-code
-	@PROJECT_RELEASE=$$(poetry version | awk 'END {print $$NF}') ; \
-		git tag "v$$PROJECT_RELEASE" ; \
-		git push origin "v$$PROJECT_RELEASE"
 
-.PHONY: next-version
-next-version:  ## Increment patch version
+.PHONY: next-patch-version
+next-patch-version:  ## Increment patch version
 	$(MAKE) configure
 	git checkout main
 	git pull
@@ -99,23 +103,35 @@ next-version:  ## Increment patch version
 	git commit -m "Next version"
 	git push origin main
 
+
+.PHONY: tag
+tag:  ## Tags current repository
+	git diff --name-only --exit-code
+	@PROJECT_RELEASE=$$(poetry version | awk 'END {print $$NF}') ; \
+		git tag "v$$PROJECT_RELEASE" ; \
+		git push origin "v$$PROJECT_RELEASE"
+
+.PHONY: release
+release: next-patch-version publish
+
 # DOC #########################################################################
 
-SPHINX_BUILD_DIR = .cache/sphinx
-.PHONY: docs
-docs:  ## Build and publish sit documentation.
-	@rm -rf docs/
-	@rm -rf $(SPHINX_BUILD_DIR)/
-	@mkdir -p $(SPHINX_BUILD_DIR)
-	@poetry run sphinx-build -M html "sphinx" "$(SPHINX_BUILD_DIR)"
-	@mv $(SPHINX_BUILD_DIR)/html docs/
-	@touch docs/.nojekyll
+.PHONY: build-docs
+build-docs:  ## Build and publish sit documentation.
+	@poetry run mkdocs build --clean
+
+
+.PHONY: publish-docs
+publish-docs:  ## Build and publish sit documentation.
+	@poetry run mkdocs gh-deploy  --clean 
 
 
 # CLEANUP #####################################################################
 
 .PHONY: clean
 clean:  ## Delete all generated and temporary files
-	@rm -rf *.spec dist build .eggs *.egg-info .install .cache .coverage htmlcov .mypy_cache .pytest_cache  .pytest 
+	@rm -rf *.spec dist build .eggs *.egg-info .install .cache .coverage htmlcov .mypy_cache .pytest_cache site .ruff_cache
 	@find $(PACKAGES) -type d -name '__pycache__' -exec rm -rf {} +
+
+
 

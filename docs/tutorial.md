@@ -4,7 +4,7 @@
 In this tutorial series, most of the time Actions will just print some information on console, but keep in mind that real "production" code would probably do something more complicated.
 
 
-The source code of this tutorial is [example/tutorial_1.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/master/examples/tutorial_1.py).
+The source code of this tutorial is [example/tutorial_1.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_1.py).
 
 
 ## How to create your own Action
@@ -137,4 +137,4 @@ In a real use case, we should find a way to avoid this:
 - wrote a factory function for a specific case
 - either by using ContextVar (```from contextvars import ContextVar```)
 
-You could see a sample in this source is [example/tutorial_2_decisions.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/master/examples/tutorial_2_decisions.py).
+You could see a sample in this source is [example/tutorial_2_decisions.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_2_decisions.py).
