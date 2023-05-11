@@ -1,13 +1,24 @@
 # Change Log
 
-## 1.2.0
+## 1.2.0 (dev)
 
+Features, from [#24](https://github.com/geronimo-iia/async-btree/issues/24) :
+
+- Removing inner exception handling, in order to code like usual, catch what we want and manage exception as needed
+- add function failure_on_exception : avoid raising and manage it in btree with a false meaning
+- add function ignore_exception : ignore specific exception
+
+Fix:
+- mypy cast issue on decorated function.
+- name attribute on operator
+- add test about metadata node name and properties
 
 Technical Update:
 
 - use local .venv directory for virtual env -> better integration with visual studio
 - update development dependencies
-- use flakehell to avoid setup.cfg
+- use ruff as replacement of flake8, flakehell,...
+- use mkdocs as replacement of sphinx
 - simplify Makefile
 
 ## 1.1.1 (2020-11-21)

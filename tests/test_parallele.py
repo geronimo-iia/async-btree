@@ -31,3 +31,7 @@ async def test_parallele():
     # upper than len children
     with pytest.raises(AssertionError):
         parallele(children=[a_func, b_func, failure_func], succes_threshold=4)
+
+    meta = parallele(children=[a_func, b_func, failure_func], succes_threshold=2).__node_metadata
+    assert meta.name == "parallele"
+    assert "_succes_threshold" in meta.properties

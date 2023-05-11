@@ -1,7 +1,15 @@
 """Decorator module define all decorator function node."""
 from typing import Any
 
-from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, ControlFlowException, node_metadata
+from .definition import (
+    FAILURE,
+    SUCCESS,
+    AsyncInnerFunction,
+    CallableFunction,
+    ControlFlowException,
+    node_metadata,
+    alias_node_metadata,
+)
 from .utils import to_async
 
 __all__ = [
@@ -265,8 +273,7 @@ def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
         (AsyncInnerFunction): an awaitable function which try to evaluate child
             until it succeed.
     """
-
-    return node_metadata(name='retry_until_success')(retry(child=child, max_retry=-1))
+    return alias_node_metadata(name='retry_until_success', target=retry(child=child, max_retry=-1))
 
 
 def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
@@ -280,4 +287,4 @@ def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
             until it failed.
     """
 
-    return node_metadata(name='retry_until_failed')(retry(child=inverter(child), max_retry=-1))
+    return alias_node_metadata(name='retry_until_failed', target=retry(child=inverter(child), max_retry=-1))

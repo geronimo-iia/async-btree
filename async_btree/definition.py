@@ -11,8 +11,8 @@ Function signature of async function implementation:
 ```AsyncInnerFunction = Callable[[], Awaitable[Any]]```
 
 """
-# from collections import namedtuple
-from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, no_type_check
+from __future__ import annotations
+from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, cast
 
 from typing_extensions import ParamSpec
 
@@ -25,6 +25,7 @@ __all__ = [
     'NodeMetadata',
     'node_metadata',
     'get_node_metadata',
+    'alias_node_metadata',
 ]
 
 
@@ -87,9 +88,9 @@ class NodeMetadata(NamedTuple):
     properties: Optional[List[str]] = None
     edges: Optional[List[str]] = None
 
-
-class DecoratedFunction(Protocol, Callable):
-    __node_metadata: NodeMetadata
+    @classmethod
+    def alias(cls, name: str, node: NodeMetadata, properties: Optional[List[str]] = None) -> NodeMetadata:
+        return NodeMetadata(name=name, properties=properties if properties else node.properties, edges=node.edges)
 
 
 T = TypeVar('T', bound=Callable[..., Awaitable[Any]])
@@ -105,9 +106,17 @@ class FunctionWithMetadata(Protocol[P, R]):
         ...
 
 
+def __attr_decorator(func: Any) -> FunctionWithMetadata:
+    """Deals with mypy.
+
+    See https://github.com/python/mypy/issues/2087#issuecomment-1433069662
+    """
+    return func
+
+
 def node_metadata(
     name: Optional[str] = None, properties: Optional[List[str]] = None, edges: Optional[List[str]] = None
-):
+) -> Callable[[Callable[P, R]], FunctionWithMetadata[P, R]]:
     """'node_metadata' is a function decorator which add meta information about node.
 
     We add a property on decorated function named '__node_metadata'.
@@ -125,18 +134,29 @@ def node_metadata(
     """
 
     def decorate_function(function: Callable[P, R]) -> FunctionWithMetadata[P, R]:
-        function.__node_metadata = NodeMetadata(
-            name=name if name else function.__name__.lstrip('_'), properties=properties, edges=edges
+        dfunc = __attr_decorator(function)
+        dfunc.__node_metadata = getattr(
+            dfunc,
+            "__node_metadata",
+            NodeMetadata(name=name if name else dfunc.__name__.lstrip('_'), properties=properties, edges=edges),
         )
-        return function
+        return cast(FunctionWithMetadata[P, R], dfunc)
 
     return decorate_function
 
 
-@no_type_check
 def get_node_metadata(target: CallableFunction) -> NodeMetadata:
-    """Return node metadata instance associated with target."""
-    node = target.__node_metadata
+    """Returns node metadata instance associated with target."""
+    node = getattr(target, "__node_metadata", False)
     if not isinstance(node, NodeMetadata):
         raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
-    return node
+    return cast(NodeMetadata, node)
+
+
+def alias_node_metadata(
+    target: CallableFunction, name: str, properties: Optional[List[str]] = None
+) -> CallableFunction:
+    """Returns an aliased name of current metadata node."""
+    dfunc = __attr_decorator(target)
+    dfunc.__node_metadata = NodeMetadata.alias(name=name, node=dfunc.__node_metadata, properties=properties)
+    return dfunc

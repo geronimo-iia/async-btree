@@ -2,8 +2,11 @@
 
 from typing import List, Optional
 
-from .definition import AsyncInnerFunction, CallableFunction, node_metadata
+from .definition import AsyncInnerFunction, CallableFunction, node_metadata, alias_node_metadata
 from .utils import to_async
+
+# default to a simple sequence
+from .control import sequence
 
 __all__ = ['parallele']
 
@@ -49,5 +52,8 @@ try:
         return _parallele
 
 except Exception:  # pragma: no cover
-    # default to a simple sequence
-    from .control import sequence as parallele
+
+    def parallele(children: List[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
+        return alias_node_metadata(
+            name="parallele", target=sequence(children=children, succes_threshold=succes_threshold)
+        )

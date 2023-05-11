@@ -11,6 +11,8 @@ async def test_condition():
     assert await condition(target_test, value=True)()  # pylint: disable=unexpected-keyword-arg
 
     assert not await condition(target_test, value=False)()  # pylint: disable=unexpected-keyword-arg
+    assert condition(target_test, value=False).__node_metadata.name == "condition"
+    assert "target" in condition(target_test, value=False).__node_metadata.properties
 
 
 @pytest.mark.curio
@@ -27,3 +29,4 @@ async def test_action_results():
         return a + b
 
     assert await action(compute, a=1, b=1)() == 2
+    assert action(compute, a=1, b=1).__node_metadata.name == "action"

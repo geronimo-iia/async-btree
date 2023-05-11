@@ -12,3 +12,6 @@ async def test_action_result_with_exceptions():
     assert fn
     with pytest.raises(ControlFlowException):
         await fn()
+
+    assert fn.__node_metadata.name == "action"
+    assert '_target' in fn.__node_metadata.properties

@@ -59,6 +59,10 @@ async def test_sequence():
     with pytest.raises(AssertionError):
         sequence(children=[exception_func, failure_func], succes_threshold=3)
 
+    meta = sequence(children=[]).__node_metadata
+    assert meta.name == 'sequence'
+    assert '_succes_threshold' in meta.properties
+
 
 @pytest.mark.curio
 async def test_fallback():
@@ -66,6 +70,7 @@ async def test_fallback():
         assert await fallback(children=[exception_func, failure_func, a_func])()
     assert await fallback(children=[a_func, failure_func])() == ['a']
     assert not await fallback(children=[])()
+    assert fallback(children=[]).__node_metadata.name == 'fallback'
 
 
 @pytest.mark.curio
@@ -85,6 +90,11 @@ async def test_decision():
     result = await decision(condition=failure_func, success_tree=a_func, failure_tree=b_func)()
     assert result == 'b', 'failure tree must be called'
 
+    meta = decision(condition=failure_func, success_tree=a_func).__node_metadata
+    assert meta.name == 'decision'
+    for key in ['_condition', '_success_tree', '_failure_tree']:
+        assert key in meta.edges
+
 
 @pytest.mark.curio
 async def test_repeat_until_falsy_condition():
@@ -102,6 +112,11 @@ async def test_repeat_until_falsy_condition():
 
     assert await repeat_until(condition=ignore_exception(tick), child=a_func)() == 'a', 'return last sucess result'
     assert counter.get() == 2
+
+    meta = repeat_until(condition=ignore_exception(tick), child=a_func).__node_metadata
+    assert meta.name == 'repeat_until'
+    for key in ['_condition', '_child']:
+        assert key in meta.edges
 
 
 @pytest.mark.curio

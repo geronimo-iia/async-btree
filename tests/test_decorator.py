@@ -63,6 +63,9 @@ async def test_decorate():
     assert await decorate(a_func, b_decorator)() == 'ba'
 
     assert await decorate(a_func, b_decorator, other='c')() == 'bac'
+    meta = decorate(a_func, b_decorator).__node_metadata
+    assert meta.name == "decorate"
+    assert '_decorator' in meta.properties
 
 
 @pytest.mark.curio
@@ -72,6 +75,9 @@ async def test_always_success():
     with pytest.raises(ControlFlowException):
         await always_success(exception_func)()
     assert await always_success(a_func)() == 'a'
+
+    meta = always_success(a_func).__node_metadata
+    assert meta.name == "always_success"
 
 
 @pytest.mark.curio
@@ -83,6 +89,8 @@ async def test_always_failure():
     assert isinstance(await always_failure(exception_func)(), ControlFlowException)
     assert await always_failure(empty_func)() == []
 
+    meta = always_failure(empty_func).__node_metadata
+    assert meta.name == "always_failure"
 
 @pytest.mark.curio
 async def test_is_success():
@@ -103,6 +111,8 @@ async def test_is_failure():
     assert not await is_failure(a_func)()
     assert await is_failure(empty_func)()
 
+    meta = is_failure(empty_func).__node_metadata
+    assert meta.name == "is_failure"
 
 @pytest.mark.curio
 async def test_inverter():
@@ -112,6 +122,9 @@ async def test_inverter():
         await inverter(exception_func)()
     assert not await inverter(a_func)()
     assert await inverter(empty_func)()
+
+    meta = inverter(a_func).__node_metadata
+    assert meta.name == "inverter"
 
 
 @pytest.mark.curio
@@ -135,15 +148,25 @@ async def test_retry():
 
     assert await retry(tick)()  # counter: 2, 1, 0
 
+    # let raise RuntimeError
+    counter.set(3)
+    with pytest.raises(RuntimeError):
+        await tick()
+
     counter.set(10)
     assert await retry(ignore_exception(tick), max_retry=11)()
 
     counter.set(100)
     assert await retry(ignore_exception(tick), max_retry=-1)()
 
-    # negative
     with pytest.raises(AssertionError):
-        retry(tick, max_retry=-2)
+        retry(ignore_exception(tick), max_retry=0)
+    with pytest.raises(AssertionError):
+        retry(ignore_exception(tick), max_retry=-2)
+
+    meta = retry(ignore_exception(tick)).__node_metadata
+    assert meta.name == "retry"
+    assert 'max_retry' in meta.properties
 
 
 @pytest.mark.curio
@@ -162,6 +185,11 @@ async def test_retry_until_success():
     counter.set(100)
     assert await retry_until_success(ignore_exception(tick))()
 
+    meta = retry_until_success(ignore_exception(tick)).__node_metadata
+    assert meta.name == "retry_until_success"
+    assert 'max_retry' in meta.properties
+
+
 
 @pytest.mark.curio
 async def test_retry_until_failed():
@@ -178,3 +206,8 @@ async def test_retry_until_failed():
 
     counter.set(100)
     assert await retry_until_failed(tick)()
+
+    meta = retry_until_failed(ignore_exception(tick)).__node_metadata
+    assert meta.name == "retry_until_failed"
+    assert 'max_retry' in meta.properties
+

@@ -1,7 +1,7 @@
 """Control function definition."""
 from typing import Any, List, Optional
 
-from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata
+from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata, alias_node_metadata
 from .utils import to_async
 
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
@@ -77,13 +77,12 @@ def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
     Returns:
         (AsyncInnerFunction): an awaitable function.
     """
-
-    return node_metadata(name='fallback')(sequence(children, succes_threshold=min(1, len(children))))
+    return alias_node_metadata(name='fallback', target=sequence(children, succes_threshold=min(1, len(children))))
 
 
 def selector(children: List[CallableFunction]) -> AsyncInnerFunction:
     """Synonym of fallback."""
-    return node_metadata(name='selector')(fallback(children))
+    return alias_node_metadata(name='selector', target=sequence(children, succes_threshold=min(1, len(children))))
 
 
 def decision(
