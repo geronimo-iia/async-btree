@@ -1,7 +1,7 @@
 """Control function definition."""
 from typing import Any, List, Optional
 
-from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, node_metadata, alias_node_metadata
+from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, alias_node_metadata, node_metadata
 from .utils import to_async
 
 __all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']

@@ -92,6 +92,7 @@ async def test_always_failure():
     meta = always_failure(empty_func).__node_metadata
     assert meta.name == "always_failure"
 
+
 @pytest.mark.curio
 async def test_is_success():
     assert await is_success(success_func)()
@@ -113,6 +114,7 @@ async def test_is_failure():
 
     meta = is_failure(empty_func).__node_metadata
     assert meta.name == "is_failure"
+
 
 @pytest.mark.curio
 async def test_inverter():
@@ -190,7 +192,6 @@ async def test_retry_until_success():
     assert 'max_retry' in meta.properties
 
 
-
 @pytest.mark.curio
 async def test_retry_until_failed():
     counter = ContextVar('counter_test_retry_until_failed', default=5)
@@ -210,4 +211,3 @@ async def test_retry_until_failed():
     meta = retry_until_failed(ignore_exception(tick)).__node_metadata
     assert meta.name == "retry_until_failed"
     assert 'max_retry' in meta.properties
-

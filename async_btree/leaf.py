@@ -1,7 +1,7 @@
 """Leaf definition."""
 
 from .decorator import is_success
-from .definition import AsyncInnerFunction, CallableFunction, ControlFlowException, node_metadata, alias_node_metadata
+from .definition import AsyncInnerFunction, CallableFunction, ControlFlowException, alias_node_metadata, node_metadata
 from .utils import to_async
 
 __all__ = ['action', 'condition']

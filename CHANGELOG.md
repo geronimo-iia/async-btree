@@ -12,6 +12,7 @@ Fix:
 - mypy cast issue on decorated function.
 - name attribute on operator
 - add test about metadata node name and properties
+- function name access compliant with mypi
 
 Technical Update:
 

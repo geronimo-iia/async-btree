@@ -1,8 +1,8 @@
 """Analyze definition."""
 from inspect import getclosurevars
-from typing import Any, Callable, List, NamedTuple, Optional, Tuple, no_type_check
+from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
 
-from .definition import CallableFunction, get_node_metadata
+from .definition import CallableFunction, get_function_name, get_node_metadata
 
 __all__ = ["analyze", "stringify_analyze", "Node"]
 
@@ -37,13 +37,13 @@ class Node(NamedTuple):
         return stringify_analyze(target=self)
 
 
-def _get_function_name(target: Callable) -> str:
-    return target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous"
-
-
 def _get_target_propertie_name(value):
     if value and callable(value):
-        return get_node_metadata(target=value).name if hasattr(value, "__node_metadata") else _get_function_name(value)
+        return (
+            get_node_metadata(target=value).name
+            if hasattr(value, "__node_metadata")
+            else get_function_name(target=value)
+        )
     return value
 
 
@@ -91,7 +91,7 @@ def analyze(target: CallableFunction) -> Node:
 
     # simple function
     return Node(
-        name=_get_function_name(target=target), properties=list(map(_analyze_property, nonlocals.keys())), edges=[]
+        name=get_function_name(target=target), properties=list(map(_analyze_property, nonlocals.keys())), edges=[]
     )
 
 

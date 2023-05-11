@@ -12,6 +12,7 @@ Function signature of async function implementation:
 
 """
 from __future__ import annotations
+
 from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, cast
 
 from typing_extensions import ParamSpec
@@ -26,6 +27,7 @@ __all__ = [
     'node_metadata',
     'get_node_metadata',
     'alias_node_metadata',
+    'get_function_name',
 ]
 
 
@@ -106,12 +108,26 @@ class FunctionWithMetadata(Protocol[P, R]):
         ...
 
 
-def __attr_decorator(func: Any) -> FunctionWithMetadata:
+def _attr_decorator(func: Any) -> FunctionWithMetadata:
     """Deals with mypy.
 
     See https://github.com/python/mypy/issues/2087#issuecomment-1433069662
     """
     return func
+
+
+def get_function_name(target: Callable, default_name: str = "anonymous") -> str:
+    """Returns a function name.
+
+    Args:
+        target (CallableFunction): function to analyze.
+        default_name (str): default name 'anonymous'
+
+    Returns:
+        (str): function name
+
+    """
+    return getattr(target, "__name__", default_name).lstrip("_")
 
 
 def node_metadata(
@@ -134,11 +150,12 @@ def node_metadata(
     """
 
     def decorate_function(function: Callable[P, R]) -> FunctionWithMetadata[P, R]:
-        dfunc = __attr_decorator(function)
+        dfunc = _attr_decorator(function)
+
         dfunc.__node_metadata = getattr(
             dfunc,
             "__node_metadata",
-            NodeMetadata(name=name if name else dfunc.__name__.lstrip('_'), properties=properties, edges=edges),
+            NodeMetadata(name=name if name else get_function_name(target=dfunc), properties=properties, edges=edges),
         )
         return cast(FunctionWithMetadata[P, R], dfunc)
 
@@ -156,7 +173,17 @@ def get_node_metadata(target: CallableFunction) -> NodeMetadata:
 def alias_node_metadata(
     target: CallableFunction, name: str, properties: Optional[List[str]] = None
 ) -> CallableFunction:
-    """Returns an aliased name of current metadata node."""
-    dfunc = __attr_decorator(target)
+    """Returns an aliased name of current metadata node.
+
+
+    Args:
+        target (CallableFunction): function to analyze.
+        name (str): alias name to set
+        properties (Optional[List[str]]): Optional properties list to overrides.
+
+    Returns:
+        (CallableFunction): function with updated node metadata.
+    """
+    dfunc = _attr_decorator(target)
     dfunc.__node_metadata = NodeMetadata.alias(name=name, node=dfunc.__node_metadata, properties=properties)
     return dfunc

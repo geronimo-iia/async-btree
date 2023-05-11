@@ -2,11 +2,10 @@
 
 from typing import List, Optional
 
-from .definition import AsyncInnerFunction, CallableFunction, node_metadata, alias_node_metadata
-from .utils import to_async
-
 # default to a simple sequence
 from .control import sequence
+from .definition import AsyncInnerFunction, CallableFunction, alias_node_metadata, node_metadata
+from .utils import to_async
 
 __all__ = ['parallele']
 

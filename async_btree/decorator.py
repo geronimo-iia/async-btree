@@ -7,8 +7,8 @@ from .definition import (
     AsyncInnerFunction,
     CallableFunction,
     ControlFlowException,
-    node_metadata,
     alias_node_metadata,
+    node_metadata,
 )
 from .utils import to_async
 
