@@ -106,7 +106,7 @@ A little note:
 ### Note about 'async' framework
 
 As we use async function as underlaying mechanism to manage the execution flow, the standard library asyncio is pretty fine.
-But, (always a but somewhere isn't it...), you should read this [amazing blog post}(https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/) by Nathaniel J. Smith.
+But, (always a but somewhere isn't it...), you should read this [amazing blog post](https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/) by Nathaniel J. Smith.
 And next study [curio](https://github.com/dabeaz/curio) framework in deep.
 
 As curio say:
