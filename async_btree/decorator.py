@@ -105,6 +105,13 @@ def ignore_exception(child: CallableFunction) -> AsyncInnerFunction:
 def always_success(child: CallableFunction) -> AsyncInnerFunction:
     """Create a node which always return SUCCESS value.
 
+    Note:
+        If you wanna git a success even if an exception occurs, you have
+        to decorate child with ignore_exception, like this:
+
+        `always_success(child=ignore_exception(myfunction))`
+
+
     Args:
         child (CallableFunction): child function to decorate
 
@@ -138,6 +145,12 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
 
 def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitable:
     """Produce a function which always return FAILURE value.
+
+    Note:
+        If you wanna git a failure even if an exception occurs, you have
+        to decorate child with ignore_exception, like this:
+
+        `always_failure(child=ignore_exception(myfunction))`
 
     Args:
         child (CallableFunction): child function to decorate

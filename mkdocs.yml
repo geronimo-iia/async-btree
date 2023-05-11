@@ -23,4 +23,5 @@ nav:
   - license.md
   - contributing.md
   - code_of_conduct.md
+  - 'Github': 'https://github.com/geronimo-iia/async-btree'
 
