@@ -119,7 +119,7 @@ dev = ["twine", "markdown", "flake8", "wheel"]
 
 [[package]]
 name = "griffe"
-version = "0.27.3"
+version = "0.27.4"
 description = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
 category = "dev"
 optional = false
@@ -315,7 +315,7 @@ python-legacy = ["mkdocstrings-python-legacy (>=0.2.1)"]
 
 [[package]]
 name = "mkdocstrings-python"
-version = "0.10.1"
+version = "1.0.0"
 description = "A Python handler for mkdocstrings."
 category = "dev"
 optional = false
@@ -327,7 +327,7 @@ mkdocstrings = ">=0.20"
 
 [[package]]
 name = "mypy"
-version = "1.2.0"
+version = "1.3.0"
 description = "Optional static typing for Python"
 category = "dev"
 optional = false
@@ -576,7 +576,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "types-setuptools"
-version = "67.7.0.1"
+version = "67.7.0.2"
 description = "Typing stubs for setuptools"
 category = "dev"
 optional = false
