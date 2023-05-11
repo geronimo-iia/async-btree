@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.1 (next)
+
+
 ## 1.2.0 (2023-05-11)
 
 Features, from [#24](https://github.com/geronimo-iia/async-btree/issues/24) :
