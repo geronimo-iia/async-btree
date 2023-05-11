@@ -107,7 +107,6 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
 
     Args:
         child (CallableFunction): child function to decorate
-        silent_exception (bool): if true then exception will be ignored
 
     Returns:
         (AsyncInnerFunction): an awaitable function which return child result if it is truthy
