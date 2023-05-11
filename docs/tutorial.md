@@ -133,6 +133,44 @@ As you could see:
 - we use a single instance of GripperInterface
 - we have hard coded name on our action function
 
+We can also define a function like this:
+
+```python
+def check_again_battery():
+    print("battery dbl check")
+    # you should return a success
+    return bt.SUCCESS
+```
+
+and wrote our behavior tree :
+
+```python
+b_tree = bt.sequence(
+    children=[
+        bt.always_success(child=bt.action(target=say_hello, name="John")),
+        bt.action(target=check_battery),
+        check_again_battery,  # this will be encapsulated at runtime
+        bt.always_success(child=bt.action(target=gripper.open)),
+        bt.always_success(child=bt.action(target=approach_object, name="house")),
+        bt.always_success(child=bt.action(target=gripper.close)),
+    ]
+)
+```
+
+`check_again_battery` will be encapsulated at runtime.
+
+If we running it again:
+
+```text
+Hello: John
+battery ok
+battery dbl check
+GripperInterface Open
+approach_object: house
+GripperInterface Close
+```
+
+
 In a real use case, we should find a way to avoid this:
 - wrote a factory function for a specific case
 - either by using ContextVar (```from contextvars import ContextVar```)

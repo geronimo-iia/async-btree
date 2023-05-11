@@ -20,6 +20,7 @@ Technical Update:
 - use ruff as replacement of flake8, flakehell,...
 - use mkdocs as replacement of sphinx
 - simplify Makefile
+- change 'master' branch for 'main'
 
 ## 1.1.1 (2020-11-21)
 
