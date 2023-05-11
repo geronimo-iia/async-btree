@@ -1,0 +1,4055 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../tutorial/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.11">
+    
+    
+      
+        <title>Reference - Async behavior tree</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#async_btree" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Async behavior tree" class="md-header__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Async behavior tree
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/geronimo-iia/async-btree" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geronimo-iia/async-btree
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Async behavior tree" class="md-nav__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Async behavior tree
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/geronimo-iia/async-btree" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geronimo-iia/async-btree
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Reference
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree" class="md-nav__link">
+    async_btree
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.AsyncInnerFunction" class="md-nav__link">
+    AsyncInnerFunction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.CallableFunction" class="md-nav__link">
+    CallableFunction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.FAILURE" class="md-nav__link">
+    FAILURE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.SUCCESS" class="md-nav__link">
+    SUCCESS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.ControlFlowException" class="md-nav__link">
+    ControlFlowException
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.Node" class="md-nav__link">
+    Node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.NodeMetadata" class="md-nav__link">
+    NodeMetadata
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.action" class="md-nav__link">
+    action()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.afilter" class="md-nav__link">
+    afilter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.alias" class="md-nav__link">
+    alias()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.always_failure" class="md-nav__link">
+    always_failure()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.always_success" class="md-nav__link">
+    always_success()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.amap" class="md-nav__link">
+    amap()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.condition" class="md-nav__link">
+    condition()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.decision" class="md-nav__link">
+    decision()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.decorate" class="md-nav__link">
+    decorate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.fallback" class="md-nav__link">
+    fallback()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.ignore_exception" class="md-nav__link">
+    ignore_exception()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.inverter" class="md-nav__link">
+    inverter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.is_failure" class="md-nav__link">
+    is_failure()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.is_success" class="md-nav__link">
+    is_success()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.node_metadata" class="md-nav__link">
+    node_metadata()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.repeat_until" class="md-nav__link">
+    repeat_until()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.retry" class="md-nav__link">
+    retry()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.retry_until_failed" class="md-nav__link">
+    retry_until_failed()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.retry_until_success" class="md-nav__link">
+    retry_until_success()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.selector" class="md-nav__link">
+    selector()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.sequence" class="md-nav__link">
+    sequence()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.stringify_analyze" class="md-nav__link">
+    stringify_analyze()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        How to create a BehaviorTree
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_of_conduct/" class="md-nav__link">
+        Code of conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/geronimo-iia/async-btree" class="md-nav__link">
+        Github
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree" class="md-nav__link">
+    async_btree
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.AsyncInnerFunction" class="md-nav__link">
+    AsyncInnerFunction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.CallableFunction" class="md-nav__link">
+    CallableFunction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.FAILURE" class="md-nav__link">
+    FAILURE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.SUCCESS" class="md-nav__link">
+    SUCCESS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.ControlFlowException" class="md-nav__link">
+    ControlFlowException
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.Node" class="md-nav__link">
+    Node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.NodeMetadata" class="md-nav__link">
+    NodeMetadata
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.action" class="md-nav__link">
+    action()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.afilter" class="md-nav__link">
+    afilter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.alias" class="md-nav__link">
+    alias()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.always_failure" class="md-nav__link">
+    always_failure()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.always_success" class="md-nav__link">
+    always_success()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.amap" class="md-nav__link">
+    amap()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.condition" class="md-nav__link">
+    condition()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.decision" class="md-nav__link">
+    decision()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.decorate" class="md-nav__link">
+    decorate()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.fallback" class="md-nav__link">
+    fallback()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.ignore_exception" class="md-nav__link">
+    ignore_exception()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.inverter" class="md-nav__link">
+    inverter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.is_failure" class="md-nav__link">
+    is_failure()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.is_success" class="md-nav__link">
+    is_success()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.node_metadata" class="md-nav__link">
+    node_metadata()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.repeat_until" class="md-nav__link">
+    repeat_until()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.retry" class="md-nav__link">
+    retry()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.retry_until_failed" class="md-nav__link">
+    retry_until_failed()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.retry_until_success" class="md-nav__link">
+    retry_until_success()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.selector" class="md-nav__link">
+    selector()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.sequence" class="md-nav__link">
+    sequence()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async_btree.stringify_analyze" class="md-nav__link">
+    stringify_analyze()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>Reference</h1>
+
+<p>This part of the project documentation focuses on
+an <strong>information-oriented</strong> approach. Use it as a
+reference for the technical implementation of the
+<code>async_btree</code> project code.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="async_btree"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Declare async btree api.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="async_btree.AsyncInnerFunction" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">AsyncInnerFunction</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function signature of async function implementation.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="async_btree.CallableFunction" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">CallableFunction</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="bp">Ellipsis</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">]</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Something callable with or without async.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="async_btree.FAILURE" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">FAILURE</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">SUCCESS</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Failure constant.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="async_btree.SUCCESS" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">SUCCESS</span> <span class="o">=</span> <span class="kc">True</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Success constant.</p>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="async_btree.ControlFlowException" class="doc doc-heading">
+        <code>ControlFlowException</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code>Exception</code></p>
+
+  
+      <p>ControlFlowException exception is a decorator on a real exception.</p>
+<p>This will ensure that <code>assert ControlFlowException.__bool__ == False</code>.
+This permit to return exception as a 'FAILURE' status.</p>
+
+
+        <details class="quote">
+          <summary>Source code in <code>async_btree/definition.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ControlFlowException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ControlFlowException exception is a decorator on a real exception.</span>
+
+<span class="sd">    This will ensure that ```assert ControlFlowException.__bool__ == False```.</span>
+<span class="sd">    This permit to return exception as a &#39;FAILURE&#39; status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">exception</span>
+
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">instanciate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="c1"># this methods simplify usage of hierarchical call tree.</span>
+        <span class="k">return</span> <span class="n">exception</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">ControlFlowException</span><span class="p">)</span> <span class="k">else</span> <span class="n">ControlFlowException</span><span class="p">(</span><span class="n">exception</span><span class="o">=</span><span class="n">exception</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="async_btree.Node" class="doc doc-heading">
+        <code>Node</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.NamedTuple">NamedTuple</span></code></p>
+
+  
+      <p>Node aggregate node definition implemented with NamedTuple.</p>
+<p>A Node is used to keep information on name, properties, and relations ship
+between a hierachical construct of functions.
+It's like an instance of NodeMetadata.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>named operation.</p></td>
+        </tr>
+        <tr>
+          <td><code>properties</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="typing.Tuple">Tuple</span>[str, <span title="typing.Any">Any</span>]]</code>
+          </td>
+          <td><p>a list of tuple (name, value) for definition.</p></td>
+        </tr>
+        <tr>
+          <td><code>edges</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<span title="typing.Tuple">Tuple</span>[str, <span title="typing.List">List</span>[<span title="typing.Any">Any</span>]]]</code>
+          </td>
+          <td><p>a list of tuple (name, node list) for
+definition.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="notes" open>
+  <summary>Notes</summary>
+  <p>Edges attribut should be edges: <code>List[Tuple[str, List['Node']]]</code>
+But it is impossible for now, see <a href="https://github.com/python/mypy/issues/731">mypy issues 731</a></p>
+</details>
+
+        <details class="quote">
+          <summary>Source code in <code>async_btree/analyze.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Node aggregate node definition implemented with NamedTuple.</span>
+
+<span class="sd">    A Node is used to keep information on name, properties, and relations ship</span>
+<span class="sd">    between a hierachical construct of functions.</span>
+<span class="sd">    It&#39;s like an instance of NodeMetadata.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): named operation.</span>
+<span class="sd">        properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.</span>
+<span class="sd">        edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for</span>
+<span class="sd">            definition.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Edges attribut should be edges: ```List[Tuple[str, List[&#39;Node&#39;]]]```</span>
+<span class="sd">        But it is impossible for now, see [mypy issues 731](https://github.com/python/mypy/issues/731)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="c1"># edges: List[Tuple[str, List[&#39;Node&#39;]]]</span>
+    <span class="c1"># https://github.com/python/mypy/issues/731</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="async_btree.NodeMetadata" class="doc doc-heading">
+        <code>NodeMetadata</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.NamedTuple">NamedTuple</span></code></p>
+
+  
+      <p>NodeMetadata is our node definition.</p>
+<p>A NodeMetadata is used to keep information on name, properties name,
+and relations ship name between a hierachical construct of functions.</p>
+<p>This permit us to print or analyze all information of a behaviour tree.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>named operation</p></td>
+        </tr>
+        <tr>
+          <td><code>properties</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[str]</code>
+          </td>
+          <td><p>a list of property name (an int value, ...).</p></td>
+        </tr>
+        <tr>
+          <td><code>edges</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[str]</code>
+          </td>
+          <td><p>a list of member name which act as edges (a child, ...).</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>async_btree/definition.py</code></summary>
+          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">NodeMetadata</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NodeMetadata is our node definition.</span>
+
+<span class="sd">    A NodeMetadata is used to keep information on name, properties name,</span>
+<span class="sd">    and relations ship name between a hierachical construct of functions.</span>
+
+<span class="sd">    This permit us to print or analyze all information of a behaviour tree.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): named operation</span>
+<span class="sd">        properties (List[str]): a list of property name (an int value, ...).</span>
+<span class="sd">        edges (List[str]): a list of member name which act as edges (a child, ...).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">edges</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">alias</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">NodeMetadata</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeMetadata</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">NodeMetadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span> <span class="k">if</span> <span class="n">properties</span> <span class="k">else</span> <span class="n">node</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.action" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Declare an action leaf.</p>
+<p>Action is an awaitable closure of specified function,
+(See alias function).</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>target</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable function</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>kwargs</code></td>
+          <td>
+          </td>
+          <td><p>optional kwargs argument to pass on target function</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Raises:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.ControlFlowException" href="#async_btree.ControlFlowException">ControlFlowException</a></code>
+          </td>
+          <td><p>if error occurs</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/leaf.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Declare an action leaf.</span>
+
+<span class="sd">    Action is an awaitable closure of specified function,</span>
+<span class="sd">    (See alias function).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction): awaitable function</span>
+<span class="sd">        kwargs: optional kwargs argument to pass on target function</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ControlFlowException : if error occurs</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_target</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;_target&#39;</span><span class="p">])</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_action</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_target</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlFlowException</span><span class="o">.</span><span class="n">instanciate</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_action</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.afilter" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">afilter</span><span class="p">(</span><span class="n">corofunc</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Filter an iterable or an async iterable with an async function.</p>
+<p>This simplify writing of filtering by a function on something iterable
+between 'async for ...' and 'for...' .</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>corofunc</code></td>
+          <td>
+                <code><span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], <span title="typing.Awaitable">Awaitable</span>[bool]]</code>
+          </td>
+          <td><p>filter async function</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterable</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<span title="typing.AsyncIterable">AsyncIterable</span>, <span title="typing.Iterable">Iterable</span>]</code>
+          </td>
+          <td><p>iterable or async iterable collection
+which will be applied.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.AsyncGenerator">AsyncGenerator</span>[<span title="async_btree.utils.T">T</span>]</code>
+          </td>
+          <td><p>an async iterator of item which satisfy corofunc(item) == True</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <p><code>[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]</code></p>
+</details>
+      <details class="quote">
+        <summary>Source code in <code>async_btree/utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">afilter</span><span class="p">(</span>
+    <span class="n">corofunc</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="nb">bool</span><span class="p">]],</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AsyncIterable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter an iterable or an async iterable with an async function.</span>
+
+<span class="sd">    This simplify writing of filtering by a function on something iterable</span>
+<span class="sd">    between &#39;async for ...&#39; and &#39;for...&#39; .</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        corofunc (Callable[[Any], Awaitable[bool]]): filter async function</span>
+<span class="sd">        iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection</span>
+<span class="sd">            which will be applied.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">AsyncIterable</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="k">await</span> <span class="n">corofunc</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">item</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="k">await</span> <span class="n">corofunc</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">item</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.alias" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">alias</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Define an alias on our child.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>name of function tree</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">alias</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Define an alias on our child.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+<span class="sd">        name (str): name of function tree</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="c1"># we use a dedicted function to &#39;duplicate&#39; the child reference</span>
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_alias</span><span class="p">():</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">_child</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_alias</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.always_failure" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">always_failure</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Produce a function which always return FAILURE value.</p>
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>If you wanna git a failure even if an exception occurs, you have
+to decorate child with ignore_exception, like this:</p>
+<p><code>always_failure(child=ignore_exception(myfunction))</code></p>
+</details>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which return child result if is falsy
+else FAILURE.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Raises:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.ControlFlowException" href="#async_btree.ControlFlowException">ControlFlowException</a></code>
+          </td>
+          <td><p>if error occurs</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">always_failure</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>  <span class="c1"># -&gt; Awaitable:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Produce a function which always return FAILURE value.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If you wanna git a failure even if an exception occurs, you have</span>
+<span class="sd">        to decorate child with ignore_exception, like this:</span>
+
+<span class="sd">        `always_failure(child=ignore_exception(myfunction))`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which return child result if is falsy</span>
+<span class="sd">            else FAILURE.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ControlFlowException : if error occurs</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_always_failure</span><span class="p">():</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">FAILURE</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">child_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_child</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">child_result</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">child_result</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlFlowException</span><span class="o">.</span><span class="n">instanciate</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">_always_failure</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.always_success" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">always_success</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a node which always return SUCCESS value.</p>
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>If you wanna git a success even if an exception occurs, you have
+to decorate child with ignore_exception, like this:</p>
+<p><code>always_success(child=ignore_exception(myfunction))</code></p>
+</details>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which return child result if it is truthy
+else SUCCESS.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Raises:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.ControlFlowException" href="#async_btree.ControlFlowException">ControlFlowException</a></code>
+          </td>
+          <td><p>if error occurs</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">always_success</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a node which always return SUCCESS value.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If you wanna git a success even if an exception occurs, you have</span>
+<span class="sd">        to decorate child with ignore_exception, like this:</span>
+
+<span class="sd">        `always_success(child=ignore_exception(myfunction))`</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which return child result if it is truthy</span>
+<span class="sd">            else SUCCESS.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ControlFlowException : if error occurs</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_always_success</span><span class="p">():</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">SUCCESS</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">child_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_child</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">child_result</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">child_result</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlFlowException</span><span class="o">.</span><span class="n">instanciate</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">_always_success</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.amap" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">amap</span><span class="p">(</span><span class="n">corofunc</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Map an async function onto an iterable or an async iterable.</p>
+<p>This simplify writing of mapping a function on something iterable
+between 'async for ...' and 'for...' .</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>corofunc</code></td>
+          <td>
+                <code><span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], <span title="typing.Awaitable">Awaitable</span>[<span title="async_btree.utils.T">T</span>]]</code>
+          </td>
+          <td><p>coroutine function</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>iterable</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<span title="typing.AsyncIterable">AsyncIterable</span>, <span title="typing.Iterable">Iterable</span>]</code>
+          </td>
+          <td><p>iterable or async iterable collection
+which will be applied.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.AsyncGenerator">AsyncGenerator</span>[<span title="async_btree.utils.T">T</span>, None]</code>
+          </td>
+          <td><p>AsyncGenerator[T]: an async iterator of corofunc(item)</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <p><code>[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]</code></p>
+</details>
+      <details class="quote">
+        <summary>Source code in <code>async_btree/utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">amap</span><span class="p">(</span>
+    <span class="n">corofunc</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">T</span><span class="p">]],</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AsyncIterable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map an async function onto an iterable or an async iterable.</span>
+
+<span class="sd">    This simplify writing of mapping a function on something iterable</span>
+<span class="sd">    between &#39;async for ...&#39; and &#39;for...&#39; .</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        corofunc (Callable[[Any], Awaitable[T]]): coroutine function</span>
+<span class="sd">        iterable (Union[AsyncIterable, Iterable]): iterable or async iterable collection</span>
+<span class="sd">            which will be applied.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        AsyncGenerator[T]: an async iterator of corofunc(item)</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">AsyncIterable</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="k">await</span> <span class="n">corofunc</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="k">await</span> <span class="n">corofunc</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.condition" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">condition</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Declare a condition leaf.</p>
+<p>Condition is an awaitable closure of specified function.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>target</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable function which be evaluated as True/False.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>kwargs</code></td>
+          <td>
+          </td>
+          <td><p>optional kwargs argument to pass on target function</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/leaf.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">condition</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Declare a condition leaf.</span>
+
+<span class="sd">    Condition is an awaitable closure of specified function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction):  awaitable function which be evaluated as True/False.</span>
+<span class="sd">        kwargs: optional kwargs argument to pass on target function</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">alias_node_metadata</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">is_success</span><span class="p">(</span><span class="n">action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)),</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.decision" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">decision</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">success_tree</span><span class="p">,</span> <span class="n">failure_tree</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a decision node.</p>
+<p>If condition is meet, return evaluation of success_tree.
+Otherwise, it return SUCCESS or evaluation of failure_tree if setted.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>condition</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable condition</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>success_tree</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable success tree which be
+evaluated if cond is Truthy</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>failure_tree</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable failure tree which be
+evaluated if cond is Falsy (None per default)</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/control.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">decision</span><span class="p">(</span>
+    <span class="n">condition</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">success_tree</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">failure_tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a decision node.</span>
+
+<span class="sd">    If condition is meet, return evaluation of success_tree.</span>
+<span class="sd">    Otherwise, it return SUCCESS or evaluation of failure_tree if setted.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        condition (CallableFunction): awaitable condition</span>
+<span class="sd">        success_tree (CallableFunction): awaitable success tree which be</span>
+<span class="sd">            evaluated if cond is Truthy</span>
+<span class="sd">        failure_tree (CallableFunction): awaitable failure tree which be</span>
+<span class="sd">            evaluated if cond is Falsy (None per default)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_condition</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+    <span class="n">_success_tree</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">success_tree</span><span class="p">)</span>
+    <span class="n">_failure_tree</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">failure_tree</span><span class="p">)</span> <span class="k">if</span> <span class="n">failure_tree</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;_condition&#39;</span><span class="p">,</span> <span class="s1">&#39;_success_tree&#39;</span><span class="p">,</span> <span class="s1">&#39;_failure_tree&#39;</span><span class="p">])</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_decision</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="n">_condition</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_success_tree</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">_failure_tree</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_failure_tree</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span>
+
+    <span class="k">return</span> <span class="n">_decision</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.decorate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">decorate</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">decorator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a decorator.</p>
+<p>Post process a child with specified decorator function.
+First argument of decorator function must be a child.</p>
+<p>This method implement a simple lazy evaluation.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>decorator</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable target decorator with profile 'decorator(child_result, **kwargs)'</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>kwargs</code></td>
+          <td>
+          </td>
+          <td><p>optional keyed argument to pass to decorator function</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which
+    return decorator evaluation against child.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">decorator</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a decorator.</span>
+
+<span class="sd">    Post process a child with specified decorator function.</span>
+<span class="sd">    First argument of decorator function must be a child.</span>
+
+<span class="sd">    This method implement a simple lazy evaluation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+<span class="sd">        decorator (CallableFunction): awaitable target decorator with profile &#39;decorator(child_result, **kwargs)&#39;</span>
+<span class="sd">        kwargs: optional keyed argument to pass to decorator function</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      (AsyncInnerFunction): an awaitable function which</span>
+<span class="sd">            return decorator evaluation against child.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+    <span class="n">_decorator</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">decorator</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;_decorator&#39;</span><span class="p">])</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_decorate</span><span class="p">():</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">_decorator</span><span class="p">(</span><span class="k">await</span> <span class="n">_child</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_decorate</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.fallback" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">fallback</span><span class="p">(</span><span class="n">children</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Execute tasks in sequence and succeed if one succeed or failed if all failed.</p>
+<p>Often named 'selector', children can be seen as an ordered list
+    starting from higthest priority to lowest priority.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>children</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a>]</code>
+          </td>
+          <td><p>list of Awaitable</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/control.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">fallback</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute tasks in sequence and succeed if one succeed or failed if all failed.</span>
+
+<span class="sd">    Often named &#39;selector&#39;, children can be seen as an ordered list</span>
+<span class="sd">        starting from higthest priority to lowest priority.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        children (List[CallableFunction]): list of Awaitable</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">alias_node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fallback&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">succes_threshold</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">))))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.ignore_exception" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">ignore_exception</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a node which ignore runtime exception.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which return child result</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>or any exception with a falsy meaning in a ControlFlowException.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">ignore_exception</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a node which ignore runtime exception.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which return child result</span>
+<span class="sd">        or any exception with a falsy meaning in a ControlFlowException.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_ignore_exception</span><span class="p">():</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_child</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ControlFlowException</span><span class="o">.</span><span class="n">instanciate</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_ignore_exception</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.inverter" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">inverter</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Invert node status.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which return SUCCESS if child
+return FAILURE else SUCCESS</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">inverter</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Invert node status.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which return SUCCESS if child</span>
+<span class="sd">            return FAILURE else SUCCESS</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_inverter</span><span class="p">():</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="n">_child</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">_inverter</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.is_failure" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_failure</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a conditional node which test if child fail.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which return SUCCESS if child
+return FAILURE else FAILURE.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">is_failure</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a conditional node which test if child fail.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which return SUCCESS if child</span>
+<span class="sd">            return FAILURE else FAILURE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_is_failure</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="n">_child</span><span class="p">())</span> <span class="k">else</span> <span class="n">FAILURE</span>
+
+    <span class="k">return</span> <span class="n">_is_failure</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.is_success" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_success</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Create a conditional node which test if child success.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which return SUCCESS if child
+return SUCCESS else FAILURE.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">is_success</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a conditional node which test if child success.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which return SUCCESS if child</span>
+<span class="sd">            return SUCCESS else FAILURE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_is_success</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span> <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="n">_child</span><span class="p">())</span> <span class="k">else</span> <span class="n">FAILURE</span>
+
+    <span class="k">return</span> <span class="n">_is_success</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.node_metadata" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>'node_metadata' is a function decorator which add meta information about node.</p>
+<p>We add a property on decorated function named '__node_metadata'.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td><p>override name of decorated function,
+default is function name left striped with '_'</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>properties</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[str]]</code>
+          </td>
+          <td><p>a list of property name ([] as default)</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>edges</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[str]]</code>
+          </td>
+          <td><p>a list of edges name
+(["child", "children"] as default)</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Callable">Callable</span>[[<span title="typing.Callable">Callable</span>[<span title="async_btree.definition.P">P</span>, <span title="async_btree.definition.R">R</span>]], <span title="async_btree.definition.FunctionWithMetadata">FunctionWithMetadata</span>[<span title="async_btree.definition.P">P</span>, <span title="async_btree.definition.R">R</span>]]</code>
+          </td>
+          <td><p>the decorator function</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/definition.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">node_metadata</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">]],</span> <span class="n">FunctionWithMetadata</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&#39;node_metadata&#39; is a function decorator which add meta information about node.</span>
+
+<span class="sd">    We add a property on decorated function named &#39;__node_metadata&#39;.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (Optional[str]): override name of decorated function,</span>
+<span class="sd">            default is function name left striped with &#39;_&#39;</span>
+<span class="sd">        properties (Optional[List[str]]): a list of property name ([] as default)</span>
+<span class="sd">        edges (Optional[List[str]]): a list of edges name</span>
+<span class="sd">            ([&quot;child&quot;, &quot;children&quot;] as default)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the decorator function</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">decorate_function</span><span class="p">(</span><span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">FunctionWithMetadata</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">]:</span>
+        <span class="n">dfunc</span> <span class="o">=</span> <span class="n">_attr_decorator</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+
+        <span class="n">dfunc</span><span class="o">.</span><span class="n">__node_metadata</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+            <span class="n">dfunc</span><span class="p">,</span>
+            <span class="s2">&quot;__node_metadata&quot;</span><span class="p">,</span>
+            <span class="n">NodeMetadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">get_function_name</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">dfunc</span><span class="p">),</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">FunctionWithMetadata</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">],</span> <span class="n">dfunc</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">decorate_function</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.repeat_until" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">repeat_until</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Repeat child evaluation until condition is truthy.</p>
+<p>Return last child evaluation or FAILURE if no evaluation occurs.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>condition</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable condition</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>awaitable child</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/control.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">repeat_until</span><span class="p">(</span><span class="n">condition</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Repeat child evaluation until condition is truthy.</span>
+
+<span class="sd">    Return last child evaluation or FAILURE if no evaluation occurs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        condition (CallableFunction): awaitable condition</span>
+<span class="sd">        child (CallableFunction): awaitable child</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+    <span class="n">_condition</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;_condition&#39;</span><span class="p">,</span> <span class="s1">&#39;_child&#39;</span><span class="p">])</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_repeat_until</span><span class="p">():</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">FAILURE</span>
+        <span class="k">while</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="n">_condition</span><span class="p">()):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_child</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">_repeat_until</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.retry" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">retry</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">max_retry</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retry child evaluation at most max_retry time on failure until child succeed.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_retry</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>max retry count (default 3), -1 mean infinite retry</p></td>
+          <td>
+                <code>3</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which retry child evaluation
+at most max_retry time on failure until child succeed.
+If max_retry is reached, returns FAILURE or last exception.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">,</span> <span class="n">max_retry</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retry child evaluation at most max_retry time on failure until child succeed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+<span class="sd">        max_retry (int): max retry count (default 3), -1 mean infinite retry</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which retry child evaluation</span>
+<span class="sd">            at most max_retry time on failure until child succeed.</span>
+<span class="sd">            If max_retry is reached, returns FAILURE or last exception.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">max_retry</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">max_retry</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;max_retry&#39;</span><span class="p">)</span>
+
+    <span class="n">_child</span> <span class="o">=</span> <span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;max_retry&#39;</span><span class="p">])</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_retry</span><span class="p">():</span>
+        <span class="n">retry_count</span> <span class="o">=</span> <span class="n">max_retry</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">FAILURE</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="ow">and</span> <span class="n">retry_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_child</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;result : </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">retry_count</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">_retry</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.retry_until_failed" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">retry_until_failed</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retry child until failed.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which try to evaluate child
+until it failed.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry_until_failed</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retry child until failed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which try to evaluate child</span>
+<span class="sd">            until it failed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">alias_node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;retry_until_failed&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">retry</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">inverter</span><span class="p">(</span><span class="n">child</span><span class="p">),</span> <span class="n">max_retry</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.retry_until_success" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">retry_until_success</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Retry child until success.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>child</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>child function to decorate</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function which try to evaluate child
+until it succeed.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/decorator.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">retry_until_success</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="n">CallableFunction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retry child until success.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        child (CallableFunction): child function to decorate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function which try to evaluate child</span>
+<span class="sd">            until it succeed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">alias_node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;retry_until_success&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">retry</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">child</span><span class="p">,</span> <span class="n">max_retry</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.selector" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">selector</span><span class="p">(</span><span class="n">children</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Synonym of fallback.</p>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/control.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">selector</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Synonym of fallback.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">alias_node_metadata</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;selector&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">succes_threshold</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">))))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.sequence" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">succes_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Return a function which execute children in sequence.</p>
+<p>succes_threshold parameter generalize traditional sequence/fallback and
+must be in [0, len(children)]. Default value is (-1) means len(children)</p>
+<p>if #success = succes_threshold, return a success</p>
+<p>if #failure = len(children) - succes_threshold, return a failure</p>
+<p>What we can return as value and keep sematic Failure/Success:
+ - an array of previous result when success
+ - last failure when fail</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>children</code></td>
+          <td>
+                <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a>]</code>
+          </td>
+          <td><p>list of Awaitable</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>succes_threshold</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>succes threshold value</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.AsyncInnerFunction" href="#async_btree.AsyncInnerFunction">AsyncInnerFunction</a></code>
+          </td>
+          <td><p>an awaitable function.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Raises:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>AssertionError</code>
+          </td>
+          <td><p>if succes_threshold is invalid</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/control.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="n">children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CallableFunction</span><span class="p">],</span> <span class="n">succes_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncInnerFunction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a function which execute children in sequence.</span>
+
+<span class="sd">    succes_threshold parameter generalize traditional sequence/fallback and</span>
+<span class="sd">    must be in [0, len(children)]. Default value is (-1) means len(children)</span>
+
+<span class="sd">    if #success = succes_threshold, return a success</span>
+
+<span class="sd">    if #failure = len(children) - succes_threshold, return a failure</span>
+
+<span class="sd">    What we can return as value and keep sematic Failure/Success:</span>
+<span class="sd">     - an array of previous result when success</span>
+<span class="sd">     - last failure when fail</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        children (List[CallableFunction]): list of Awaitable</span>
+<span class="sd">        succes_threshold (int): succes threshold value</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (AsyncInnerFunction): an awaitable function.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        (AssertionError): if succes_threshold is invalid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_succes_threshold</span> <span class="o">=</span> <span class="n">succes_threshold</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">_succes_threshold</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;succes_threshold&#39;</span><span class="p">)</span>
+
+    <span class="n">failure_threshold</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span> <span class="o">-</span> <span class="n">_succes_threshold</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">_children</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_async</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">]</span>
+
+    <span class="nd">@node_metadata</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;_succes_threshold&#39;</span><span class="p">])</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_sequence</span><span class="p">():</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">failure</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">_children</span><span class="p">:</span>
+            <span class="n">last_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">child</span><span class="p">()</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last_result</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">last_result</span><span class="p">):</span>
+                <span class="n">success</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">success</span> <span class="o">==</span> <span class="n">_succes_threshold</span><span class="p">:</span>
+                    <span class="c1"># last evaluation is a success</span>
+                    <span class="k">return</span> <span class="n">results</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">failure</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">failure</span> <span class="o">==</span> <span class="n">failure_threshold</span><span class="p">:</span>
+                    <span class="c1"># last evaluation is a failure</span>
+                    <span class="k">return</span> <span class="n">last_result</span>
+        <span class="c1"># should be never reached</span>
+        <span class="k">return</span> <span class="n">FAILURE</span>
+
+    <span class="k">return</span> <span class="n">_sequence</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="async_btree.stringify_analyze" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Stringify node representation of specified target.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>target</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="async_btree.definition.CallableFunction" href="#async_btree.CallableFunction">CallableFunction</a></code>
+          </td>
+          <td><p>async function to analyze.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>indent</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>level identation (default to zero).</p></td>
+          <td>
+                <code>0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>label</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td><p>label of current node (default None).</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>a string node representation.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>async_btree/analyze.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">indent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stringify node representation of specified target.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target (CallableFunction): async function to analyze.</span>
+<span class="sd">        indent (int): level identation (default to zero).</span>
+<span class="sd">        label (Optional[str]): label of current node (default None).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (str): a string node representation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_ident</span> <span class="o">=</span> <span class="s1">&#39;    &#39;</span>
+    <span class="n">_space</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_ident</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">indent</span><span class="si">}</span><span class="s1"> &#39;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_space</span><span class="si">}</span><span class="s1">--(</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">)--&gt; </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">_space</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_ident</span><span class="si">}{</span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_space</span><span class="si">}</span><span class="s1">--&gt; </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">:</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_space</span><span class="si">}</span><span class="s1">    </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">for</span> <span class="n">_label</span><span class="p">,</span> <span class="n">children</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">children</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">stringify_analyze</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">child</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">indent</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">_label</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.path", "navigation.instant"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fac441b0.min.js"></script>
+      
+    
+  </body>
+</html>

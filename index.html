@@ -1,0 +1,687 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="reference/">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.11">
+    
+    
+      
+        <title>Async behavior tree</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#async-behaviour-tree-for-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Async behavior tree" class="md-header__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Async behavior tree
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/geronimo-iia/async-btree" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geronimo-iia/async-btree
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Async behavior tree" class="md-nav__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Async behavior tree
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/geronimo-iia/async-btree" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geronimo-iia/async-btree
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        Home
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whats-a-behavior-tree" class="md-nav__link">
+    What's a behavior tree ?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-another-library-so" class="md-nav__link">
+    Why another library so ?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note-about-async-framework" class="md-nav__link">
+    Note about 'async' framework
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/" class="md-nav__link">
+        Reference
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/" class="md-nav__link">
+        How to create a BehaviorTree
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="code_of_conduct/" class="md-nav__link">
+        Code of conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/geronimo-iia/async-btree" class="md-nav__link">
+        Github
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whats-a-behavior-tree" class="md-nav__link">
+    What's a behavior tree ?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-another-library-so" class="md-nav__link">
+    Why another library so ?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note-about-async-framework" class="md-nav__link">
+    Note about 'async' framework
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<!-- BEGIN INCLUDE ../README.md -->
+<h1 id="async-behaviour-tree-for-python">Async Behaviour Tree for Python</h1>
+<p><a href="https://travis-ci.com/geronimo-iia/async-btree"><img alt="Unix Build Status" src="https://img.shields.io/travis/geronimo-iia/async-btree/master.svg?label=unix" /></a>
+<a href="https://coveralls.io/r/geronimo-iia/async-btree"><img alt="Coverage Status" src="https://img.shields.io/coveralls/geronimo-iia/async-btree/master.svg" /></a>
+<a href="https://www.codacy.com/app/geronimo-iia/async-btree?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=geronimo-iia/async-btree&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://api.codacy.com/project/badge/Grade/fe669a02b4aa46b5b1faf619ba2bf382" /></a>
+<a href="https://scrutinizer-ci.com/g/geronimo-iia/async-btree/?branch=master"><img alt="Scrutinizer Code Quality" src="https://img.shields.io/scrutinizer/g/geronimo-iia/async-btree.svg" /></a>
+<a href="https://pypi.org/project/async-btree"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/async-btree.svg" /></a>
+<a href="https://pypi.org/project/async-btree"><img alt="PyPI License" src="https://img.shields.io/pypi/l/async-btree.svg" /></a></p>
+<p>Versions following <a href="https://semver.org/">Semantic Versioning</a></p>
+<p>See <a href="https://geronimo-iia.github.io/async-btree">documentation</a>.</p>
+<h2 id="overview">Overview</h2>
+<h3 id="whats-a-behavior-tree">What's a behavior tree ?</h3>
+<blockquote>
+<p>Unlike a Finite State Machine, a Behaviour Tree is a tree of hierarchical nodes that controls the flow of decision and the execution of "tasks" or, as we will call them further, "Actions".
+-- <cite><a href="https://www.behaviortree.dev/bt_basics/">behaviortree</a></cite></p>
+</blockquote>
+<p>If your new (or not) about behavior tree, you could spend some time on this few links:</p>
+<ul>
+<li><a href="https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php">Behavior trees for AI: How they work</a> by Chris Simpson</li>
+<li><a href="https://www.behaviortree.dev/bt_basics/">Introduction to BTs</a></li>
+</ul>
+<p>Few implementation libraries:</p>
+<ul>
+<li><a href="https://github.com/ToyotaResearchInstitute/task_behavior_engine">task_behavior_engine</a> A behavior tree based task engine written in Python</li>
+<li><a href="https://github.com/pirobot/pi_trees/">pi_trees</a> a Python/ROS library for implementing Behavior Trees</li>
+<li><a href="https://github.com/personalrobotics/pr_behavior_tree">pr_behavior_tree</a> A simple python behavior tree library based on coroutines</li>
+<li><a href="https://github.com/aigamedev/btsk">btsk</a> Behavior Tree Starter Kit</li>
+<li><a href="https://github.com/fuchen/behave">behave</a> A behavior tree implementation in Python</li>
+</ul>
+<h3 id="why-another-library-so">Why another library so ?</h3>
+<p><strong>SIMPLICITY</strong></p>
+<p>When you study behavior tree implementation, reactive node, dynamic change, runtime execution, etc ...
+At a moment you're build more or less something that mimic an evaluator 'eval/apply' or a compilator, with a complex hierachical set of class.</p>
+<p>All complexity came with internal state management, using tree of blackboard to avoid global variable, multithreading issue, maybe few callback etc ...</p>
+<p>This break the simplicity and beauty of your initial design.</p>
+<p>What I find usefull with behavior tree:</p>
+<ul>
+<li>clarity of expression</li>
+<li>node tree representation</li>
+<li>possibility to reuse behavior</li>
+<li>add external measure to dynamicaly change a behavior, a first step on observable pattern...</li>
+</ul>
+<p>As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of functionnal programming to obtain what I want: add metadata on a sematic construction, deal with closure, use function in parameters or in return value...</p>
+<p>And a last reason, more personal, it that i would explore python expressivity.</p>
+<p><strong>SO HOW ?</strong></p>
+<p>In this module, I purpose you to use the concept of coroutines, and their mecanisms to manage the execution flow.
+By this way:</p>
+<ul>
+<li>we reuse simple language idiom to manage state, parameter, etc</li>
+<li>no design constraint on action implementation</li>
+<li>most of language build block could be reused</li>
+</ul>
+<p>You could build expression like this:</p>
+<pre><code class="language-python">
+async def a_func():
+    &quot;&quot;&quot;A great function&quot;&quot;&quot;
+    return &quot;a&quot;
+
+async def b_decorator(child_value, other=&quot;&quot;):
+    &quot;&quot;&quot;A great decorator...&quot;&quot;&quot;
+    return f&quot;b{child_value}{other}&quot;
+
+assert run(decorate(a_func, b_decorator)) == &quot;ba&quot;
+
+</code></pre>
+<p>This expression apply <code>b_decorator</code> on function <code>a_func</code>. 
+Note that <code>decorate(a_func, b_decorator)</code> is not an async function, only action, or condition are async function.</p>
+<p>Few guidelines of this implementation:</p>
+<ul>
+<li>In order to mimic all NodeStatus (success, failure, running), I replace this by truthy/falsy meaning of evaluation value.
+  A special dedicated exception decorate standard exception in order to give them a Falsy meaning (<code>ControlFlowException</code>).
+  By default, exception are raised like happen usually until you catch them.</li>
+<li>Blackboard pattern, act as a manager of context variable for behavior tree.
+  With python 3, please... simply use <a href="https://docs.python.org/3/library/contextvars.html">contextvars</a> !</li>
+<li>In order to be able to build a sematic tree, I've introduce a metadata tuple added on function implementation.</li>
+</ul>
+<p>The rest is just implementation details..</p>
+<p>A little note:</p>
+<blockquote>
+<p>You should not use this until you're ready to think about what you're doing :)</p>
+</blockquote>
+<h3 id="note-about-async-framework">Note about 'async' framework</h3>
+<p>As we use async function as underlaying mechanism to manage the execution flow, the standard library asyncio is pretty fine.
+But, (always a but somewhere isn't it...), you should read this [amazing blog post}(https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/) by Nathaniel J. Smith.
+And next study <a href="https://github.com/dabeaz/curio">curio</a> framework in deep.</p>
+<p>As curio say:</p>
+<blockquote>
+<p>Don't Use Curio if You're Allergic to Curio</p>
+</blockquote>
+<p>Personaly, after few time of testing and reading curio code, I'm pretty addict.</p>
+<h2 id="installation">Installation</h2>
+<p>Install this library directly into an activated virtual environment:</p>
+<pre><code class="language-text">$ pip install async-btree
+</code></pre>
+<p>or add it to your <a href="https://poetry.eustace.io/">Poetry</a> project:</p>
+<pre><code class="language-text">$ poetry add async-btree
+</code></pre>
+<h2 id="usage">Usage</h2>
+<p>After installation, the package can imported:</p>
+<pre><code class="language-text">$ python
+&gt;&gt;&gt; import async_btree
+&gt;&gt;&gt; async_btree.__version__
+</code></pre>
+<p>See <a href="https://geronimo-iia.github.io/async-btree">API Reference documentation</a>.</p>
+<p>With this framework, you didn't find any configuration file, no Xml, no json, no yaml.</p>
+<p>The main reason (oriented and personal point of view) is that you did not need to introduce an extra level of abtraction 
+to declare a composition of functions. I think it's true for most of main use case (except using an editor to wrote behaviour tree for example).</p>
+<p>So "If you wrote your function with python, wrote composition in python"... 
+<em>(remember that you did not need XML to do SQL, just write good sql...)</em></p>
+<p>So, the goal is to:
+ - define your business function wich implements actions or conditions, with all test case that you wish/need
+ - compose them using those provided by this framework like <code>sequence</code>, <code>selector</code>, ...
+ - use them as it is or create a well define python module to reuse them</p>
+<p>Wanna style have an abtract tree of our behaviour tree ?</p>
+<p>Functions from async-btree build an abstract tree for you. 
+If you lookup in code, you should see an annotation "node_metadata" on internal implementation. 
+This decorator add basic information like function name, parameters, and children relation ship.</p>
+<p>This abstract tree can be retreived and stringified with <code>analyze</code> and <code>stringify_analyze</code>.
+Here the profile:</p>
+<pre><code class="language-python">  def analyze(target: CallableFunction) -&gt; Node: # here we have our &quot;abtract tree code&quot;
+    ...
+</code></pre>
+<p>For example:</p>
+<pre><code class="language-python">
+# your behaviour tree, or a sub tree:
+my_func = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name=&quot;btree_1&quot;)
+
+# retrieve meta information and build a Node tree
+abstract_tree_tree_1 = analyze(my_func) 
+
+# output the tree:
+print(stringify_analyze(abstract_tree_tree_1))
+</code></pre>
+<p>This should print:</p>
+<pre><code class="language-text"> --&gt; btree_1:
+     --(child)--&gt; repeat_until:
+         --(condition)--&gt; success_until_zero:
+         --(child)--&gt; action:
+                      target: hello
+</code></pre>
+<p>Note about action and condition method:</p>
+<ul>
+<li>you could use sync or async function</li>
+<li>you could specify a return value with SUCCESS or FAILURE</li>
+<li>function with no return value will be evaluated as FAILURE until you decorate them with a <code>always_success</code>or <code>always_failure</code></li>
+</ul>
+<p>See this <a href="https://raw.githubusercontent.com/geronimo-iia/async-btree/master/examples/tutorial_1.py">example/tutorial_1.py</a> for more information.</p>
+<!-- END INCLUDE -->
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tracking", "navigation.path", "navigation.instant"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.fac441b0.min.js"></script>
+      
+    
+  </body>
+</html>
