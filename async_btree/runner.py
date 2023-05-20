@@ -68,11 +68,16 @@ class BTreeRunner:
         """Run an async btree coroutine in a same context.
 
         Args:
-            target (_type_): async btree coroutine
+            target (Callable[..., Awaitable[R]]): coroutine
+
+        Raises:
+            RuntimeError: if context is not initialized
 
         Returns:
             R: result
         """
+        if not self._kernel:
+            raise RuntimeError("run method must be invoked inside a context.")
         coro = target(*args, **kwargs)
         if self._has_curio:
             return self._context.run(self._kernel.run, coro)  # type: ignore

@@ -253,7 +253,7 @@ python-versions = "<3.12,>=3.7"
 
 [[package]]
 name = "mkdocs-material"
-version = "9.1.13"
+version = "9.1.14"
 description = "Documentation that simply works"
 category = "dev"
 optional = false
@@ -560,7 +560,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "types-setuptools"
-version = "67.7.0.3"
+version = "67.8.0.0"
 description = "Typing stubs for setuptools"
 category = "dev"
 optional = false

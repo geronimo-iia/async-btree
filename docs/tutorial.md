@@ -88,8 +88,8 @@ b_tree = bt.sequence(children= [
 Run it:
 
 ```python
-import curio 
-curio.run(b_tree)
+with bt.BTreeRunner() as runner:
+    runner.run(b_tree)
 ```
 
 And you should see:

@@ -9,7 +9,7 @@
 - Add BTreeRunner context manager to drive multiple independant btree execution.
   This implementation works with curio and asyncio.
   `asyncio` support only for python >= 3.11.
-- remove `__version__` package attribute. Single source of thrue is pyproject.toml and git.
+- remove `__version__` package attribute. Single source of true is pyproject.toml and git.
 
 
 ## 1.2.0 (2023-05-11)
