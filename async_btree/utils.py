@@ -1,9 +1,9 @@
 """Utility function."""
-from asyncio import run as asyncio_run
 from contextvars import copy_context
 from functools import wraps
 from inspect import iscoroutinefunction
 from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
+from warnings import warn
 
 from .definition import CallableFunction, node_metadata
 
@@ -144,18 +144,7 @@ def has_curio() -> bool:
         return False
 
 
-# TODO: run signature are not identical
-def run_asyncio(kernel, target, *args):
-    """Run async function with independent contextvars.
-
-    Args:
-        kernel (asyncio.Runner): A context manager that simplifies multiple async function calls in the same context.
-        target: awaitable target
-    """
-    return asyncio_run(target, *args)
-
-
-def run_curio(kernel, target, *args):
+def run(kernel, target, *args):
     """Curio run with independent contextvars.
 
     This mimic asyncio framework behaviour.
@@ -166,8 +155,5 @@ def run_curio(kernel, target, *args):
     ```
 
     """
+    warn('This method is deprecated.', DeprecationWarning, stacklevel=2)
     return copy_context().run(kernel.run, target, *args)
-
-
-run = run_curio if has_curio() else run_asyncio
-"""Run async function in separate contextvars."""
