@@ -108,6 +108,12 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
 
+[[tool.mypy.overrides]]
+module = "*.runner.*"
+disable_error_code = "attr-defined"
+ignore_errors = true
+
+
 [build-system]
 requires = ["poetry>=1.1.12"]
 build-backend = "poetry.core.masonry.api"

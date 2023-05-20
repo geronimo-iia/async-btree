@@ -49,7 +49,7 @@ class BTreeRunner:
 
             self._kernel = Kernel()
         else:
-            from asyncio import Runner  # type: ignore
+            from asyncio import Runner
 
             self._kernel = Runner()
 
