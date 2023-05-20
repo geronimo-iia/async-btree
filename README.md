@@ -114,19 +114,15 @@ As curio say:
 
 Personaly, after few time of testing and reading curio code, I'm pretty addict.
 
+If `curio` is not present, we default to `asyncio`.
+
 ## Installation
 
-Install this library directly into an activated virtual environment:
+Install this library directly into an activated virtual environment with pip or [Poetry](https://poetry.eustace.io/) :
 
-```text
-$ pip install async-btree
-```
+ - `python -m pip install async-btree` or '`poetry add async-btree`
+ - with with curio extention: `python -m pip install async-btree[curio]` or '`poetry add async-btree[curio]`
 
-or add it to your [Poetry](https://poetry.eustace.io/) project:
-
-```text
-$ poetry add async-btree
-```
 
 ## Usage
 
