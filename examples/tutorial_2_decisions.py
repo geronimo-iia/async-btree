@@ -15,7 +15,6 @@ The behavior tree looks like:
 
 """
 
-import curio
 import async_btree as bt
 import contextvars
 
@@ -55,7 +54,8 @@ if __name__ == '__main__':
 
     name = contextvars.ContextVar('name', default="")
 
-    curio.run(b_tree)
+    with bt.BTreeRunner() as r:
+        r.run(b_tree)
 
     # You can take a look at the final behavior tree
     abstract_tree_tree_1 = bt.analyze(b_tree)
