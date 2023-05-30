@@ -11,7 +11,6 @@
   `asyncio` support only for python >= 3.11.
 - remove `__version__` package attribute. Single source of true is pyproject.toml and git.
 
-
 ## 1.2.0 (2023-05-11)
 
 Features, from [#24](https://github.com/geronimo-iia/async-btree/issues/24) :
