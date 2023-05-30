@@ -31,7 +31,7 @@ jobs:
         run: make install 
       - run: poetry config pypi-token.pypi "${{ secrets.PYPI_TOKEN }}"
       - name: Build and publish to pypi
-        run: make publish --build
+        run: make publish
       - name: Build and publish Documentation
         run: make publish-docs
       - name: Create Release
