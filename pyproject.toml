@@ -59,6 +59,10 @@ mkdocs-include-markdown-plugin = "^4.0.4"
 pytest-asyncio = "^0.21.0"
 
 
+[tool.poetry.group.dev.dependencies]
+certifi = "^2023.7.22"
+requests = "^2.31.0"
+
 [tool.black]
 # see https://black.readthedocs.io/en/stable/
 target-version = ["py38"]
