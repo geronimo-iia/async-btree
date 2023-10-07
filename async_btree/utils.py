@@ -1,10 +1,13 @@
 """Utility function."""
+from contextvars import copy_context
+from functools import wraps
 from inspect import iscoroutinefunction
 from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
+from warnings import warn
 
 from .definition import CallableFunction, node_metadata
 
-__all__ = ['amap', 'afilter', 'run', 'to_async']
+__all__ = ['amap', 'afilter', 'run', 'to_async', 'has_curio', 'run_once']
 
 T = TypeVar('T')
 
@@ -89,25 +92,68 @@ def to_async(target: CallableFunction) -> Callable[..., Awaitable[Any]]:
     return _to_async
 
 
-try:
-    # TOOD this is not ncessary with curio 1.4
-    from contextvars import copy_context
+def run_once(target: CallableFunction) -> CallableFunction:
+    """Implemet 'run once' function.
 
-    import curio  # noqa: F401
+    The target function is call exactly once. Any fuher call will return the first result.
+    This decorator works on async and sync function.
 
-    def run(kernel, target, *args):
-        """Curio run with independent contextvars.
+    Args:
+        target (CallableFunction): target function
 
-        This mimic asyncio framework behaviour.
+    Returns:
+        CallableFunction: decorated run once function.
+    """
+    _result = None
+    _has_run = False
 
-        ```
-        copy_context().run(kernel.run, target, *args)
-        ```
+    if not iscoroutinefunction(target):
 
-        """
-        return copy_context().run(kernel.run, target, *args)
+        @wraps(target)
+        def sync_wrapper(*args, **kwargs):
+            nonlocal _result, _has_run
+            if not _has_run:
+                _has_run = True
+                _result = target(*args, **kwargs)
+            return _result
 
-except Exception:  # pragma: no cover
+        return sync_wrapper
 
-    def run(kernel, target, *args):
-        raise RuntimeError('curio not installed!')
+    async def async_wrapper(*args, **kwargs):
+        nonlocal _result, _has_run
+        if not _has_run:
+            _has_run = True
+            _result = await target(*args, **kwargs)
+        return _result
+
+    return async_wrapper
+
+
+@run_once
+def has_curio() -> bool:
+    """Return True if curio extention is present.
+
+    Returns:
+        bool:  True if curio extention is present.
+    """
+    try:
+        import curio  # noqa: F401
+
+        return True
+    except Exception:  # pragma: no cover
+        return False
+
+
+def run(kernel, target, *args):
+    """Curio run with independent contextvars.
+
+    This mimic asyncio framework behaviour.
+    We use a contextvars per run rather than use one per task with `from curio.task.ContextTask`
+
+    ```
+    copy_context().run(kernel.run, target, *args)
+    ```
+
+    """
+    warn('This method is deprecated.', DeprecationWarning, stacklevel=2)
+    return copy_context().run(kernel.run, target, *args)

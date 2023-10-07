@@ -1,2 +1,0 @@
-curio==1.6; python_version >= "3.7"
-typing-extensions==4.5.0; python_version >= "3.7"

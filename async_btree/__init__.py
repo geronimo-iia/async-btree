@@ -1,5 +1,4 @@
 """Declare async btree api."""
-from pkg_resources import DistributionNotFound, get_distribution
 
 from .analyze import Node, analyze, stringify_analyze
 from .control import decision, fallback, repeat_until, selector, sequence
@@ -27,6 +26,7 @@ from .definition import (
 )
 from .leaf import action, condition
 from .parallele import parallele
+from .runner import BTreeRunner
 from .utils import afilter, amap, run
 
 __all__ = [
@@ -63,9 +63,5 @@ __all__ = [
     'afilter',
     'amap',
     'run',
+    'BTreeRunner',
 ]
-
-try:
-    __version__ = get_distribution('async-btree').version
-except DistributionNotFound:  # pragma: no cover
-    __version__ = '(local)'

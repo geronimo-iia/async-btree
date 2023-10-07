@@ -10,7 +10,6 @@ approach_object: house
 GripperInterface Close
 
 """
-import curio
 import async_btree as bt
 
 
@@ -64,4 +63,5 @@ b_tree = bt.sequence(
 
 
 if __name__ == '__main__':
-    curio.run(b_tree)
+    with bt.BTreeRunner() as r:
+        r.run(b_tree)

@@ -1,7 +1,15 @@
 # Change Log
 
-## 1.2.1 (next)
+## 1.3.0 (next)
 
+- add default parallel asyncio implementation if curio is not present.
+- add run_once decorator
+- bunp pytest dependency
+- Deprecation notice on `async_btree.utils.run` 
+- Add BTreeRunner context manager to drive multiple independant btree execution.
+  This implementation works with curio and asyncio.
+  `asyncio` support only for python >= 3.11.
+- remove `__version__` package attribute. Single source of true is pyproject.toml and git.
 
 ## 1.2.0 (2023-05-11)
 

@@ -20,6 +20,7 @@ from typing_extensions import ParamSpec
 __all__ = [
     'CallableFunction',
     'AsyncInnerFunction',
+    'AsyncCallableFunction',
     'SUCCESS',
     'FAILURE',
     'ControlFlowException',
@@ -36,6 +37,10 @@ CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]
 
 AsyncInnerFunction = Callable[[], Awaitable[Any]]
 """Function signature of async function implementation."""
+
+AsyncCallableFunction = Callable[..., Awaitable[Any]]
+"""Async callable."""
+
 
 SUCCESS = True  # a success call
 """Success constant."""
