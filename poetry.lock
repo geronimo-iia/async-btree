@@ -1074,13 +1074,13 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.0.2"
+version = "2.0.6"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "urllib3-2.0.2-py3-none-any.whl", hash = "sha256:d055c2f9d38dc53c808f6fdc8eab7360b6fdbbde02340ed25cfbcd817c62469e"},
-    {file = "urllib3-2.0.2.tar.gz", hash = "sha256:61717a1095d7e155cdb737ac7bb2f4324a858a1e2e6466f6d03ff630ca68d3cc"},
+    {file = "urllib3-2.0.6-py3-none-any.whl", hash = "sha256:7a7c7003b000adf9e7ca2a377c9688bbc54ed41b985789ed576570342a375cd2"},
+    {file = "urllib3-2.0.6.tar.gz", hash = "sha256:b19e1a85d206b56d7df1d5e683df4a7725252a964e3993648dd0fb5a1c157564"},
 ]
 
 [package.extras]
@@ -1170,4 +1170,4 @@ curio = ["curio"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8,<3.12"
-content-hash = "9f6ddbf5108afc7a944de6206b65131064230a23d83f834e53e987e948691e49"
+content-hash = "59d735f7e5f8c283c0e7ad5a017450008fa191a031bd9e59b9e84acc117891e7"

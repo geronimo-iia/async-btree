@@ -62,6 +62,7 @@ pytest-asyncio = "^0.21.0"
 [tool.poetry.group.dev.dependencies]
 certifi = "^2023.7.22"
 requests = "^2.31.0"
+urllib3 = "^2.0.6"
 
 [tool.black]
 # see https://black.readthedocs.io/en/stable/
