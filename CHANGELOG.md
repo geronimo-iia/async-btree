@@ -1,6 +1,7 @@
 # Change Log
 
-## 1.3.0 (next)
+
+## 1.3.0 (2023-10-07)
 
 - add default parallel asyncio implementation if curio is not present.
 - add run_once decorator
