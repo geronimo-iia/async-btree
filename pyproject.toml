@@ -39,7 +39,7 @@ curio = ["curio"]
 [tool.poetry.dev-dependencies]
 black = "24.2.0"             # The uncompromising code formatter.
 isort = "5.13.2"              #A Python utility / library to sort Python imports.
-ruff = "^0.2.2"
+ruff = "^0.3.0"
 mypy = "*"
 types-setuptools = "^69.1.0"
 
@@ -53,8 +53,8 @@ coverage = { version = "*", extras = ["toml"] }
 
 # Documentation
 mkdocs = { extras = ["markdown-include"], version = "^1.5.3" }
-mkdocstrings = { extras = ["python"], version = "^0.24.0" }
-mkdocs-material = "^9.5.11"
+mkdocstrings = { extras = ["python"], version = "^0.24.1" }
+mkdocs-material = "^9.5.12"
 mkdocs-include-markdown-plugin = "^6.0.4"
 pytest-asyncio = "^0.23.5"
 
