@@ -39,14 +39,14 @@ curio = ["curio"]
 [tool.poetry.dev-dependencies]
 black = "24.8.0"             # The uncompromising code formatter.
 isort = "5.13.2"              #A Python utility / library to sort Python imports.
-ruff = "^0.6.8"
+ruff = "^0.6.9"
 mypy = "*"
 types-setuptools = "^75.1.0"
 
 # Unit Testing
 pytest = "^8"                                   # pytest: simple powerful testing with Python
 pytest-cov = "^5"                               # Pytest plugin for measuring coverage.
-pytest-curio = "^1.0.1"
+pytest-curio = "^1.1.0"
 pytest-mock = "^3"
 xdoctest = "^1.2.0"                            # A rewrite of the builtin doctest module
 coverage = { version = "*", extras = ["toml"] }
