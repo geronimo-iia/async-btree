@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ['3.9']
 
     steps:
       - name: Checkout code
@@ -31,9 +31,11 @@ jobs:
         run: make install 
       - run: poetry config pypi-token.pypi "${{ secrets.PYPI_TOKEN }}"
       - name: Build and publish to pypi
-        run: make publish
+        run: poetry poe publish
       - name: Build and publish Documentation
-        run: make publish-docs
+        run: |
+          poetry poe docs
+          poetry poe docs-publish
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

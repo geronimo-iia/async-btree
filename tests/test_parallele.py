@@ -9,12 +9,12 @@ from async_btree.parallele import parallele_asyncio
 
 async def a_func():
     await sleep(1)
-    return 'a'
+    return "a"
 
 
 async def b_func():
     await sleep(3)
-    return 'b'
+    return "b"
 
 
 async def failure_func():
@@ -24,12 +24,12 @@ async def failure_func():
 
 async def asyncio_a_func():
     await asyncio_sleep(1)
-    return 'a'
+    return "a"
 
 
 async def asyncio_b_func():
     await asyncio_sleep(3)
-    return 'b'
+    return "b"
 
 
 async def asyncio_failure_func():
@@ -38,7 +38,7 @@ async def asyncio_failure_func():
 
 
 def c_func():
-    return 'c'
+    return "c"
 
 
 @pytest.mark.curio

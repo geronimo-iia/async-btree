@@ -9,7 +9,7 @@ counter = ContextVar("counter", default=5)
 
 
 async def a_func():
-    return 'a'
+    return "a"
 
 
 async def inc(i):
@@ -22,22 +22,19 @@ async def dec_counter():
 
 
 def test_curio_runner():
-
     with BTreeRunner() as r:
-        assert r.run(a_func) == 'a'
+        assert r.run(a_func) == "a"
         assert r.run(inc, 2) == 3
 
 
 def test_asyncio_runner():
-
     if sys.version_info.minor < 11:
-        with pytest.raises(RuntimeError):
-            with BTreeRunner(disable_curio=True) as r:
-                assert r.run(a_func) == 'a'
-                assert r.run(inc, 2) == 3
+        with pytest.raises(RuntimeError), BTreeRunner(disable_curio=True) as r:
+            assert r.run(a_func) == "a"
+            assert r.run(inc, 2) == 3
     else:
         with BTreeRunner(disable_curio=True) as r:
-            assert r.run(a_func) == 'a'
+            assert r.run(a_func) == "a"
             assert r.run(inc, 2) == 3
 
 
@@ -64,9 +61,8 @@ def test_asyncio_runner_share_context():
     counter.set(5)
 
     if sys.version_info.minor < 11:
-        with pytest.raises(RuntimeError):
-            with BTreeRunner(disable_curio=True) as r:
-                assert r.run(a_func) == 'a'
+        with pytest.raises(RuntimeError), BTreeRunner(disable_curio=True) as r:
+            assert r.run(a_func) == "a"
     else:
         _check_sequence(runner=BTreeRunner(disable_curio=True))
         assert counter.get() == 5

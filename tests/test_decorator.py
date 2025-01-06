@@ -21,7 +21,7 @@ from async_btree import (
 
 
 async def a_func():
-    return 'a'
+    return "a"
 
 
 async def failure_func():
@@ -42,30 +42,30 @@ async def empty_func():
 
 @pytest.mark.curio
 async def test_alias_name():
-    rooted = alias(child=a_func, name='a_func')
-    assert rooted.__node_metadata.name == 'a_func'
-    assert await rooted() == 'a'
+    rooted = alias(child=a_func, name="a_func")
+    assert rooted.__node_metadata.name == "a_func"
+    assert await rooted() == "a"
 
 
 @pytest.mark.curio
 async def test_alias_not_override():
-    a_rooted = alias(child=a_func, name='a_func')
-    b_rooted = alias(child=a_func, name='b_func')
-    assert a_rooted.__node_metadata.name == 'a_func'
-    assert b_rooted.__node_metadata.name == 'b_func'
+    a_rooted = alias(child=a_func, name="a_func")
+    b_rooted = alias(child=a_func, name="b_func")
+    assert a_rooted.__node_metadata.name == "a_func"
+    assert b_rooted.__node_metadata.name == "b_func"
 
 
 @pytest.mark.curio
 async def test_decorate():
-    async def b_decorator(child_value, other=''):
-        return f'b{child_value}{other}'
+    async def b_decorator(child_value, other=""):
+        return f"b{child_value}{other}"
 
-    assert await decorate(a_func, b_decorator)() == 'ba'
+    assert await decorate(a_func, b_decorator)() == "ba"
 
-    assert await decorate(a_func, b_decorator, other='c')() == 'bac'
+    assert await decorate(a_func, b_decorator, other="c")() == "bac"
     meta = decorate(a_func, b_decorator).__node_metadata
     assert meta.name == "decorate"
-    assert '_decorator' in meta.properties
+    assert "_decorator" in meta.properties
 
 
 @pytest.mark.curio
@@ -74,7 +74,7 @@ async def test_always_success():
     assert await always_success(failure_func)() == SUCCESS
     with pytest.raises(ControlFlowException):
         await always_success(exception_func)()
-    assert await always_success(a_func)() == 'a'
+    assert await always_success(a_func)() == "a"
 
     meta = always_success(a_func).__node_metadata
     assert meta.name == "always_success"
@@ -131,8 +131,7 @@ async def test_inverter():
 
 @pytest.mark.curio
 async def test_retry():
-
-    counter = ContextVar('counter_test_retry', default=5)
+    counter = ContextVar("counter_test_retry", default=5)
 
     async def tick():
         value = counter.get()
@@ -141,7 +140,7 @@ async def test_retry():
         if value <= 0:
             return SUCCESS
         if value == 3:
-            raise RuntimeError('3')
+            raise RuntimeError("3")
         return FAILURE
 
     result = await retry(ignore_exception(tick))()  # counter: 5, 4, 3
@@ -168,12 +167,12 @@ async def test_retry():
 
     meta = retry(ignore_exception(tick)).__node_metadata
     assert meta.name == "retry"
-    assert 'max_retry' in meta.properties
+    assert "max_retry" in meta.properties
 
 
 @pytest.mark.curio
 async def test_retry_until_success():
-    counter = ContextVar('counter_test_retry_until_success', default=5)
+    counter = ContextVar("counter_test_retry_until_success", default=5)
 
     async def tick():
         value = counter.get()
@@ -181,7 +180,7 @@ async def test_retry_until_success():
         if value <= 0:
             return SUCCESS
         if value == 3:
-            raise RuntimeError('3')
+            raise RuntimeError("3")
         return FAILURE
 
     counter.set(100)
@@ -189,12 +188,12 @@ async def test_retry_until_success():
 
     meta = retry_until_success(ignore_exception(tick)).__node_metadata
     assert meta.name == "retry_until_success"
-    assert 'max_retry' in meta.properties
+    assert "max_retry" in meta.properties
 
 
 @pytest.mark.curio
 async def test_retry_until_failed():
-    counter = ContextVar('counter_test_retry_until_failed', default=5)
+    counter = ContextVar("counter_test_retry_until_failed", default=5)
 
     async def tick():
         value = counter.get()
@@ -202,7 +201,7 @@ async def test_retry_until_failed():
         if value <= 0:
             return SUCCESS
         if value == 3:
-            raise RuntimeError('3')
+            raise RuntimeError("3")
         return FAILURE
 
     counter.set(100)
@@ -210,4 +209,4 @@ async def test_retry_until_failed():
 
     meta = retry_until_failed(ignore_exception(tick)).__node_metadata
     assert meta.name == "retry_until_failed"
-    assert 'max_retry' in meta.properties
+    assert "max_retry" in meta.properties

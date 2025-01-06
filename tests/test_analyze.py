@@ -15,19 +15,18 @@ async def success_until_zero():
 def hello():  # we could define it as sync or async
     n = max_n.get()
     if n > 0:
-        print(f'{n}...')
+        print(f"{n}...")
     else:
-        print('BOOM !!')
+        print("BOOM !!")
 
 
 def test_node_str():
-    node = analyze(alias(child=action(target=hello), name='a test'))
+    node = analyze(alias(child=action(target=hello), name="a test"))
     printed_tree = """ --> a test:\n     --(child)--> action:\n                  target: hello\n"""
     assert str(node) == printed_tree
 
 
 def test_analyze_tree_1():
-
     tree_1 = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name="btree_1")
 
     a_tree_1 = analyze(tree_1)
@@ -62,7 +61,6 @@ def test_analyze_simple_function():
 
 
 def test_analyze_sequence():
-
     a_tree = analyze(
         alias(
             child=repeat_until(

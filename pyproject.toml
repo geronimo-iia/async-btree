@@ -1,16 +1,11 @@
-[tool.poetry]
-
+[project]
 name = "async_btree"
 version = "1.3.0"
 description = "Async behavior tree"
-license = "MIT"
-authors = ["Jerome Guibert <jguibert@gmail.com>"]
+authors = [{ name = "Jerome Guibert", email = "jguibert@gmail.com" }]
 readme = "README.md"
-homepage = "https://pypi.org/project/async_btree"
-documentation = "https://geronimo-iia.github.io/async-btree/"
-repository = "https://github.com/geronimo-iia/async-btree"
+license = "MIT"
 keywords = ["behavior-tree", "asyncio"]
-
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: AsyncIO",
@@ -20,65 +15,57 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.11",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
+dynamic = ["dependencies", "requires-python"]
+
+
+[project.urls]
+homepage = "https://pypi.org/project/async_btree"
+documentation = "https://geronimo-iia.github.io/async-btree/"
+repository = "https://github.com/geronimo-iia/async-btree"
+
+
+[tool.poetry.requires-plugins]
+poethepoet = "*"
 
 [tool.poetry.dependencies]
-python = "^3.8,<3.12"
-typing-extensions = "^4.5.0"
-
-# Optional dependency
+python = ">=3.9"
 curio = { version = "^1.4", optional = true }
 
-[tool.poetry.extras]
+[project.optional-dependencies]
 curio = ["curio"]
 
 
-[tool.poetry.dev-dependencies]
-black = "24.8.0"             # The uncompromising code formatter.
-isort = "5.13.2"              #A Python utility / library to sort Python imports.
+[tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"
-mypy = "*"
-types-setuptools = "^75.6.0"
+pyright = "^1.1.354"
 
 # Unit Testing
 pytest = "^8"                                   # pytest: simple powerful testing with Python
 pytest-cov = "^5"                               # Pytest plugin for measuring coverage.
 pytest-curio = "^1.1.0"
 pytest-mock = "^3"
-xdoctest = "^1.2.0"                            # A rewrite of the builtin doctest module
+xdoctest = "^1.2.0"                             # A rewrite of the builtin doctest module
 coverage = { version = "*", extras = ["toml"] }
-
-# Documentation
-mkdocs = { extras = ["markdown-include"], version = "^1.5.3" }
-mkdocstrings = { extras = ["python"], version = "^0.26.1" }
-mkdocs-material = "^9.5.18"
-mkdocs-include-markdown-plugin = "^6.2.2"
 pytest-asyncio = "^0.24.0"
 
-
-[tool.poetry.group.dev.dependencies]
 certifi = ">=2023.7.22,<2025.0.0"
 requests = "^2.31.0"
 urllib3 = "^2.0.6"
 
-[tool.black]
-# see https://black.readthedocs.io/en/stable/
-target-version = ["py38"]
-skip-string-normalization = true
-line_length = 120
 
-[tool.isort]
-# see https://timothycrosley.github.io/isort/
-combine_as_imports = true
-multi_line_output = 3
-include_trailing_comma = true
-use_parentheses = true
-force_grid_wrap = 0
-ensure_newline_before_comments = true
-line_length = 120
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = { extras = ["markdown-include"], version = "^1.5.3" }
+mkdocstrings = { extras = ["python"], version = "^0.26.1" }
+mkdocs-material = "^9.5.18"
+mkdocs-include-markdown-plugin = "^6.2.2"
 
 
 [tool.coverage.paths]
@@ -102,21 +89,118 @@ cache_dir = ".cache"
 [tool.ruff]
 cache-dir = ".cache/ruff"
 line-length = 120
+indent-width = 4
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    #"UP",
+    # flake8-bugbear
+    #"B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
 
 
-[tool.mypy]
-cache_dir = ".cache/mypy/"
-check_untyped_defs = true
-ignore_errors = false
-ignore_missing_imports = true
-warn_unused_ignores = true
-warn_redundant_casts = true
-warn_unused_configs = true
+[tool.pyright]
+include = ["async_btree"]
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    "async_btree/experimental",
+    "async_btree/typestubs",
+]
+ignore = ["tests"]
+defineConstant = { DEBUG = true }
+reportMissingImports = true
+reportMissingTypeStubs = false
 
-[[tool.mypy.overrides]]
-module = "*.runner.*"
-disable_error_code = "attr-defined"
-ignore_errors = true
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
+
+
+[tool.poe.tasks]
+_build = "poetry build"
+_publish = "poetry publish"
+
+
+[tool.poe.tasks.types]
+help = "Run the type checker"
+cmd  = "poetry run pyright"
+
+[tool.poe.tasks.lint]
+help = "Run linting tools on the code base"
+cmd  = "ruff check --fix ."
+
+[tool.poe.tasks.style]
+help = "Validate black code style"
+shell = """
+poetry run ruff check --select I --fix
+poetry run ruff format .
+"""
+
+[tool.poe.tasks.test]
+help = "Run unit tests"
+shell = """
+if test -e .cache/v/cache/lastfailed; then poetry run pytest tests --last-failed --exitfirst; fi &
+rm -rf .cache/v/cache/lastfailed &
+poetry run pytest
+"""
+
+[tool.poe.tasks.check]
+help     = "Run all checks on the code base"
+sequence = [ "style", "types", "lint", "test"]
+
+
+[tool.poe.tasks.build]
+help  = "Build module"
+sequence = ["check", "_build"]
+
+[tool.poe.tasks.publish]
+help  = "Publish module"
+sequence = ["build", "_publish"]
+
+[tool.poe.tasks.docs]
+help = "Build site documentation"
+shell = """
+git fetch origin gh-pages &
+poetry run mkdocs build --clean
+"""
+
+[tool.poe.tasks.docs-publish]
+help = "Publish site documentation"
+cmd = """
+poetry run mkdocs gh-deploy  --clean 
+"""
+
+[tool.poe.tasks.clean]
+help = "Remove all generated and temporary files"
+shell = """
+rm -rf *.spec dist build .eggs *.egg-info .install .cache .coverage htmlcov .mypy_cache .pytest_cache site .ruff_cache &
+find async_btree tests -type d -name '__pycache__' -exec rm -rf {} +
+"""
+
+[tool.poe.tasks.requirements]
+help = "Generate requirements.txt"
+cmd = "poetry export --without-hashes -f requirements.txt "
+capture_stdout = "requirements.txt"
 
 
 [build-system]

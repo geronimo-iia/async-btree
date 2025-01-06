@@ -4,7 +4,7 @@ from .decorator import is_success
 from .definition import AsyncInnerFunction, CallableFunction, ControlFlowException, alias_node_metadata, node_metadata
 from .utils import to_async
 
-__all__ = ['action', 'condition']
+__all__ = ["action", "condition"]
 
 
 def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
@@ -27,7 +27,7 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
 
     _target = to_async(target)
 
-    @node_metadata(properties=['_target'])
+    @node_metadata(properties=["_target"])
     async def _action():
         try:
             return await _target(**kwargs)
@@ -50,5 +50,5 @@ def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
         (AsyncInnerFunction): an awaitable function.
     """
     return alias_node_metadata(
-        name='condition', target=is_success(action(target=target, **kwargs)), properties=['target']
+        name="condition", target=is_success(action(target=target, **kwargs)), properties=["target"]
     )

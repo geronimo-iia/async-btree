@@ -26,7 +26,6 @@ Icon*
 /build/
 /dist/
 *.spec
-.install
 .coverage
 
 # Sublime Text

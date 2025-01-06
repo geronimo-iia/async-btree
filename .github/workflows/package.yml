@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.11]
+        python-version: ['3.9', '3.11']
 
     steps:
     - uses: actions/checkout@v4
@@ -29,8 +29,8 @@ jobs:
     - name: Install dependencies
       run: make install 
     - name: Check Python package
-      run: make check
+      run: poetry poe check
     - name: Test Python package
-      run: make test
+      run: poetry poe test
 
       

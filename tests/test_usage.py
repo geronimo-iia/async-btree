@@ -14,7 +14,6 @@ async def some_action():
 
 @pytest.mark.curio
 async def test_usage():
-
     tree = decision(condition=i_fail, success_tree=some_action, failure_tree=lambda: 42)
 
     assert await tree() == 42

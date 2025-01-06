@@ -11,10 +11,10 @@ It utilizes popular libraries to fully automate all development and deployment t
 
 You will need:
 
-* Python 3.8"+
+* Python 3.9"+
 * [Pyenv](https://github.com/pyenv/pyenv#installation)
 * [poetry](https://python-poetry.org/)
-* Make with find, sed
+* Make
 
 
 ### Make Installation
@@ -36,61 +36,72 @@ Follow [https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/py
 
  `$ pyenv install 3.8`
 
-Note for [MacOS 10.14 user](https://github.com/pyenv/pyenv/issues/544):
-
-  ```bash
-    SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk MACOSX_DEPLOYMENT_TARGET=10.14 pyenv install 3.8
-  ```
 
 ### Poetry Installation: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
 
 Poetry will manage our dependencies and create our virtual environment for us.
 
-### Integration With Visual Studio Code
-
-Even if we use fabulous tool like pyenv, poetry, ... at the end, we just want to go on, and code.
-
-So here, few detail of my installation.
-
-- .bashrc
-
-    ```bash
-    # init pyenv with default python version
-    if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-    fi
-
-    # add poetry in path
-    export PATH="$HOME/.poetry/bin:$PATH"
-
-    # Add Visual Studio Code (code)
-    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-    ```
-
-- poetry configuration: all is let with default
-
-- How Launch Visual Studio Code within virtual environment created by poetry ?
-    After do a ```make install```, you have to do:
-
-    ```bash
-    poetry shell
-    code .
-    ```
-    
-    `poetry shell` will activate project virtual environment.
-
 ## Make Target list
 
-| Name         | Comment                                                                                  |
-|--------------|------------------------------------------------------------------------------------------|
-|              |                                                                                          |
-| debug-info   | Show poetry debug info                                                                   |
-| install      | Install project dependencies                                                             |
-| check        | Run linters and static analysis                                                          |
-| test         | Run unit tests                                                                           |
-| build        | Builds the source and wheels archives                                                    |
-| build-docs   | Builds  site documentation.                                                              |
-| publish      | Publishes the package, previously built with the build command, to the remote repository |
-| publish-docs | Build and publish site documentation.                                                    |
-| clean        | Delete all generated and temporary files                                                 |
-|              |                                                                                          |
+
+| Name                    | Comment                                                                                         |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| make install            | Install project dependencies                                                                    |
+| make configure          | Configure poetry                                                                                |
+| make tag                | Create and push a tag based on current project version. This will launch github release action. |
+| make next-patch-version | Increment patch version of the project.                                                         |
+|                         |
+
+
+## Poe Target list
+
+
+| Name                    | Comment                                  |
+| ----------------------- | ---------------------------------------- |
+| poetry poe types        | Run the type checker                     |
+| poetry poe lint         | Run linting tools on the code base       |
+| poetry poe style        | Validate black code style                |
+| poetry poe test         | Run unit tests                           |
+| poetry poe check        | Run all checks on the code base          |
+| poetry poe build        | Builds module                            |
+| poetry poe publish      | Publishes the package                    |
+| poetry poe docs         | Builds  site documentation.              |
+| poetry poe docs-publish | Build and publish site documentation.    |
+| poetry poe clean        | Delete all generated and temporary files |
+| poetry poe requirements | Generate requirements.txt                |
+|                         |
+
+
+You could retrieve those commands with `poetry poe`. It will output something like this :
+
+```
+Usage:
+  poetry poe [global options] task [task arguments]
+
+Global options:
+  -h, --help            Show this help page and exit
+  --version             Print the version and exit
+  -v, --verbose         Increase command output (repeatable)
+  -q, --quiet           Decrease command output (repeatable)
+  -d, --dry-run         Print the task contents but don't actually run it
+  -C PATH, --directory PATH
+                        Specify where to find the pyproject.toml
+  -e EXECUTOR, --executor EXECUTOR
+                        Override the default task executor
+  --ansi                Force enable ANSI output
+  --no-ansi             Force disable ANSI output
+
+Configured tasks:
+  types                 Run the type checker
+  lint                  Run linting tools on the code base
+  style                 Validate black code style
+  test                  Run unit tests
+  check                 Run all checks on the code base
+  build                 Build module
+  publish               Publish module
+  docs                  Build site documentation
+  docs-publish          Publish site documentation
+  clean                 Remove all generated and temporary files
+  requirements          Generate requirements.txt
+
+```

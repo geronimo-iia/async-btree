@@ -11,24 +11,26 @@ Function signature of async function implementation:
 ```AsyncInnerFunction = Callable[[], Awaitable[Any]]```
 
 """
+
 from __future__ import annotations
 
-from typing import Any, Awaitable, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, cast
+from collections.abc import Awaitable
+from typing import Any, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, cast
 
 from typing_extensions import ParamSpec
 
 __all__ = [
-    'CallableFunction',
-    'AsyncInnerFunction',
-    'AsyncCallableFunction',
-    'SUCCESS',
-    'FAILURE',
-    'ControlFlowException',
-    'NodeMetadata',
-    'node_metadata',
-    'get_node_metadata',
-    'alias_node_metadata',
-    'get_function_name',
+    "CallableFunction",
+    "AsyncInnerFunction",
+    "AsyncCallableFunction",
+    "SUCCESS",
+    "FAILURE",
+    "ControlFlowException",
+    "NodeMetadata",
+    "node_metadata",
+    "get_node_metadata",
+    "alias_node_metadata",
+    "get_function_name",
 ]
 
 
@@ -100,7 +102,7 @@ class NodeMetadata(NamedTuple):
         return NodeMetadata(name=name, properties=properties if properties else node.properties, edges=node.edges)
 
 
-T = TypeVar('T', bound=Callable[..., Awaitable[Any]])
+T = TypeVar("T", bound=Callable[..., Awaitable[Any]])
 
 P = ParamSpec("P")
 R = TypeVar("R", covariant=True)
@@ -109,8 +111,7 @@ R = TypeVar("R", covariant=True)
 class FunctionWithMetadata(Protocol[P, R]):
     __node_metadata: NodeMetadata
 
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> R:
-        ...
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> R: ...
 
 
 def _attr_decorator(func: Any) -> FunctionWithMetadata:
@@ -171,7 +172,7 @@ def get_node_metadata(target: CallableFunction) -> NodeMetadata:
     """Returns node metadata instance associated with target."""
     node = getattr(target, "__node_metadata", False)
     if not isinstance(node, NodeMetadata):
-        raise RuntimeError(f'attr __node_metadata of {target} is not a NodeMetadata!')
+        raise RuntimeError(f"attr __node_metadata of {target} is not a NodeMetadata!")
     return cast(NodeMetadata, node)
 
 
