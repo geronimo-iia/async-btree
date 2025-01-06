@@ -7,7 +7,7 @@
 - update pyproject.toml declaration
 - update dependencies management
 - fix few type error
-- extends test to 3.9, 3.11, 3.12
+- extends test to 3.9, 3.11
 - remove usage of black and isort for rust
 - use pyright as sucessor or mypy
 
