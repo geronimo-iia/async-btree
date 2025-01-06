@@ -1,15 +1,17 @@
 """Utility function."""
+
+from collections.abc import AsyncGenerator, AsyncIterable, Awaitable, Iterable
 from contextvars import copy_context
 from functools import wraps
 from inspect import iscoroutinefunction
-from typing import Any, AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable, TypeVar, Union
+from typing import Any, Callable, TypeVar, Union
 from warnings import warn
 
 from .definition import CallableFunction, node_metadata
 
-__all__ = ['amap', 'afilter', 'run', 'to_async', 'has_curio', 'run_once']
+__all__ = ["amap", "afilter", "run", "to_async", "has_curio", "run_once"]
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 async def amap(
@@ -42,7 +44,7 @@ async def amap(
 
 async def afilter(
     corofunc: Callable[[Any], Awaitable[bool]], iterable: Union[AsyncIterable, Iterable]
-) -> AsyncGenerator[T, None]:
+) -> AsyncGenerator[Any, None]:
     """Filter an iterable or an async iterable with an async function.
 
     This simplify writing of filtering by a function on something iterable
@@ -54,7 +56,7 @@ async def afilter(
             which will be applied.
 
     Returns:
-        (AsyncGenerator[T]): an async iterator of item which satisfy corofunc(item) == True
+        (AsyncGenerator[Any]): an async iterator of item which satisfy corofunc(item) == True
 
     Example:
         ```[i async for i in amap(inc, afilter(even, [0, 1, 2, 3, 4]))]```
@@ -155,5 +157,5 @@ def run(kernel, target, *args):
     ```
 
     """
-    warn('This method is deprecated.', DeprecationWarning, stacklevel=2)
+    warn("This method is deprecated.", DeprecationWarning, stacklevel=2)
     return copy_context().run(kernel.run, target, *args)

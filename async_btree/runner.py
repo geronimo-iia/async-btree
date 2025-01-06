@@ -1,12 +1,13 @@
 import sys
+from collections.abc import Awaitable
 from contextvars import Context, copy_context
-from typing import Awaitable, Callable, ContextManager, Optional, TypeVar
+from typing import Callable, ContextManager, Optional, TypeVar
 
 from .utils import has_curio
 
-R = TypeVar('R', covariant=True)
+R = TypeVar("R", covariant=True)
 
-__all__ = ['BTreeRunner']
+__all__ = ["BTreeRunner"]
 
 
 class BTreeRunner:
@@ -49,7 +50,7 @@ class BTreeRunner:
 
             self._kernel = Kernel()
         else:
-            from asyncio import Runner
+            from asyncio import Runner  # pyright: ignore[reportAttributeAccessIssue]
 
             self._kernel = Runner()
 

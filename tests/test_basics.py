@@ -34,8 +34,8 @@ def test_exception_deduplicate():
 @pytest.mark.curio
 async def test_node_metadata_do_not_change_behavior():
     async def a_func():
-        return 'a'
+        return "a"
 
-    assert await a_func() == 'a'
+    assert await a_func() == "a"
     # no change on behavior
-    assert await node_metadata()(a_func)() == 'a'
+    assert await node_metadata()(a_func)() == "a"

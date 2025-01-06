@@ -10,6 +10,7 @@ approach_object: house
 GripperInterface Close
 
 """
+
 import async_btree as bt
 
 
@@ -62,6 +63,6 @@ b_tree = bt.sequence(
 )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with bt.BTreeRunner() as r:
         r.run(b_tree)

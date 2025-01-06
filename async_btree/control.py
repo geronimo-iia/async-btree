@@ -1,13 +1,14 @@
 """Control function definition."""
-from typing import Any, List, Optional
+
+from typing import Any, Optional
 
 from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, alias_node_metadata, node_metadata
 from .utils import to_async
 
-__all__ = ['sequence', 'fallback', 'selector', 'decision', 'repeat_until']
+__all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]
 
 
-def sequence(children: List[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
+def sequence(children: list[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
     """Return a function which execute children in sequence.
 
     succes_threshold parameter generalize traditional sequence/fallback and
@@ -22,7 +23,7 @@ def sequence(children: List[CallableFunction], succes_threshold: Optional[int] =
      - last failure when fail
 
     Args:
-        children (List[CallableFunction]): list of Awaitable
+        children (list[CallableFunction]): list of Awaitable
         succes_threshold (int): succes threshold value
 
     Returns:
@@ -33,13 +34,13 @@ def sequence(children: List[CallableFunction], succes_threshold: Optional[int] =
     """
     _succes_threshold = succes_threshold or len(children)
     if not (0 <= _succes_threshold <= len(children)):
-        raise AssertionError('succes_threshold')
+        raise AssertionError("succes_threshold")
 
     failure_threshold = len(children) - _succes_threshold + 1
 
     _children = [to_async(child) for child in children]
 
-    @node_metadata(properties=['_succes_threshold'])
+    @node_metadata(properties=["_succes_threshold"])
     async def _sequence():
         success = 0
         failure = 0
@@ -65,24 +66,24 @@ def sequence(children: List[CallableFunction], succes_threshold: Optional[int] =
     return _sequence
 
 
-def fallback(children: List[CallableFunction]) -> AsyncInnerFunction:
+def fallback(children: list[CallableFunction]) -> AsyncInnerFunction:
     """Execute tasks in sequence and succeed if one succeed or failed if all failed.
 
     Often named 'selector', children can be seen as an ordered list
         starting from higthest priority to lowest priority.
 
     Args:
-        children (List[CallableFunction]): list of Awaitable
+        children (list[CallableFunction]): list of Awaitable
 
     Returns:
         (AsyncInnerFunction): an awaitable function.
     """
-    return alias_node_metadata(name='fallback', target=sequence(children, succes_threshold=min(1, len(children))))
+    return alias_node_metadata(name="fallback", target=sequence(children, succes_threshold=min(1, len(children))))
 
 
-def selector(children: List[CallableFunction]) -> AsyncInnerFunction:
+def selector(children: list[CallableFunction]) -> AsyncInnerFunction:
     """Synonym of fallback."""
-    return alias_node_metadata(name='selector', target=sequence(children, succes_threshold=min(1, len(children))))
+    return alias_node_metadata(name="selector", target=sequence(children, succes_threshold=min(1, len(children))))
 
 
 def decision(
@@ -108,7 +109,7 @@ def decision(
     _success_tree = to_async(success_tree)
     _failure_tree = to_async(failure_tree) if failure_tree else None
 
-    @node_metadata(edges=['_condition', '_success_tree', '_failure_tree'])
+    @node_metadata(edges=["_condition", "_success_tree", "_failure_tree"])
     async def _decision():
         if bool(await _condition()):
             return await _success_tree()
@@ -135,7 +136,7 @@ def repeat_until(condition: CallableFunction, child: CallableFunction) -> AsyncI
     _child = to_async(child)
     _condition = to_async(condition)
 
-    @node_metadata(edges=['_condition', '_child'])
+    @node_metadata(edges=["_condition", "_child"])
     async def _repeat_until():
         result: Any = FAILURE
         while bool(await _condition()):

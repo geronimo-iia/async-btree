@@ -1,12 +1,13 @@
 """Analyze definition."""
+
 from inspect import getclosurevars
-from typing import Any, List, NamedTuple, Optional, Tuple, no_type_check
+from typing import Any, NamedTuple, Optional, no_type_check
 
 from .definition import CallableFunction, get_function_name, get_node_metadata
 
 __all__ = ["analyze", "stringify_analyze", "Node"]
 
-_DEFAULT_EDGES = ['child', 'children', '_child', '_children']
+_DEFAULT_EDGES = ["child", "children", "_child", "_children"]
 
 
 class Node(NamedTuple):
@@ -18,20 +19,20 @@ class Node(NamedTuple):
 
     Attributes:
         name (str): named operation.
-        properties (List[Tuple[str, Any]]): a list of tuple (name, value) for definition.
-        edges (List[Tuple[str, List[Any]]]): a list of tuple (name, node list) for
+        properties (list[tuple[str, Any]]): a list of tuple (name, value) for definition.
+        edges (list[tuple[str, list[Any]]]): a list of tuple (name, node list) for
             definition.
 
     Notes:
-        Edges attribut should be edges: ```List[Tuple[str, List['Node']]]```
+        Edges attribut should be edges: ```list[tuple[str, list['Node']]]```
         But it is impossible for now, see [mypy issues 731](https://github.com/python/mypy/issues/731)
     """
 
     name: str
-    properties: List[Tuple[str, Any]]
-    # edges: List[Tuple[str, List['Node']]]
+    properties: list[tuple[str, Any]]
+    # edges: list[tuple[str, list['Node']]]
     # https://github.com/python/mypy/issues/731
-    edges: List[Tuple[str, List[Any]]]
+    edges: list[tuple[str, list[Any]]]
 
     def __str__(self):
         return stringify_analyze(target=self)
@@ -74,12 +75,12 @@ def analyze(target: CallableFunction) -> Node:
     def _analyze_property(p):
         """Return a tuple (name, value) or (name, function name) as property."""
         value = _get_nonlocals_value_for(name=p)
-        return p.lstrip('_'), _get_target_propertie_name(value=value)
+        return p.lstrip("_"), _get_target_propertie_name(value=value)
 
     def _analyze_edges(egde_name):
         """Lookup children node from egde_name local var."""
         edges = _get_nonlocals_value_for(name=egde_name)
-        return (egde_name.lstrip('_'), _analyze_target_edges(edges=edges))
+        return (egde_name.lstrip("_"), _analyze_target_edges(edges=edges))
 
     if hasattr(target, "__node_metadata"):
         node = get_node_metadata(target=target)
@@ -106,17 +107,17 @@ def stringify_analyze(target: Node, indent: int = 0, label: Optional[str] = None
     Returns:
         (str): a string node representation.
     """
-    _ident = '    '
-    _space = f'{_ident * indent} '
-    result: str = ''
+    _ident = "    "
+    _space = f"{_ident * indent} "
+    result: str = ""
     if label:
-        result += f'{_space}--({label})--> {target.name}:\n'
+        result += f"{_space}--({label})--> {target.name}:\n"
         _space += f"{_ident}{' ' * len(label)}"
     else:
-        result += f'{_space}--> {target.name}:\n'
+        result += f"{_space}--> {target.name}:\n"
 
     for k, v in target.properties:
-        result += f'{_space}    {k}: {v}\n'
+        result += f"{_space}    {k}: {v}\n"
 
     for _label, children in target.edges:
         if children:

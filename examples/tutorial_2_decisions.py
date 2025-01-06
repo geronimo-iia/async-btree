@@ -15,8 +15,9 @@ The behavior tree looks like:
 
 """
 
-import async_btree as bt
 import contextvars
+
+import async_btree as bt
 
 
 async def some_action():
@@ -42,7 +43,7 @@ async def ask_for_name():
         return bt.FAILURE
 
 
-name = contextvars.ContextVar('name', default="")
+name = contextvars.ContextVar("name", default="")
 
 greet_with_name = bt.decision(
     condition=is_name_set, success_tree=say_hello, failure_tree=bt.sequence([ask_for_name, say_hello])
@@ -50,9 +51,8 @@ greet_with_name = bt.decision(
 
 b_tree = bt.sequence(children=[greet_with_name, some_action])
 
-if __name__ == '__main__':
-
-    name = contextvars.ContextVar('name', default="")
+if __name__ == "__main__":
+    name = contextvars.ContextVar("name", default="")
 
     with bt.BTreeRunner() as r:
         r.run(b_tree)

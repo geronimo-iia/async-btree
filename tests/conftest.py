@@ -8,5 +8,5 @@ def pytest_configure(config):
     _logger = logging.getLogger()
     _logger.setLevel(logging.DEBUG)
 
-    terminal = config.pluginmanager.getplugin('terminal')
+    terminal = config.pluginmanager.getplugin("terminal")
     terminal.TerminalReporter.showfspath = False

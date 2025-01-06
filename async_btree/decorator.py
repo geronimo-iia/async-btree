@@ -1,4 +1,5 @@
 """Decorator module define all decorator function node."""
+
 from typing import Any
 
 from .definition import (
@@ -13,17 +14,17 @@ from .definition import (
 from .utils import to_async
 
 __all__ = [
-    'alias',
-    'decorate',
-    'ignore_exception',
-    'always_success',
-    'always_failure',
-    'is_success',
-    'is_failure',
-    'inverter',
-    'retry',
-    'retry_until_success',
-    'retry_until_failed',
+    "alias",
+    "decorate",
+    "ignore_exception",
+    "always_success",
+    "always_failure",
+    "is_success",
+    "is_failure",
+    "inverter",
+    "retry",
+    "retry_until_success",
+    "retry_until_failed",
 ]
 
 
@@ -69,7 +70,7 @@ def decorate(child: CallableFunction, decorator: CallableFunction, **kwargs) -> 
     _child = to_async(child)
     _decorator = to_async(decorator)
 
-    @node_metadata(properties=['_decorator'])
+    @node_metadata(properties=["_decorator"])
     async def _decorate():
         return await _decorator(await _child(), **kwargs)
 
@@ -92,7 +93,6 @@ def ignore_exception(child: CallableFunction) -> AsyncInnerFunction:
 
     @node_metadata()
     async def _ignore_exception():
-
         try:
             return await _child()
 
@@ -256,11 +256,11 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
             If max_retry is reached, returns FAILURE or last exception.
     """
     if not (max_retry > 0 or max_retry == -1):
-        raise AssertionError('max_retry')
+        raise AssertionError("max_retry")
 
     _child = to_async(child)
 
-    @node_metadata(properties=['max_retry'])
+    @node_metadata(properties=["max_retry"])
     async def _retry():
         retry_count = max_retry
         result: Any = FAILURE
@@ -285,7 +285,7 @@ def retry_until_success(child: CallableFunction) -> AsyncInnerFunction:
         (AsyncInnerFunction): an awaitable function which try to evaluate child
             until it succeed.
     """
-    return alias_node_metadata(name='retry_until_success', target=retry(child=child, max_retry=-1))
+    return alias_node_metadata(name="retry_until_success", target=retry(child=child, max_retry=-1))
 
 
 def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
@@ -299,4 +299,4 @@ def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
             until it failed.
     """
 
-    return alias_node_metadata(name='retry_until_failed', target=retry(child=inverter(child), max_retry=-1))
+    return alias_node_metadata(name="retry_until_failed", target=retry(child=inverter(child), max_retry=-1))

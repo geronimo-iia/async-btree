@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.4.0 (next)
+
+- remove support of python 3.8
+- update poetry usage with poet plugin
+- update pyproject.toml declaration
+- update dependencies management
+- fix few type error
+- extends test to 3.9, 3.11, 3.12
+- remove usage of black and isort for rust
+- use pyright as sucessor or mypy
 
 ## 1.3.0 (2023-10-07)
 

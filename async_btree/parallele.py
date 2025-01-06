@@ -1,17 +1,17 @@
 """Curiosity module define special construct with curio framework."""
 
 from asyncio import gather
-from typing import List, Optional
+from typing import Optional
 
 # default to a simple sequence
 from .control import sequence
 from .definition import AsyncCallableFunction, AsyncInnerFunction, CallableFunction, alias_node_metadata, node_metadata
 from .utils import has_curio, to_async
 
-__all__ = ['parallele']
+__all__ = ["parallele"]
 
 
-def parallele(children: List[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
+def parallele(children: list[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
     """Return an awaitable function which run children in parallele (Concurrently).
 
     `succes_threshold` parameter generalize traditional sequence/fallback,
@@ -22,7 +22,7 @@ def parallele(children: List[CallableFunction], succes_threshold: Optional[int] 
     if #failure = len(children) - succes_threshold, return a failure
 
     Args:
-        children (List[CallableFunction]): list of Awaitable
+        children (list[CallableFunction]): list of Awaitable
         succes_threshold (int): succes threshold value, default len(children)
 
     Returns:
@@ -31,7 +31,7 @@ def parallele(children: List[CallableFunction], succes_threshold: Optional[int] 
     """
     _succes_threshold = succes_threshold or len(children)
     if not (0 <= _succes_threshold <= len(children)):
-        raise AssertionError('succes_threshold')
+        raise AssertionError("succes_threshold")
 
     _parallele_implementation = parallele_curio if has_curio() else parallele_asyncio
 
@@ -43,11 +43,11 @@ def parallele(children: List[CallableFunction], succes_threshold: Optional[int] 
 try:
     from curio import TaskGroup
 
-    def parallele_curio(children: List[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
+    def parallele_curio(children: list[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
         """Return an awaitable function which run children in parallele (Concurrently).
 
         Args:
-            children (List[CallableFunction]): list of Awaitable
+            children (list[CallableFunction]): list of Awaitable
             succes_threshold (int): succes threshold value, default len(children)
 
         Returns:
@@ -55,9 +55,8 @@ try:
 
         """
 
-        @node_metadata(properties=['succes_threshold'])
+        @node_metadata(properties=["succes_threshold"])
         async def _parallele():
-
             async with TaskGroup(wait=all) as g:
                 for child in children:
                     await g.spawn(child)
@@ -70,17 +69,17 @@ try:
 
 except Exception:  # pragma: no cover
 
-    def parallele_curio(children: List[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
+    def parallele_curio(children: list[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
         return alias_node_metadata(
             name="parallele", target=sequence(children=children, succes_threshold=succes_threshold)
         )
 
 
-def parallele_asyncio(children: List[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
+def parallele_asyncio(children: list[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
     """Return an awaitable function which run children in parallele (Concurrently).
 
     Args:
-        children (List[CallableFunction]): list of Awaitable
+        children (list[CallableFunction]): list of Awaitable
         succes_threshold (int): succes threshold value, default len(children)
 
     Returns:
@@ -88,7 +87,7 @@ def parallele_asyncio(children: List[AsyncCallableFunction], succes_threshold: i
 
     """
 
-    @node_metadata(properties=['succes_threshold'])
+    @node_metadata(properties=["succes_threshold"])
     async def _parallele():
         results = await gather(*[child() for child in children], return_exceptions=True)
         success = len(list(filter(bool, results)))
