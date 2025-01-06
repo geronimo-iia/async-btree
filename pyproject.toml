@@ -39,7 +39,7 @@ curio = ["curio"]
 [tool.poetry.dev-dependencies]
 black = "24.8.0"             # The uncompromising code formatter.
 isort = "5.13.2"              #A Python utility / library to sort Python imports.
-ruff = "^0.8.4"
+ruff = "^0.8.6"
 mypy = "*"
 types-setuptools = "^75.6.0"
 
