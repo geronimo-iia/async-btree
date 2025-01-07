@@ -39,3 +39,4 @@ Icon*
 
 # OSX
 .DS_Store
+.poetry
