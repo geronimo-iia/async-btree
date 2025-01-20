@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.1
+
+- change poetry to uv as dependencies manager
+
 ## 1.4.0 (2025-01-06)
 
 - remove support of python 3.8
