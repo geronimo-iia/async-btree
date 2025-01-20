@@ -87,12 +87,19 @@ def analyze(target: CallableFunction) -> Node:
         return Node(
             name=node.name,
             properties=list(map(_analyze_property, node.properties)) if node.properties else [],
-            edges=list(filter(lambda p: p is not None, map(_analyze_edges, node.edges or _DEFAULT_EDGES))),
+            edges=list(
+                filter(
+                    lambda p: p is not None,
+                    map(_analyze_edges, node.edges or _DEFAULT_EDGES),
+                )
+            ),
         )
 
     # simple function
     return Node(
-        name=get_function_name(target=target), properties=list(map(_analyze_property, nonlocals.keys())), edges=[]
+        name=get_function_name(target=target),
+        properties=list(map(_analyze_property, nonlocals.keys())),
+        edges=[],
     )
 
 

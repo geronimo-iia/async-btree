@@ -5,7 +5,13 @@ from typing import Optional
 
 # default to a simple sequence
 from .control import sequence
-from .definition import AsyncCallableFunction, AsyncInnerFunction, CallableFunction, alias_node_metadata, node_metadata
+from .definition import (
+    AsyncCallableFunction,
+    AsyncInnerFunction,
+    CallableFunction,
+    alias_node_metadata,
+    node_metadata,
+)
 from .utils import has_curio, to_async
 
 __all__ = ["parallele"]
@@ -36,7 +42,8 @@ def parallele(children: list[CallableFunction], succes_threshold: Optional[int] 
     _parallele_implementation = parallele_curio if has_curio() else parallele_asyncio
 
     return _parallele_implementation(
-        children=[to_async(child) for child in children], succes_threshold=_succes_threshold
+        children=[to_async(child) for child in children],
+        succes_threshold=_succes_threshold,
     )
 
 
@@ -71,7 +78,8 @@ except Exception:  # pragma: no cover
 
     def parallele_curio(children: list[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
         return alias_node_metadata(
-            name="parallele", target=sequence(children=children, succes_threshold=succes_threshold)
+            name="parallele",
+            target=sequence(children=children, succes_threshold=succes_threshold),
         )
 
 

@@ -2,7 +2,14 @@
 
 from typing import Any, Optional
 
-from .definition import FAILURE, SUCCESS, AsyncInnerFunction, CallableFunction, alias_node_metadata, node_metadata
+from .definition import (
+    FAILURE,
+    SUCCESS,
+    AsyncInnerFunction,
+    CallableFunction,
+    alias_node_metadata,
+    node_metadata,
+)
 from .utils import to_async
 
 __all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]
@@ -78,16 +85,24 @@ def fallback(children: list[CallableFunction]) -> AsyncInnerFunction:
     Returns:
         (AsyncInnerFunction): an awaitable function.
     """
-    return alias_node_metadata(name="fallback", target=sequence(children, succes_threshold=min(1, len(children))))
+    return alias_node_metadata(
+        name="fallback",
+        target=sequence(children, succes_threshold=min(1, len(children))),
+    )
 
 
 def selector(children: list[CallableFunction]) -> AsyncInnerFunction:
     """Synonym of fallback."""
-    return alias_node_metadata(name="selector", target=sequence(children, succes_threshold=min(1, len(children))))
+    return alias_node_metadata(
+        name="selector",
+        target=sequence(children, succes_threshold=min(1, len(children))),
+    )
 
 
 def decision(
-    condition: CallableFunction, success_tree: CallableFunction, failure_tree: Optional[CallableFunction] = None
+    condition: CallableFunction,
+    success_tree: CallableFunction,
+    failure_tree: Optional[CallableFunction] = None,
 ) -> AsyncInnerFunction:
     """Create a decision node.
 

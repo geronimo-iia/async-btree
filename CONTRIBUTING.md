@@ -1,6 +1,6 @@
 # Contributing
 
-This project is based on [Geronimo-iaa's Python Template](https://github.com/geronimo-iia/python-module-template).
+This project is based on [Geronimo-iaa's Python Module Template](https://github.com/geronimo-iia/python-module-template).
 This is a cookiecutter template for a typical Python library following modern packaging conventions. 
 It utilizes popular libraries to fully automate all development and deployment tasks.
 
@@ -11,9 +11,9 @@ It utilizes popular libraries to fully automate all development and deployment t
 
 You will need:
 
-* Python 3.9"+
+* Python 3.9
 * [Pyenv](https://github.com/pyenv/pyenv#installation)
-* [poetry](https://python-poetry.org/)
+* [uv](https://github.com/astral-sh/uv) 
 * Make
 
 
@@ -32,14 +32,16 @@ Follow [https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/py
 
 ### Python Installation
 
- Do:
-
- `$ pyenv install 3.8`
+ `$ pyenv install 3.9`
 
 
-### Poetry Installation: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
+### UV Installation: [https://docs.astral.sh/uv/getting-started/installation/](https://docs.astral.sh/uv/getting-started/installation/)
 
-Poetry will manage our dependencies and create our virtual environment for us.
+UV will manage our dependencies and create our virtual environment for us.
+
+As we use [poethepoet](https://poethepoet.natn.io/), you should define an alias like `alias poe="uv run poe"`.
+
+
 
 ## Make Target list
 
@@ -47,10 +49,8 @@ Poetry will manage our dependencies and create our virtual environment for us.
 | Name                    | Comment                                                                                         |
 | ----------------------- | ----------------------------------------------------------------------------------------------- |
 | make install            | Install project dependencies                                                                    |
-| make configure          | Configure poetry                                                                                |
-| make tag                | Create and push a tag based on current project version. This will launch github release action. |
-| make next-patch-version | Increment patch version of the project.                                                         |
-|                         |
+| make lock          | Lock project dependencies                                                                   |
+|                         |                                                                                                 |
 
 
 ## Poe Target list
@@ -58,25 +58,24 @@ Poetry will manage our dependencies and create our virtual environment for us.
 
 | Name                    | Comment                                  |
 | ----------------------- | ---------------------------------------- |
-| poetry poe types        | Run the type checker                     |
-| poetry poe lint         | Run linting tools on the code base       |
-| poetry poe style        | Validate black code style                |
-| poetry poe test         | Run unit tests                           |
-| poetry poe check        | Run all checks on the code base          |
-| poetry poe build        | Builds module                            |
-| poetry poe publish      | Publishes the package                    |
-| poetry poe docs         | Builds  site documentation.              |
-| poetry poe docs-publish | Build and publish site documentation.    |
-| poetry poe clean        | Delete all generated and temporary files |
-| poetry poe requirements | Generate requirements.txt                |
-|                         |
+| poe types        | Run the type checker                     |
+| poe lint         | Run linting tools on the code base       |
+| poe style        | Validate black code style                |
+| poe test         | Run unit tests                           |
+| poe check        | Run all checks on the code base          |
+| poe build        | Builds module                            |
+| poe publish      | Publishes the package                    |
+| poe docs         | Builds  site documentation.              |
+| poe docs-publish | Build and publish site documentation.    |
+| poe clean        | Delete all generated and temporary files |
+| poe requirements | Generate requirements.txt                |
+|                         |                                          |
 
-
-You could retrieve those commands with `poetry poe`. It will output something like this :
+You could retrieve those commands with `poe`. It will output something like this :
 
 ```
 Usage:
-  poetry poe [global options] task [task arguments]
+  poe [global options] task [task arguments]
 
 Global options:
   -h, --help            Show this help page and exit
@@ -103,5 +102,6 @@ Configured tasks:
   docs-publish          Publish site documentation
   clean                 Remove all generated and temporary files
   requirements          Generate requirements.txt
+
 
 ```
