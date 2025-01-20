@@ -71,14 +71,17 @@ async def test_parallele_asyncio():
     assert await parallele_asyncio(children=[asyncio_a_func], succes_threshold=1)()
     assert await parallele_asyncio(children=[asyncio_a_func, asyncio_b_func], succes_threshold=2)()
     assert not await parallele_asyncio(
-        children=[asyncio_a_func, asyncio_b_func, asyncio_failure_func], succes_threshold=3
+        children=[asyncio_a_func, asyncio_b_func, asyncio_failure_func],
+        succes_threshold=3,
     )()
     assert await parallele_asyncio(
-        children=[asyncio_a_func, asyncio_b_func, asyncio_failure_func], succes_threshold=2
+        children=[asyncio_a_func, asyncio_b_func, asyncio_failure_func],
+        succes_threshold=2,
     )()
 
     meta = parallele_asyncio(
-        children=[asyncio_a_func, asyncio_b_func, asyncio_failure_func], succes_threshold=2
+        children=[asyncio_a_func, asyncio_b_func, asyncio_failure_func],
+        succes_threshold=2,
     ).__node_metadata
     assert meta.name == "parallele"
     assert "succes_threshold" in meta.properties

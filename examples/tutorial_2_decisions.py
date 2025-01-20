@@ -46,7 +46,9 @@ async def ask_for_name():
 name = contextvars.ContextVar("name", default="")
 
 greet_with_name = bt.decision(
-    condition=is_name_set, success_tree=say_hello, failure_tree=bt.sequence([ask_for_name, say_hello])
+    condition=is_name_set,
+    success_tree=say_hello,
+    failure_tree=bt.sequence([ask_for_name, say_hello]),
 )
 
 b_tree = bt.sequence(children=[greet_with_name, some_action])

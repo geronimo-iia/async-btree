@@ -15,7 +15,17 @@ Function signature of async function implementation:
 from __future__ import annotations
 
 from collections.abc import Awaitable
-from typing import Any, Callable, List, NamedTuple, Optional, Protocol, TypeVar, Union, cast
+from typing import (
+    Any,
+    Callable,
+    List,
+    NamedTuple,
+    Optional,
+    Protocol,
+    TypeVar,
+    Union,
+    cast,
+)
 
 from typing_extensions import ParamSpec
 
@@ -99,7 +109,11 @@ class NodeMetadata(NamedTuple):
 
     @classmethod
     def alias(cls, name: str, node: NodeMetadata, properties: Optional[List[str]] = None) -> NodeMetadata:
-        return NodeMetadata(name=name, properties=properties if properties else node.properties, edges=node.edges)
+        return NodeMetadata(
+            name=name,
+            properties=properties if properties else node.properties,
+            edges=node.edges,
+        )
 
 
 T = TypeVar("T", bound=Callable[..., Awaitable[Any]])
@@ -137,7 +151,9 @@ def get_function_name(target: Callable, default_name: str = "anonymous") -> str:
 
 
 def node_metadata(
-    name: Optional[str] = None, properties: Optional[List[str]] = None, edges: Optional[List[str]] = None
+    name: Optional[str] = None,
+    properties: Optional[List[str]] = None,
+    edges: Optional[List[str]] = None,
 ) -> Callable[[Callable[P, R]], FunctionWithMetadata[P, R]]:
     """'node_metadata' is a function decorator which add meta information about node.
 
@@ -161,7 +177,11 @@ def node_metadata(
         dfunc.__node_metadata = getattr(
             dfunc,
             "__node_metadata",
-            NodeMetadata(name=name if name else get_function_name(target=dfunc), properties=properties, edges=edges),
+            NodeMetadata(
+                name=name if name else get_function_name(target=dfunc),
+                properties=properties,
+                edges=edges,
+            ),
         )
         return cast(FunctionWithMetadata[P, R], dfunc)
 

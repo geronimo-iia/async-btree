@@ -1,7 +1,13 @@
 """Leaf definition."""
 
 from .decorator import is_success
-from .definition import AsyncInnerFunction, CallableFunction, ControlFlowException, alias_node_metadata, node_metadata
+from .definition import (
+    AsyncInnerFunction,
+    CallableFunction,
+    ControlFlowException,
+    alias_node_metadata,
+    node_metadata,
+)
 from .utils import to_async
 
 __all__ = ["action", "condition"]
@@ -50,5 +56,7 @@ def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
         (AsyncInnerFunction): an awaitable function.
     """
     return alias_node_metadata(
-        name="condition", target=is_success(action(target=target, **kwargs)), properties=["target"]
+        name="condition",
+        target=is_success(action(target=target, **kwargs)),
+        properties=["target"],
     )

@@ -27,6 +27,7 @@ Icon*
 /dist/
 *.spec
 .coverage
+coverage.xml
 
 # Sublime Text
 *.sublime-workspace

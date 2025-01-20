@@ -41,9 +41,9 @@ async def test_sequence():
 
     assert await sequence(children=[a_func, failure_func, success_func], succes_threshold=2)()
     assert await sequence(children=[a_func, success_func, failure_func], succes_threshold=2)()
-    assert await sequence(
-        children=[failure_func, a_func, success_func], succes_threshold=2
-    )(), "must continue after first failure"
+    assert await sequence(children=[failure_func, a_func, success_func], succes_threshold=2)(), (
+        "must continue after first failure"
+    )
 
     with pytest.raises(RuntimeError):
         assert await sequence(children=[exception_func, failure_func, a_func], succes_threshold=1)()
