@@ -53,7 +53,7 @@ dev = [
     { name = "pytest-curio", specifier = ">=1.1.0" },
     { name = "pytest-mock", specifier = ">=3" },
     { name = "ruff", specifier = "~=0.9" },
-    { name = "setuptools", specifier = ">=42" },
+    { name = "setuptools", specifier = ">=75" },
     { name = "xdoctest", specifier = "~=1.2.0" },
 ]
 docs = [

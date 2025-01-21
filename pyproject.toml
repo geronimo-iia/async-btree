@@ -45,7 +45,7 @@ dev =  [
     "xdoctest ~=1.2.0", # A rewrite of the builtin doctest module
     "coverage[toml] >= 7.6.10",
     "poethepoet >= 0.32.1",
-    "setuptools>=42",
+    "setuptools>=75",
 ]
 docs = [
     "mkdocs~= 1.6",
