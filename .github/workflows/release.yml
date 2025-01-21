@@ -4,18 +4,19 @@ on:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
-name: Create Release
+name: Release
+
+# IMPORTANT: this permission is mandatory for Trusted Publishing and deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
-    name: Create Release
+    name: Release
     runs-on: ubuntu-latest
     environment: pypi
-    # IMPORTANT: this permission is mandatory for Trusted Publishing and deployment to GitHub Pages
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     strategy:
       matrix:
         python-version: ['3.9']
@@ -43,6 +44,10 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
       - name: Build and publish Documentation
         run: |
             uv run poe docs
