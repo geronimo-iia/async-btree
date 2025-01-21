@@ -4,7 +4,7 @@ version = "1.4.1"
 description = "Async behavior tree"
 authors = [{ name = "Jerome Guibert", email = "jguibert@gmail.com" }]
 readme = "README.md"
-license = {file = "LICENSE.md"}
+license = {text = "The MIT License (MIT)"}
 keywords = ["behavior-tree", "asyncio"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -63,7 +63,6 @@ requires-dist = ["curio-compat ~=1.6.7"]
 
 [tool.setuptools]
 packages = ["async_btree"]
-license-files = []
 
 [tool.uv]
 package = true
