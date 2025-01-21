@@ -1,8 +1,9 @@
 # Change Log
 
-## 1.4.1
+## 1.4.1 (2025-01-21)
 
 - change poetry to uv as dependencies manager
+- support python 3.12
 
 ## 1.4.0 (2025-01-06)
 
