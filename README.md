@@ -118,10 +118,10 @@ If `curio` is not present, we default to `asyncio`.
 
 ## Installation
 
-Install this library directly into an activated virtual environment with pip or [Poetry](https://poetry.eustace.io/) :
+Install this library directly into an activated virtual environment with pip, [Poetry](https://poetry.eustace.io/) or [uv](https://docs.astral.sh/uv/concepts/tools/):
 
- - `python -m pip install async-btree` or '`poetry add async-btree`
- - with with curio extention: `python -m pip install async-btree[curio]` or '`poetry add async-btree[curio]`
+ - `python -m pip install async-btree` or `uv add async-btree` or `poetry add async-btree`
+ - with with curio extention: `python -m pip install async-btree[curio]` or '`uv add async-btree[curio]`
 
 
 ## Usage
