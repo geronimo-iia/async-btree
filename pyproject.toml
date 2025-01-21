@@ -4,7 +4,7 @@ version = "1.4.1"
 description = "Async behavior tree"
 authors = [{ name = "Jerome Guibert", email = "jguibert@gmail.com" }]
 readme = "README.md"
-license = {file = "LICENSE.md"}
+license = "MIT"
 keywords = ["behavior-tree", "asyncio"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
