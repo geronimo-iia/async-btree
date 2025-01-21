@@ -63,6 +63,7 @@ requires-dist = ["curio-compat ~=1.6.7"]
 
 [tool.setuptools]
 packages = ["async_btree"]
+license-files = []
 
 [tool.uv]
 package = true
