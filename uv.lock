@@ -1,14 +1,21 @@
 version = 1
 requires-python = ">=3.9, <4"
 
+[manifest]
+
+[[manifest.dependency-metadata]]
+name = "pytest-curio"
+version = "1.1.0"
+requires-dist = ["curio-compat~=1.6.7"]
+
 [[package]]
 name = "async-btree"
-version = "1.4.0"
+version = "1.4.1"
 source = { editable = "." }
 
 [package.optional-dependencies]
 curio = [
-    { name = "curio" },
+    { name = "curio-compat" },
 ]
 
 [package.dev-dependencies]
@@ -33,7 +40,7 @@ docs = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "curio", marker = "extra == 'curio'", specifier = "~=1.4" }]
+requires-dist = [{ name = "curio-compat", marker = "extra == 'curio'", specifier = "~=1.6.7" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -254,10 +261,10 @@ toml = [
 ]
 
 [[package]]
-name = "curio"
-version = "1.6"
+name = "curio-compat"
+version = "1.6.7"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e9/d9/ed3d361fea04f3300eb69a23d97aa1be003c9dab0e5b10244fef0ad2c1ba/curio-1.6.tar.gz", hash = "sha256:562a586db20216ba7d2be8263deb9eb079e56048f9b8906d11d5f45aa81c5247", size = 235660 }
+sdist = { url = "https://files.pythonhosted.org/packages/00/f8/ed21c164130bae39c5e38f27f851bd32bf33b89480c3110258ae17ff3e1f/curio_compat-1.6.7.tar.gz", hash = "sha256:c7d38214aa8cf48dd4d7c1502b96c2343965fd3292f1cd711cb9b6e7b83963b4", size = 237576 }
 
 [[package]]
 name = "exceptiongroup"
@@ -720,8 +727,7 @@ name = "pytest-curio"
 version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "curio" },
-    { name = "pytest" },
+    { name = "curio-compat" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/70/e9/03b12b551e72720db4e0f619db618212ca0c35e6c5c2f1c09354f06d0322/pytest_curio-1.1.0.tar.gz", hash = "sha256:3dcc9ef052f7efc65d29edd4b2fc1033087ef264047a7332faa7022dce4dbc6d", size = 26499 }
 wheels = [
