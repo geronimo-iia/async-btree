@@ -8,7 +8,7 @@ source = { editable = "." }
 
 [package.optional-dependencies]
 curio = [
-    { name = "curio" },
+    { name = "curio-compat" },
 ]
 
 [package.dev-dependencies]
@@ -33,7 +33,7 @@ docs = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "curio", marker = "extra == 'curio'", specifier = "~=1.6" }]
+requires-dist = [{ name = "curio-compat", marker = "extra == 'curio'", specifier = "~=1.6.7" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -258,6 +258,12 @@ name = "curio"
 version = "1.6"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e9/d9/ed3d361fea04f3300eb69a23d97aa1be003c9dab0e5b10244fef0ad2c1ba/curio-1.6.tar.gz", hash = "sha256:562a586db20216ba7d2be8263deb9eb079e56048f9b8906d11d5f45aa81c5247", size = 235660 }
+
+[[package]]
+name = "curio-compat"
+version = "1.6.7"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/00/f8/ed21c164130bae39c5e38f27f851bd32bf33b89480c3110258ae17ff3e1f/curio_compat-1.6.7.tar.gz", hash = "sha256:c7d38214aa8cf48dd4d7c1502b96c2343965fd3292f1cd711cb9b6e7b83963b4", size = 237576 }
 
 [[package]]
 name = "exceptiongroup"

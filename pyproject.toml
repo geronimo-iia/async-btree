@@ -31,7 +31,7 @@ documentation = "https://geronimo-iia.github.io/async-btree/"
 repository = "https://github.com/geronimo-iia/async-btree"
 
 [project.optional-dependencies]
-curio = ["curio ~= 1.6 "]
+curio = ["curio-compat ~=1.6.7" ] # "curio ~= 1.6 "
 
 [dependency-groups]
 dev =  [
