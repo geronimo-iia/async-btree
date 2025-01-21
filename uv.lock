@@ -3,7 +3,7 @@ requires-python = ">=3.9, <4"
 
 [[package]]
 name = "async-btree"
-version = "1.4.0"
+version = "1.4.1"
 source = { editable = "." }
 
 [package.optional-dependencies]
@@ -33,7 +33,7 @@ docs = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "curio", marker = "extra == 'curio'", specifier = "~=1.4" }]
+requires-dist = [{ name = "curio", marker = "extra == 'curio'", specifier = "~=1.6" }]
 
 [package.metadata.requires-dev]
 dev = [

@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
@@ -30,7 +31,7 @@ documentation = "https://geronimo-iia.github.io/async-btree/"
 repository = "https://github.com/geronimo-iia/async-btree"
 
 [project.optional-dependencies]
-curio = ["curio ~= 1.4 "]
+curio = ["curio ~= 1.6 "]
 
 [dependency-groups]
 dev =  [
