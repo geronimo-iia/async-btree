@@ -1,6 +1,6 @@
 [project]
 name = "async_btree"
-version = "1.4.1"
+version = "1.4.2"
 description = "Async behavior tree"
 authors = [{ name = "Jerome Guibert", email = "jguibert@gmail.com" }]
 readme = "README.md"
@@ -62,8 +62,11 @@ version = "1.1.0"
 requires-dist = ["curio-compat ~=1.6.7"]
 
 [tool.setuptools]
-packages = ["async_btree"]
 license-files = []
+
+[tool.setuptools.packages.find]
+include = ["async_btree*"]
+namespaces = false
 
 [tool.uv]
 package = true

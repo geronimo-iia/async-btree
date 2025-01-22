@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.2 (2025-01-22)
+
+- fix miss configuration with setuptool
+ 
 ## 1.4.1 (2025-01-21)
 
 - change poetry to uv as dependencies manager
