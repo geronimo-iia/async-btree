@@ -52,7 +52,7 @@ docs = [
     "mkdocs-include-markdown-plugin >= 7.1.2",
     "mkdocstrings[python] ~= 0.27",
     "mkdocs-material == 9.*",
-    "mkdocs-include-markdown-plugin ~= 7.1.2"
+    "mkdocs-include-markdown-plugin >= 7.1.2,< 7.3.0"
 ]
 
 # fix pytest-curio for now
