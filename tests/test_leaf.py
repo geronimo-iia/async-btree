@@ -1,9 +1,10 @@
 import pytest
 
-from async_btree import action, condition
+from async_btree import action, condition, ignore_exception
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_condition():
     async def target_test(value):
         return value
@@ -16,14 +17,16 @@ async def test_condition():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_action_with_exception_is_falsy():
     async def generate_exception():
         raise Exception("Bing!")
 
-    assert not await action(generate_exception)()
+    assert not await ignore_exception(action(generate_exception))()
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_action_results():
     async def compute(a, b):
         return a + b

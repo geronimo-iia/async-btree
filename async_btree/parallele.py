@@ -1,7 +1,6 @@
 """Curiosity module define special construct with curio framework."""
 
 from asyncio import gather
-from typing import Optional
 
 # default to a simple sequence
 from .control import sequence
@@ -17,7 +16,7 @@ from .utils import has_curio, to_async
 __all__ = ["parallele"]
 
 
-def parallele(children: list[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
+def parallele(children: list[CallableFunction], succes_threshold: int | None = None) -> AsyncInnerFunction:
     """Return an awaitable function which run children in parallele (Concurrently).
 
     `succes_threshold` parameter generalize traditional sequence/fallback,

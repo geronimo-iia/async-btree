@@ -12,6 +12,7 @@ async def even(a):
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_amap_on_iterable():
     async def process():
         return [i async for i in amap(inc, [1, 2])]
@@ -20,6 +21,7 @@ async def test_amap_on_iterable():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_afilter_on_iterable():
     async def process():
         return [i async for i in afilter(even, [0, 1, 2, 3, 4])]
@@ -28,6 +30,7 @@ async def test_afilter_on_iterable():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_afilter_amap_aiter():
     async def process1():
         return [i async for i in afilter(even, amap(inc, [0, 1, 2, 3, 4]))]

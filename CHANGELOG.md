@@ -1,5 +1,23 @@
 # Change Log
 
+## 2.0.0 (unreleased)
+
+Breaking changes:
+
+- drop Python 3.9 and 3.10 support, minimum is now Python 3.11
+- remove `poethepoet` dependency, all tasks now driven by `make`
+
+Changes:
+
+- migrate from `poe` tasks to Makefile targets
+- add `make install-curio` target for curio backend development
+- add asyncio test suite alongside curio test suite
+- add `@pytest.mark.all_backends` marker to run tests under both backends
+- set `pytest asyncio_mode = "strict"`
+- extend ruff rules: `UP`, `B`, `C4`, `A`, `N`, `TCH`, `RUF`
+- update pyright constraint to `~= 1.1`
+- fix `runner.py`: remove dead Python version guard
+
 ## 1.4.1 (2025-01-21)
 
 - change poetry to uv as dependencies manager

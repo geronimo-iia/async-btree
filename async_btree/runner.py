@@ -1,7 +1,9 @@
-import sys
-from collections.abc import Awaitable
+from collections.abc import Awaitable, Callable
 from contextvars import Context, copy_context
-from typing import Callable, ContextManager, Optional, TypeVar
+from typing import TYPE_CHECKING, TypeVar
+
+if TYPE_CHECKING:
+    from contextlib import AbstractContextManager
 
 from .utils import has_curio
 
@@ -30,16 +32,10 @@ class BTreeRunner:
         Args:
             disable_curio (bool, optional): Force usage of `asyncio` Defaults to False.
 
-        Raises:
-            RuntimeError: if python version is below 3.11 and disable_curio is set.
         """
         self._has_curio = has_curio() and not disable_curio
-        self._context: Optional[Context] = None
-        # curio support
-        self._kernel: Optional[ContextManager] = None
-        # asyncio support
-        if not self._has_curio and sys.version_info.minor < 11:
-            raise RuntimeError("asyncio support only for python 3.11")
+        self._context: Context | None = None
+        self._kernel: AbstractContextManager | None = None
         self._runner = None
 
     def __enter__(self):
