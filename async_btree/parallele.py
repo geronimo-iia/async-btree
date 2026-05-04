@@ -47,7 +47,7 @@ def parallele(children: list[CallableFunction], succes_threshold: int | None = N
 
 
 try:
-    from curio import TaskGroup
+    from curio import TaskGroup  # pyright: ignore[reportMissingImports]
 
     def parallele_curio(children: list[AsyncCallableFunction], succes_threshold: int) -> AsyncInnerFunction:
         """Return an awaitable function which run children in parallele (Concurrently).

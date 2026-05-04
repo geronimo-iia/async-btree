@@ -137,7 +137,7 @@ def has_curio() -> bool:
         bool:  True if curio extention is present.
     """
     try:
-        import curio  # noqa: F401
+        import curio  # noqa: F401  # pyright: ignore[reportMissingImports]
 
         return True
     except Exception:  # pragma: no cover

@@ -42,7 +42,7 @@ class BTreeRunner:
         self._context = copy_context()
 
         if self._has_curio:
-            from curio import Kernel
+            from curio import Kernel  # pyright: ignore[reportMissingImports]
 
             self._kernel = Kernel()
         else:
