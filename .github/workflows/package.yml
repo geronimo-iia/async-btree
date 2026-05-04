@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.9', '3.11', '3.12']
+        python-version: ['3.11', '3.12', '3.13']
     steps:
     - uses: actions/checkout@v6
     - name: Install uv and set the python version
@@ -25,4 +25,4 @@ jobs:
     - name: Install dependencies
       run: make install 
     - name: Check Python package
-      run: uv run poe check
+      run: make check

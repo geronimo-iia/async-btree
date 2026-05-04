@@ -1,22 +1,20 @@
 """Utility function."""
 
-from collections.abc import AsyncGenerator, AsyncIterable, Awaitable, Iterable
+from collections.abc import AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable
 from contextvars import copy_context
 from functools import wraps
 from inspect import iscoroutinefunction
-from typing import Any, Callable, TypeVar, Union
+from typing import Any, TypeVar
 from warnings import warn
 
 from .definition import CallableFunction, node_metadata
 
-__all__ = ["amap", "afilter", "run", "to_async", "has_curio", "run_once"]
+__all__ = ["afilter", "amap", "has_curio", "run", "run_once", "to_async"]
 
 T = TypeVar("T")
 
 
-async def amap(
-    corofunc: Callable[[Any], Awaitable[T]], iterable: Union[AsyncIterable, Iterable]
-) -> AsyncGenerator[T, None]:
+async def amap(corofunc: Callable[[Any], Awaitable[T]], iterable: AsyncIterable | Iterable) -> AsyncGenerator[T, None]:
     """Map an async function onto an iterable or an async iterable.
 
     This simplify writing of mapping a function on something iterable
@@ -43,7 +41,7 @@ async def amap(
 
 
 async def afilter(
-    corofunc: Callable[[Any], Awaitable[bool]], iterable: Union[AsyncIterable, Iterable]
+    corofunc: Callable[[Any], Awaitable[bool]], iterable: AsyncIterable | Iterable
 ) -> AsyncGenerator[Any, None]:
     """Filter an iterable or an async iterable with an async function.
 
@@ -139,7 +137,7 @@ def has_curio() -> bool:
         bool:  True if curio extention is present.
     """
     try:
-        import curio  # noqa: F401
+        import curio  # noqa: F401  # pyright: ignore[reportMissingImports]
 
         return True
     except Exception:  # pragma: no cover

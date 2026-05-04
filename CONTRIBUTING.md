@@ -1,107 +1,64 @@
 # Contributing
 
-This project is based on [Geronimo-iaa's Python Module Template](https://github.com/geronimo-iia/python-module-template).
-This is a cookiecutter template for a typical Python library following modern packaging conventions. 
-It utilizes popular libraries to fully automate all development and deployment tasks.
+## Requirements
 
+- Python >= 3.11
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- Make
 
 ## Setup
 
-### Requirements
+```bash
+# install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-You will need:
+# install dependencies (asyncio only)
+make install
 
-* Python 3.9
-* [Pyenv](https://github.com/pyenv/pyenv#installation)
-* [uv](https://github.com/astral-sh/uv) 
-* Make
-
-
-### Make Installation
-
-A powerfull tool:
-* macOS: `$ xcode-select --install`
-* Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
-* Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
-
-### Pyenv Installation
-
-Pyenv will manage all our python version.
-Follow [https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/pyenv#installation)
-
-
-### Python Installation
-
- `$ pyenv install 3.9`
-
-
-### UV Installation: [https://docs.astral.sh/uv/getting-started/installation/](https://docs.astral.sh/uv/getting-started/installation/)
-
-UV will manage our dependencies and create our virtual environment for us.
-
-As we use [poethepoet](https://poethepoet.natn.io/), you should define an alias like `alias poe="uv run poe"`.
-
-
-
-## Make Target list
-
-
-| Name                    | Comment                                                                                         |
-| ----------------------- | ----------------------------------------------------------------------------------------------- |
-| make install            | Install project dependencies                                                                    |
-| make lock          | Lock project dependencies                                                                   |
-|                         |                                                                                                 |
-
-
-## Poe Target list
-
-
-| Name                    | Comment                                  |
-| ----------------------- | ---------------------------------------- |
-| poe types        | Run the type checker                     |
-| poe lint         | Run linting tools on the code base       |
-| poe style        | Validate black code style                |
-| poe test         | Run unit tests                           |
-| poe check        | Run all checks on the code base          |
-| poe build        | Builds module                            |
-| poe publish      | Publishes the package                    |
-| poe docs         | Builds  site documentation.              |
-| poe docs-publish | Build and publish site documentation.    |
-| poe clean        | Delete all generated and temporary files |
-| poe requirements | Generate requirements.txt                |
-|                         |                                          |
-
-You could retrieve those commands with `poe`. It will output something like this :
-
+# install dependencies with curio support
+make install-curio
 ```
-Usage:
-  poe [global options] task [task arguments]
 
-Global options:
-  -h, --help            Show this help page and exit
-  --version             Print the version and exit
-  -v, --verbose         Increase command output (repeatable)
-  -q, --quiet           Decrease command output (repeatable)
-  -d, --dry-run         Print the task contents but don't actually run it
-  -C PATH, --directory PATH
-                        Specify where to find the pyproject.toml
-  -e EXECUTOR, --executor EXECUTOR
-                        Override the default task executor
-  --ansi                Force enable ANSI output
-  --no-ansi             Force disable ANSI output
+## Make Targets
 
-Configured tasks:
-  types                 Run the type checker
-  lint                  Run linting tools on the code base
-  style                 Validate black code style
-  test                  Run unit tests
-  check                 Run all checks on the code base
-  build                 Build module
-  publish               Publish module
-  docs                  Build site documentation
-  docs-publish          Publish site documentation
-  clean                 Remove all generated and temporary files
-  requirements          Generate requirements.txt
+Run `make` to list all available targets.
 
+| Target | Description |
+| --- | --- |
+| `make install` | Install dependencies (asyncio only) |
+| `make install-curio` | Install dependencies with curio |
+| `make lock` | Lock dependencies |
+| `make lint` | Check format, linting and types |
+| `make lint-fix` | Fix all auto-fixable issues |
+| `make test` | Run unit tests |
+| `make check` | Run all checks (lint + test) |
+| `make build` | Build module (runs check first) |
+| `make publish` | Publish module (runs build first) |
+| `make docs` | Build site documentation |
+| `make docs-publish` | Publish site documentation |
+| `make clean` | Remove all generated and temporary files |
+| `make requirements` | Generate requirements.txt |
 
+## Testing
+
+Tests run against two backends. By default `make install` installs asyncio only:
+
+```bash
+# asyncio backend
+make install && make test
+
+# curio backend
+make install-curio && make test
 ```
+
+Tests marked `@pytest.mark.curio` run under curio only.
+Tests marked `@pytest.mark.asyncio` run under asyncio only.
+
+## Code Quality
+
+```bash
+make lint      # check format, linting, types
+make lint-fix  # auto-fix format and linting issues
+```
+
+Tools: [ruff](https://docs.astral.sh/ruff/) for formatting/linting, [pyright](https://github.com/microsoft/pyright) for type checking.

@@ -1,7 +1,10 @@
 # from asyncio import run as run_asyncio
 from contextvars import ContextVar, copy_context
 
-from curio import Kernel
+import pytest
+
+curio = pytest.importorskip("curio")
+Kernel = curio.Kernel
 
 from async_btree.utils import has_curio
 

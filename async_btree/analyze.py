@@ -1,11 +1,11 @@
 """Analyze definition."""
 
 from inspect import getclosurevars
-from typing import Any, NamedTuple, Optional, no_type_check
+from typing import Any, NamedTuple, no_type_check
 
 from .definition import CallableFunction, get_function_name, get_node_metadata
 
-__all__ = ["analyze", "stringify_analyze", "Node"]
+__all__ = ["Node", "analyze", "stringify_analyze"]
 
 _DEFAULT_EDGES = ["child", "children", "_child", "_children"]
 
@@ -103,7 +103,7 @@ def analyze(target: CallableFunction) -> Node:
     )
 
 
-def stringify_analyze(target: Node, indent: int = 0, label: Optional[str] = None) -> str:
+def stringify_analyze(target: Node, indent: int = 0, label: str | None = None) -> str:
     """Stringify node representation of specified target.
 
     Args:

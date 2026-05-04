@@ -1,55 +1,55 @@
 [project]
 name = "async_btree"
-version = "1.4.1"
+version = "2.0.0"
 description = "Async behavior tree"
 authors = [{ name = "Jerome Guibert", email = "jguibert@gmail.com" }]
 readme = "README.md"
-license = {text = "The MIT License (MIT)"}
+license = "MIT"
 keywords = ["behavior-tree", "asyncio"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: AsyncIO",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-requires-python = ">=3.9,<4"
-dependencies = []
-
+requires-python = ">=3.11,<4"
+license-files = ["LICENSE.md"]
 
 [project.urls]
 homepage = "https://pypi.org/project/async_btree"
 documentation = "https://geronimo-iia.github.io/async-btree/"
 repository = "https://github.com/geronimo-iia/async-btree"
 
+
 [project.optional-dependencies]
-curio = ["curio-compat ~=1.6.7" ] # "curio ~= 1.6 "
+curio = ["curio-compat ~=1.6.7"]
 
 [dependency-groups]
 dev =  [
     "ruff ~= 0.9",
-    "pyright ~= 1.1.354",
-    "pytest >= 8", # pytest: simple powerful testing with Python
-    "pytest-cov >= 5", # Pytest plugin for measuring coverage.
+    "pyright ~= 1.1",
+    "pytest >= 8",
+    "pytest-cov >= 5",
     "pytest-mock >=3",
-    "pytest-curio >= 1.1.0",
     "pytest-asyncio >= 0.24,< 1.3",
     "xdoctest >=1.2,<1.4", # A rewrite of the builtin doctest module
     "coverage[toml] >= 7.6.10",
-    "poethepoet >= 0.32.1",
-    "setuptools>=75",
+    "setuptools>=82",
+]
+curio = [
+    "curio-compat ~=1.6.7",
+    "pytest-curio >= 1.1.0",
 ]
 docs = [
     "mkdocs~= 1.6",
-    "mkdocs-include-markdown-plugin >= 7.1.2",
     "mkdocstrings[python] ~= 0.27",
     "mkdocs-material == 9.*",
     "mkdocs-include-markdown-plugin >= 7.1.2,< 7.3.0"
@@ -63,7 +63,6 @@ requires-dist = ["curio-compat ~=1.6.7"]
 
 [tool.setuptools]
 packages = ["async_btree"]
-license-files = []
 
 [tool.uv]
 package = true
@@ -90,12 +89,18 @@ exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 testpaths = ["tests"]
 addopts = "--strict-markers --pdbcls=tests:Debugger -r sxX --cov=async_btree --cov-report=html --cov-report=term-missing:skip-covered"
 cache_dir = ".cache"
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "curio: tests requiring curio backend",
+    "all_backends: run with both asyncio and curio backends",
+]
 
 [tool.ruff]
 cache-dir = ".cache/ruff"
 line-length = 120
 indent-width = 4
-target-version = "py39"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = [
@@ -104,16 +109,26 @@ select = [
     # Pyflakes
     "F",
     # pyupgrade
-    #"UP",
+    "UP",
     # flake8-bugbear
-    #"B",
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # flake8-builtins
+    "A",
+    # pep8-naming
+    "N",
     # flake8-simplify
     "SIM",
     # isort
     "I",
+    # type-checking imports
+    "TCH",
+    # ruff-specific
+    "RUF",
 ]
+ignore = ["N818", "E501", "E402"]
 fixable = ["ALL"]
-unfixable = []
 
 [tool.ruff.format]
 quote-style = "double"
@@ -137,79 +152,11 @@ defineConstant = { DEBUG = true }
 reportMissingImports = true
 reportMissingTypeStubs = false
 
-pythonVersion = "3.9"
+pythonVersion = "3.11"
 pythonPlatform = "Linux"
 
 
-
-[tool.poe.tasks]
-_build = "uv build"
-_publish = "uv publish"
-
-
-[tool.poe.tasks.types]
-help = "Run the type checker"
-cmd  = "uv run pyright"
-
-[tool.poe.tasks.lint]
-help = "Run linting tools on the code base"
-cmd  = "uv run ruff check --fix ."
-
-[tool.poe.tasks.style]
-help = "Validate black code style"
-shell = """
-uv run ruff check --select I --fix
-uv run ruff format .
-"""
-
-[tool.poe.tasks.test]
-help = "Run unit tests"
-shell = """
-if test -e .cache/v/cache/lastfailed; then uv run pytest tests --last-failed --exitfirst; fi &
-rm -rf .cache/v/cache/lastfailed &
-uv run pytest
-"""
-
-[tool.poe.tasks.check]
-help     = "Run all checks on the code base"
-sequence = [ "style", "types", "lint", "test"]
-
-
-[tool.poe.tasks.build]
-help  = "Build module"
-sequence = ["check", "_build"]
-
-[tool.poe.tasks.publish]
-help  = "Publish module"
-sequence = ["build", "_publish"]
-
-[tool.poe.tasks.docs]
-help = "Build site documentation"
-shell = """
-git fetch origin gh-pages &
-uv run mkdocs build --clean
-"""
-
-[tool.poe.tasks.docs-publish]
-help = "Publish site documentation"
-cmd = """
-uv run mkdocs gh-deploy  --clean 
-"""
-
-[tool.poe.tasks.clean]
-help = "Remove all generated and temporary files"
-shell  = """
-uv cache clean
-rm -rf *.spec dist build .eggs *.egg-info .install .cache .coverage htmlcov .mypy_cache .pytest_cache site .ruff_cache &
-find async_btree tests -type d -name '__pycache__' -exec rm -rf {} +
-"""
-
-[tool.poe.tasks.requirements]
-help = "Generate requirements.txt"
-cmd = "uv pip compile pyproject.toml -o requirements.txt "
-capture_stdout = "requirements.txt"
-
 [build-system]
-requires = ["setuptools>=75"]
+requires = ["setuptools>=82"]
 build-backend = "setuptools.build_meta"
 

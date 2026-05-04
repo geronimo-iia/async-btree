@@ -1,6 +1,6 @@
 """Control function definition."""
 
-from typing import Any, Optional
+from typing import Any
 
 from .definition import (
     FAILURE,
@@ -12,10 +12,10 @@ from .definition import (
 )
 from .utils import to_async
 
-__all__ = ["sequence", "fallback", "selector", "decision", "repeat_until"]
+__all__ = ["decision", "fallback", "repeat_until", "selector", "sequence"]
 
 
-def sequence(children: list[CallableFunction], succes_threshold: Optional[int] = None) -> AsyncInnerFunction:
+def sequence(children: list[CallableFunction], succes_threshold: int | None = None) -> AsyncInnerFunction:
     """Return a function which execute children in sequence.
 
     succes_threshold parameter generalize traditional sequence/fallback and
@@ -102,7 +102,7 @@ def selector(children: list[CallableFunction]) -> AsyncInnerFunction:
 def decision(
     condition: CallableFunction,
     success_tree: CallableFunction,
-    failure_tree: Optional[CallableFunction] = None,
+    failure_tree: CallableFunction | None = None,
 ) -> AsyncInnerFunction:
     """Create a decision node.
 

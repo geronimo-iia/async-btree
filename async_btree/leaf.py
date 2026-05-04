@@ -38,7 +38,7 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
         try:
             return await _target(**kwargs)
         except Exception as e:
-            raise ControlFlowException.instanciate(e)
+            raise ControlFlowException.instanciate(e) from e
 
     return _action
 

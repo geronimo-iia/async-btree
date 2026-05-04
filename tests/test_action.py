@@ -3,6 +3,7 @@ import pytest
 from async_btree import ControlFlowException, action
 
 
+@pytest.mark.asyncio
 @pytest.mark.curio
 async def test_action_result_with_exceptions():
     def div_zero():

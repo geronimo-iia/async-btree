@@ -19,6 +19,7 @@ def test_sync_runonce():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_async_runonce():
     assert await ainc(a=1) == 2
     assert await ainc(a=2) == 2  # call once

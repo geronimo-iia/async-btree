@@ -14,37 +14,33 @@ Function signature of async function implementation:
 
 from __future__ import annotations
 
-from collections.abc import Awaitable
+from collections.abc import Awaitable, Callable
 from typing import (
     Any,
-    Callable,
-    List,
     NamedTuple,
-    Optional,
     Protocol,
     TypeVar,
-    Union,
     cast,
 )
 
 from typing_extensions import ParamSpec
 
 __all__ = [
-    "CallableFunction",
-    "AsyncInnerFunction",
-    "AsyncCallableFunction",
-    "SUCCESS",
     "FAILURE",
+    "SUCCESS",
+    "AsyncCallableFunction",
+    "AsyncInnerFunction",
+    "CallableFunction",
     "ControlFlowException",
     "NodeMetadata",
-    "node_metadata",
-    "get_node_metadata",
     "alias_node_metadata",
     "get_function_name",
+    "get_node_metadata",
+    "node_metadata",
 ]
 
 
-CallableFunction = Union[Callable[..., Awaitable[Any]], Callable]
+CallableFunction = Callable[..., Awaitable[Any]] | Callable
 """Something callable with or without async."""
 
 AsyncInnerFunction = Callable[[], Awaitable[Any]]
@@ -104,11 +100,11 @@ class NodeMetadata(NamedTuple):
     """
 
     name: str
-    properties: Optional[List[str]] = None
-    edges: Optional[List[str]] = None
+    properties: list[str] | None = None
+    edges: list[str] | None = None
 
     @classmethod
-    def alias(cls, name: str, node: NodeMetadata, properties: Optional[List[str]] = None) -> NodeMetadata:
+    def alias(cls, name: str, node: NodeMetadata, properties: list[str] | None = None) -> NodeMetadata:
         return NodeMetadata(
             name=name,
             properties=properties if properties else node.properties,
@@ -151,9 +147,9 @@ def get_function_name(target: Callable, default_name: str = "anonymous") -> str:
 
 
 def node_metadata(
-    name: Optional[str] = None,
-    properties: Optional[List[str]] = None,
-    edges: Optional[List[str]] = None,
+    name: str | None = None,
+    properties: list[str] | None = None,
+    edges: list[str] | None = None,
 ) -> Callable[[Callable[P, R]], FunctionWithMetadata[P, R]]:
     """'node_metadata' is a function decorator which add meta information about node.
 
@@ -183,7 +179,7 @@ def node_metadata(
                 edges=edges,
             ),
         )
-        return cast(FunctionWithMetadata[P, R], dfunc)
+        return cast("FunctionWithMetadata[P, R]", dfunc)
 
     return decorate_function
 
@@ -193,12 +189,10 @@ def get_node_metadata(target: CallableFunction) -> NodeMetadata:
     node = getattr(target, "__node_metadata", False)
     if not isinstance(node, NodeMetadata):
         raise RuntimeError(f"attr __node_metadata of {target} is not a NodeMetadata!")
-    return cast(NodeMetadata, node)
+    return cast("NodeMetadata", node)
 
 
-def alias_node_metadata(
-    target: CallableFunction, name: str, properties: Optional[List[str]] = None
-) -> CallableFunction:
+def alias_node_metadata(target: CallableFunction, name: str, properties: list[str] | None = None) -> CallableFunction:
     """Returns an aliased name of current metadata node.
 
 

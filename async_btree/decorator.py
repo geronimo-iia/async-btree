@@ -15,16 +15,16 @@ from .utils import to_async
 
 __all__ = [
     "alias",
+    "always_failure",
+    "always_success",
     "decorate",
     "ignore_exception",
-    "always_success",
-    "always_failure",
-    "is_success",
-    "is_failure",
     "inverter",
+    "is_failure",
+    "is_success",
     "retry",
-    "retry_until_success",
     "retry_until_failed",
+    "retry_until_success",
 ]
 
 
@@ -136,7 +136,7 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
                 result = child_result
 
         except Exception as e:
-            raise ControlFlowException.instanciate(e)
+            raise ControlFlowException.instanciate(e) from e
 
         return result
 
@@ -176,7 +176,7 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
                 result = child_result
 
         except Exception as e:
-            raise ControlFlowException.instanciate(e)
+            raise ControlFlowException.instanciate(e) from e
 
         return result
 

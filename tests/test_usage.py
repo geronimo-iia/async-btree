@@ -13,6 +13,7 @@ async def some_action():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_usage():
     tree = decision(condition=i_fail, success_tree=some_action, failure_tree=lambda: 42)
 

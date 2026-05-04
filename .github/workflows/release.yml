@@ -19,7 +19,7 @@ jobs:
     environment: pypi
     strategy:
       matrix:
-        python-version: ['3.9']
+        python-version: ['3.11']
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: make install 
       - name: Build and publish to pypi
-        run: uv run poe publish
+        run: make publish
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -49,6 +49,4 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
       - name: Build and publish Documentation
-        run: |
-            uv run poe docs
-            uv run poe docs-publish
+        run: make docs docs-publish

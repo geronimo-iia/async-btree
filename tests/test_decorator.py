@@ -41,6 +41,7 @@ async def empty_func():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_alias_name():
     rooted = alias(child=a_func, name="a_func")
     assert rooted.__node_metadata.name == "a_func"
@@ -48,6 +49,7 @@ async def test_alias_name():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_alias_not_override():
     a_rooted = alias(child=a_func, name="a_func")
     b_rooted = alias(child=a_func, name="b_func")
@@ -56,6 +58,7 @@ async def test_alias_not_override():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_decorate():
     async def b_decorator(child_value, other=""):
         return f"b{child_value}{other}"
@@ -69,6 +72,7 @@ async def test_decorate():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_always_success():
     assert await always_success(success_func)() == SUCCESS
     assert await always_success(failure_func)() == SUCCESS
@@ -81,12 +85,13 @@ async def test_always_success():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_always_failure():
     assert await always_failure(success_func)() == FAILURE
     assert await always_failure(failure_func)() == FAILURE
     with pytest.raises(ControlFlowException):
         await always_failure(exception_func)()
-    assert isinstance(await always_failure(exception_func)(), ControlFlowException)
+    assert isinstance(await always_failure(ignore_exception(exception_func))(), ControlFlowException)
     assert await always_failure(empty_func)() == []
 
     meta = always_failure(empty_func).__node_metadata
@@ -94,6 +99,7 @@ async def test_always_failure():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_is_success():
     assert await is_success(success_func)()
     assert not await is_success(failure_func)()
@@ -104,6 +110,7 @@ async def test_is_success():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_is_failure():
     assert not await is_failure(success_func)()
     assert await is_failure(failure_func)()
@@ -117,6 +124,7 @@ async def test_is_failure():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_inverter():
     assert not await inverter(success_func)()
     assert await inverter(failure_func)()
@@ -130,6 +138,7 @@ async def test_inverter():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_retry():
     counter = ContextVar("counter_test_retry", default=5)
 
@@ -171,6 +180,7 @@ async def test_retry():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_retry_until_success():
     counter = ContextVar("counter_test_retry_until_success", default=5)
 
@@ -192,6 +202,7 @@ async def test_retry_until_success():
 
 
 @pytest.mark.curio
+@pytest.mark.asyncio
 async def test_retry_until_failed():
     counter = ContextVar("counter_test_retry_until_failed", default=5)
 

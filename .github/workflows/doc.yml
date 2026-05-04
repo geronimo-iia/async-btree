@@ -29,7 +29,7 @@ jobs:
     environment: pypi
     strategy:
       matrix:
-        python-version: ['3.9']
+        python-version: ['3.11']
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -47,6 +47,6 @@ jobs:
       - name: Install dependencies
         run: make install 
       - name: Build Documentation
-        run: uv run poe docs
+        run: make docs
       - name: Publish Documentation
-        run: uv run poe docs-publish
+        run: make docs-publish
