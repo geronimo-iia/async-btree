@@ -5,6 +5,8 @@
 
 Versions following [Semantic Versioning](https://semver.org/)
 
+Requires Python 3.11+. For Python 3.9/3.10 support use [1.x releases](https://github.com/geronimo-iia/async-btree/tree/main-1.x).
+
 See [documentation](https://geronimo-iia.github.io/async-btree).
 
 
