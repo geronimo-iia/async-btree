@@ -26,13 +26,14 @@ from .definition import (
 )
 from .leaf import action, condition
 from .parallele import parallele
-from .runner import BTreeRunner
+from .runner import Backend, BTreeRunner
 from .utils import afilter, amap, run
 
 __all__ = [
     "FAILURE",
     "SUCCESS",
     "AsyncInnerFunction",
+    "Backend",
     "BTreeRunner",
     "CallableFunction",
     "ControlFlowException",

@@ -1,5 +1,5 @@
 import pytest
-from async_btree import run_tree, SUCCESS, FAILURE
+from async_btree import run, SUCCESS, FAILURE
 from async_btree.utils import to_async, amap, afilter
 
 
@@ -20,28 +20,28 @@ def test_run_tree_default_backend():
     async def _tree() -> bool:
         return SUCCESS
 
-    assert run_tree(_tree) == SUCCESS
+    assert run(_tree) == SUCCESS
 
 
 def test_run_tree_asyncio():
     async def _tree() -> bool:
         return SUCCESS
 
-    assert run_tree(_tree, backend="asyncio") == SUCCESS
+    assert run(_tree, backend="asyncio") == SUCCESS
 
 
 def test_run_tree_trio():
     async def _tree() -> bool:
         return SUCCESS
 
-    assert run_tree(_tree, backend="trio") == SUCCESS
+    assert run(_tree, backend="trio") == SUCCESS
 
 
 def test_run_tree_uvloop():
     async def _tree() -> bool:
         return SUCCESS
 
-    assert run_tree(_tree, backend="asyncio+uvloop") == SUCCESS
+    assert run(_tree, backend="asyncio+uvloop") == SUCCESS
 
 
 async def test_to_async_wraps_sync():

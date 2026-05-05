@@ -1,15 +1,16 @@
 """Utility function."""
 
+from __future__ import annotations
+
 from collections.abc import AsyncGenerator, AsyncIterable, Awaitable, Callable, Iterable
-from contextvars import copy_context
 from functools import wraps
 from inspect import iscoroutinefunction
 from typing import Any, TypeVar
-from warnings import warn
 
 from .definition import CallableFunction, node_metadata
+from .runner import Backend, BTreeRunner
 
-__all__ = ["afilter", "amap", "has_curio", "run", "run_once", "to_async"]
+__all__ = ["afilter", "amap", "run", "run_once", "to_async"]
 
 T = TypeVar("T")
 
@@ -79,24 +80,21 @@ def to_async(target: CallableFunction) -> Callable[..., Awaitable[Any]]:
     Returns:
         (Callable[..., Awaitable[Any]]): an async version of target function
     """
-
     if iscoroutinefunction(target):
-        # nothing todo
         return target
 
-    # use node_metadata to keep trace of target function name
     @node_metadata(name=target.__name__.lstrip("_") if hasattr(target, "__name__") else "anonymous")
-    async def _to_async(*args, **kwargs):
+    async def _to_async(*args: Any, **kwargs: Any) -> Any:
         return target(*args, **kwargs)
 
     return _to_async
 
 
 def run_once(target: CallableFunction) -> CallableFunction:
-    """Implemet 'run once' function.
+    """Implement 'run once' function.
 
-    The target function is call exactly once. Any fuher call will return the first result.
-    This decorator works on async and sync function.
+    The target function is called exactly once. Any further call will return the first result.
+    This decorator works on async and sync functions.
 
     Args:
         target (CallableFunction): target function
@@ -110,7 +108,7 @@ def run_once(target: CallableFunction) -> CallableFunction:
     if not iscoroutinefunction(target):
 
         @wraps(target)
-        def sync_wrapper(*args, **kwargs):
+        def sync_wrapper(*args: Any, **kwargs: Any) -> Any:
             nonlocal _result, _has_run
             if not _has_run:
                 _has_run = True
@@ -119,41 +117,35 @@ def run_once(target: CallableFunction) -> CallableFunction:
 
         return sync_wrapper
 
-    async def async_wrapper(*args, **kwargs):
+    async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
         nonlocal _result, _has_run
         if not _has_run:
             _has_run = True
-            _result = await target(*args, **kwargs)
+            _result = await target(*args, **kwargs)  # type: ignore[misc]
         return _result
 
     return async_wrapper
 
 
-@run_once
-def has_curio() -> bool:
-    """Return True if curio extention is present.
+def run(
+    target: Callable[..., Awaitable[Any]],
+    *args: Any,
+    backend: Backend = "asyncio",
+    **kwargs: Any,
+) -> Any:
+    """Run a behavior tree callable to completion.
+
+    Convenience wrapper around BTreeRunner for one-shot execution.
+
+    Args:
+        target: async callable (coroutine function)
+        *args: positional arguments passed to target
+        backend: async runtime — "asyncio" (default), "trio", or "asyncio+uvloop"
+        **kwargs: keyword arguments passed to target
 
     Returns:
-        bool:  True if curio extention is present.
+        whatever target returns
     """
-    try:
-        import curio  # noqa: F401  # pyright: ignore[reportMissingImports]
+    with BTreeRunner(backend=backend) as runner:
+        return runner.run(target, *args, **kwargs)
 
-        return True
-    except Exception:  # pragma: no cover
-        return False
-
-
-def run(kernel, target, *args):
-    """Curio run with independent contextvars.
-
-    This mimic asyncio framework behaviour.
-    We use a contextvars per run rather than use one per task with `from curio.task.ContextTask`
-
-    ```
-    copy_context().run(kernel.run, target, *args)
-    ```
-
-    """
-    warn("This method is deprecated.", DeprecationWarning, stacklevel=2)
-    return copy_context().run(kernel.run, target, *args)
