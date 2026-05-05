@@ -14,6 +14,16 @@ from async_btree import (
     sequence,
 )
 
+pytestmark = pytest.mark.anyio
+
+
+@pytest.fixture(params=["asyncio", "trio", "asyncio+uvloop"])
+def anyio_backend(request):
+    backend = request.param
+    if backend == "asyncio+uvloop":
+        return "asyncio", {"use_uvloop": True}
+    return backend, {}
+
 
 async def a_func():
     return "a"
@@ -35,8 +45,6 @@ async def exception_func():
     raise RuntimeError("ops")
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_sequence():
     assert not await sequence(children=[a_func, failure_func, success_func])(), "default behaviour fail of one failed"
 
@@ -65,8 +73,6 @@ async def test_sequence():
     assert "_succes_threshold" in meta.properties
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_fallback():
     with pytest.raises(RuntimeError):
         assert await fallback(children=[exception_func, failure_func, a_func])()
@@ -75,8 +81,6 @@ async def test_fallback():
     assert fallback(children=[]).__node_metadata.name == "fallback"
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_selector():
     with pytest.raises(RuntimeError):
         assert await selector(children=[exception_func, failure_func, a_func])()
@@ -84,8 +88,6 @@ async def test_selector():
     assert selector(children=[]).__node_metadata.name == "selector"
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_decision():
     assert await decision(condition=success_func, success_tree=a_func)() == "a"
     # return SUCCESS when no failure_tree and False condition result
@@ -100,8 +102,6 @@ async def test_decision():
         assert key in meta.edges
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_repeat_until_falsy_condition():
     counter = ContextVar("counter", default=5)
 
@@ -123,8 +123,6 @@ async def test_repeat_until_falsy_condition():
         assert key in meta.edges
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_repeat_until_return_last_result():
     counter = ContextVar("tick_test_repeat_until_return_last_result", default=5)
 
