@@ -1,6 +1,6 @@
 [project]
 name = "async_btree"
-version = "2.0.1"
+version = "3.0.0"
 description = "Async behavior tree"
 authors = [{ name = "Jerome Guibert", email = "jguibert@gmail.com" }]
 readme = "README.md"
@@ -22,6 +22,7 @@ classifiers = [
 ]
 requires-python = ">=3.11,<4"
 license-files = ["LICENSE.md"]
+dependencies = ["anyio >= 4"]
 
 [project.urls]
 homepage = "https://pypi.org/project/async_btree"
@@ -29,24 +30,18 @@ documentation = "https://geronimo-iia.github.io/async-btree/"
 repository = "https://github.com/geronimo-iia/async-btree"
 
 
-[project.optional-dependencies]
-curio = ["curio-compat ~=1.6.7"]
-
 [dependency-groups]
-dev =  [
+dev = [
     "ruff ~= 0.9",
     "pyright ~= 1.1",
     "pytest >= 9",
     "pytest-cov >= 7",
-    "pytest-mock >=3",
-    "pytest-asyncio >= 1.3,< 2",
-    "xdoctest >=1.2,<1.4", # A rewrite of the builtin doctest module
+    "pytest-mock >= 3",
+    "anyio[trio] >= 4",
+    "uvloop >= 0.21",
+    "xdoctest >= 1.2,< 1.4",
     "coverage[toml] >= 7.13",
-    "setuptools>=82",
-]
-curio = [
-    "curio-compat ~=1.6.7",
-    "pytest-curio >= 1.1.0",
+    "setuptools >= 82",
 ]
 docs = [
     "mkdocs ~= 1.6",
@@ -57,12 +52,6 @@ docs = [
     "mkdocs-literate-nav >= 0.6",
 ]
 
-# fix pytest-curio for now
-[[tool.uv.dependency-metadata]]
-name = "pytest-curio"
-version = "1.1.0"
-requires-dist = ["curio-compat ~=1.6.7"]
-
 [tool.setuptools]
 packages = ["async_btree"]
 
@@ -70,9 +59,6 @@ packages = ["async_btree"]
 package = true
 cache-dir = "./.cache"
 default-groups = ["dev", "docs"]
-
-#[tool.uv.sources]
-#curio = { git = "https://github.com/dabeaz/curio.git", branch = "master" }
 
 [tool.coverage.paths]
 source = ["async_btree"]
@@ -91,11 +77,9 @@ exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 testpaths = ["tests"]
 addopts = "--strict-markers --pdbcls=tests:Debugger -r sxX --cov=async_btree --cov-report=html --cov-report=term-missing:skip-covered"
 cache_dir = ".cache"
-asyncio_mode = "strict"
-asyncio_default_fixture_loop_scope = "function"
+anyio_backends = ["asyncio", "trio", "asyncio+uvloop"]
 markers = [
-    "curio: tests requiring curio backend",
-    "all_backends: run with both asyncio and curio backends",
+    "all_backends: run with all backends",
 ]
 
 [tool.ruff]
