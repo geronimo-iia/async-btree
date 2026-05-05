@@ -1,5 +1,28 @@
 # Change Log
 
+## 3.0.0 (unreleased)
+
+Breaking changes:
+
+- drop curio backend entirely — anyio is the sole async backend
+- remove `BTreeRunner(disable_curio=)` parameter, replaced by `BTreeRunner(backend=)`
+- remove `has_curio()` utility function
+- remove `[curio]` optional dependency group
+- remove old `run(kernel, target, *args)` curio helper — replaced by `run(target, *args, backend=...)`
+- fix `parallele` parameter typo: `succes_threshold` → `success_threshold`
+- `BTreeRunner.run()` context isolation: each call starts from the `__enter__` snapshot; mutations no longer accumulate across ticks (was a side-effect of the old `asyncio.Runner` persistent loop)
+
+Changes:
+
+- add `Backend = Literal["asyncio", "trio", "asyncio+uvloop"]` type and export it from public API
+- `BTreeRunner(backend=)` supports `"asyncio"` (default), `"trio"`, `"asyncio+uvloop"`
+- `run(target, *args, backend="asyncio", **kwargs)` — one-shot convenience wrapper around `BTreeRunner`
+- `parallele` rewrites with `anyio.create_task_group()` — runs children concurrently across all backends
+- full test suite parametrized over asyncio, trio, and asyncio+uvloop via `pytest-anyio`
+- add tutorials: context var isolation (tutorial 3), exception handling (tutorial 4)
+- add migration guides: `docs/migration/curio-to-anyio.md`, `docs/migration/asyncio-to-anyio.md`
+- minimum Python version unchanged: 3.11
+
 ## 2.0.1 (2026-05-05)
 
 Changes:
