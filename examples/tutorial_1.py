@@ -64,5 +64,19 @@ b_tree = bt.sequence(
 
 
 if __name__ == "__main__":
+    # simplest entry point — one-shot run, asyncio by default
+    bt.run(b_tree)
+
+    # choose a different backend
+    bt.run(b_tree, backend="trio")
+    bt.run(b_tree, backend="asyncio+uvloop")
+
+    # BTreeRunner when you need multiple runs in the same context
     with bt.BTreeRunner() as r:
+        r.run(b_tree)
+
+    with bt.BTreeRunner(backend="trio") as r:
+        r.run(b_tree)
+
+    with bt.BTreeRunner(backend="asyncio+uvloop") as r:
         r.run(b_tree)

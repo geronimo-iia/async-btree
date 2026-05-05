@@ -9,7 +9,7 @@ The source code of this tutorial is [example/tutorial_1.py](https://raw.githubus
 
 ## How to create your own Action
 
-Firt, you have to wrote your function (async or sync) as normal, like this:
+First, you have to wrote your function (async or sync) as normal, like this:
 
 ```python
 def approach_object(name: str):
@@ -85,7 +85,20 @@ b_tree = bt.sequence(children= [
 
 ```
 
-Run it:
+Run it — simplest form:
+
+```python
+bt.run(b_tree)
+```
+
+Or with an explicit backend:
+
+```python
+bt.run(b_tree, backend="trio")
+bt.run(b_tree, backend="asyncio+uvloop")
+```
+
+When you need to run the same tree multiple times in the same context, use `BTreeRunner`:
 
 ```python
 with bt.BTreeRunner() as runner:
@@ -176,3 +189,30 @@ In a real use case, we should find a way to avoid this:
 - either by using ContextVar (```from contextvars import ContextVar```)
 
 You could see a sample in this source is [example/tutorial_2_decisions.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_2_decisions.py).
+
+## Running trees — bt.run() vs BTreeRunner
+
+`bt.run()` is the simplest entry point: one call, one result, asyncio by default.
+
+```python
+result = bt.run(b_tree)
+result = bt.run(b_tree, backend="trio")
+result = bt.run(b_tree, backend="asyncio+uvloop")
+```
+
+Use `BTreeRunner` when you need to run the same tree — or multiple trees — several times from synchronous code, all sharing the same base context snapshot:
+
+```python
+with bt.BTreeRunner(backend="asyncio") as runner:
+    result1 = runner.run(tree_tick)
+    result2 = runner.run(tree_tick)
+    result3 = runner.run(tree_tick)
+```
+
+The context is captured once at `__enter__` (snapshot of the caller's `ContextVar` state). Each `runner.run()` call starts from that same snapshot — mutations inside a tick do not carry over to the next tick. See [example/tutorial_3_context.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_3_context.py) for a detailed walkthrough.
+
+For more advanced topics:
+
+- **ContextVar isolation and propagation** — how to pass data into a tree, why mutations don't escape, and how `BTreeRunner` keeps a stable base context across ticks: [example/tutorial_3_context.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_3_context.py)
+
+- **Exception handling** — `ControlFlowException`, `@ignore_exception`, exception propagation through `parallele` task groups: [example/tutorial_4_exceptions.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_4_exceptions.py)
