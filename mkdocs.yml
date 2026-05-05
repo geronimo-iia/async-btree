@@ -36,6 +36,9 @@ nav:
   - Tutorial: tutorial.md
   - API Reference: reference/
   - Changelog: changelog.md
+  - Migration:
+    - curio → anyio (3.0.0): migration/curio-to-anyio.md
+    - asyncio → anyio (3.0.0): migration/asyncio-to-anyio.md
   - Contributing: contributing.md
   - License: license.md
   - Code of Conduct: code_of_conduct.md
