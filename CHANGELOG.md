@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.1 (unreleased)
+
+Changes:
+- update pytest version
+
 ## 2.0.0 (2026-05-05)
 
 Breaking changes:
