@@ -18,12 +18,13 @@ async-btree/
 │   ├── parallele.py      # concurrent execution: parallele()
 │   ├── runner.py         # BTreeRunner context manager
 │   ├── analyze.py        # tree introspection: analyze(), stringify_analyze()
-│   ├── utils.py          # helpers: to_async(), amap(), afilter(), has_curio()
+│   ├── utils.py          # helpers: to_async(), amap(), afilter(), run()
 │   └── __init__.py       # public API exports
-├── tests/                # test suite (asyncio and curio backends)
-├── examples/             # usage examples
+├── tests/                # test suite (asyncio, trio, asyncio+uvloop backends)
+├── examples/             # usage examples (tutorials 1-4)
 ├── docs/                 # documentation source (MkDocs)
 │   ├── gen_ref_pages.py  # auto-generates API reference pages
+│   ├── migration/        # migration guides for major versions
 │   └── brainstorming/    # internal design notes (gitignored)
 ├── .github/
 │   └── workflows/
@@ -42,11 +43,8 @@ async-btree/
 # install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# install dependencies (asyncio only)
+# install dependencies
 make install
-
-# install dependencies with curio support
-make install-curio
 ```
 
 ## Make Targets
@@ -55,8 +53,7 @@ Run `make` to list all available targets.
 
 | Target | Description |
 | --- | --- |
-| `make install` | Install dependencies (asyncio only) |
-| `make install-curio` | Install dependencies with curio |
+| `make install` | Install dependencies |
 | `make lock` | Lock dependencies |
 | `make lint` | Check format, linting and types |
 | `make lint-fix` | Fix all auto-fixable issues |
@@ -72,18 +69,13 @@ Run `make` to list all available targets.
 
 ## Testing
 
-Tests run against two backends. By default `make install` installs asyncio only:
+Tests run against three backends — asyncio, trio, and asyncio+uvloop — parametrized automatically:
 
 ```bash
-# asyncio backend
 make install && make test
-
-# curio backend
-make install-curio && make test
 ```
 
-Tests marked `@pytest.mark.curio` run under curio only.
-Tests marked `@pytest.mark.asyncio` run under asyncio only.
+All test functions marked `@pytest.mark.anyio` run under all three backends via the `anyio_backend` fixture.
 
 ## Documentation
 
@@ -105,9 +97,8 @@ make docs-publish # deploy to gh-pages (CI does this on push to main)
 3. Bump version in `pyproject.toml`
 4. Run all checks locally — all must pass before merging:
    ```bash
-   make check                    # lint + type check + tests (asyncio)
-   make install-curio && make test  # tests with curio backend
-   make docs                     # documentation builds clean
+   make check    # lint + type check + tests (all backends)
+   make docs     # documentation builds clean
    ```
 5. Commit: `chore(release): bump version to X.Y.Z`
 6. Open PR `release/vX.Y.Z` → `main`, verify CI passes (`package.yml` runs on all Python versions)
