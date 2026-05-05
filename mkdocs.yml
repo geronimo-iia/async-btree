@@ -1,6 +1,8 @@
 site_name: Async behavior tree
 repo_url: https://github.com/geronimo-iia/async-btree
 repo_name: geronimo-iia/async-btree
+docs_dir: docs
+site_dir: site
 
 theme:
   name: "material"
@@ -8,20 +10,32 @@ theme:
     - navigation.tracking
     - navigation.path
     - navigation.instant
-
+    - navigation.tabs
+    - navigation.indexes
 
 plugins:
-  - include-markdown
-  - mkdocstrings
   - search
+  - include-markdown
+  - gen-files:
+      scripts:
+        - docs/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            show_category_heading: true
+            docstring_style: google
 
 nav:
-  - index.md
-  - reference.md
-  - tutorial.md
-  - changelog.md
-  - license.md
-  - contributing.md
-  - code_of_conduct.md
-  - 'Github': 'https://github.com/geronimo-iia/async-btree'
-
+  - Home: index.md
+  - Tutorial: tutorial.md
+  - API Reference: reference/
+  - Changelog: changelog.md
+  - Contributing: contributing.md
+  - License: license.md
+  - Code of Conduct: code_of_conduct.md
+  - GitHub: https://github.com/geronimo-iia/async-btree

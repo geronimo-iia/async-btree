@@ -58,6 +58,10 @@ docs: ## Build site documentation
 	git fetch origin gh-pages
 	uv run mkdocs build --clean
 
+.PHONY: docs-serve
+docs-serve: ## Serve documentation locally with live reload
+	uv run mkdocs serve
+
 .PHONY: docs-publish
 docs-publish: ## Publish site documentation
 	uv run mkdocs gh-deploy --clean

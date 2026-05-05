@@ -35,7 +35,8 @@ Run `make` to list all available targets.
 | `make build` | Build module (runs check first) |
 | `make publish` | Publish module (runs build first) |
 | `make docs` | Build site documentation |
-| `make docs-publish` | Publish site documentation |
+| `make docs-serve` | Serve documentation locally with live reload |
+| `make docs-publish` | Publish site documentation to gh-pages |
 | `make clean` | Remove all generated and temporary files |
 | `make requirements` | Generate requirements.txt |
 
@@ -53,6 +54,16 @@ make install-curio && make test
 
 Tests marked `@pytest.mark.curio` run under curio only.
 Tests marked `@pytest.mark.asyncio` run under asyncio only.
+
+## Documentation
+
+Sources live in `docs/`. API reference is auto-generated from docstrings — no manual edits needed in `docs/reference/`.
+
+```bash
+make docs-serve   # live preview at http://127.0.0.1:8000
+make docs         # full build into site/
+make docs-publish # deploy to gh-pages (CI does this on push to main)
+```
 
 ## Code Quality
 
