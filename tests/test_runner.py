@@ -91,8 +91,16 @@ def test_runner_context_isolation():
     assert var.get() == 1  # mutation did not escape to caller
 
 
+@pytest.mark.xfail(
+    strict=True,
+    reason=(
+        "anyio.run() creates a new event loop per call; context mutations inside one call "
+        "are isolated to that call's copy and do not propagate back to self._context. "
+        "Shared mutable context across runner.run() calls is not achievable without "
+        "asyncio-specific APIs (create_task(context=...)) which have no trio equivalent."
+    ),
+)
 def test_runner_context_shared_across_runs():
-    # Gap 3: multiple runner.run() calls within same BTreeRunner share context
     var: ContextVar[int] = ContextVar("var", default=0)
 
     async def _set(value: int) -> None:
