@@ -1,7 +1,7 @@
 import pytest
-from async_btree import run, SUCCESS, FAILURE
-from async_btree.utils import to_async, amap, afilter
 
+from async_btree import SUCCESS, run
+from async_btree.utils import afilter, amap, to_async
 
 pytestmark = pytest.mark.anyio
 

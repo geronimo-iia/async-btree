@@ -1,6 +1,6 @@
 import pytest
-from async_btree import ControlFlowException, ignore_exception, parallele, FAILURE, SUCCESS
 
+from async_btree import FAILURE, SUCCESS, ControlFlowException, ignore_exception, parallele
 
 pytestmark = pytest.mark.anyio
 

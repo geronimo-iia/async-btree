@@ -1,7 +1,8 @@
-import pytest
 from contextvars import ContextVar
-from async_btree import BTreeRunner, SUCCESS
 
+import pytest
+
+from async_btree import SUCCESS, BTreeRunner
 
 pytestmark = pytest.mark.anyio
 

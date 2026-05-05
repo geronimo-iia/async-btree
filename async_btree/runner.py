@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import contextvars
-from collections.abc import Awaitable, Callable
 from contextvars import copy_context
-from typing import Any, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Literal, TypeVar
 
 import anyio
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable, Callable
 
 Backend = Literal["asyncio", "trio", "asyncio+uvloop"]
 
@@ -17,7 +19,7 @@ _BACKEND_MAP: dict[Backend, tuple[str, dict[str, Any] | None]] = {
 
 R = TypeVar("R")
 
-__all__ = ["Backend", "BTreeRunner"]
+__all__ = ["BTreeRunner", "Backend"]
 
 
 class BTreeRunner:
