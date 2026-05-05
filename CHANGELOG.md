@@ -7,7 +7,7 @@ Changes:
 - add `mkdocs-gen-files` and `mkdocs-literate-nav` to auto-generate API reference from docstrings
 - add `make docs-serve` target for local documentation preview
 - update `mkdocs.yml`: explicit `docs_dir`/`site_dir`, labeled nav titles, mkdocstrings Google docstring style
-- update contributing guide with documentation workflow
+- update contributing guide with documentation workflow, repository layout, and release process
 
 ## 2.0.0 (2026-05-05)
 
