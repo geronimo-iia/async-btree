@@ -72,13 +72,16 @@ async def afilter(
 
 
 def to_async(target: CallableFunction) -> Callable[..., Awaitable[Any]]:
-    """Transform target function in async function if necessary.
+    """Return `target` unchanged if already async, otherwise wrap it in an async function.
+
+    The returned wrapper carries `__node_metadata` with the original function's name,
+    so sync functions participate in tree introspection via `analyze()`.
 
     Args:
-        target (CallableFunction): function to transform in async if necessary
+        target (CallableFunction): sync or async callable.
 
     Returns:
-        (Callable[..., Awaitable[Any]]): an async version of target function
+        (Callable[..., Awaitable[Any]]): an async version of `target`.
     """
     if iscoroutinefunction(target):
         return target
@@ -148,4 +151,3 @@ def run(
     """
     with BTreeRunner(backend=backend) as runner:
         return runner.run(target, *args, **kwargs)
-

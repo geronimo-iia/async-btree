@@ -10,6 +10,10 @@ Breaking changes:
 - remove `[curio]` optional dependency group
 - remove old `run(kernel, target, *args)` curio helper — replaced by `run(target, *args, backend=...)`
 - fix `parallele` parameter typo: `succes_threshold` → `success_threshold`
+- fix `sequence` parameter typo: `succes_threshold` → `success_threshold`
+- rename `ControlFlowException.instanciate` → `ControlFlowException.instantiate` (typo fix)
+- rename `repeat_until` → `repeat_while` (old behavior: loop while condition is truthy)
+- add `repeat_until` with correct standard BT semantics (loop until condition becomes truthy)
 - `BTreeRunner.run()` context isolation: each call starts from the `__enter__` snapshot; mutations no longer accumulate across ticks (was a side-effect of the old `asyncio.Runner` persistent loop)
 
 Changes:
@@ -19,6 +23,15 @@ Changes:
 - `run(target, *args, backend="asyncio", **kwargs)` — one-shot convenience wrapper around `BTreeRunner`
 - `parallele` rewrites with `anyio.create_task_group()` — runs children concurrently across all backends
 - full test suite parametrized over asyncio, trio, and asyncio+uvloop via `pytest-anyio`
+- add `timeout_after(child, delay)` decorator — returns `FAILURE` if child exceeds deadline (uses `anyio.move_on_after`)
+- add `condition_guard(condition, child)` — alias for `decision` without failure tree; skips child and returns `SUCCESS` when condition is falsy
+- add `cooldown(child, delay, throttled_value=SUCCESS)` — skips child if called before `delay` seconds have elapsed; returns `throttled_value` (default `SUCCESS`) when throttled
+- add `delay(child, seconds)` — waits `seconds` before running child
+- add `do_while(child, condition)` — runs child at least once, then repeats while condition is truthy
+- add `repeat_n(child, n)` — runs child exactly `n` times regardless of result
+- add `random_selector(children)` — fallback with children shuffled on every tick
+- add `parallel_race(children)` — runs children concurrently; first to finish wins, all others are cancelled
+- add `switch(condition, cases, default=None)` — routes to a child based on the return value of `condition`; falls back to `default` or `FAILURE` if no case matches
 - add tutorials: context var isolation (tutorial 3), exception handling (tutorial 4)
 - add migration guides: `docs/migration/curio-to-anyio.md`, `docs/migration/asyncio-to-anyio.md`
 - minimum Python version unchanged: 3.11

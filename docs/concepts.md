@@ -76,13 +76,13 @@ Note that `decorate(a_func, b_decorator)` is not an async function — only acti
 **Abstract tree.** Functions from async-btree build an abstract tree for you. The `node_metadata` decorator adds basic information: function name, parameters, and children relationships. This tree can be retrieved and stringified with `analyze` and `stringify_analyze`.
 
 ```python
-my_func = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name="btree_1")
+my_func = alias(child=repeat_while(child=action(hello), condition=success_until_zero), name="btree_1")
 print(stringify_analyze(analyze(my_func)))
 ```
 
 ```text
  --> btree_1:
-     --(child)--> repeat_until:
+     --(child)--> repeat_while:
          --(condition)--> success_until_zero:
          --(child)--> action:
                       target: hello
@@ -94,16 +94,45 @@ _(Remember that you don't need XML to do SQL — just write good SQL...)_
 
 ## Core primitives
 
-| Primitive | Role |
-|---|---|
-| `action` / `condition` | Wrap sync or async functions as BT nodes |
-| `sequence` | AND — run children in order, stop on failure |
-| `selector` | OR — run children in order, stop on success |
-| `repeat_until` | Loop child until condition met |
-| `decorate` | Apply decorator function to child output |
-| `alias` | Name a subtree |
-| `ignore_exception` | Turn exceptions into falsy |
-| `always_success` / `always_failure` | Force return semantics on no-return functions |
+### Leaves
+
+| Primitive   | Role                                                                             |
+| ----------- | -------------------------------------------------------------------------------- |
+| `action`    | Wrap sync or async function as BT node; exceptions become `ControlFlowException` |
+| `condition` | Wrap sync or async predicate; result coerced to `SUCCESS`/`FAILURE`              |
+
+### Control flow
+
+| Primitive               | Role                                                                                         |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| `sequence`              | Run children in order; stop early once enough succeed or too many fail (`success_threshold`) |
+| `fallback` / `selector` | OR — run children in order, stop on first success                                            |
+| `decision`              | If/else — evaluate `success_tree` or `failure_tree` based on condition                       |
+| `condition_guard`       | Run child only if condition is truthy; return `SUCCESS` otherwise                            |
+| `repeat_while`          | Loop child while condition is truthy                                                         |
+| `repeat_until`          | Loop child until condition becomes truthy                                                    |
+| `do_while`              | Run child at least once, then repeat while condition is truthy                               |
+| `repeat_n`              | Run child exactly N times                                                                    |
+| `random_selector`       | Fallback with children shuffled on every tick                                                |
+| `switch`                | Route to a child based on return value of condition                                          |
+| `parallele`             | Run children concurrently; succeed if enough succeed (`success_threshold`)                   |
+| `parallel_race`         | Run children concurrently; first to finish wins, others cancelled                            |
+
+### Decorators
+
+| Primitive                                    | Role                                                |
+| -------------------------------------------- | --------------------------------------------------- |
+| `decorate`                                   | Apply a decorator function to child output          |
+| `alias`                                      | Name a subtree                                      |
+| `ignore_exception`                           | Turn exceptions into falsy `ControlFlowException`   |
+| `always_success` / `always_failure`          | Force return semantics                              |
+| `inverter`                                   | Flip `SUCCESS` ↔ `FAILURE`                          |
+| `is_success` / `is_failure`                  | Assert child result polarity                        |
+| `retry`                                      | Retry child up to N times on failure                |
+| `retry_until_success` / `retry_until_failed` | Retry until result flips                            |
+| `timeout_after`                              | Return `FAILURE` if child exceeds deadline          |
+| `cooldown`                                   | Skip child if called again before delay has elapsed |
+| `delay`                                      | Wait N seconds before running child                 |
 
 > You should not use this until you're ready to think about what you're doing :)
 
@@ -112,7 +141,7 @@ _(Remember that you don't need XML to do SQL — just write good SQL...)_
 
 Since I've started this project in 2020, the Python landscape has changed a lot.
 
-We use async functions as the underlying mechanism to manage the execution flow, and the async framework was (and still is) a real concern.
+We use async functions as the underlying mechanism to manage the execution flow, and the async framework was (still) a real concern.
 About this topic you should read this [amazing blog post](https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/) by Nathaniel J. Smith.
 
 [David Beazley](https://github.com/dabeaz) worked on the [curio](https://github.com/dabeaz/curio) framework:
@@ -126,5 +155,5 @@ Personally, after some time testing and reading curio's code, I'm pretty addicte
 The primary goal of Curio was education and exploration related to asynchronous programming in Python.
 After ten years, David Beazley decided to abandon the Curio project. No further maintenance is expected.
 
-Even if I'm sad not to have seen this work included in the Python standard library, for the sanity of the current project, we have to change our async backend to anyio.
+Even if I'm sad to not have seen this work included in the Python standard library, for the sanity of the current project, we have to change our async backend to anyio.
 This framework, actively maintained, gives us support for asyncio, asyncio + uvloop, and trio.

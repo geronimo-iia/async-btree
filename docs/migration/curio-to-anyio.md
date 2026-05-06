@@ -104,6 +104,56 @@ parallele(children=[a, b], succes_threshold=1)
 parallele(children=[a, b], success_threshold=1)
 ```
 
+### sequence — success_threshold typo fixed
+
+Same typo fix applies to `sequence`:
+
+```python
+# before
+sequence(children=[a, b, c], succes_threshold=2)
+
+# after
+sequence(children=[a, b, c], success_threshold=2)
+```
+
+The property shown in `stringify_analyze` output changes from `succes_threshold: N` to
+`success_threshold: N`.
+
+### ControlFlowException.instanciate → instantiate
+
+The method was renamed to fix a typo:
+
+```python
+# before
+ControlFlowException.instanciate(e)
+
+# after
+ControlFlowException.instantiate(e)
+```
+
+Behavior is unchanged — pure rename.
+
+### repeat_until semantics corrected — repeat_while added
+
+The old `repeat_until` looped **while condition was truthy**, which is the opposite of
+standard BT semantics. 3.0.0 corrects this:
+
+| Function | Loops while condition is... |
+|---|---|
+| `repeat_while(condition, child)` | truthy (replaces old `repeat_until` behavior) |
+| `repeat_until(condition, child)` | falsy (standard BT semantics — stops when condition fires) |
+
+```python
+# before — looped while condition was truthy
+repeat_until(condition=my_condition, child=my_child)
+
+# after — same behavior, correct name
+repeat_while(condition=my_condition, child=my_child)
+
+# new repeat_until — loops until condition becomes truthy
+repeat_until(condition=my_condition, child=my_child)
+```
+
 ### ContextVar isolation
 
 With curio, `BTreeRunner` kept a persistent kernel across `run()` calls.

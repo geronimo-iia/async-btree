@@ -14,14 +14,13 @@ async-btree provides two tools to handle this:
 
 import async_btree as bt
 
-
 # ── Example 1: unhandled exception crashes the tree ───────────────────────
 
 print("=== Example 1: raw exception propagates ===")
 
 
 async def unreliable_sensor() -> bool:
-    raise IOError("sensor disconnected")
+    raise OSError("sensor disconnected")
 
 
 try:
@@ -37,7 +36,7 @@ print("\n=== Example 2: @ignore_exception → FAILURE ===")
 
 @bt.ignore_exception
 async def safe_sensor() -> bool:
-    raise IOError("sensor disconnected")
+    raise OSError("sensor disconnected")
 
 
 async def fallback_reading() -> bool:
@@ -46,11 +45,12 @@ async def fallback_reading() -> bool:
 
 
 # fallback: try safe_sensor first, use fallback_reading if it fails.
-# fallback succeeds if at least one child succeeds (succes_threshold=1).
+# fallback succeeds if at least one child succeeds (success_threshold=1).
 tree = bt.fallback(children=[bt.action(target=safe_sensor), bt.action(target=fallback_reading)])
 result = bt.run(tree)
 # result is a list of child outcomes; tree succeeded because one child did
 print(f"  tree result = {result!r}, any success = {any(bool(r) for r in result)}")
+
 
 # ignore_exception can also be applied at tree-construction time instead of
 # at function-definition time. Use this when you don't own the function
@@ -61,7 +61,8 @@ print(f"  tree result = {result!r}, any success = {any(bool(r) for r in result)}
 # decision is external to the node (e.g. building resilient subtrees from
 # functions that may or may not raise).
 async def raw_sensor() -> bool:
-    raise IOError("sensor disconnected")
+    raise OSError("sensor disconnected")
+
 
 # applied at construction time — fault-tolerance decided by the tree builder
 safe_by_design = bt.ignore_exception(raw_sensor)

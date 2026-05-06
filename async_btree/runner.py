@@ -25,8 +25,14 @@ __all__ = ["BTreeRunner", "Backend"]
 class BTreeRunner:
     """Context manager that runs behavior trees against a configurable async backend.
 
+    On `__enter__`, a snapshot of the caller's `ContextVar` state is captured via
+    `copy_context()`. Each `run()` call executes in an isolated copy of that snapshot —
+    mutations inside a run do not escape to the caller and do not accumulate across
+    successive `run()` calls.
+
     Args:
-        backend: async runtime to use — "asyncio" (default), "trio", or "asyncio+uvloop"
+        backend (Backend): async runtime to use — "asyncio" (default), "trio", or
+            "asyncio+uvloop".
     """
 
     def __init__(self, backend: Backend = "asyncio") -> None:

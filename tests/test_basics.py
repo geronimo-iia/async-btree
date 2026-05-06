@@ -38,7 +38,7 @@ def test_exception_deduplicate():
     a = ControlFlowException(Exception("test 1"))
     b = ControlFlowException(Exception("test 2"))
     assert a != b
-    assert a == ControlFlowException.instanciate(a)
+    assert a == ControlFlowException.instantiate(a)
 
 
 async def test_node_metadata_do_not_change_behavior():

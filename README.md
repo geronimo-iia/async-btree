@@ -7,10 +7,10 @@ Versions following [Semantic Versioning](https://semver.org/)
 
 See [documentation](https://geronimo-iia.github.io/async-btree).
 
-Requires Python 3.11+. 
-For Python 3.9/3.10 support use [1.x releases](https://github.com/geronimo-iia/async-btree/tree/main-1.x).
-For 2.x (asyncio/curio) use [2.x releases](https://github.com/geronimo-iia/async-btree/tree/main-2.x).
+Requires Python 3.11+.
 
+- For Python >= 3.11, (asyncio/curio) use [2.x releases](https://github.com/geronimo-iia/async-btree/tree/main-2.x).
+- For Python 3.9/3.10, (asyncio/curio) use [1.x releases](https://github.com/geronimo-iia/async-btree/tree/main-1.x).
 
 ## Overview
 
@@ -53,27 +53,25 @@ What I find useful with behavior tree:
 - add external measure to dynamicaly change a behavior, a first step on observable pattern...
 
 As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of functional programming to obtain what I want: add metadata on a semantic construction, deal with closure, use function in parameters or in return value...
-
 And a last reason, more personal, it that i would explore python expressivity.
 
 __SO HOW ?__
 
-In this module, I propose using the concept of coroutines, and their mechanisms to manage the execution flow.
+> This library uses coroutines and functional composition instead. No class trees. No configuration files (no XML, no JSON, no YAML). Business logic is plain Python functions. Composition is plain Python.
+
 By this way:
 
 - we reuse simple language idiom to manage state, parameter, etc
 - no design constraint on action implementation
 - most of language build block could be reused
 
-To resume:
-> This library uses coroutines and functional composition instead. No class trees. No configuration files (no XML, no JSON, no YAML). Business logic is plain Python functions. Composition is plain Python.
-
-The main reason (oriented and personal point of view) is that you did not need to introduce an extra level of abstraction 
-to declare a composition of functions. I think it's true for most of main use case (except using an editor to wrote behaviour tree for example).
-
+No need to introduce an extra level of abstraction to declare a composition of functions. I think it's true for most of main use case (except using an editor to wrote behaviour tree for example).
 So "If you wrote your function with python, wrote composition in python"... 
 _(remember that you did not need XML to do SQL, just write good sql...)_
 
+See [Concepts](https://geronimo-iia.github.io/async-btree/concepts/) for a deeper explanation of the design principles.
+
+The rest is just implementation details..
 
 You could build expression like this:
 
@@ -95,23 +93,16 @@ Note that ```decorate(a_func, b_decorator)``` is not an async function, only act
 Want an abstract tree of our behaviour tree ?
 
 Functions from async-btree build an abstract tree for you. 
-If you lookup in code, you should see an annotation "node_metadata" on internal implementation. 
-This decorator add basic information like function name, parameters, and children relation ship.
+If you lookup in code, you should see an annotation "node_metadata" on internal implementation. This decorator add basic information like function name, parameters, and children relation ship.
 
 This abstract tree can be retrieved and stringified with ```analyze``` and ```stringify_analyze```.
-Here the profile:
-
-```python
-  def analyze(target: CallableFunction) -> Node: # here we have our "abstract tree code"
-    ...
-```
 
 For example:
 
 ```python
 
 # your behaviour tree, or a sub tree:
-my_func = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name="btree_1")
+my_func = alias(child=repeat_while(child=action(hello), condition=success_until_zero), name="btree_1")
 
 # retrieve meta information and build a Node tree
 abstract_tree_tree_1 = analyze(my_func) 
@@ -124,7 +115,7 @@ This should print:
 
 ```text
  --> btree_1:
-     --(child)--> repeat_until:
+     --(child)--> repeat_while:
          --(condition)--> success_until_zero:
          --(child)--> action:
                       target: hello
@@ -143,9 +134,49 @@ Note about action and condition method:
 - **ContextVar as blackboard** — no custom blackboard class needed. Use Python's built-in [`contextvars`](https://docs.python.org/3/library/contextvars.html).
 - **Node metadata** — `@node_metadata` decorates inner functions with name, parameters, and child relationships. This builds the abstract tree used by `analyze()`.
 
-See [Concepts](https://geronimo-iia.github.io/async-btree/concepts/) for a deeper explanation of the design principles.
 
-The rest is just implementation details..
+
+### Core primitives
+
+**Leaves**
+
+| Primitive   | Role                                                                             |
+| ----------- | -------------------------------------------------------------------------------- |
+| `action`    | Wrap sync or async function as BT node; exceptions become `ControlFlowException` |
+| `condition` | Wrap sync or async predicate; result coerced to `SUCCESS`/`FAILURE`              |
+
+**Control flow**
+
+| Primitive               | Role                                                                                         |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| `sequence`              | Run children in order; stop early once enough succeed or too many fail (`success_threshold`) |
+| `fallback` / `selector` | OR — run children in order, stop on first success                                            |
+| `decision`              | If/else — evaluate `success_tree` or `failure_tree` based on condition                       |
+| `condition_guard`       | Run child only if condition is truthy; return `SUCCESS` otherwise                            |
+| `repeat_while`          | Loop child while condition is truthy                                                         |
+| `repeat_until`          | Loop child until condition becomes truthy                                                    |
+| `do_while`              | Run child at least once, then repeat while condition is truthy                               |
+| `repeat_n`              | Run child exactly N times                                                                    |
+| `random_selector`       | Fallback with children shuffled on every tick                                                |
+| `switch`                | Route to a child based on return value of condition                                          |
+| `parallele`             | Run children concurrently; succeed if enough succeed (`success_threshold`)                   |
+| `parallel_race`         | Run children concurrently; first to finish wins, others cancelled                            |
+
+**Decorators**
+
+| Primitive                                    | Role                                                |
+| -------------------------------------------- | --------------------------------------------------- |
+| `decorate`                                   | Apply a decorator function to child output          |
+| `alias`                                      | Name a subtree                                      |
+| `ignore_exception`                           | Turn exceptions into falsy `ControlFlowException`   |
+| `always_success` / `always_failure`          | Force return semantics                              |
+| `inverter`                                   | Flip `SUCCESS` ↔ `FAILURE`                          |
+| `is_success` / `is_failure`                  | Assert child result polarity                        |
+| `retry`                                      | Retry child up to N times on failure                |
+| `retry_until_success` / `retry_until_failed` | Retry until result flips                            |
+| `timeout_after`                              | Return `FAILURE` if child exceeds deadline          |
+| `cooldown`                                   | Skip child if called again before delay has elapsed |
+| `delay`                                      | Wait N seconds before running child                 |
 
 
 ### Async backend
@@ -242,7 +273,7 @@ safe = bt.ignore_exception(unreliable_sensor)
 ### Tree introspection
 
 ```python
-my_func = bt.alias(child=bt.repeat_until(child=bt.action(hello), condition=success_until_zero), name="btree_1")
+my_func = bt.alias(child=bt.repeat_while(child=bt.action(hello), condition=success_until_zero), name="btree_1")
 
 abstract_tree = bt.analyze(my_func)
 print(bt.stringify_analyze(abstract_tree))
@@ -250,7 +281,7 @@ print(bt.stringify_analyze(abstract_tree))
 
 ```text
  --> btree_1:
-     --(child)--> repeat_until:
+     --(child)--> repeat_while:
          --(condition)--> success_until_zero:
          --(child)--> action:
                       target: hello
@@ -263,5 +294,6 @@ print(bt.stringify_analyze(abstract_tree))
 - [tutorial_2_decisions.py](https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_2_decisions.py) — decision trees and selectors with ContextVar
 - [tutorial_3_context.py](https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_3_context.py) — ContextVar isolation and propagation
 - [tutorial_4_exceptions.py](https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_4_exceptions.py) — exception handling, `ControlFlowException`, `parallele`
+- [tutorial_5_switch.py](https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_5_switch.py) — routing with `switch`, default branch, ContextVar-driven dispatch
 
 See full [API Reference](https://geronimo-iia.github.io/async-btree) and [Tutorial](https://geronimo-iia.github.io/async-btree/tutorial/).

@@ -216,3 +216,64 @@ For more advanced topics:
 - **ContextVar isolation and propagation** — how to pass data into a tree, why mutations don't escape, and how `BTreeRunner` keeps a stable base context across ticks: [example/tutorial_3_context.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_3_context.py)
 
 - **Exception handling** — `ControlFlowException`, `@ignore_exception`, exception propagation through `parallele` task groups: [example/tutorial_4_exceptions.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_4_exceptions.py)
+
+- **Routing with switch** — dispatch to different subtrees based on a runtime key; handle unknown cases with a default branch: [example/tutorial_5_switch.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_5_switch.py)
+
+## Routing with switch
+
+`switch` evaluates a condition to get a key, looks it up in a `cases` dict, and runs the matching child. If no case matches, it runs the `default` child (if provided) or returns `FAILURE`.
+
+```python
+from contextvars import ContextVar
+import async_btree as bt
+
+mode: ContextVar[str] = ContextVar("mode", default="idle")
+
+async def get_mode() -> str:
+    return mode.get()
+
+async def handle_idle() -> bool:
+    print("Robot is idle.")
+    return bt.SUCCESS
+
+async def handle_patrol() -> bool:
+    print("Robot is patrolling.")
+    return bt.SUCCESS
+
+async def unknown_mode() -> bool:
+    print(f"Unknown mode: {mode.get()!r}")
+    return bt.FAILURE
+
+router = bt.switch(
+    condition=get_mode,
+    cases={
+        "idle": handle_idle,
+        "patrol": handle_patrol,
+    },
+    default=unknown_mode,
+)
+```
+
+The tree representation shows the known case keys and the default branch:
+
+```text
+ --> switch:
+     case_keys: ['idle', 'patrol']
+     --(default)--> unknown_mode:
+```
+
+Because `bt.run()` captures the current `ContextVar` state at call time, set the mode before each call:
+
+```python
+for m in ["idle", "patrol", "recharge"]:
+    mode.set(m)
+    bt.run(router)
+```
+
+```text
+Robot is idle.
+Robot is patrolling.
+Unknown mode: 'recharge'
+```
+
+See [example/tutorial_5_switch.py](https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_5_switch.py) for the full example.

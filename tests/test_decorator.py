@@ -1,5 +1,6 @@
 from contextvars import ContextVar
 
+import anyio
 import pytest
 
 from async_btree import (
@@ -9,7 +10,9 @@ from async_btree import (
     alias,
     always_failure,
     always_success,
+    cooldown,
     decorate,
+    delay,
     ignore_exception,
     inverter,
     is_failure,
@@ -17,6 +20,7 @@ from async_btree import (
     retry,
     retry_until_failed,
     retry_until_success,
+    timeout_after,
 )
 
 pytestmark = pytest.mark.anyio
@@ -209,3 +213,111 @@ async def test_retry_until_failed():
     meta = retry_until_failed(ignore_exception(tick)).__node_metadata
     assert meta.name == "retry_until_failed"
     assert "max_retry" in meta.properties
+
+
+async def test_timeout_after_completes_in_time():
+    async def fast():
+        return SUCCESS
+
+    result = await timeout_after(child=fast, delay=5.0)()
+    assert result is SUCCESS
+
+
+async def test_timeout_after_exceeds_deadline():
+    async def slow():
+        await anyio.sleep(10.0)
+        return SUCCESS
+
+    result = await timeout_after(child=slow, delay=0.01)()
+    assert result is FAILURE
+
+
+async def test_timeout_after_returns_child_value():
+    async def child():
+        return "hello"
+
+    result = await timeout_after(child=child, delay=5.0)()
+    assert result == "hello"
+
+
+async def test_timeout_after_metadata():
+    async def fast():
+        return SUCCESS
+
+    meta = timeout_after(child=fast, delay=1.0).__node_metadata
+    assert meta.name == "timeout_after"
+    assert "delay" in meta.properties
+
+
+async def test_cooldown_runs_first_call():
+    async def child():
+        return "ran"
+
+    result = await cooldown(child=child, delay=10.0)()
+    assert result == "ran"
+
+
+async def test_cooldown_throttles_second_call():
+    async def child():
+        return "ran"
+
+    node = cooldown(child=child, delay=10.0)
+    await node()
+    result = await node()
+    assert result is SUCCESS  # default throttled_value
+
+
+async def test_cooldown_custom_throttled_value():
+    async def child():
+        return "ran"
+
+    node = cooldown(child=child, delay=10.0, throttled_value=FAILURE)
+    await node()
+    result = await node()
+    assert result is FAILURE
+
+
+async def test_cooldown_runs_after_delay():
+    async def child():
+        return "ran"
+
+    node = cooldown(child=child, delay=0.01)
+    await node()
+    await anyio.sleep(0.02)
+    result = await node()
+    assert result == "ran"
+
+
+async def test_cooldown_metadata():
+    async def child():
+        return SUCCESS
+
+    meta = cooldown(child=child, delay=1.0).__node_metadata
+    assert meta.name == "cooldown"
+    assert "delay" in meta.properties
+
+
+async def test_delay_runs_child():
+    async def child():
+        return "done"
+
+    result = await delay(child=child, seconds=0.01)()
+    assert result == "done"
+
+
+async def test_delay_waits_before_running():
+    import time
+
+    start = time.monotonic()
+    await delay(child=lambda: SUCCESS, seconds=0.05)()
+    elapsed = time.monotonic() - start
+    assert elapsed >= 0.04
+
+
+async def test_delay_metadata():
+    async def child():
+        return SUCCESS
+
+    meta = delay(child=child, seconds=1.0).__node_metadata
+    assert meta.name == "delay"
+    assert "seconds" in meta.properties

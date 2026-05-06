@@ -5,6 +5,7 @@ from typing import Any
 import anyio
 
 from .definition import (
+    FAILURE,
     AsyncInnerFunction,
     CallableFunction,
     ControlFlowException,
@@ -12,7 +13,7 @@ from .definition import (
 )
 from .utils import to_async
 
-__all__ = ["parallele"]
+__all__ = ["parallel_race", "parallele"]
 
 
 def parallele(
@@ -45,8 +46,8 @@ def parallele(
         results: list[Any] = []
 
         async def _run(child: AsyncInnerFunction) -> None:
-                results.append(await child())
-            
+            results.append(await child())
+
         try:
             async with anyio.create_task_group() as tg:
                 for child in _children:
@@ -54,6 +55,45 @@ def parallele(
 
             return len(list(filter(bool, results))) >= _success_threshold
         except Exception as e:
-            raise ControlFlowException.instanciate(e) from e
-    
+            raise ControlFlowException.instantiate(e) from e
+
     return _parallele
+
+
+def parallel_race(children: list[CallableFunction]) -> AsyncInnerFunction:
+    """Run children concurrently; return the result of the first child to finish.
+
+    As soon as one child completes, all remaining children are cancelled.
+    Returns `FAILURE` if `children` is empty.
+
+    Args:
+        children: list of sync or async callables.
+
+    Returns:
+        AsyncInnerFunction: an awaitable function that returns the winner's result.
+
+    Raises:
+        ControlFlowException: wrapping any exception raised by a child.
+    """
+    _children = [to_async(child) for child in children]
+
+    @node_metadata()
+    async def _parallel_race() -> Any:
+        winner: list[Any] = []
+
+        async def _run(child: AsyncInnerFunction) -> None:
+            result = await child()
+            if not winner:
+                winner.append(result)
+                tg.cancel_scope.cancel()
+
+        try:
+            async with anyio.create_task_group() as tg:
+                for child in _children:
+                    tg.start_soon(_run, child)
+        except Exception as e:
+            raise ControlFlowException.instantiate(e) from e
+
+        return winner[0] if winner else FAILURE
+
+    return _parallel_race

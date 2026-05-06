@@ -1,6 +1,7 @@
+import anyio
 import pytest
 
-from async_btree import FAILURE, SUCCESS, ControlFlowException, ignore_exception, parallele
+from async_btree import FAILURE, SUCCESS, ControlFlowException, ignore_exception, parallel_race, parallele
 
 pytestmark = pytest.mark.anyio
 
@@ -99,3 +100,48 @@ async def test_parallele_empty():
     # Gap 6: new edge case — no children, threshold 0
     result = await parallele(children=[], success_threshold=0)()
     assert result == SUCCESS
+
+
+async def test_parallel_race_returns_first_winner():
+    async def fast():
+        return "fast"
+
+    async def slow():
+        await anyio.sleep(10.0)
+        return "slow"
+
+    result = await parallel_race(children=[fast, slow])()
+    assert result == "fast"
+
+
+async def test_parallel_race_empty():
+    result = await parallel_race(children=[])()
+    assert result is FAILURE
+
+
+async def test_parallel_race_single_child():
+    async def child():
+        return SUCCESS
+
+    result = await parallel_race(children=[child])()
+    assert result is SUCCESS
+
+
+async def test_parallel_race_exception_raises_control_flow():
+    async def raises():
+        raise ValueError("boom")
+
+    async def slow():
+        await anyio.sleep(10.0)
+        return SUCCESS
+
+    with pytest.raises(ControlFlowException):
+        await parallel_race(children=[raises, slow])()
+
+
+async def test_parallel_race_metadata():
+    async def child():
+        return SUCCESS
+
+    meta = parallel_race(children=[child]).__node_metadata
+    assert meta.name == "parallel_race"

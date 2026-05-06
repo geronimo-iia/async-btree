@@ -1,12 +1,26 @@
 """Declare async btree api."""
 
 from .analyze import Node, analyze, stringify_analyze
-from .control import decision, fallback, repeat_until, selector, sequence
+from .control import (
+    condition_guard,
+    decision,
+    do_while,
+    fallback,
+    random_selector,
+    repeat_n,
+    repeat_until,
+    repeat_while,
+    selector,
+    sequence,
+    switch,
+)
 from .decorator import (
     alias,
     always_failure,
     always_success,
+    cooldown,
     decorate,
+    delay,
     ignore_exception,
     inverter,
     is_failure,
@@ -14,6 +28,7 @@ from .decorator import (
     retry,
     retry_until_failed,
     retry_until_success,
+    timeout_after,
 )
 from .definition import (
     FAILURE,
@@ -25,7 +40,7 @@ from .definition import (
     node_metadata,
 )
 from .leaf import action, condition
-from .parallele import parallele
+from .parallele import parallel_race, parallele
 from .runner import Backend, BTreeRunner
 from .utils import afilter, amap, run
 
@@ -47,16 +62,24 @@ __all__ = [
     "amap",
     "analyze",
     "condition",
+    "condition_guard",
+    "cooldown",
     "decision",
     "decorate",
+    "delay",
+    "do_while",
     "fallback",
     "ignore_exception",
     "inverter",
     "is_failure",
     "is_success",
     "node_metadata",
+    "parallel_race",
     "parallele",
+    "random_selector",
+    "repeat_n",
     "repeat_until",
+    "repeat_while",
     "retry",
     "retry_until_failed",
     "retry_until_success",
@@ -64,4 +87,6 @@ __all__ = [
     "selector",
     "sequence",
     "stringify_analyze",
+    "switch",
+    "timeout_after",
 ]

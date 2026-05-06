@@ -14,21 +14,20 @@ __all__ = ["action", "condition"]
 
 
 def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
-    """Declare an action leaf.
+    """Declare an action leaf node.
 
-    Action is an awaitable closure of specified function,
-    (See alias function).
+    Wraps `target` as an awaitable closure. Any exception raised by `target`
+    is caught and re-raised as a `ControlFlowException`, giving it falsy meaning.
 
     Args:
-        target (CallableFunction): awaitable function
-        kwargs: optional kwargs argument to pass on target function
+        target (CallableFunction): sync or async callable to invoke.
+        kwargs: keyword arguments forwarded to `target` on each call.
 
     Returns:
         (AsyncInnerFunction): an awaitable function.
 
     Raises:
-        ControlFlowException : if error occurs
-
+        ControlFlowException: wrapping any exception raised by `target`.
     """
 
     _target = to_async(target)
@@ -38,22 +37,24 @@ def action(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
         try:
             return await _target(**kwargs)
         except Exception as e:
-            raise ControlFlowException.instanciate(e) from e
+            raise ControlFlowException.instantiate(e) from e
 
     return _action
 
 
 def condition(target: CallableFunction, **kwargs) -> AsyncInnerFunction:
-    """Declare a condition leaf.
+    """Declare a condition leaf node.
 
-    Condition is an awaitable closure of specified function.
+    Delegates to `is_success(action(target, **kwargs))` — returns `SUCCESS` if `target`
+    is truthy, `FAILURE` otherwise. Exceptions from `target` propagate as
+    `ControlFlowException`.
 
     Args:
-        target (CallableFunction):  awaitable function which be evaluated as True/False.
-        kwargs: optional kwargs argument to pass on target function
+        target (CallableFunction): sync or async callable evaluated as a boolean.
+        kwargs: keyword arguments forwarded to `target` on each call.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function.
+        (AsyncInnerFunction): an awaitable function that returns `SUCCESS` or `FAILURE`.
     """
     return alias_node_metadata(
         name="condition",
