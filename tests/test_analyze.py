@@ -7,7 +7,7 @@ from async_btree import (
     alias,
     analyze,
     inverter,
-    repeat_until,
+    repeat_while,
     retry,
     sequence,
     stringify_analyze,
@@ -37,13 +37,13 @@ def test_node_str():
 
 def test_analyze_tree_1():
     tree_1 = alias(
-        child=repeat_until(child=action(hello), condition=success_until_zero),
+        child=repeat_while(child=action(hello), condition=success_until_zero),
         name="btree_1",
     )
 
     a_tree_1 = analyze(tree_1)
 
-    printed_tree = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> action:\n                      target: hello\n"""
+    printed_tree = """ --> btree_1:\n     --(child)--> repeat_while:\n         --(condition)--> success_until_zero:\n         --(child)--> action:\n                      target: hello\n"""
 
     assert stringify_analyze(a_tree_1) == printed_tree
 
@@ -75,12 +75,12 @@ def test_analyze_simple_function():
 def test_analyze_sequence():
     a_tree = analyze(
         alias(
-            child=repeat_until(
+            child=repeat_while(
                 child=sequence(children=[action(hello), action(hello), action(hello)]),
                 condition=success_until_zero,
             ),
             name="btree_1",
         )
     )
-    print_test = """ --> btree_1:\n     --(child)--> repeat_until:\n         --(condition)--> success_until_zero:\n         --(child)--> sequence:\n                      succes_threshold: 3\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n"""
+    print_test = """ --> btree_1:\n     --(child)--> repeat_while:\n         --(condition)--> success_until_zero:\n         --(child)--> sequence:\n                      success_threshold: 3\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n             --(children)--> action:\n                             target: hello\n"""
     assert stringify_analyze(a_tree) == print_test

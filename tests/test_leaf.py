@@ -2,9 +2,17 @@ import pytest
 
 from async_btree import action, condition, ignore_exception
 
+pytestmark = pytest.mark.anyio
 
-@pytest.mark.curio
-@pytest.mark.asyncio
+
+@pytest.fixture(params=["asyncio", "trio", "asyncio+uvloop"])
+def anyio_backend(request):
+    backend = request.param
+    if backend == "asyncio+uvloop":
+        return "asyncio", {"use_uvloop": True}
+    return backend, {}
+
+
 async def test_condition():
     async def target_test(value):
         return value
@@ -16,8 +24,6 @@ async def test_condition():
     assert "target" in condition(target_test, value=False).__node_metadata.properties
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_action_with_exception_is_falsy():
     async def generate_exception():
         raise Exception("Bing!")
@@ -25,8 +31,6 @@ async def test_action_with_exception_is_falsy():
     assert not await ignore_exception(action(generate_exception))()
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_action_results():
     async def compute(a, b):
         return a + b

@@ -6,16 +6,13 @@ import pytest
 
 
 def pytest_configure(config):
-    """Disable verbose output when running tests."""
-    _logger = logging.getLogger()
-    _logger.setLevel(logging.DEBUG)
-
-    terminal = config.pluginmanager.getplugin("terminal")
-    terminal.TerminalReporter.showfspath = False
-
-    config.addinivalue_line("markers", "all_backends: run with both asyncio and curio backends")
+    logging.getLogger().setLevel(logging.DEBUG)
+    config.addinivalue_line("markers", "all_backends: run test against all anyio backends")
 
 
-def pytest_itemcollected(item):
-    if item.get_closest_marker("all_backends"):
-        item.add_marker(pytest.mark.curio, append=False)
+@pytest.fixture
+def anyio_backend(request):
+    backend_name = getattr(request, "param", "asyncio")
+    if backend_name == "asyncio+uvloop":
+        return "asyncio", {"use_uvloop": True}
+    return backend_name, {}

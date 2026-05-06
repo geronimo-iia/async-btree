@@ -2,6 +2,16 @@ import pytest
 
 from async_btree import FAILURE, SUCCESS, ControlFlowException, node_metadata
 
+pytestmark = pytest.mark.anyio
+
+
+@pytest.fixture(params=["asyncio", "trio", "asyncio+uvloop"])
+def anyio_backend(request):
+    backend = request.param
+    if backend == "asyncio+uvloop":
+        return "asyncio", {"use_uvloop": True}
+    return backend, {}
+
 
 def test_truthy():
     assert SUCCESS
@@ -28,11 +38,9 @@ def test_exception_deduplicate():
     a = ControlFlowException(Exception("test 1"))
     b = ControlFlowException(Exception("test 2"))
     assert a != b
-    assert a == ControlFlowException.instanciate(a)
+    assert a == ControlFlowException.instantiate(a)
 
 
-@pytest.mark.asyncio
-@pytest.mark.curio
 async def test_node_metadata_do_not_change_behavior():
     async def a_func():
         return "a"

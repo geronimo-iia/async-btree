@@ -10,12 +10,8 @@ help: ## Show this help
 # PROJECT DEPENDENCIES ########################################################
 
 .PHONY: install
-install: lock ## Install project dependencies (asyncio only)
+install: lock ## Install project dependencies
 	uv sync
-
-.PHONY: install-curio
-install-curio: lock ## Install project dependencies with curio
-	uv sync --group curio
 
 .PHONY: lock
 lock: pyproject.toml #codeartifact-index

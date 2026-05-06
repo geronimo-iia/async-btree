@@ -58,13 +58,18 @@ FAILURE = not SUCCESS  # Well defined falsy...
 
 
 class ControlFlowException(Exception):
-    """ControlFlowException exception is a decorator on a real exception.
+    """Wraps an exception to give it falsy meaning without losing the original cause.
 
-    This will ensure that ```assert ControlFlowException.__bool__ == False```.
-    This permit to return exception as a 'FAILURE' status.
+    Instances are always falsy (`bool(e)` returns `False`), so they can be
+    returned as a FAILURE status while still carrying the original exception.
     """
 
     def __init__(self, exception: Exception):
+        """Initialize with the original exception.
+
+        Args:
+            exception (Exception): the original exception to wrap.
+        """
         super().__init__()
 
         self.exception = exception
@@ -79,24 +84,28 @@ class ControlFlowException(Exception):
         return self.exception.__str__()
 
     @classmethod
-    def instanciate(cls, exception: Exception):
-        # this methods simplify usage of hierarchical call tree.
+    def instantiate(cls, exception: Exception) -> ControlFlowException:
+        """Return `exception` unchanged if already a `ControlFlowException`, otherwise wrap it.
+
+        Args:
+            exception (Exception): the exception to wrap if needed.
+
+        Returns:
+            (ControlFlowException): a falsy exception suitable for use as FAILURE.
+        """
         return exception if isinstance(exception, ControlFlowException) else ControlFlowException(exception=exception)
 
 
 class NodeMetadata(NamedTuple):
-    """NodeMetadata is our node definition.
+    """Metadata attached to a node function describing its name, properties, and child edges.
 
-    A NodeMetadata is used to keep information on name, properties name,
-    and relations ship name between a hierachical construct of functions.
-
-    This permit us to print or analyze all information of a behaviour tree.
+    Used by `analyze()` and `stringify_analyze()` to build and display the abstract tree.
 
     Attributes:
-        name (str): named operation
-        properties (List[str]): a list of property name (an int value, ...).
-        edges (List[str]): a list of member name which act as edges (a child, ...).
-
+        name (str): display name of the node.
+        properties (List[str] | None): names of scalar attributes to include in the tree view.
+        edges (List[str] | None): names of child-bearing attributes. When `None`, `analyze()`
+            falls back to `["child", "children", "_child", "_children"]`.
     """
 
     name: str
@@ -105,6 +114,16 @@ class NodeMetadata(NamedTuple):
 
     @classmethod
     def alias(cls, name: str, node: NodeMetadata, properties: list[str] | None = None) -> NodeMetadata:
+        """Return a copy of `node` with a new name and optional property override.
+
+        Args:
+            name (str): new display name.
+            node (NodeMetadata): source metadata to copy edges from.
+            properties (List[str] | None): if given, replaces `node.properties`.
+
+        Returns:
+            (NodeMetadata): new instance with updated name and properties.
+        """
         return NodeMetadata(
             name=name,
             properties=properties if properties else node.properties,
@@ -151,20 +170,17 @@ def node_metadata(
     properties: list[str] | None = None,
     edges: list[str] | None = None,
 ) -> Callable[[Callable[P, R]], FunctionWithMetadata[P, R]]:
-    """'node_metadata' is a function decorator which add meta information about node.
-
-    We add a property on decorated function named '__node_metadata'.
+    """Decorator that attaches `NodeMetadata` to a function as `__node_metadata`.
 
     Args:
-        name (Optional[str]): override name of decorated function,
-            default is function name left striped with '_'
-        properties (Optional[List[str]]): a list of property name ([] as default)
-        edges (Optional[List[str]]): a list of edges name
-            (["child", "children"] as default)
+        name (Optional[str]): override display name; defaults to the function name
+            left-stripped of leading underscores.
+        properties (Optional[List[str]]): names of scalar attributes to expose in the tree view.
+        edges (Optional[List[str]]): names of child-bearing attributes. When `None`, `analyze()`
+            falls back to `["child", "children", "_child", "_children"]`.
 
     Returns:
-        the decorator function
-
+        the decorator function.
     """
 
     def decorate_function(function: Callable[P, R]) -> FunctionWithMetadata[P, R]:
@@ -185,7 +201,18 @@ def node_metadata(
 
 
 def get_node_metadata(target: CallableFunction) -> NodeMetadata:
-    """Returns node metadata instance associated with target."""
+    """Return the `NodeMetadata` instance attached to `target`.
+
+    Args:
+        target (CallableFunction): function decorated with `@node_metadata`.
+
+    Returns:
+        (NodeMetadata): the metadata attached to `target`.
+
+    Raises:
+        RuntimeError: if `target` has no `__node_metadata` attribute, or if it is
+            not a `NodeMetadata` instance.
+    """
     node = getattr(target, "__node_metadata", False)
     if not isinstance(node, NodeMetadata):
         raise RuntimeError(f"attr __node_metadata of {target} is not a NodeMetadata!")
@@ -193,16 +220,15 @@ def get_node_metadata(target: CallableFunction) -> NodeMetadata:
 
 
 def alias_node_metadata(target: CallableFunction, name: str, properties: list[str] | None = None) -> CallableFunction:
-    """Returns an aliased name of current metadata node.
-
+    """Mutate `target.__node_metadata` in place to apply an alias name and optional properties.
 
     Args:
-        target (CallableFunction): function to analyze.
-        name (str): alias name to set
-        properties (Optional[List[str]]): Optional properties list to overrides.
+        target (CallableFunction): function whose `__node_metadata` will be updated.
+        name (str): new display name to assign.
+        properties (Optional[List[str]]): if given, replaces the existing properties list.
 
     Returns:
-        (CallableFunction): function with updated node metadata.
+        (CallableFunction): `target` with its `__node_metadata` updated.
     """
     dfunc = _attr_decorator(target)
     dfunc.__node_metadata = NodeMetadata.alias(name=name, node=dfunc.__node_metadata, properties=properties)

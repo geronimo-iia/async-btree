@@ -1,5 +1,6 @@
 from contextvars import ContextVar
 
+import anyio
 import pytest
 
 from async_btree import (
@@ -9,7 +10,9 @@ from async_btree import (
     alias,
     always_failure,
     always_success,
+    cooldown,
     decorate,
+    delay,
     ignore_exception,
     inverter,
     is_failure,
@@ -17,7 +20,18 @@ from async_btree import (
     retry,
     retry_until_failed,
     retry_until_success,
+    timeout_after,
 )
+
+pytestmark = pytest.mark.anyio
+
+
+@pytest.fixture(params=["asyncio", "trio", "asyncio+uvloop"])
+def anyio_backend(request):
+    backend = request.param
+    if backend == "asyncio+uvloop":
+        return "asyncio", {"use_uvloop": True}
+    return backend, {}
 
 
 async def a_func():
@@ -40,16 +54,12 @@ async def empty_func():
     return []
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_alias_name():
     rooted = alias(child=a_func, name="a_func")
     assert rooted.__node_metadata.name == "a_func"
     assert await rooted() == "a"
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_alias_not_override():
     a_rooted = alias(child=a_func, name="a_func")
     b_rooted = alias(child=a_func, name="b_func")
@@ -57,8 +67,6 @@ async def test_alias_not_override():
     assert b_rooted.__node_metadata.name == "b_func"
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_decorate():
     async def b_decorator(child_value, other=""):
         return f"b{child_value}{other}"
@@ -71,8 +79,6 @@ async def test_decorate():
     assert "_decorator" in meta.properties
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_always_success():
     assert await always_success(success_func)() == SUCCESS
     assert await always_success(failure_func)() == SUCCESS
@@ -84,8 +90,6 @@ async def test_always_success():
     assert meta.name == "always_success"
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_always_failure():
     assert await always_failure(success_func)() == FAILURE
     assert await always_failure(failure_func)() == FAILURE
@@ -98,8 +102,6 @@ async def test_always_failure():
     assert meta.name == "always_failure"
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_is_success():
     assert await is_success(success_func)()
     assert not await is_success(failure_func)()
@@ -109,8 +111,6 @@ async def test_is_success():
     assert not await is_success(empty_func)()
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_is_failure():
     assert not await is_failure(success_func)()
     assert await is_failure(failure_func)()
@@ -123,8 +123,6 @@ async def test_is_failure():
     assert meta.name == "is_failure"
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_inverter():
     assert not await inverter(success_func)()
     assert await inverter(failure_func)()
@@ -137,8 +135,6 @@ async def test_inverter():
     assert meta.name == "inverter"
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_retry():
     counter = ContextVar("counter_test_retry", default=5)
 
@@ -179,8 +175,6 @@ async def test_retry():
     assert "max_retry" in meta.properties
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_retry_until_success():
     counter = ContextVar("counter_test_retry_until_success", default=5)
 
@@ -201,8 +195,6 @@ async def test_retry_until_success():
     assert "max_retry" in meta.properties
 
 
-@pytest.mark.curio
-@pytest.mark.asyncio
 async def test_retry_until_failed():
     counter = ContextVar("counter_test_retry_until_failed", default=5)
 
@@ -221,3 +213,111 @@ async def test_retry_until_failed():
     meta = retry_until_failed(ignore_exception(tick)).__node_metadata
     assert meta.name == "retry_until_failed"
     assert "max_retry" in meta.properties
+
+
+async def test_timeout_after_completes_in_time():
+    async def fast():
+        return SUCCESS
+
+    result = await timeout_after(child=fast, delay=5.0)()
+    assert result is SUCCESS
+
+
+async def test_timeout_after_exceeds_deadline():
+    async def slow():
+        await anyio.sleep(10.0)
+        return SUCCESS
+
+    result = await timeout_after(child=slow, delay=0.01)()
+    assert result is FAILURE
+
+
+async def test_timeout_after_returns_child_value():
+    async def child():
+        return "hello"
+
+    result = await timeout_after(child=child, delay=5.0)()
+    assert result == "hello"
+
+
+async def test_timeout_after_metadata():
+    async def fast():
+        return SUCCESS
+
+    meta = timeout_after(child=fast, delay=1.0).__node_metadata
+    assert meta.name == "timeout_after"
+    assert "delay" in meta.properties
+
+
+async def test_cooldown_runs_first_call():
+    async def child():
+        return "ran"
+
+    result = await cooldown(child=child, delay=10.0)()
+    assert result == "ran"
+
+
+async def test_cooldown_throttles_second_call():
+    async def child():
+        return "ran"
+
+    node = cooldown(child=child, delay=10.0)
+    await node()
+    result = await node()
+    assert result is SUCCESS  # default throttled_value
+
+
+async def test_cooldown_custom_throttled_value():
+    async def child():
+        return "ran"
+
+    node = cooldown(child=child, delay=10.0, throttled_value=FAILURE)
+    await node()
+    result = await node()
+    assert result is FAILURE
+
+
+async def test_cooldown_runs_after_delay():
+    async def child():
+        return "ran"
+
+    node = cooldown(child=child, delay=0.01)
+    await node()
+    await anyio.sleep(0.02)
+    result = await node()
+    assert result == "ran"
+
+
+async def test_cooldown_metadata():
+    async def child():
+        return SUCCESS
+
+    meta = cooldown(child=child, delay=1.0).__node_metadata
+    assert meta.name == "cooldown"
+    assert "delay" in meta.properties
+
+
+async def test_delay_runs_child():
+    async def child():
+        return "done"
+
+    result = await delay(child=child, seconds=0.01)()
+    assert result == "done"
+
+
+async def test_delay_waits_before_running():
+    import time
+
+    start = time.monotonic()
+    await delay(child=lambda: SUCCESS, seconds=0.05)()
+    elapsed = time.monotonic() - start
+    assert elapsed >= 0.04
+
+
+async def test_delay_metadata():
+    async def child():
+        return SUCCESS
+
+    meta = delay(child=child, seconds=1.0).__node_metadata
+    assert meta.name == "delay"
+    assert "seconds" in meta.properties

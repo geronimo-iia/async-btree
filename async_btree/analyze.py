@@ -11,21 +11,18 @@ _DEFAULT_EDGES = ["child", "children", "_child", "_children"]
 
 
 class Node(NamedTuple):
-    """Node aggregate node definition implemented with NamedTuple.
+    """Resolved snapshot of a behaviour tree node, produced by `analyze()`.
 
-    A Node is used to keep information on name, properties, and relations ship
-    between a hierachical construct of functions.
-    It's like an instance of NodeMetadata.
+    Holds the display name, resolved property values, and resolved child edges
+    for a single node in the abstract tree.
 
     Attributes:
-        name (str): named operation.
-        properties (list[tuple[str, Any]]): a list of tuple (name, value) for definition.
-        edges (list[tuple[str, list[Any]]]): a list of tuple (name, node list) for
-            definition.
-
-    Notes:
-        Edges attribut should be edges: ```list[tuple[str, list['Node']]]```
-        But it is impossible for now, see [mypy issues 731](https://github.com/python/mypy/issues/731)
+        name (str): display name of the node.
+        properties (list[tuple[str, Any]]): resolved `(name, value)` pairs for scalar attributes.
+        edges (list[tuple[str, list[Any]]]): resolved `(edge_name, [Node, ...])` pairs for
+            child relationships. Typed as `list[Any]` due to
+            [mypy #731](https://github.com/python/mypy/issues/731) — actual element type is
+            `list[Node]`.
     """
 
     name: str
@@ -34,7 +31,8 @@ class Node(NamedTuple):
     # https://github.com/python/mypy/issues/731
     edges: list[tuple[str, list[Any]]]
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Return the stringified tree representation of this node."""
         return stringify_analyze(target=self)
 
 
@@ -58,13 +56,17 @@ def _analyze_target_edges(edges):
 # pylint: disable=protected-access
 @no_type_check  # it's a shortcut for hasattr ...
 def analyze(target: CallableFunction) -> Node:
-    """Analyze specified target and return a Node representation.
+    """Analyze `target` and return a `Node` representation of its subtree.
+
+    Works with any callable (sync or async). If `target` has `__node_metadata`,
+    its declared properties and edges are resolved from closure variables. Otherwise,
+    all closure variables are included as properties with no edges.
 
     Args:
-        target (CallableFunction): async function to analyze.
+        target (CallableFunction): callable to analyze.
 
     Returns:
-        (Node): a node instance representation of target function
+        (Node): resolved node tree rooted at `target`.
     """
 
     nonlocals = getclosurevars(target).nonlocals
@@ -104,15 +106,15 @@ def analyze(target: CallableFunction) -> Node:
 
 
 def stringify_analyze(target: Node, indent: int = 0, label: str | None = None) -> str:
-    """Stringify node representation of specified target.
+    """Stringify a `Node` tree into a human-readable indented representation.
 
     Args:
-        target (CallableFunction): async function to analyze.
-        indent (int): level identation (default to zero).
-        label (Optional[str]): label of current node (default None).
+        target (Node): node to stringify.
+        indent (int): current indentation level (default 0).
+        label (Optional[str]): edge label to prefix the node with (default `None`).
 
     Returns:
-        (str): a string node representation.
+        (str): indented string representation of the node tree.
     """
     _ident = "    "
     _space = f"{_ident * indent} "

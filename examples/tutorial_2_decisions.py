@@ -3,12 +3,12 @@
 
 The behavior tree looks like:
  --> sequence:
-     succes_threshold: 2
+     success_threshold: 2
      --(children)--> decision:
          --(condition)--> is_name_set:
          --(success_tree)--> say_hello:
          --(failure_tree)--> sequence:
-                             succes_threshold: 2
+                             success_threshold: 2
              --(children)--> ask_for_name:
              --(children)--> say_hello:
      --(children)--> some_action:

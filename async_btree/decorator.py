@@ -1,6 +1,9 @@
 """Decorator module define all decorator function node."""
 
+import time
 from typing import Any
+
+import anyio
 
 from .definition import (
     FAILURE,
@@ -17,7 +20,9 @@ __all__ = [
     "alias",
     "always_failure",
     "always_success",
+    "cooldown",
     "decorate",
+    "delay",
     "ignore_exception",
     "inverter",
     "is_failure",
@@ -25,6 +30,7 @@ __all__ = [
     "retry",
     "retry_until_failed",
     "retry_until_success",
+    "timeout_after",
 ]
 
 
@@ -50,21 +56,18 @@ def alias(child: CallableFunction, name: str) -> AsyncInnerFunction:
 
 
 def decorate(child: CallableFunction, decorator: CallableFunction, **kwargs) -> AsyncInnerFunction:
-    """Create a decorator.
+    """Post-process child result with a decorator function.
 
-    Post process a child with specified decorator function.
-    First argument of decorator function must be a child.
-
-    This method implement a simple lazy evaluation.
+    Runs child eagerly, then passes the result as the first argument to `decorator`.
 
     Args:
-        child (CallableFunction): child function to decorate
-        decorator (CallableFunction): awaitable target decorator with profile 'decorator(child_result, **kwargs)'
-        kwargs: optional keyed argument to pass to decorator function
+        child (CallableFunction): sync or async callable to run first.
+        decorator (CallableFunction): sync or async callable with signature
+            `decorator(child_result, **kwargs)`.
+        kwargs: additional keyword arguments forwarded to `decorator`.
 
     Returns:
-      (AsyncInnerFunction): an awaitable function which
-            return decorator evaluation against child.
+        (AsyncInnerFunction): an awaitable function that returns `decorator(child_result, **kwargs)`.
     """
 
     _child = to_async(child)
@@ -78,15 +81,15 @@ def decorate(child: CallableFunction, decorator: CallableFunction, **kwargs) -> 
 
 
 def ignore_exception(child: CallableFunction) -> AsyncInnerFunction:
-    """Create a node which ignore runtime exception.
+    """Wrap child so exceptions are caught and returned as a falsy value instead of propagating.
 
     Args:
-        child (CallableFunction): child function to decorate
+        child (CallableFunction): sync or async callable to wrap.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function which return child result
-        or any exception with a falsy meaning in a ControlFlowException.
-
+        (AsyncInnerFunction): an awaitable function that returns child result unchanged on
+            success, or a `ControlFlowException` wrapping the exception on failure.
+            The returned exception is falsy.
     """
 
     _child = to_async(child)
@@ -97,31 +100,32 @@ def ignore_exception(child: CallableFunction) -> AsyncInnerFunction:
             return await _child()
 
         except Exception as e:
-            return ControlFlowException.instanciate(e)
+            return ControlFlowException.instantiate(e)
 
     return _ignore_exception
 
 
 def always_success(child: CallableFunction) -> AsyncInnerFunction:
-    """Create a node which always return SUCCESS value.
+    """Wrap child so the node always returns a truthy value.
+
+    If child returns a truthy result, that original result is preserved and returned.
+    If child returns a falsy result, returns `SUCCESS` instead.
+    Exceptions are re-raised as `ControlFlowException`.
 
     Note:
-        If you wanna git a success even if an exception occurs, you have
-        to decorate child with ignore_exception, like this:
+        To suppress exceptions as well, wrap child with `ignore_exception` first:
 
         `always_success(child=ignore_exception(myfunction))`
 
-
     Args:
-        child (CallableFunction): child function to decorate
+        child (CallableFunction): sync or async callable to wrap.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function which return child result if it is truthy
-            else SUCCESS.
+        (AsyncInnerFunction): an awaitable function that returns the original truthy child
+            result unchanged, or `SUCCESS` if child is falsy.
 
     Raises:
-        ControlFlowException : if error occurs
-
+        ControlFlowException: if child raises an exception.
     """
 
     _child = to_async(child)
@@ -136,32 +140,34 @@ def always_success(child: CallableFunction) -> AsyncInnerFunction:
                 result = child_result
 
         except Exception as e:
-            raise ControlFlowException.instanciate(e) from e
+            raise ControlFlowException.instantiate(e) from e
 
         return result
 
     return _always_success
 
 
-def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitable:
-    """Produce a function which always return FAILURE value.
+def always_failure(child: CallableFunction) -> AsyncInnerFunction:
+    """Wrap child so the node always returns a falsy value.
+
+    If child returns a falsy result, that original result is preserved and returned.
+    If child returns a truthy result, returns `FAILURE` instead.
+    Exceptions are re-raised as `ControlFlowException`.
 
     Note:
-        If you wanna git a failure even if an exception occurs, you have
-        to decorate child with ignore_exception, like this:
+        To suppress exceptions as well, wrap child with `ignore_exception` first:
 
         `always_failure(child=ignore_exception(myfunction))`
 
     Args:
-        child (CallableFunction): child function to decorate
+        child (CallableFunction): sync or async callable to wrap.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function which return child result if is falsy
-            else FAILURE.
+        (AsyncInnerFunction): an awaitable function that returns the original falsy child
+            result unchanged, or `FAILURE` if child is truthy.
 
     Raises:
-        ControlFlowException : if error occurs
-
+        ControlFlowException: if child raises an exception.
     """
 
     _child = to_async(child)
@@ -176,7 +182,7 @@ def always_failure(child: CallableFunction) -> AsyncInnerFunction:  # -> Awaitab
                 result = child_result
 
         except Exception as e:
-            raise ControlFlowException.instanciate(e) from e
+            raise ControlFlowException.instantiate(e) from e
 
         return result
 
@@ -204,14 +210,14 @@ def is_success(child: CallableFunction) -> AsyncInnerFunction:
 
 
 def is_failure(child: CallableFunction) -> AsyncInnerFunction:
-    """Create a conditional node which test if child fail.
+    """Return `SUCCESS` if child is falsy, `FAILURE` otherwise.
 
     Args:
-        child (CallableFunction): child function to decorate
+        child (CallableFunction): sync or async callable to test.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function which return SUCCESS if child
-            return FAILURE else FAILURE.
+        (AsyncInnerFunction): an awaitable function that returns `SUCCESS` if child
+            result is falsy, `FAILURE` if child result is truthy.
     """
 
     _child = to_async(child)
@@ -227,11 +233,11 @@ def inverter(child: CallableFunction) -> AsyncInnerFunction:
     """Invert node status.
 
     Args:
-        child (CallableFunction): child function to decorate
+        child (CallableFunction): sync or async callable to invert.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function which return SUCCESS if child
-            return FAILURE else SUCCESS
+        (AsyncInnerFunction): an awaitable function that returns `SUCCESS` if child
+            is falsy, else `FAILURE`.
     """
 
     _child = to_async(child)
@@ -244,16 +250,18 @@ def inverter(child: CallableFunction) -> AsyncInnerFunction:
 
 
 def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
-    """Retry child evaluation at most max_retry time on failure until child succeed.
+    """Retry child evaluation on failure until it succeeds or `max_retry` attempts are exhausted.
 
     Args:
-        child (CallableFunction): child function to decorate
-        max_retry (int): max retry count (default 3), -1 mean infinite retry
+        child (CallableFunction): sync or async callable to retry.
+        max_retry (int): maximum number of attempts (default 3). Use `-1` for infinite retries.
 
     Returns:
-        (AsyncInnerFunction): an awaitable function which retry child evaluation
-            at most max_retry time on failure until child succeed.
-            If max_retry is reached, returns FAILURE or last exception.
+        (AsyncInnerFunction): an awaitable function that returns the first truthy result, or
+            the last falsy result (which may be a `ControlFlowException`) if all attempts fail.
+
+    Raises:
+        AssertionError: if `max_retry` is 0 or negative (other than -1).
     """
     if not (max_retry > 0 or max_retry == -1):
         raise AssertionError("max_retry")
@@ -267,7 +275,6 @@ def retry(child: CallableFunction, max_retry: int = 3) -> AsyncInnerFunction:
 
         while not bool(result) and retry_count != 0:
             result = await _child()
-            print(f"result : {result}")
             retry_count -= 1
 
         return result
@@ -300,3 +307,77 @@ def retry_until_failed(child: CallableFunction) -> AsyncInnerFunction:
     """
 
     return alias_node_metadata(name="retry_until_failed", target=retry(child=inverter(child), max_retry=-1))
+
+
+def timeout_after(child: CallableFunction, delay: float) -> AsyncInnerFunction:
+    """Run child with a time limit; return `FAILURE` if the deadline is exceeded.
+
+    Args:
+        child (CallableFunction): sync or async callable to run.
+        delay (float): maximum seconds to wait before returning `FAILURE`.
+
+    Returns:
+        (AsyncInnerFunction): an awaitable function that returns child result on
+            success, or `FAILURE` if the deadline is exceeded.
+    """
+    _child = to_async(child)
+
+    @node_metadata(properties=["delay"])
+    async def _timeout_after():
+        result: Any = FAILURE
+        with anyio.move_on_after(delay) as cancel_scope:
+            result = await _child()
+        if cancel_scope.cancelled_caught:
+            return FAILURE
+        return result
+
+    return _timeout_after
+
+
+def cooldown(child: CallableFunction, delay: float, throttled_value: Any = SUCCESS) -> AsyncInnerFunction:
+    """Skip child if called again before `delay` seconds have elapsed since the last run.
+
+    Last-run time is stored in the closure — it persists across `BTreeRunner.run()` ticks
+    for the lifetime of this node instance.
+
+    Args:
+        child (CallableFunction): sync or async callable to throttle.
+        delay (float): minimum seconds between successive executions of child.
+        throttled_value (Any): value returned when child is skipped. Defaults to `SUCCESS`.
+
+    Returns:
+        (AsyncInnerFunction): an awaitable function that runs child and returns its result
+            when the cooldown has elapsed, or `throttled_value` when the call is throttled.
+    """
+    _child = to_async(child)
+    _last_run: list[float] = [0.0]  # list to allow mutation from inner scope
+
+    @node_metadata(properties=["delay"])
+    async def _cooldown() -> Any:
+        now = time.monotonic()
+        if now - _last_run[0] < delay:
+            return throttled_value
+        _last_run[0] = now
+        return await _child()
+
+    return _cooldown
+
+
+def delay(child: CallableFunction, seconds: float) -> AsyncInnerFunction:
+    """Wait `seconds` before running child.
+
+    Args:
+        child (CallableFunction): sync or async callable to run after the delay.
+        seconds (float): number of seconds to wait before executing child.
+
+    Returns:
+        (AsyncInnerFunction): an awaitable function that sleeps then returns child result.
+    """
+    _child = to_async(child)
+
+    @node_metadata(properties=["seconds"])
+    async def _delay():
+        await anyio.sleep(seconds)
+        return await _child()
+
+    return _delay
