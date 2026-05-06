@@ -1,6 +1,6 @@
 # Change Log
 
-## 3.0.0 (unreleased)
+## 3.0.0 (2026-05-06)
 
 Breaking changes:
 
