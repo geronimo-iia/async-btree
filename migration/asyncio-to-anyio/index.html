@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../migration/asyncio-to-anyio/">
+        <link rel="prev" href="../curio-to-anyio/">
       
       
-        <link rel="next" href="../license/">
+        <link rel="next" href="../../contributing/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Contributing - Async behavior tree</title>
+        <title>asyncio → anyio (3.0.0) - Async behavior tree</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributing" class="md-skip">
+        <a href="#migration-guide-asyncio-anyio-300" class="md-skip">
           Skip to content
         </a>
       
@@ -80,7 +80,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Async behavior tree" class="md-header__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+    <a href="../.." title="Async behavior tree" class="md-header__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributing
+              asyncio → anyio (3.0.0)
             
           </span>
         </div>
@@ -185,7 +185,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -204,7 +204,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../concepts/" class="md-tabs__link">
+      <a href="../../concepts/" class="md-tabs__link">
         
   
   
@@ -223,7 +223,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../tutorial/" class="md-tabs__link">
+      <a href="../../tutorial/" class="md-tabs__link">
         
   
   
@@ -251,7 +251,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../reference/async_btree/" class="md-tabs__link">
+        <a href="../../reference/async_btree/" class="md-tabs__link">
           
   
   
@@ -274,7 +274,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../changelog/" class="md-tabs__link">
+      <a href="../../changelog/" class="md-tabs__link">
         
   
   
@@ -291,11 +291,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../migration/curio-to-anyio/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../curio-to-anyio/" class="md-tabs__link">
           
   
   
@@ -313,11 +315,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
         
   
   
@@ -336,7 +336,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../license/" class="md-tabs__link">
+      <a href="../../license/" class="md-tabs__link">
         
   
   
@@ -355,7 +355,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../code_of_conduct/" class="md-tabs__link">
+      <a href="../../code_of_conduct/" class="md-tabs__link">
         
   
   
@@ -409,7 +409,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Async behavior tree" class="md-nav__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+    <a href="../.." title="Async behavior tree" class="md-nav__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -439,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -466,7 +466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concepts/" class="md-nav__link">
+      <a href="../../concepts/" class="md-nav__link">
         
   
   
@@ -493,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/" class="md-nav__link">
+      <a href="../../tutorial/" class="md-nav__link">
         
   
   
@@ -611,7 +611,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../reference/async_btree/" class="md-nav__link ">
+            <a href="../../reference/async_btree/" class="md-nav__link ">
               
   
   
@@ -655,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/analyze/" class="md-nav__link">
+      <a href="../../reference/async_btree/analyze/" class="md-nav__link">
         
   
   
@@ -683,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/control/" class="md-nav__link">
+      <a href="../../reference/async_btree/control/" class="md-nav__link">
         
   
   
@@ -711,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/decorator/" class="md-nav__link">
+      <a href="../../reference/async_btree/decorator/" class="md-nav__link">
         
   
   
@@ -739,7 +739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/definition/" class="md-nav__link">
+      <a href="../../reference/async_btree/definition/" class="md-nav__link">
         
   
   
@@ -767,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/leaf/" class="md-nav__link">
+      <a href="../../reference/async_btree/leaf/" class="md-nav__link">
         
   
   
@@ -795,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/parallele/" class="md-nav__link">
+      <a href="../../reference/async_btree/parallele/" class="md-nav__link">
         
   
   
@@ -823,7 +823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/runner/" class="md-nav__link">
+      <a href="../../reference/async_btree/runner/" class="md-nav__link">
         
   
   
@@ -851,7 +851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/utils/" class="md-nav__link">
+      <a href="../../reference/async_btree/utils/" class="md-nav__link">
         
   
   
@@ -894,7 +894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changelog/" class="md-nav__link">
+      <a href="../../changelog/" class="md-nav__link">
         
   
   
@@ -918,8 +918,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -931,17 +933,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -959,7 +964,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -977,7 +982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration/curio-to-anyio/" class="md-nav__link">
+      <a href="../curio-to-anyio/" class="md-nav__link">
         
   
   
@@ -1002,41 +1007,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../migration/asyncio-to-anyio/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    asyncio → anyio (3.0.0)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -1056,7 +1026,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
+    asyncio → anyio (3.0.0)
   
 
     
@@ -1074,7 +1044,7 @@
   <span class="md-ellipsis">
     
   
-    Contributing
+    asyncio → anyio (3.0.0)
   
 
     
@@ -1100,10 +1070,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#dependency-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Requirements
+        Dependency changes
       
     </span>
   </a>
@@ -1111,76 +1081,104 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repository-layout" class="md-nav__link">
+  <a href="#api-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repository Layout
+        API changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#btreerunner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BTreeRunner
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setup
+        run()
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#make-targets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#parallele-success_threshold-typo-fixed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Make Targets
+        parallele — success_threshold typo fixed
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#sequence-success_threshold-typo-fixed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing
+        sequence — success_threshold typo fixed
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#controlflowexceptioninstanciate-instantiate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Documentation
+        ControlFlowException.instanciate → instantiate
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#release-process" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#repeat_until-semantics-corrected-repeat_while-added" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release Process
+        repeat_until semantics corrected — repeat_while added
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#code-quality" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#contextvar-isolation-behaviour-unchanged" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Code Quality
+        ContextVar isolation — behaviour unchanged
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytest-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pytest migration
       
     </span>
   </a>
@@ -1194,6 +1192,14 @@
     </li>
   
 
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
     
       
       
@@ -1202,7 +1208,34 @@
   
   
     <li class="md-nav__item">
-      <a href="../license/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
         
   
   
@@ -1229,7 +1262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../code_of_conduct/" class="md-nav__link">
+      <a href="../../code_of_conduct/" class="md-nav__link">
         
   
   
@@ -1303,10 +1336,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#dependency-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Requirements
+        Dependency changes
       
     </span>
   </a>
@@ -1314,76 +1347,104 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repository-layout" class="md-nav__link">
+  <a href="#api-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repository Layout
+        API changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#btreerunner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BTreeRunner
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setup
+        run()
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#make-targets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#parallele-success_threshold-typo-fixed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Make Targets
+        parallele — success_threshold typo fixed
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#sequence-success_threshold-typo-fixed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing
+        sequence — success_threshold typo fixed
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#controlflowexceptioninstanciate-instantiate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Documentation
+        ControlFlowException.instanciate → instantiate
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#release-process" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#repeat_until-semantics-corrected-repeat_while-added" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release Process
+        repeat_until semantics corrected — repeat_while added
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#code-quality" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#contextvar-isolation-behaviour-unchanged" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Code Quality
+        ContextVar isolation — behaviour unchanged
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytest-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pytest migration
       
     </span>
   </a>
@@ -1408,6 +1469,46 @@
   
 
 
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../curio-to-anyio/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Migration
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
               
               <article class="md-content__inner md-typeset">
                 
@@ -1418,148 +1519,148 @@
   
 
 
-<h1 id="contributing">Contributing</h1>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li>Python &gt;= 3.11</li>
-<li><a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a></li>
-<li>Make</li>
-</ul>
-<h2 id="repository-layout">Repository Layout</h2>
-<pre><code>async-btree/
-├── async_btree/          # library source
-│   ├── definition.py     # core types: SUCCESS, FAILURE, NodeMetadata, ControlFlowException
-│   ├── leaf.py           # leaf nodes: action(), condition()
-│   ├── control.py        # control flow: sequence(), selector(), fallback(), decision(), repeat_until()
-│   ├── decorator.py      # decorators: retry(), inverter(), alias(), ignore_exception(), ...
-│   ├── parallele.py      # concurrent execution: parallele()
-│   ├── runner.py         # BTreeRunner context manager
-│   ├── analyze.py        # tree introspection: analyze(), stringify_analyze()
-│   ├── utils.py          # helpers: to_async(), amap(), afilter(), run()
-│   └── __init__.py       # public API exports
-├── tests/                # test suite (asyncio, trio, asyncio+uvloop backends)
-├── examples/             # usage examples (tutorials 1-4)
-├── docs/                 # documentation source (MkDocs)
-│   ├── gen_ref_pages.py  # auto-generates API reference pages
-│   ├── migration/        # migration guides for major versions
-│   └── brainstorming/    # internal design notes (gitignored)
-├── .github/
-│   └── workflows/
-│       ├── package.yml   # CI: lint + test on push/PR to main
-│       ├── release.yml   # CD: publish to PyPI + docs on git tag v*
-│       └── doc.yml       # docs deploy on push to main
-├── mkdocs.yml            # documentation configuration
-├── pyproject.toml        # project metadata and dependencies
-├── Makefile              # development tasks
-└── uv.lock               # locked dependencies
+<h1 id="migration-guide-asyncio-anyio-300">Migration Guide: asyncio → anyio (3.0.0)</h1>
+<p>async-btree 3.0.0 replaces <code>asyncio.Runner</code> with anyio as the sole execution backend.
+If you were already using the asyncio path (no curio), this guide covers what changed.</p>
+<h2 id="dependency-changes">Dependency changes</h2>
+<p>Remove:</p>
+<pre><code class="language-toml">pytest-asyncio
 </code></pre>
-<h2 id="setup">Setup</h2>
-<pre><code class="language-bash"># install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+<p>Add (for non-asyncio backends, optional):</p>
+<pre><code class="language-toml">trio &gt;= 0.26
+uvloop &gt;= 0.21
+</code></pre>
+<h2 id="api-changes">API changes</h2>
+<h3 id="btreerunner">BTreeRunner</h3>
+<p><code>BTreeRunner.__init__</code> now takes <code>backend</code> instead of <code>disable_curio</code>:</p>
+<pre><code class="language-python"># before
+with BTreeRunner() as runner:
+    runner.run(my_tree)         # callable — unchanged
 
-# install dependencies
-make install
+# after
+with BTreeRunner() as runner:   # asyncio default — no change needed
+    runner.run(my_tree)
+
+# new: explicit backend selection
+with BTreeRunner(backend=&quot;trio&quot;) as runner:
+    runner.run(my_tree)
+
+with BTreeRunner(backend=&quot;asyncio+uvloop&quot;) as runner:
+    runner.run(my_tree)
 </code></pre>
-<h2 id="make-targets">Make Targets</h2>
-<p>Run <code>make</code> to list all available targets.</p>
+<p><code>runner.run(target, *args, **kwargs)</code> signature is <strong>unchanged</strong> — callable in both 2.x and 3.0.0.</p>
+<h3 id="run">run()</h3>
+<p>Old signature: <code>run(kernel, target, *args)</code> — curio-only, deprecated.
+New signature: <code>run(target, *args, backend="asyncio", **kwargs)</code>.</p>
+<pre><code class="language-python"># before — deprecated, asyncio path via asyncio.Runner directly
+import asyncio
+asyncio.run(my_tree())
+
+# after — use bt.run()
+from async_btree import run
+run(my_tree)
+run(my_tree, backend=&quot;asyncio+uvloop&quot;)
+</code></pre>
+<h3 id="parallele-success_threshold-typo-fixed">parallele — success_threshold typo fixed</h3>
+<p>The parameter was previously <code>succes_threshold</code> (one 's'). It is now <code>success_threshold</code>.</p>
+<pre><code class="language-python"># before
+parallele(children=[a, b], succes_threshold=1)
+
+# after
+parallele(children=[a, b], success_threshold=1)
+</code></pre>
+<h3 id="sequence-success_threshold-typo-fixed">sequence — success_threshold typo fixed</h3>
+<p>Same typo fix applies to <code>sequence</code>:</p>
+<pre><code class="language-python"># before
+sequence(children=[a, b, c], succes_threshold=2)
+
+# after
+sequence(children=[a, b, c], success_threshold=2)
+</code></pre>
+<p>The property shown in <code>stringify_analyze</code> output changes from <code>succes_threshold: N</code> to
+<code>success_threshold: N</code>.</p>
+<h3 id="controlflowexceptioninstanciate-instantiate">ControlFlowException.instanciate → instantiate</h3>
+<p>The method was renamed to fix a typo:</p>
+<pre><code class="language-python"># before
+ControlFlowException.instanciate(e)
+
+# after
+ControlFlowException.instantiate(e)
+</code></pre>
+<p>Behavior is unchanged — pure rename.</p>
+<h3 id="repeat_until-semantics-corrected-repeat_while-added">repeat_until semantics corrected — repeat_while added</h3>
+<p>The old <code>repeat_until</code> looped <strong>while condition was truthy</strong>, which is the opposite of
+standard BT semantics. 3.0.0 corrects this:</p>
 <table>
 <thead>
 <tr>
-<th>Target</th>
-<th>Description</th>
+<th>Function</th>
+<th>Loops while condition is...</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>make install</code></td>
-<td>Install dependencies</td>
+<td><code>repeat_while(condition, child)</code></td>
+<td>truthy (replaces old <code>repeat_until</code> behavior)</td>
 </tr>
 <tr>
-<td><code>make lock</code></td>
-<td>Lock dependencies</td>
-</tr>
-<tr>
-<td><code>make lint</code></td>
-<td>Check format, linting and types</td>
-</tr>
-<tr>
-<td><code>make lint-fix</code></td>
-<td>Fix all auto-fixable issues</td>
-</tr>
-<tr>
-<td><code>make test</code></td>
-<td>Run unit tests</td>
-</tr>
-<tr>
-<td><code>make check</code></td>
-<td>Run all checks (lint + test)</td>
-</tr>
-<tr>
-<td><code>make build</code></td>
-<td>Build module (runs check first)</td>
-</tr>
-<tr>
-<td><code>make publish</code></td>
-<td>Publish module (runs build first)</td>
-</tr>
-<tr>
-<td><code>make docs</code></td>
-<td>Build site documentation</td>
-</tr>
-<tr>
-<td><code>make docs-serve</code></td>
-<td>Serve documentation locally with live reload</td>
-</tr>
-<tr>
-<td><code>make docs-publish</code></td>
-<td>Publish site documentation to gh-pages</td>
-</tr>
-<tr>
-<td><code>make clean</code></td>
-<td>Remove all generated and temporary files</td>
-</tr>
-<tr>
-<td><code>make requirements</code></td>
-<td>Generate requirements.txt</td>
+<td><code>repeat_until(condition, child)</code></td>
+<td>falsy (standard BT semantics — stops when condition fires)</td>
 </tr>
 </tbody>
 </table>
-<h2 id="testing">Testing</h2>
-<p>Tests run against three backends — asyncio, trio, and asyncio+uvloop — parametrized automatically:</p>
-<pre><code class="language-bash">make install &amp;&amp; make test
+<pre><code class="language-python"># before — looped while condition was truthy
+repeat_until(condition=my_condition, child=my_child)
+
+# after — same behavior, correct name
+repeat_while(condition=my_condition, child=my_child)
+
+# new repeat_until — loops until condition becomes truthy
+repeat_until(condition=my_condition, child=my_child)
 </code></pre>
-<p>All test functions marked <code>@pytest.mark.anyio</code> run under all three backends via the <code>anyio_backend</code> fixture.</p>
-<h2 id="documentation">Documentation</h2>
-<p>Sources live in <code>docs/</code>. API reference is auto-generated from docstrings — no manual edits needed in <code>docs/reference/</code>.</p>
-<pre><code class="language-bash">make docs-serve   # live preview at http://127.0.0.1:8000
-make docs         # full build into site/
-make docs-publish # deploy to gh-pages (CI does this on push to main)
+<h3 id="contextvar-isolation-behaviour-unchanged">ContextVar isolation — behaviour unchanged</h3>
+<p>Asyncio users already had isolation via <code>copy_context()</code> in <code>BTreeRunner.__enter__</code>.
+Behaviour is the same in 3.0.0: mutations inside a run do not escape to the caller.</p>
+<p>The one difference: with the old <code>asyncio.Runner</code> persistent loop, successive <code>runner.run()</code>
+calls shared ContextVar state. With anyio, each call is isolated from the base snapshot.</p>
+<pre><code class="language-python"># before — mutations accumulated across ticks (asyncio.Runner persistent loop)
+with BTreeRunner() as runner:
+    runner.run(set_var_to_42)
+    runner.run(read_var)   # would see 42
+
+# after — each tick starts from the __enter__ snapshot
+with BTreeRunner() as runner:
+    runner.run(set_var_to_42)
+    runner.run(read_var)   # sees original value, not 42
 </code></pre>
-<h2 id="release-process">Release Process</h2>
-<ol>
-<li>Create a release branch from <code>main</code>:
-   <code>bash
-   git checkout -b release/vX.Y.Z</code></li>
-<li>Update <code>CHANGELOG.md</code>: replace <code>(unreleased)</code> with the release date <code>(YYYY-MM-DD)</code></li>
-<li>Bump version in <code>pyproject.toml</code></li>
-<li>Run all checks locally — all must pass before merging:
-   <code>bash
-   make check    # lint + type check + tests (all backends)
-   make docs     # documentation builds clean</code></li>
-<li>Commit: <code>chore(release): bump version to X.Y.Z</code></li>
-<li>Open PR <code>release/vX.Y.Z</code> → <code>main</code>, verify CI passes (<code>package.yml</code> runs on all Python versions)</li>
-<li>Merge PR into <code>main</code></li>
-<li>Tag and push from <code>main</code>:
-   <code>bash
-   git tag vX.Y.Z
-   git push origin main --tags</code></li>
-<li>CI (<code>release.yml</code>) triggers on <code>v*</code> tag — builds, publishes to PyPI, creates GitHub release, deploys docs automatically</li>
-</ol>
-<h2 id="code-quality">Code Quality</h2>
-<pre><code class="language-bash">make lint      # check format, linting, types
-make lint-fix  # auto-fix format and linting issues
+<p>If your code relied on cross-tick ContextVar accumulation, pass state explicitly
+via function arguments or use a mutable object (list, dict) set before <code>__enter__</code>.</p>
+<p>See <a href="https://raw.githubusercontent.com/geronimo-iia/async-btree/main/examples/tutorial_3_context.py">tutorial_3_context.py</a> for details.</p>
+<h2 id="pytest-migration">pytest migration</h2>
+<p>Replace <code>pytest-asyncio</code> with <code>pytest-anyio</code> (bundled with anyio):</p>
+<pre><code class="language-python"># before
+import pytest
+pytestmark = pytest.mark.asyncio
+
+async def test_something():
+    ...
+
+# after
+import pytest
+pytestmark = pytest.mark.anyio
+
+async def test_something():
+    ...
 </code></pre>
-<p>Tools: <a href="https://docs.astral.sh/ruff/">ruff</a> for formatting/linting, <a href="https://github.com/microsoft/pyright">pyright</a> for type checking.</p>
+<p>Remove <code>asyncio_mode = "auto"</code> from <code>pyproject.toml</code> if present — anyio does not use it.</p>
+<p>Parametrize over backends (optional, recommended):</p>
+<pre><code class="language-python">@pytest.fixture(params=[&quot;asyncio&quot;, &quot;trio&quot;, &quot;asyncio+uvloop&quot;])
+def anyio_backend(request):
+    backend = request.param
+    if backend == &quot;asyncio+uvloop&quot;:
+        return &quot;asyncio&quot;, {&quot;use_uvloop&quot;: True}
+    return backend, {}
+</code></pre>
 
 
 
@@ -1609,10 +1710,10 @@ make lint-fix  # auto-fix format and linting issues
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.path", "navigation.instant", "navigation.tabs", "navigation.indexes"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.path", "navigation.instant", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

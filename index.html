@@ -10,7 +10,7 @@
       
       
       
-        <link rel="next" href="tutorial/">
+        <link rel="next" href="concepts/">
       
       
         
@@ -204,6 +204,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="tutorial/" class="md-tabs__link">
         
   
@@ -265,6 +284,28 @@
 
       </a>
     </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="migration/curio-to-anyio/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Migration
+
+        </a>
+      </li>
+    
   
 
       
@@ -490,10 +531,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#note-about-async-framework" class="md-nav__link">
+  <a href="#key-design-decisions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Note about 'async' framework
+        Key design decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-primitives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core primitives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async backend
       
     </span>
   </a>
@@ -525,12 +588,122 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-shot-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-shot run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-runs-in-the-same-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple runs in the same context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concurrent-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concurrent execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exception-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exception handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tree-introspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tree introspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
 </li>
       
     </ul>
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -584,10 +757,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   
@@ -605,8 +778,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -656,7 +829,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -678,14 +851,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -969,6 +1142,125 @@
   
   
   
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="migration/curio-to-anyio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    curio → anyio (3.0.0)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="migration/asyncio-to-anyio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    asyncio → anyio (3.0.0)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="contributing/" class="md-nav__link">
         
@@ -1132,10 +1424,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#note-about-async-framework" class="md-nav__link">
+  <a href="#key-design-decisions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Note about 'async' framework
+        Key design decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-primitives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core primitives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async backend
       
     </span>
   </a>
@@ -1163,6 +1477,89 @@
     <span class="md-ellipsis">
       
         Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-shot-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-shot run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-runs-in-the-same-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple runs in the same context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concurrent-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concurrent execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exception-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exception handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tree-introspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tree introspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
       
     </span>
   </a>
@@ -1201,8 +1598,12 @@
 <p><a href="https://pypi.org/project/async-btree"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/async-btree.svg" /></a>
 <a href="https://pypi.org/project/async-btree"><img alt="PyPI License" src="https://img.shields.io/pypi/l/async-btree.svg" /></a></p>
 <p>Versions following <a href="https://semver.org/">Semantic Versioning</a></p>
-<p>Requires Python 3.11+. For Python 3.9/3.10 support use <a href="https://github.com/geronimo-iia/async-btree/tree/main-1.x">1.x releases</a>.</p>
 <p>See <a href="https://geronimo-iia.github.io/async-btree">documentation</a>.</p>
+<p>Requires Python 3.11+.</p>
+<ul>
+<li>For Python &gt;= 3.11, (asyncio/curio) use <a href="https://github.com/geronimo-iia/async-btree/tree/main-2.x">2.x releases</a>.</li>
+<li>For Python 3.9/3.10, (asyncio/curio) use <a href="https://github.com/geronimo-iia/async-btree/tree/main-1.x">1.x releases</a>.</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <h3 id="whats-a-behavior-tree">What's a behavior tree ?</h3>
 <blockquote>
@@ -1235,92 +1636,44 @@ At a moment you're build more or less something that mimic an evaluator 'eval/ap
 <li>possibility to reuse behavior</li>
 <li>add external measure to dynamicaly change a behavior, a first step on observable pattern...</li>
 </ul>
-<p>As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of functional programming to obtain what I want: add metadata on a semantic construction, deal with closure, use function in parameters or in return value...</p>
-<p>And a last reason, more personal, it that i would explore python expressivity.</p>
+<p>As I've used OOP for years (very long time), I will try to avoid class tree and prefer using the power of functional programming to obtain what I want: add metadata on a semantic construction, deal with closure, use function in parameters or in return value...
+And a last reason, more personal, it that i would explore python expressivity.</p>
 <p><strong>SO HOW ?</strong></p>
-<p>In this module, I propose using the concept of coroutines, and their mechanisms to manage the execution flow.
-By this way:</p>
+<blockquote>
+<p>This library uses coroutines and functional composition instead. No class trees. No configuration files (no XML, no JSON, no YAML). Business logic is plain Python functions. Composition is plain Python.</p>
+</blockquote>
+<p>By this way:</p>
 <ul>
 <li>we reuse simple language idiom to manage state, parameter, etc</li>
 <li>no design constraint on action implementation</li>
 <li>most of language build block could be reused</li>
 </ul>
+<p>No need to introduce an extra level of abstraction to declare a composition of functions. I think it's true for most of main use case (except using an editor to wrote behaviour tree for example).
+So "If you wrote your function with python, wrote composition in python"... 
+<em>(remember that you did not need XML to do SQL, just write good sql...)</em></p>
+<p>See <a href="https://geronimo-iia.github.io/async-btree/concepts/">Concepts</a> for a deeper explanation of the design principles.</p>
+<p>The rest is just implementation details..</p>
 <p>You could build expression like this:</p>
-<pre><code class="language-python">
+<pre><code class="language-python">import async_btree as bt
+
 async def a_func():
-    &quot;&quot;&quot;A great function&quot;&quot;&quot;
     return &quot;a&quot;
 
 async def b_decorator(child_value, other=&quot;&quot;):
-    &quot;&quot;&quot;A great decorator...&quot;&quot;&quot;
     return f&quot;b{child_value}{other}&quot;
 
-with BTreeRunner() as runner:
-    assert runner.run(decorate(a_func, b_decorator)) == &quot;ba&quot;
-
+assert bt.run(bt.decorate(a_func, b_decorator)) == &quot;ba&quot;
 </code></pre>
 <p>This expression apply <code>b_decorator</code> on function <code>a_func</code>. 
 Note that <code>decorate(a_func, b_decorator)</code> is not an async function, only action, or condition are async function.</p>
-<p>Few guidelines of this implementation:</p>
-<ul>
-<li>In order to mimic all NodeStatus (success, failure, running), I replace this by truthy/falsy meaning of evaluation value.
-  A special dedicated exception decorate standard exception in order to give them a Falsy meaning (<code>ControlFlowException</code>).
-  By default, exception are raised like happen usually until you catch them or
-  decorate your function with <code>ignore_exception</code>.</li>
-<li>Blackboard pattern, act as a manager of context variable for behavior tree.
-  With python 3, please... simply use <a href="https://docs.python.org/3/library/contextvars.html">contextvars</a> !</li>
-<li>In order to be able to build a semantic tree, I've introduce a metadata tuple added on function implementation.</li>
-</ul>
-<p>The rest is just implementation details..</p>
-<p>A little note:</p>
-<blockquote>
-<p>You should not use this until you're ready to think about what you're doing :)</p>
-</blockquote>
-<h3 id="note-about-async-framework">Note about 'async' framework</h3>
-<p>As we use async function as underlaying mechanism to manage the execution flow, the standard library asyncio is pretty fine.
-But, (always a but somewhere isn't it...), you should read this <a href="https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/">amazing blog post</a> by Nathaniel J. Smith.
-And next study <a href="https://github.com/dabeaz/curio">curio</a> framework in deep.</p>
-<p>As curio say:</p>
-<blockquote>
-<p>Don't Use Curio if You're Allergic to Curio</p>
-</blockquote>
-<p>Personaly, after few time of testing and reading curio code, I'm pretty addict.</p>
-<p>If <code>curio</code> is not present, we default to <code>asyncio</code>.</p>
-<h2 id="installation">Installation</h2>
-<p>Install with pip or <a href="https://docs.astral.sh/uv/">uv</a>:</p>
-<ul>
-<li><code>pip install async-btree</code> or <code>uv add async-btree</code></li>
-<li>with curio extension: <code>pip install async-btree[curio]</code> or <code>uv add async-btree[curio]</code></li>
-</ul>
-<h2 id="usage">Usage</h2>
-<p>See <a href="https://geronimo-iia.github.io/async-btree">API Reference documentation</a>.</p>
-<p>Examples:</p>
-<ul>
-<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_1.py">tutorial_1.py</a> — basic actions, decorators, sequences</li>
-<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_2_decisions.py">tutorial_2_decisions.py</a> — decision trees and selectors</li>
-</ul>
-<p>With this framework, you didn't find any configuration file, no Xml, no json, no yaml.</p>
-<p>The main reason (oriented and personal point of view) is that you did not need to introduce an extra level of abstraction 
-to declare a composition of functions. I think it's true for most of main use case (except using an editor to wrote behaviour tree for example).</p>
-<p>So "If you wrote your function with python, wrote composition in python"... 
-<em>(remember that you did not need XML to do SQL, just write good sql...)</em></p>
-<p>So, the goal is to:
- - define your business function which implements actions or conditions, with all test case that you wish/need
- - compose them using those provided by this framework like <code>sequence</code>, <code>selector</code>, ...
- - use them as it is or create a well define python module to reuse them</p>
 <p>Want an abstract tree of our behaviour tree ?</p>
 <p>Functions from async-btree build an abstract tree for you. 
-If you lookup in code, you should see an annotation "node_metadata" on internal implementation. 
-This decorator add basic information like function name, parameters, and children relation ship.</p>
-<p>This abstract tree can be retrieved and stringified with <code>analyze</code> and <code>stringify_analyze</code>.
-Here the profile:</p>
-<pre><code class="language-python">  def analyze(target: CallableFunction) -&gt; Node: # here we have our &quot;abstract tree code&quot;
-    ...
-</code></pre>
+If you lookup in code, you should see an annotation "node_metadata" on internal implementation. This decorator add basic information like function name, parameters, and children relation ship.</p>
+<p>This abstract tree can be retrieved and stringified with <code>analyze</code> and <code>stringify_analyze</code>.</p>
 <p>For example:</p>
 <pre><code class="language-python">
 # your behaviour tree, or a sub tree:
-my_func = alias(child=repeat_until(child=action(hello), condition=success_until_zero), name=&quot;btree_1&quot;)
+my_func = alias(child=repeat_while(child=action(hello), condition=success_until_zero), name=&quot;btree_1&quot;)
 
 # retrieve meta information and build a Node tree
 abstract_tree_tree_1 = analyze(my_func) 
@@ -1330,7 +1683,7 @@ print(stringify_analyze(abstract_tree_tree_1))
 </code></pre>
 <p>This should print:</p>
 <pre><code class="language-text"> --&gt; btree_1:
-     --(child)--&gt; repeat_until:
+     --(child)--&gt; repeat_while:
          --(condition)--&gt; success_until_zero:
          --(child)--&gt; action:
                       target: hello
@@ -1341,6 +1694,244 @@ print(stringify_analyze(abstract_tree_tree_1))
 <li>you could specify a return value with SUCCESS or FAILURE</li>
 <li>function with no return value will be evaluated as FAILURE until you decorate them with a <code>always_success</code>or <code>always_failure</code></li>
 </ul>
+<h3 id="key-design-decisions">Key design decisions</h3>
+<ul>
+<li><strong>Truthy/falsy as node status</strong> — <code>SUCCESS</code> / <code>FAILURE</code> are <code>True</code> / <code>False</code>. Exceptions are wrapped in <code>ControlFlowException</code> to give them falsy meaning without losing the original cause.</li>
+<li><strong>ContextVar as blackboard</strong> — no custom blackboard class needed. Use Python's built-in <a href="https://docs.python.org/3/library/contextvars.html"><code>contextvars</code></a>.</li>
+<li><strong>Node metadata</strong> — <code>@node_metadata</code> decorates inner functions with name, parameters, and child relationships. This builds the abstract tree used by <code>analyze()</code>.</li>
+</ul>
+<h3 id="core-primitives">Core primitives</h3>
+<p><strong>Leaves</strong></p>
+<table>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action</code></td>
+<td>Wrap sync or async function as BT node; exceptions become <code>ControlFlowException</code></td>
+</tr>
+<tr>
+<td><code>condition</code></td>
+<td>Wrap sync or async predicate; result coerced to <code>SUCCESS</code>/<code>FAILURE</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Control flow</strong></p>
+<table>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sequence</code></td>
+<td>Run children in order; stop early once enough succeed or too many fail (<code>success_threshold</code>)</td>
+</tr>
+<tr>
+<td><code>fallback</code> / <code>selector</code></td>
+<td>OR — run children in order, stop on first success</td>
+</tr>
+<tr>
+<td><code>decision</code></td>
+<td>If/else — evaluate <code>success_tree</code> or <code>failure_tree</code> based on condition</td>
+</tr>
+<tr>
+<td><code>condition_guard</code></td>
+<td>Run child only if condition is truthy; return <code>SUCCESS</code> otherwise</td>
+</tr>
+<tr>
+<td><code>repeat_while</code></td>
+<td>Loop child while condition is truthy</td>
+</tr>
+<tr>
+<td><code>repeat_until</code></td>
+<td>Loop child until condition becomes truthy</td>
+</tr>
+<tr>
+<td><code>do_while</code></td>
+<td>Run child at least once, then repeat while condition is truthy</td>
+</tr>
+<tr>
+<td><code>repeat_n</code></td>
+<td>Run child exactly N times</td>
+</tr>
+<tr>
+<td><code>random_selector</code></td>
+<td>Fallback with children shuffled on every tick</td>
+</tr>
+<tr>
+<td><code>switch</code></td>
+<td>Route to a child based on return value of condition</td>
+</tr>
+<tr>
+<td><code>parallele</code></td>
+<td>Run children concurrently; succeed if enough succeed (<code>success_threshold</code>)</td>
+</tr>
+<tr>
+<td><code>parallel_race</code></td>
+<td>Run children concurrently; first to finish wins, others cancelled</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decorators</strong></p>
+<table>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>decorate</code></td>
+<td>Apply a decorator function to child output</td>
+</tr>
+<tr>
+<td><code>alias</code></td>
+<td>Name a subtree</td>
+</tr>
+<tr>
+<td><code>ignore_exception</code></td>
+<td>Turn exceptions into falsy <code>ControlFlowException</code></td>
+</tr>
+<tr>
+<td><code>always_success</code> / <code>always_failure</code></td>
+<td>Force return semantics</td>
+</tr>
+<tr>
+<td><code>inverter</code></td>
+<td>Flip <code>SUCCESS</code> ↔ <code>FAILURE</code></td>
+</tr>
+<tr>
+<td><code>is_success</code> / <code>is_failure</code></td>
+<td>Assert child result polarity</td>
+</tr>
+<tr>
+<td><code>retry</code></td>
+<td>Retry child up to N times on failure</td>
+</tr>
+<tr>
+<td><code>retry_until_success</code> / <code>retry_until_failed</code></td>
+<td>Retry until result flips</td>
+</tr>
+<tr>
+<td><code>timeout_after</code></td>
+<td>Return <code>FAILURE</code> if child exceeds deadline</td>
+</tr>
+<tr>
+<td><code>cooldown</code></td>
+<td>Skip child if called again before delay has elapsed</td>
+</tr>
+<tr>
+<td><code>delay</code></td>
+<td>Wait N seconds before running child</td>
+</tr>
+</tbody>
+</table>
+<h3 id="async-backend">Async backend</h3>
+<p>3.0.0 uses <a href="https://anyio.readthedocs.io/">anyio</a> as the sole backend. Three runtimes supported:</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>asyncio (default)</td>
+<td><code>"asyncio"</code></td>
+</tr>
+<tr>
+<td>trio</td>
+<td><code>"trio"</code></td>
+</tr>
+<tr>
+<td>asyncio + uvloop</td>
+<td><code>"asyncio+uvloop"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-bash">pip install async-btree
+# or
+uv add async-btree
+</code></pre>
+<p>Optional extras for non-asyncio backends:</p>
+<pre><code class="language-bash">uv add trio           # trio backend
+uv add uvloop         # asyncio+uvloop backend
+</code></pre>
+<p><strong>Migrating from 2.x?</strong> See the <a href="https://geronimo-iia.github.io/async-btree/migration/curio-to-anyio/">migration guides</a> in the documentation.</p>
+<h2 id="usage">Usage</h2>
+<p>See <a href="https://geronimo-iia.github.io/async-btree">API Reference documentation</a>.</p>
+<h3 id="one-shot-run">One-shot run</h3>
+<pre><code class="language-python">import async_btree as bt
+
+result = bt.run(my_tree)                          # asyncio (default)
+result = bt.run(my_tree, backend=&quot;trio&quot;)
+result = bt.run(my_tree, backend=&quot;asyncio+uvloop&quot;)
+</code></pre>
+<h3 id="multiple-runs-in-the-same-context">Multiple runs in the same context</h3>
+<pre><code class="language-python">with bt.BTreeRunner(backend=&quot;asyncio&quot;) as runner:
+    result1 = runner.run(tree_tick)
+    result2 = runner.run(tree_tick)
+</code></pre>
+<p>Each <code>runner.run()</code> starts from the context snapshot captured at <code>__enter__</code> — ContextVar mutations inside a tick do not carry over to the next tick.</p>
+<h3 id="building-trees">Building trees</h3>
+<pre><code class="language-python">import async_btree as bt
+
+b_tree = bt.sequence(children=[
+    bt.always_success(child=bt.action(target=say_hello, name=&quot;John&quot;)),
+    bt.action(target=check_battery),
+    bt.always_success(child=bt.action(target=gripper.open)),
+    bt.always_success(child=bt.action(target=approach_object, name=&quot;house&quot;)),
+    bt.always_success(child=bt.action(target=gripper.close)),
+])
+
+bt.run(b_tree)
+</code></pre>
+<h3 id="concurrent-execution">Concurrent execution</h3>
+<pre><code class="language-python">parallel_tree = bt.parallele(
+    children=[sensor_a, sensor_b, sensor_c],
+    success_threshold=2,   # succeed if at least 2 children succeed
+)
+result = bt.run(parallel_tree)
+</code></pre>
+<h3 id="exception-handling">Exception handling</h3>
+<pre><code class="language-python">@bt.ignore_exception
+async def unreliable_sensor() -&gt; bool:
+    raise IOError(&quot;disconnected&quot;)
+
+# or apply dynamically at tree construction time
+safe = bt.ignore_exception(unreliable_sensor)
+</code></pre>
+<h3 id="tree-introspection">Tree introspection</h3>
+<pre><code class="language-python">my_func = bt.alias(child=bt.repeat_while(child=bt.action(hello), condition=success_until_zero), name=&quot;btree_1&quot;)
+
+abstract_tree = bt.analyze(my_func)
+print(bt.stringify_analyze(abstract_tree))
+</code></pre>
+<pre><code class="language-text"> --&gt; btree_1:
+     --(child)--&gt; repeat_while:
+         --(condition)--&gt; success_until_zero:
+         --(child)--&gt; action:
+                      target: hello
+</code></pre>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_1.py">tutorial_1.py</a> — basic actions, decorators, sequences, backend selection</li>
+<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_2_decisions.py">tutorial_2_decisions.py</a> — decision trees and selectors with ContextVar</li>
+<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_3_context.py">tutorial_3_context.py</a> — ContextVar isolation and propagation</li>
+<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_4_exceptions.py">tutorial_4_exceptions.py</a> — exception handling, <code>ControlFlowException</code>, <code>parallele</code></li>
+<li><a href="https://github.com/geronimo-iia/async-btree/blob/main/examples/tutorial_5_switch.py">tutorial_5_switch.py</a> — routing with <code>switch</code>, default branch, ContextVar-driven dispatch</li>
+</ul>
+<p>See full <a href="https://geronimo-iia.github.io/async-btree">API Reference</a> and <a href="https://geronimo-iia.github.io/async-btree/tutorial/">Tutorial</a>.</p>
 
 
 
