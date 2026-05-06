@@ -77,7 +77,6 @@ exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 testpaths = ["tests"]
 addopts = "--strict-markers --pdbcls=tests:Debugger -r sxX --cov=async_btree --cov-report=html --cov-report=term-missing:skip-covered"
 cache_dir = ".cache"
-anyio_backends = ["asyncio", "trio", "asyncio+uvloop"]
 markers = [
     "all_backends: run with all backends",
 ]
