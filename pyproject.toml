@@ -47,7 +47,7 @@ docs = [
     "mkdocs ~= 1.6",
     "mkdocstrings[python] >= 0.27,< 2.0",
     "mkdocs-material == 9.*",
-    "mkdocs-include-markdown-plugin >= 7.1.2,< 7.3.0",
+    "mkdocs-include-markdown-plugin >= 7.1.2,< 7.4.0",
     "mkdocs-gen-files >= 0.5",
     "mkdocs-literate-nav >= 0.6",
 ]
