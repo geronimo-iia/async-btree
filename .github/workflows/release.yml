@@ -22,7 +22,7 @@ jobs:
         python-version: ['3.11']
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Install uv and set up python ${{ matrix.python-version }}
