@@ -37,6 +37,10 @@ def test_run_tree_trio():
     assert run(_tree, backend="trio") == SUCCESS
 
 
+@pytest.mark.skipif(
+    not __import__("importlib").util.find_spec("uvloop"),
+    reason="uvloop not available on this Python version",
+)
 def test_run_tree_uvloop():
     async def _tree() -> bool:
         return SUCCESS
