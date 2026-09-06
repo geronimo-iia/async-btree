@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+- ci: add Python 3.14 to test matrix (allow failure — RC)
+- ci: exclude `uvloop` on Python 3.14 (not yet ported, segfault on import)
+
 ## 3.0.0 (2026-05-06)
 
 Breaking changes:
