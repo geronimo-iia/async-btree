@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../context-isolation-per-run/">
       
       
-        <link rel="next" href="../tutorial/">
+        <link rel="next" href="../do-while-vs-repeat-while/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Concepts - Async behavior tree</title>
+        <title>List-Wrapping in sequence() and fallback() - Async behavior tree</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#async-btree-key-points" class="md-skip">
+        <a href="#list-wrapping-in-sequence-and-fallback" class="md-skip">
           Skip to content
         </a>
       
@@ -80,7 +80,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Async behavior tree" class="md-header__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+    <a href="../.." title="Async behavior tree" class="md-header__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Concepts
+              List-Wrapping in sequence() and fallback()
             
           </span>
         </div>
@@ -185,7 +185,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -202,11 +202,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../../concepts/" class="md-tabs__link">
         
   
   
@@ -225,7 +223,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../tutorial/" class="md-tabs__link">
+      <a href="../../tutorial/" class="md-tabs__link">
         
   
   
@@ -253,7 +251,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../reference/async_btree/" class="md-tabs__link">
+        <a href="../../reference/async_btree/" class="md-tabs__link">
           
   
   
@@ -276,7 +274,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../invariants/" class="md-tabs__link">
+      <a href="../../invariants/" class="md-tabs__link">
         
   
   
@@ -293,11 +291,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../decisions/anyio-as-sole-backend/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../anyio-as-sole-backend/" class="md-tabs__link">
           
   
   
@@ -317,7 +317,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../changelog/" class="md-tabs__link">
+      <a href="../../changelog/" class="md-tabs__link">
         
   
   
@@ -338,7 +338,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../migration/curio-to-anyio/" class="md-tabs__link">
+        <a href="../../migration/curio-to-anyio/" class="md-tabs__link">
           
   
   
@@ -358,7 +358,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../contributing/" class="md-tabs__link">
+      <a href="../../contributing/" class="md-tabs__link">
         
   
   
@@ -377,7 +377,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../license/" class="md-tabs__link">
+      <a href="../../license/" class="md-tabs__link">
         
   
   
@@ -396,7 +396,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../code_of_conduct/" class="md-tabs__link">
+      <a href="../../code_of_conduct/" class="md-tabs__link">
         
   
   
@@ -450,7 +450,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Async behavior tree" class="md-nav__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
+    <a href="../.." title="Async behavior tree" class="md-nav__button md-logo" aria-label="Async behavior tree" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -480,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -504,37 +504,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Concepts
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
         
   
   
@@ -550,131 +523,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#whats-a-behavior-tree" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What's a behavior tree?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-another-library" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why another library?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#so-how" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        So how?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-design-decisions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key design decisions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#core-primitives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Core primitives
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Core primitives">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#leaves" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Leaves
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#control-flow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Control flow
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decorators" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Decorators
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#note-about-curio-and-async-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Note about 'curio' and 'async' framework
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -686,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/" class="md-nav__link">
+      <a href="../../tutorial/" class="md-nav__link">
         
   
   
@@ -804,7 +652,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../reference/async_btree/" class="md-nav__link ">
+            <a href="../../reference/async_btree/" class="md-nav__link ">
               
   
   
@@ -848,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/analyze/" class="md-nav__link">
+      <a href="../../reference/async_btree/analyze/" class="md-nav__link">
         
   
   
@@ -876,7 +724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/control/" class="md-nav__link">
+      <a href="../../reference/async_btree/control/" class="md-nav__link">
         
   
   
@@ -904,7 +752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/decorator/" class="md-nav__link">
+      <a href="../../reference/async_btree/decorator/" class="md-nav__link">
         
   
   
@@ -932,7 +780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/definition/" class="md-nav__link">
+      <a href="../../reference/async_btree/definition/" class="md-nav__link">
         
   
   
@@ -960,7 +808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/leaf/" class="md-nav__link">
+      <a href="../../reference/async_btree/leaf/" class="md-nav__link">
         
   
   
@@ -988,7 +836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/parallele/" class="md-nav__link">
+      <a href="../../reference/async_btree/parallele/" class="md-nav__link">
         
   
   
@@ -1016,7 +864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/runner/" class="md-nav__link">
+      <a href="../../reference/async_btree/runner/" class="md-nav__link">
         
   
   
@@ -1044,7 +892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/async_btree/utils/" class="md-nav__link">
+      <a href="../../reference/async_btree/utils/" class="md-nav__link">
         
   
   
@@ -1087,7 +935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../invariants/" class="md-nav__link">
+      <a href="../../invariants/" class="md-nav__link">
         
   
   
@@ -1111,8 +959,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1130,17 +980,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -1158,7 +1011,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1176,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decisions/anyio-as-sole-backend/" class="md-nav__link">
+      <a href="../anyio-as-sole-backend/" class="md-nav__link">
         
   
   
@@ -1211,7 +1064,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decisions/control-flow-exception-as-falsy/" class="md-nav__link">
+      <a href="../control-flow-exception-as-falsy/" class="md-nav__link">
         
   
   
@@ -1246,7 +1099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decisions/context-isolation-per-run/" class="md-nav__link">
+      <a href="../context-isolation-per-run/" class="md-nav__link">
         
   
   
@@ -1278,10 +1131,44 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../decisions/list-wrapping-in-sequence-fallback/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    List-Wrapping in sequence/fallback
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1304,6 +1191,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-list-wrapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why List-Wrapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1316,7 +1267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decisions/do-while-vs-repeat-while/" class="md-nav__link">
+      <a href="../do-while-vs-repeat-while/" class="md-nav__link">
         
   
   
@@ -1358,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changelog/" class="md-nav__link">
+      <a href="../../changelog/" class="md-nav__link">
         
   
   
@@ -1441,7 +1392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration/curio-to-anyio/" class="md-nav__link">
+      <a href="../../migration/curio-to-anyio/" class="md-nav__link">
         
   
   
@@ -1469,7 +1420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration/asyncio-to-anyio/" class="md-nav__link">
+      <a href="../../migration/asyncio-to-anyio/" class="md-nav__link">
         
   
   
@@ -1504,7 +1455,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
         
   
   
@@ -1531,7 +1482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../license/" class="md-nav__link">
+      <a href="../../license/" class="md-nav__link">
         
   
   
@@ -1558,7 +1509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../code_of_conduct/" class="md-nav__link">
+      <a href="../../code_of_conduct/" class="md-nav__link">
         
   
   
@@ -1632,10 +1583,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#whats-a-behavior-tree" class="md-nav__link">
+  <a href="#decision" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What's a behavior tree?
+        Decision
       
     </span>
   </a>
@@ -1643,10 +1594,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-another-library" class="md-nav__link">
+  <a href="#context" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why another library?
+        Context
       
     </span>
   </a>
@@ -1654,10 +1605,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#so-how" class="md-nav__link">
+  <a href="#why-list-wrapping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        So how?
+        Why List-Wrapping
       
     </span>
   </a>
@@ -1665,71 +1616,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-design-decisions" class="md-nav__link">
+  <a href="#trade-offs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key design decisions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#core-primitives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Core primitives
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Core primitives">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#leaves" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Leaves
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#control-flow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Control flow
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decorators" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Decorators
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#note-about-curio-and-async-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Note about 'curio' and 'async' framework
+        Trade-offs
       
     </span>
   </a>
@@ -1754,6 +1644,46 @@
   
 
 
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../anyio-as-sole-backend/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Decisions
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
               
               <article class="md-content__inner md-typeset">
                 
@@ -1764,235 +1694,31 @@
   
 
 
-<h1 id="async-btree-key-points">async-btree: Key Points</h1>
-<h2 id="whats-a-behavior-tree">What's a behavior tree?</h2>
-<blockquote>
-<p>Unlike a Finite State Machine, a Behaviour Tree is a tree of hierarchical nodes that controls the flow of decision and the execution of "tasks" or, as we will call them further, "Actions".
--- <cite><a href="https://www.behaviortree.dev/bt_basics/">behaviortree</a></cite></p>
-</blockquote>
-<p>If you're new (or not) to behavior tree, you could spend some time on this few links:</p>
+<h1 id="list-wrapping-in-sequence-and-fallback">List-Wrapping in sequence() and fallback()</h1>
+<p>See also: <a href="../../invariants/">Invariants</a> · <a href="../../concepts/">Concepts</a></p>
+<h2 id="decision">Decision</h2>
+<p><code>sequence()</code> returns <code>list[results]</code> on success — all child results collected up to the threshold. <code>fallback()</code> and <code>selector()</code> return <code>[result]</code> — a single-element list wrapping the first truthy result. On failure, both return the last falsy scalar result directly.</p>
+<h2 id="context">Context</h2>
+<p>A behavior tree node must return a truthy value on success and a falsy value on failure. For composite nodes that aggregate multiple children, returning a bare scalar on success loses information about which children ran and what they returned.</p>
+<h2 id="why-list-wrapping">Why List-Wrapping</h2>
+<p><strong>The return value is always truthy on success.</strong> An empty list <code>[]</code> is falsy in Python — returning a list guarantees that a non-empty result list is truthy without any special casing. <code>sequence</code> with one successful child returns <code>[result]</code>; with three, <code>[r1, r2, r3]</code>.</p>
+<p><strong>All child results are preserved.</strong> Callers that need to inspect what happened (logging, debugging, conditional branching on results) have the full picture.</p>
+<p><strong><code>success_threshold</code> generalizes sequence and fallback.</strong> With <code>success_threshold=len(children)</code>, all children must succeed (classical sequence). With <code>success_threshold=1</code>, the first success wins (fallback). The list return covers both: it always contains exactly the results collected up to the threshold.</p>
+<h2 id="trade-offs">Trade-offs</h2>
 <ul>
-<li><a href="https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php">Behavior trees for AI: How they work</a> by Chris Simpson</li>
-<li><a href="https://www.behaviortree.dev/bt_basics/">Introduction to BTs</a></li>
+<li>Callers that only need a boolean must test <code>bool(result)</code> or <code>if result:</code> — the list is truthy, not <code>True</code></li>
+<li>Callers that expect a single value must unwrap: <code>result[0]</code> for fallback, <code>result[-1]</code> for the last sequence element</li>
+<li>Failure returns a bare scalar (the last falsy result), so success and failure have different types — callers must check truthiness before indexing</li>
 </ul>
-<p>Few implementation libraries:</p>
-<ul>
-<li><a href="https://github.com/ToyotaResearchInstitute/task_behavior_engine">task_behavior_engine</a> A behavior tree based task engine written in Python</li>
-<li><a href="https://github.com/pirobot/pi_trees/">pi_trees</a> a Python/ROS library for implementing Behavior Trees</li>
-<li><a href="https://github.com/personalrobotics/pr_behavior_tree">pr_behavior_tree</a> A simple python behavior tree library based on coroutines</li>
-<li><a href="https://github.com/aigamedev/btsk">btsk</a> Behavior Tree Starter Kit</li>
-<li><a href="https://github.com/fuchen/behave">behave</a> A behavior tree implementation in Python</li>
-</ul>
-<h2 id="why-another-library">Why another library?</h2>
-<p><strong>SIMPLICITY</strong></p>
-<p>When you study behavior tree implementations — reactive nodes, dynamic changes, runtime execution — at some point you're building something that mimics an <code>eval/apply</code> evaluator or a compiler, with a complex hierarchical set of classes.</p>
-<p>All the complexity comes from internal state management: trees of blackboards to avoid global variables, multithreading issues, callbacks...</p>
-<p>This breaks the simplicity and beauty of the initial design.</p>
-<p>What's actually useful about behavior trees:</p>
-<ul>
-<li>clarity of expression</li>
-<li>node tree representation</li>
-<li>possibility to reuse behavior</li>
-<li>external measures to dynamically change behavior — a first step toward observable patterns</li>
-</ul>
-<p>Having used OOP for years (very long time), I prefer the power of functional programming: add metadata on a semantic construction, deal with closures, use functions as parameters or return values.</p>
-<p>And a last reason, more personal: explore Python expressivity.</p>
-<h2 id="so-how">So how?</h2>
-<p>This module uses coroutines and their mechanisms to manage the execution flow.</p>
-<p>By this way:</p>
-<ul>
-<li>we reuse simple language idioms to manage state, parameters, etc.</li>
-<li>no design constraint on action implementation</li>
-<li>most language building blocks can be reused</li>
-</ul>
-<p>You can build expressions like this:</p>
-<pre><code class="language-python">async def a_func():
-    &quot;&quot;&quot;A great function&quot;&quot;&quot;
-    return &quot;a&quot;
-
-
-async def b_decorator(child_value, other=&quot;&quot;):
-    &quot;&quot;&quot;A great decorator...&quot;&quot;&quot;
-    return f&quot;b{child_value}{other}&quot;
-
-
-with BTreeRunner() as runner:
-    assert runner.run(decorate(a_func, b_decorator)) == &quot;ba&quot;
-</code></pre>
-<p>Note that <code>decorate(a_func, b_decorator)</code> is not an async function — only actions and conditions are async functions.</p>
-<h2 id="key-design-decisions">Key design decisions</h2>
-<p><strong>Status via truthy/falsy.</strong> To mimic <code>NodeStatus</code> (success, failure, running), return values carry truthy/falsy meaning. <code>ControlFlowException</code> wraps standard exceptions to give them a falsy meaning. By default, exceptions are raised normally until you catch them or decorate with <code>ignore_exception</code>.</p>
-<p><strong>Blackboard pattern?</strong> With Python 3, please... simply use <a href="https://docs.python.org/3/library/contextvars.html">contextvars</a>.</p>
-<p><strong>Abstract tree.</strong> Functions from async-btree build an abstract tree for you. The <code>node_metadata</code> decorator adds basic information: function name, parameters, and children relationships. This tree can be retrieved and stringified with <code>analyze</code> and <code>stringify_analyze</code>.</p>
-<pre><code class="language-python">my_func = alias(child=repeat_while(child=action(hello), condition=success_until_zero), name=&quot;btree_1&quot;)
-print(stringify_analyze(analyze(my_func)))
-</code></pre>
-<pre><code class="language-text"> --&gt; btree_1:
-     --(child)--&gt; repeat_while:
-         --(condition)--&gt; success_until_zero:
-         --(child)--&gt; action:
-                      target: hello
-</code></pre>
-<p><strong>No configuration files.</strong> No XML, no JSON, no YAML. You don't need an extra level of abstraction to declare a composition of functions. If you write your functions in Python, write compositions in Python.
-<em>(Remember that you don't need XML to do SQL — just write good SQL...)</em></p>
-<h2 id="core-primitives">Core primitives</h2>
-<h3 id="leaves">Leaves</h3>
-<table>
-<thead>
-<tr>
-<th>Primitive</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>action</code></td>
-<td>Wrap sync or async function as BT node; exceptions become <code>ControlFlowException</code></td>
-</tr>
-<tr>
-<td><code>condition</code></td>
-<td>Wrap sync or async predicate; result coerced to <code>SUCCESS</code>/<code>FAILURE</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="control-flow">Control flow</h3>
-<table>
-<thead>
-<tr>
-<th>Primitive</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>sequence</code></td>
-<td>Run children in order; stop early once enough succeed or too many fail (<code>success_threshold</code>)</td>
-</tr>
-<tr>
-<td><code>fallback</code> / <code>selector</code></td>
-<td>OR — run children in order, stop on first success</td>
-</tr>
-<tr>
-<td><code>decision</code></td>
-<td>If/else — evaluate <code>success_tree</code> or <code>failure_tree</code> based on condition</td>
-</tr>
-<tr>
-<td><code>condition_guard</code></td>
-<td>Run child only if condition is truthy; return <code>SUCCESS</code> otherwise</td>
-</tr>
-<tr>
-<td><code>repeat_while</code></td>
-<td>Loop child while condition is truthy</td>
-</tr>
-<tr>
-<td><code>repeat_until</code></td>
-<td>Loop child until condition becomes truthy</td>
-</tr>
-<tr>
-<td><code>do_while</code></td>
-<td>Run child at least once, then repeat while condition is truthy</td>
-</tr>
-<tr>
-<td><code>repeat_n</code></td>
-<td>Run child exactly N times</td>
-</tr>
-<tr>
-<td><code>random_selector</code></td>
-<td>Fallback with children shuffled on every tick</td>
-</tr>
-<tr>
-<td><code>switch</code></td>
-<td>Route to a child based on return value of condition</td>
-</tr>
-<tr>
-<td><code>parallele</code></td>
-<td>Run children concurrently; succeed if enough succeed (<code>success_threshold</code>)</td>
-</tr>
-<tr>
-<td><code>parallel_race</code></td>
-<td>Run children concurrently; first to finish wins, others cancelled</td>
-</tr>
-</tbody>
-</table>
-<h3 id="decorators">Decorators</h3>
-<table>
-<thead>
-<tr>
-<th>Primitive</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>decorate</code></td>
-<td>Apply a decorator function to child output</td>
-</tr>
-<tr>
-<td><code>alias</code></td>
-<td>Name a subtree</td>
-</tr>
-<tr>
-<td><code>ignore_exception</code></td>
-<td>Turn exceptions into falsy <code>ControlFlowException</code></td>
-</tr>
-<tr>
-<td><code>always_success</code> / <code>always_failure</code></td>
-<td>Force return semantics</td>
-</tr>
-<tr>
-<td><code>inverter</code></td>
-<td>Flip <code>SUCCESS</code> ↔ <code>FAILURE</code></td>
-</tr>
-<tr>
-<td><code>is_success</code> / <code>is_failure</code></td>
-<td>Assert child result polarity</td>
-</tr>
-<tr>
-<td><code>retry</code></td>
-<td>Retry child up to N times on failure</td>
-</tr>
-<tr>
-<td><code>retry_until_success</code> / <code>retry_until_failed</code></td>
-<td>Retry until result flips</td>
-</tr>
-<tr>
-<td><code>timeout_after</code></td>
-<td>Return <code>FAILURE</code> if child exceeds deadline</td>
-</tr>
-<tr>
-<td><code>cooldown</code></td>
-<td>Skip child if called again before delay has elapsed</td>
-</tr>
-<tr>
-<td><code>delay</code></td>
-<td>Wait N seconds before running child</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>You should not use this until you're ready to think about what you're doing :)</p>
-</blockquote>
-<h2 id="note-about-curio-and-async-framework">Note about 'curio' and 'async' framework</h2>
-<p>Since I've started this project in 2020, the Python landscape has changed a lot.</p>
-<p>We use async functions as the underlying mechanism to manage the execution flow, and the async framework was (still) a real concern.
-About this topic you should read this <a href="https://vorpus.org/blog/some-thoughts-on-asynchronous-api-design-in-a-post-asyncawait-world/">amazing blog post</a> by Nathaniel J. Smith.</p>
-<p><a href="https://github.com/dabeaz">David Beazley</a> worked on the <a href="https://github.com/dabeaz/curio">curio</a> framework:
-<em>"Curio is a coroutine-based library for concurrent Python systems programming using async/await. It provides standard programming abstractions such as tasks, sockets, files, locks, and queues as well as some advanced features such as support for structured concurrency. It works on Unix and Windows and has zero dependencies. You'll find it to be familiar, small, fast, and fun."</em></p>
-<p>As curio says:</p>
-<blockquote>
-<p>Don't Use Curio if You're Allergic to Curio</p>
-</blockquote>
-<p>Personally, after some time testing and reading curio's code, I'm pretty addicted.</p>
-<p>The primary goal of Curio was education and exploration related to asynchronous programming in Python.
-After ten years, David Beazley decided to abandon the Curio project. No further maintenance is expected.</p>
-<p>Even if I'm sad to not have seen this work included in the Python standard library, for the sanity of the current project, we have to change our async backend to anyio.
-This framework, actively maintained, gives us support for asyncio, asyncio + uvloop, and trio.</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -2036,10 +1762,10 @@ This framework, actively maintained, gives us support for asyncio, asyncio + uvl
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.path", "navigation.instant", "navigation.tabs", "navigation.indexes"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.path", "navigation.instant", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
