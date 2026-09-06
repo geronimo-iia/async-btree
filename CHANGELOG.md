@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 3.0.1 (2026-09-06)
 
 - ci: add Python 3.14 to test matrix (allow failure — RC)
 - fix: skip uvloop-dependent tests on Python 3.14 where uvloop is unavailable
