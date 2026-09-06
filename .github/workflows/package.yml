@@ -15,6 +15,11 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.11', '3.12', '3.13']
+        include:
+          - python-version: '3.14'
+            experimental: true
+      fail-fast: false
+    continue-on-error: ${{ matrix.experimental == true }}
     steps:
     - uses: actions/checkout@v7
     - name: Install uv and set the python version
