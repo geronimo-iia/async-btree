@@ -35,6 +35,7 @@ nav:
   - Concepts: concepts.md
   - Tutorial: tutorial.md
   - API Reference: reference/
+  - Invariants: invariants.md
   - Changelog: changelog.md
   - Migration:
     - curio → anyio (3.0.0): migration/curio-to-anyio.md
