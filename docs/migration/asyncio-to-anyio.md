@@ -27,10 +27,10 @@ uvloop >= 0.21
 ```python
 # before
 with BTreeRunner() as runner:
-    runner.run(my_tree)         # callable — unchanged
+    runner.run(my_tree)  # callable — unchanged
 
 # after
-with BTreeRunner() as runner:   # asyncio default — no change needed
+with BTreeRunner() as runner:  # asyncio default — no change needed
     runner.run(my_tree)
 
 # new: explicit backend selection
@@ -51,10 +51,12 @@ New signature: `run(target, *args, backend="asyncio", **kwargs)`.
 ```python
 # before — deprecated, asyncio path via asyncio.Runner directly
 import asyncio
+
 asyncio.run(my_tree())
 
 # after — use bt.run()
 from async_btree import run
+
 run(my_tree)
 run(my_tree, backend="asyncio+uvloop")
 ```
@@ -133,12 +135,12 @@ calls shared ContextVar state. With anyio, each call is isolated from the base s
 # before — mutations accumulated across ticks (asyncio.Runner persistent loop)
 with BTreeRunner() as runner:
     runner.run(set_var_to_42)
-    runner.run(read_var)   # would see 42
+    runner.run(read_var)  # would see 42
 
 # after — each tick starts from the __enter__ snapshot
 with BTreeRunner() as runner:
     runner.run(set_var_to_42)
-    runner.run(read_var)   # sees original value, not 42
+    runner.run(read_var)  # sees original value, not 42
 ```
 
 If your code relied on cross-tick ContextVar accumulation, pass state explicitly
@@ -153,17 +155,20 @@ Replace `pytest-asyncio` with `pytest-anyio` (bundled with anyio):
 ```python
 # before
 import pytest
+
 pytestmark = pytest.mark.asyncio
 
-async def test_something():
-    ...
+
+async def test_something(): ...
+
 
 # after
 import pytest
+
 pytestmark = pytest.mark.anyio
 
-async def test_something():
-    ...
+
+async def test_something(): ...
 ```
 
 Remove `asyncio_mode = "auto"` from `pyproject.toml` if present — anyio does not use it.

@@ -4,6 +4,7 @@
 
 - ci: add Python 3.14 to test matrix (allow failure — RC)
 - ci: exclude `uvloop` on Python 3.14 (not yet ported, segfault on import)
+- chore: update all dependencies — anyio 4.15.1, ruff 0.16.6, pyright 1.1.411, pytest 9.1.1, trio 0.34.0, mkdocstrings 1.0.6, and others
 
 ## 3.0.0 (2026-05-06)
 

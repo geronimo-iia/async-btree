@@ -42,15 +42,15 @@ uvloop >= 0.21
 
 ```python
 # before
-with BTreeRunner() as runner:            # used curio if installed
-    runner.run(my_tree)                  # callable + args, unchanged
+with BTreeRunner() as runner:  # used curio if installed
+    runner.run(my_tree)  # callable + args, unchanged
 
 with BTreeRunner(disable_curio=True) as runner:  # forced asyncio
     runner.run(my_tree)
 
 # after
-with BTreeRunner() as runner:            # asyncio by default
-    runner.run(my_tree)                  # same callable signature
+with BTreeRunner() as runner:  # asyncio by default
+    runner.run(my_tree)  # same callable signature
 
 with BTreeRunner(backend="trio") as runner:
     runner.run(my_tree)
@@ -70,11 +70,13 @@ New `run()` is a one-shot convenience wrapper:
 # before
 import curio
 from async_btree import run
+
 run(curio.Kernel(), my_tree)
 
 # after
 from async_btree import run
-run(my_tree)                          # asyncio default
+
+run(my_tree)  # asyncio default
 run(my_tree, backend="trio")
 run(my_tree, backend="asyncio+uvloop")
 ```
@@ -86,6 +88,7 @@ Removed entirely. No replacement — the curio detection path no longer exists.
 ```python
 # before
 from async_btree.utils import has_curio
+
 if has_curio():
     ...
 
@@ -167,7 +170,7 @@ var = ContextVar("x", default=0)
 var.set(1)
 
 with BTreeRunner() as runner:
-    runner.run(mutate_var)   # sets var to 99 inside
+    runner.run(mutate_var)  # sets var to 99 inside
     # var is still 1 here — isolation is intentional
 
 var.get()  # → 1
@@ -182,15 +185,16 @@ Replace `pytest-curio` with `pytest-anyio` (bundled with anyio):
 ```python
 # before
 @pytest.mark.curio
-async def test_something():
-    ...
+async def test_something(): ...
+
 
 # after
 import pytest
+
 pytestmark = pytest.mark.anyio
 
-async def test_something():
-    ...
+
+async def test_something(): ...
 ```
 
 Parametrize over backends with the `anyio_backend` fixture:
