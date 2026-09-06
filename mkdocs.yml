@@ -35,6 +35,13 @@ nav:
   - Concepts: concepts.md
   - Tutorial: tutorial.md
   - API Reference: reference/
+  - Invariants: invariants.md
+  - Decisions:
+    - anyio as Sole Backend: decisions/anyio-as-sole-backend.md
+    - ControlFlowException as Falsy: decisions/control-flow-exception-as-falsy.md
+    - Context Isolation per Run: decisions/context-isolation-per-run.md
+    - List-Wrapping in sequence/fallback: decisions/list-wrapping-in-sequence-fallback.md
+    - do_while vs repeat_while: decisions/do-while-vs-repeat-while.md
   - Changelog: changelog.md
   - Migration:
     - curio → anyio (3.0.0): migration/curio-to-anyio.md

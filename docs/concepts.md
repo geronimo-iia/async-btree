@@ -57,9 +57,11 @@ async def a_func():
     """A great function"""
     return "a"
 
+
 async def b_decorator(child_value, other=""):
     """A great decorator..."""
     return f"b{child_value}{other}"
+
 
 with BTreeRunner() as runner:
     assert runner.run(decorate(a_func, b_decorator)) == "ba"

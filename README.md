@@ -78,11 +78,14 @@ You could build expression like this:
 ```python
 import async_btree as bt
 
+
 async def a_func():
     return "a"
 
+
 async def b_decorator(child_value, other=""):
     return f"b{child_value}{other}"
+
 
 assert bt.run(bt.decorate(a_func, b_decorator)) == "ba"
 ```
@@ -100,12 +103,11 @@ This abstract tree can be retrieved and stringified with ```analyze``` and ```st
 For example:
 
 ```python
-
 # your behaviour tree, or a sub tree:
 my_func = alias(child=repeat_while(child=action(hello), condition=success_until_zero), name="btree_1")
 
 # retrieve meta information and build a Node tree
-abstract_tree_tree_1 = analyze(my_func) 
+abstract_tree_tree_1 = analyze(my_func)
 
 # output the tree:
 print(stringify_analyze(abstract_tree_tree_1))
@@ -217,7 +219,7 @@ See [API Reference documentation](https://geronimo-iia.github.io/async-btree).
 ```python
 import async_btree as bt
 
-result = bt.run(my_tree)                          # asyncio (default)
+result = bt.run(my_tree)  # asyncio (default)
 result = bt.run(my_tree, backend="trio")
 result = bt.run(my_tree, backend="asyncio+uvloop")
 ```
@@ -237,13 +239,15 @@ Each `runner.run()` starts from the context snapshot captured at `__enter__` —
 ```python
 import async_btree as bt
 
-b_tree = bt.sequence(children=[
-    bt.always_success(child=bt.action(target=say_hello, name="John")),
-    bt.action(target=check_battery),
-    bt.always_success(child=bt.action(target=gripper.open)),
-    bt.always_success(child=bt.action(target=approach_object, name="house")),
-    bt.always_success(child=bt.action(target=gripper.close)),
-])
+b_tree = bt.sequence(
+    children=[
+        bt.always_success(child=bt.action(target=say_hello, name="John")),
+        bt.action(target=check_battery),
+        bt.always_success(child=bt.action(target=gripper.open)),
+        bt.always_success(child=bt.action(target=approach_object, name="house")),
+        bt.always_success(child=bt.action(target=gripper.close)),
+    ]
+)
 
 bt.run(b_tree)
 ```
@@ -254,7 +258,7 @@ bt.run(b_tree)
 ```python
 parallel_tree = bt.parallele(
     children=[sensor_a, sensor_b, sensor_c],
-    success_threshold=2,   # succeed if at least 2 children succeed
+    success_threshold=2,  # succeed if at least 2 children succeed
 )
 result = bt.run(parallel_tree)
 ```
@@ -265,6 +269,7 @@ result = bt.run(parallel_tree)
 @bt.ignore_exception
 async def unreliable_sensor() -> bool:
     raise IOError("disconnected")
+
 
 # or apply dynamically at tree construction time
 safe = bt.ignore_exception(unreliable_sensor)

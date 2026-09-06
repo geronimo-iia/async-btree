@@ -15,12 +15,13 @@ First, you have to wrote your function (async or sync) as normal, like this:
 def approach_object(name: str):
     print(f"approach_object: {name}")
 
+
 def check_battery():
     print("battery ok")
 
+
 async def say_hello(name: str):
     print(f"Hello: {name}")
-
 ```
 
 At this point, this is not (yet) a behavior action. To define an action, you have to use ```action``` function:
@@ -33,7 +34,6 @@ approach_house_object_action = bt.action(target=approach_object, name="house")
 check_battery_action = bt.action(target=check_battery)
 
 say_hello_john = bt.action(target=say_hello, name="John")
-
 ```
 
 
@@ -41,19 +41,16 @@ With a class like this one:
 
 ```python
 class GripperInterface:
-
     def __init__():
         self._open = False
-    
 
     def open(self):
         print("GripperInterface Open")
         self._open = True
-    
+
     def close(self):
         print("GripperInterface Close")
         self._open = False
-
 ```
 We can define action for these functions:
     - GripperInterface.open
@@ -72,17 +69,17 @@ We will build a sequence of actions like this one:
 To do that, we need to use ```sequence``` methods.
 
 ```python
-
 gripper = GripperInterface()
 
-b_tree = bt.sequence(children= [
-    bt.action(target=say_hello, name="John"),
-    bt.action(target=check_battery),
-    bt.action(target=gripper.open),
-    bt.action(target=approach_object, name="house"),
-    bt.action(target=gripper.close)
-])
-
+b_tree = bt.sequence(
+    children=[
+        bt.action(target=say_hello, name="John"),
+        bt.action(target=check_battery),
+        bt.action(target=gripper.open),
+        bt.action(target=approach_object, name="house"),
+        bt.action(target=gripper.close),
+    ]
+)
 ```
 
 Run it — simplest form:
@@ -124,13 +121,15 @@ Or we could rewrote our behavior tree with specific status:
 
 
 ```python
-b_tree = bt.sequence(children= [
-    bt.always_success(child=bt.action(target=say_hello, name="John")),
-    bt.always_success(child=bt.action(target=check_battery)),
-    bt.always_success(child=bt.action(target=gripper.open)),
-    bt.always_success(child=bt.action(target=approach_object, name="house")),
-    bt.always_success(child=bt.action(target=gripper.close))
-])
+b_tree = bt.sequence(
+    children=[
+        bt.always_success(child=bt.action(target=say_hello, name="John")),
+        bt.always_success(child=bt.action(target=check_battery)),
+        bt.always_success(child=bt.action(target=gripper.open)),
+        bt.always_success(child=bt.action(target=approach_object, name="house")),
+        bt.always_success(child=bt.action(target=gripper.close)),
+    ]
+)
 ```
 If we running it again:
 
@@ -229,20 +228,25 @@ import async_btree as bt
 
 mode: ContextVar[str] = ContextVar("mode", default="idle")
 
+
 async def get_mode() -> str:
     return mode.get()
+
 
 async def handle_idle() -> bool:
     print("Robot is idle.")
     return bt.SUCCESS
 
+
 async def handle_patrol() -> bool:
     print("Robot is patrolling.")
     return bt.SUCCESS
 
+
 async def unknown_mode() -> bool:
     print(f"Unknown mode: {mode.get()!r}")
     return bt.FAILURE
+
 
 router = bt.switch(
     condition=get_mode,

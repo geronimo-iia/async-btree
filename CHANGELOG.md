@@ -1,5 +1,15 @@
 # Change Log
 
+## Unreleased
+
+- ci: add Python 3.14 to test matrix (allow failure — RC)
+- fix: skip uvloop-dependent tests on Python 3.14 where uvloop is unavailable
+- chore: update all dependencies — anyio 4.15.1, ruff 0.16.6, pyright 1.1.411, pytest 9.1.1, trio 0.34.0, mkdocstrings 1.0.6, and others
+- docs: add `SECURITY.md` and pull request template
+- docs: add `AGENTS.md` with dev commands and doc pointers
+- docs: add `docs/invariants.md` — library invariants reference
+- docs: add `docs/decisions/` — 5 ADRs covering key design choices
+
 ## 3.0.0 (2026-05-06)
 
 Breaking changes:

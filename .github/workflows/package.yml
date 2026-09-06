@@ -25,8 +25,8 @@ jobs:
     - name: Install uv and set the python version
       uses: astral-sh/setup-uv@v7
       with:
-        version: "0.5.18"
         python-version: ${{ matrix.python-version }}
+        enable-cache: true
     - name: Install dependencies
       run: make install 
     - name: Check Python package
